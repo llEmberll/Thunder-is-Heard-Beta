@@ -1,0 +1,10 @@
+{
+	"entityItems": {
+		"0": {
+			"id": 0,
+			"name": "Штаб",
+			"type": "build",
+			"count": 1
+		}
+	}
+}
