@@ -19,26 +19,31 @@ public class UnitGame : MonoBehaviour
             context.Database.EnsureCreated();
 
             // Adds a publisher
-            var build = new Build
+            var publisher = new Publisher
             {
-                Name = "Headbuild",
-                SizeX = 3,
-                SizeY = 3,
+                Name = "Mariner Books"
             };
+            context.Publisher.Add(publisher);
 
-
-            context.Build.Add(build);
-
-
-            var base = new Base
+            // Adds some books
+            context.Book.Add(new Book
             {
-                Name = "Zone-51",
-                Builds = { build }
-            };
-
-            context.Base.Add(base);
-                
-            );
+                ISBN = "978-0544003415",
+                Title = "The Lord of the Rings",
+                Author = "J.R.R. Tolkien",
+                Language = "English",
+                Pages = 1216,
+                Publisher = publisher
+            });
+            context.Book.Add(new Book
+            {
+                ISBN = "978-0547247762",
+                Title = "The Sealed Letter",
+                Author = "Emma Donoghue",
+                Language = "English",
+                Pages = 416,
+                Publisher = publisher
+            });
 
             // Saves changes
             context.SaveChanges();
@@ -50,14 +55,15 @@ public class UnitGame : MonoBehaviour
         // Gets and prints all books in database
         using (var context = new LibraryContext())
         {
-            var build = context.Build
-              .Include(p => p.b);
+            var books = context.Book
+              .Include(p => p.Publisher);
             foreach (var book in books)
             {
-                var data = new StringBuilder(); 
+                var data = new StringBuilder();
                 data.AppendLine($"ISBN: {book.ISBN}");
                 data.AppendLine($"Title: {book.Title}");
                 data.AppendLine($"Publisher: {book.Publisher.Name}");
+
             }
         }
     }
