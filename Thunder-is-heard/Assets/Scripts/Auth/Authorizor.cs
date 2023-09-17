@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Microsoft.EntityFrameworkCore;
@@ -20,50 +18,6 @@ public class Authorizor: MonoBehaviour
 
     public void Start()
     {
-        using (var context = new LibraryContext())
-        {
-            // Creates the database if not exists
-            context.Database.EnsureCreated();
-
-            // Adds a publisher
-            var publisher = new Publisher
-            {
-                Name = "Mariner Books"
-            };
-            context.Publisher.Add(publisher);
-
-            // Adds some books
-            context.Book.Add(new Book
-            {
-                ISBN = "978-0544003415",
-                Title = "The Lord of the Rings",
-                Author = "J.R.R. Tolkien",
-                Language = "English",
-                Pages = 1216,
-                Publisher = publisher
-            });
-            context.Book.Add(new Book
-            {
-                ISBN = "978-0547247762",
-                Title = "The Sealed Letter",
-                Author = "Emma Donoghue",
-                Language = "English",
-                Pages = 416,
-                Publisher = publisher
-            });
-
-            var user = new User
-            {
-                Name = "Volter August",
-                Password = "916"
-            };
-
-            context.User.Add(user);
-
-            // Saves changes
-            context.SaveChanges();
-        }
-
         regData = new RegData();
 
         Debug.Log("authorizer starts!");
@@ -91,7 +45,17 @@ public class Authorizor: MonoBehaviour
     {
         if (IsValid())
         {
-            Registration();
+            if (!IsUserExists())
+            {
+                Registration();
+
+                Clear();
+            }
+            else
+            {
+                Debug.Log("Such user already exists");
+            }
+            
         }
         else
         {
@@ -111,6 +75,12 @@ public class Authorizor: MonoBehaviour
         return true;
     }
 
+    private bool IsUserExists()
+    {
+        //TODO сходить в базу и вернуть значения из таблицы юзеров по логину
+        return true;
+    }
+
     public void OnAuthorizationButton()
     {
         if (IsValid())
@@ -127,14 +97,10 @@ public class Authorizor: MonoBehaviour
     {
         Debug.Log("registration!");
 
-        if (IsUserExist())
-        {
-            Debug.Log("This user already exist");
-        }
-        else
-        {
-            CreateUser();
-        }
+        CreateUser();
+
+        Debug.Log("success");
+
     }
 
     private void Authorization()
@@ -144,6 +110,20 @@ public class Authorizor: MonoBehaviour
         if (IsUserExist())
         {
             Debug.Log("Exist!");
+
+            if (IsDataCorrect())
+            {
+                Debug.Log("success");
+
+                Clear();
+                //TODO Загрузить домашнюю сцену
+            }
+
+            else
+            {
+                Debug.Log("Not correct data");
+            }
+            
         }
         else
         {
@@ -151,51 +131,31 @@ public class Authorizor: MonoBehaviour
         }
     }
 
+    private bool IsDataCorrect()
+    {
+        //TODO по полученной ранее записи пользователя вернуть соответствие его пароля и введенного пароля
+
+        return true;
+    }
+
     private bool IsUserExist()
     {
-        using (var context = new LibraryContext())
-        {
+        //TODO Обратиться в бзу посредством EF с фильтром логина
 
-            context.Database.EnsureCreated();
-
-            var baseEntity = context.Base;
-
-            foreach (var entity in baseEntity)
-            {
-                var data = new StringBuilder();
-                data.AppendLine($"ID: {entity.ID}");
-                if (entity != null)
-                {
-                    return true;
-                }
-            }
-                return false;
-        }
+        return true;
     }
 
     private void CreateUser()
     {
-        using (var context = new LibraryContext())
-        {
-            context.Database.EnsureCreated();
+        //TODO Создать пользователя в базе посредством EF с набранным паролем и логином
+    }
 
-            var user = new User
-            {
-                Name = regData.baseName,
-            };
+    private void Clear()
+    {
+        regData = new RegData();
 
-            context.Add(user);
-
-            var b = new Base
-            {
-                Name = regData.baseName
-            };
-            
-            context.Add(b);
-
-            // Saves changes
-            context.SaveChanges();
-        }
+        baseNameFromInput.text = null;
+        passwordFromInput.text = null;
     }
     
 }

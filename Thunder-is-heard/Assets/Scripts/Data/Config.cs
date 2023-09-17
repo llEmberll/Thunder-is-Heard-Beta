@@ -12,6 +12,11 @@ public static class Config
         { "port", "3306" },
     };
 
+    public static Dictionary<string, string> localDataBase = new Dictionary<string, string>
+    {
+        {"tablesPath", "LocalDatabase/Tables/" }
+    };
+
     public static Dictionary<string, string> resources = new Dictionary<string, string>
     {
         {"materials", "Materials/" },
