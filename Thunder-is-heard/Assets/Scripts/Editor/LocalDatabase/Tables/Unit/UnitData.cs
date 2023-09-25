@@ -78,4 +78,12 @@ public class UnitData : TableItem
         get { return skill; }
         set { }
     }
+
+    [Tooltip("Расположение")]
+    [SerializeField] public Vector2Int position;
+    public Vector2Int Position
+    {
+        get { return position; }
+        set { }
+    }
 }

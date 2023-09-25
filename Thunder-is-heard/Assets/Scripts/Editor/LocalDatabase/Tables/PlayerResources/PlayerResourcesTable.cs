@@ -8,7 +8,7 @@ public class PlayerResourcesTable : Table<PlayerResourceData>
     {
         get
         {
-            return "Resource";
+            return "PlayerResource";
         }
     }
 }
