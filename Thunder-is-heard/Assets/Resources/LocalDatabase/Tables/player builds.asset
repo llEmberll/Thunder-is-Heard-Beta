@@ -49,4 +49,6 @@ MonoBehaviour:
     health: 0
     damage: 0
     distance: 0
+    position: []
+    rotation: 0
   currentIndex: 0

@@ -86,4 +86,12 @@ public class UnitData : TableItem
         get { return position; }
         set { }
     }
+
+    [Tooltip("Поворот")]
+    [SerializeField] public int rotation;
+    public int Rotation
+    {
+        get { return rotation; }
+        set { }
+    }
 }
