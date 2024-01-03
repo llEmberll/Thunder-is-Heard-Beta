@@ -15,12 +15,12 @@ public class DatabaseEditor : Editor
 
     public override void OnInspectorGUI()
     {
-            foreach (ScriptableObject table in database.GetTables())
+            foreach (var table in LocalDatabase.GetTables())
             {
-                Debug.Log("table name: " +  table.name);
+                Debug.Log("table name: " +  ((ITable)table).Name);
 
                 EditorGUILayout.BeginVertical("box");
-                if (GUILayout.Button(table.name))
+                if (GUILayout.Button(((ITable)table).Name))
                 {
                     Selection.activeObject = table;
             }

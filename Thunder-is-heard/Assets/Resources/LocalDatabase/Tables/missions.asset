@@ -9,26 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e661b9647c51c0640bea0e1391d485c3, type: 3}
-  m_Name: player resources
+  m_Script: {fileID: 11500000, guid: 79b7cc0ff0ba8e644b5713541de76951, type: 3}
+  m_Name: missions
   m_EditorClassIdentifier: 
   currentIndex: 0
-  items:
-  - resources:
-      rub: 0
-      maxRub: 0
-      frames: 0
-      maxFrames: 0
-      oil: 0
-      maxOil: 0
-      steel: 0
-      maxSteel: 0
-      staff: 0
-      maxStaff: 0
-      exp: 0
-      maxExp: 0
+  items: []
   currentItem:
-    resources:
+    name: 
+    icon: {fileID: 0}
+    reward:
       rub: 0
       maxRub: 0
       frames: 0
@@ -41,3 +30,4 @@ MonoBehaviour:
       maxStaff: 0
       exp: 0
       maxExp: 0
+    scenaio: {fileID: 0}

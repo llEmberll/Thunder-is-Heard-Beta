@@ -24,5 +24,6 @@ public static class Config
         { "prefabs", "Prefabs/" },
         { "entityPrefabs", "Prefabs/Entity/" },
         { "prefabPreview", "Prefabs/Custom/Preview" },
+        { "emptyPrefab", "Prefabs/Entity/Basic/Empty" },
     };
 }

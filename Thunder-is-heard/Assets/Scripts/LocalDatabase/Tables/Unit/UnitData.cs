@@ -1,9 +1,9 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 
 
 [System.Serializable]
-public class UnitData : TableItem
+public class UnitData : SomeTableItem
 {
     [Tooltip("Имя")]
     [SerializeField] public string name;
@@ -14,10 +14,10 @@ public class UnitData : TableItem
     }
 
     [Tooltip("Модель")]
-    [SerializeField] public Transform model;
-    public Transform Model
+    [SerializeField] public string modelPath;
+    public string ModelPath
     {
-        get { return model; }
+        get { return modelPath; }
         set { }
     }
 
@@ -29,6 +29,21 @@ public class UnitData : TableItem
         set { }
     }
 
+    [Tooltip("Цена строительства")]
+    [SerializeField] public ResourcesData cost;
+    public ResourcesData Cost
+    {
+        get { return cost; }
+        set { }
+    }
+
+    [Tooltip("Время строительства")]
+    [SerializeField] public int buildTime;
+    public int CreateTime
+    {
+        get { return buildTime; }
+        set { }
+    }
 
     [Tooltip("Вес")]
     [SerializeField] public int weight;
@@ -93,5 +108,24 @@ public class UnitData : TableItem
     {
         get { return rotation; }
         set { }
+    }
+
+
+    public override Dictionary<string, object> GetFields()
+    {
+        return new Dictionary<string, object>
+        {
+            { "name", name },
+            { "modelPath", modelPath },
+            { "icon", icon },
+            { "weight", weight },
+            { "health", health },
+            { "damage", damage },
+            { "speed", speed },
+            { "distance", distance },
+            { "skill", skill },
+            { "position", position },
+            { "rotation", rotation }
+        };
     }
 }

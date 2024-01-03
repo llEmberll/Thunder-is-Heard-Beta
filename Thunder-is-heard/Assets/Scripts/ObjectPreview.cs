@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ObjectPreview: MonoBehaviour
 {
-    public int objectId;
+    private Dictionary<string, object> objData;
+    private int objectId;
+    private string objectType;
 
     public Transform body;
     public MeshRenderer meshRenderer;
@@ -32,25 +35,60 @@ public class ObjectPreview: MonoBehaviour
         EventMaster.current.ToggledOffBuildMode += Cancel;
         EventMaster.current.PreviewRotated += Rotate;
     }
-    
-    public void Init(int id)
+
+    public void Init(int id, string type)
+    {
+        SetObjectIdAndType(id, type);
+        SetObjData();
+        SetObjSize();
+
+        InitModel();
+    }
+
+    public void SetObjData()
+    {
+        ITable objsTable = LocalDatabase.GetTableByName(objectType);
+        if (objsTable == null)
+        {
+            Debug.Log("Undefined table by item type: " + objectType);
+            Cancel();
+            return;
+        }
+
+        objData = LocalDatabase.GetFieldsByTableAndTableItemIndex(objsTable, objectId);
+        if (objData == null) 
+        {
+            Cancel();
+            return;
+        }
+    }
+
+    public void SetObjectIdAndType(int id, string type)
     {
         objectId = id;
+        objectType = type;
+    }
 
-        SetSize();
+    public void SetObjSize()
+    {
+        size = new Vector2Int(1, 1);
+        if (objData.ContainsKey("sizeByX") && objData.ContainsKey("sizeByY"))
+        {
+            size = new Vector2Int((int)objData["sizeByX"], (int)objData["sizeByY"]);
+        }
+    }
 
-        GameObject modelPrefab = Resources.Load(Config.resources["entityPrefabs"] + "Builds/Academy/Model", typeof(GameObject)) as GameObject;
+    public void InitModel()
+    {
+        string modelPath = (string)objData["modelPath"];
+
+        GameObject modelPrefab = Resources.Load<GameObject>(modelPath);
         body = Instantiate(modelPrefab, modelPrefab.transform.position, Quaternion.identity).transform;
         body.SetParent(transform);
 
         meshRenderer = body.GetComponent<MeshRenderer>();
         materialModel = meshRenderer.material;
         meshRenderer.material = materialBasic;
-    }
-
-    public void SetSize()
-    {
-        size = new Vector2Int(4, 2);
     }
 
     public void Rotate()
@@ -138,40 +176,35 @@ public class ObjectPreview: MonoBehaviour
 
     public void Expose()
     {
-        Debug.Log("Expose!");
-
         if (!exposableStatus)
         {
             return;
         }
 
-        Debug.Log("Can!");
-
         ApplyOccypation();
 
-        Transform entity = createObject(objectId);
+        Transform entity = createObject();
 
-        prepareModel(entity);
+        prepareModelToExposing(entity);
+
+        EventMaster.current.ExposeObject(objectId, objectType);
 
         Cancel();
-        EventMaster.current.OnExitBuildMode();
     }
 
-    public Transform createObject(int id)
+    public Transform createObject()
     {
-        var entityPrefab = Resources.Load(Config.resources["entityPrefabs"] + "Builds/Academy/Academy", typeof(GameObject)) as GameObject;
-        return Instantiate(entityPrefab, new Vector3(rootPoint.x, 0, rootPoint.y), Quaternion.identity).transform;
+        GameObject prefab = Resources.Load<GameObject>(Config.resources["emptyPrefab"]);
+        var obj = Instantiate(prefab, new Vector3(rootPoint.x, 0, rootPoint.y), Quaternion.identity).transform;
+        obj.name = (string)objData["name"];
+        return obj;
     }
 
-    public Transform prepareModel(Transform parent)
+    public Transform prepareModelToExposing(Transform parent)
     {
-        Transform model = parent.transform.Find("Model");
-        if (!model) return null;
-
-        model.position = body.transform.position;
-        model.rotation = body.transform.rotation;
-
-        return model;
+        meshRenderer.material = materialModel;
+        body.SetParent(parent);
+        return body;
     }
 
     public void ApplyOccypation()
@@ -185,6 +218,7 @@ public class ObjectPreview: MonoBehaviour
     public void Cancel()
     {
         UnsubscribeAll();
+        EventMaster.current.OnExitBuildMode();
         Destroy(this.gameObject);
     }
 

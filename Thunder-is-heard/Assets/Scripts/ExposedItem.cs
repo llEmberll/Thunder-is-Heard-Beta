@@ -10,6 +10,9 @@ public class ExposedItem : Item
         CreatePreview();
         
         EventMaster.current.OnBuildMode();
+
+        EventMaster.current.ToggledOffBuildMode += Finish;
+        EventMaster.current.ObjectExposed += FinishWithExpose;
     }
 
 
@@ -19,6 +22,22 @@ public class ExposedItem : Item
         var previewObject = Instantiate(previewPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
         ObjectPreview preview = previewObject.GetComponent<ObjectPreview>();
-        preview.Init(objectId);
+        preview.Init(objectId, objectType);
+    }
+
+    public void Finish()
+    {
+        EventMaster.current.ToggledOffBuildMode -= Finish;
+        EventMaster.current.ObjectExposed -= FinishWithExpose;
+    }
+
+    public void FinishWithExpose(int objId, string objType)
+    {
+        Finish();
+
+        if (objType == objectType && objId == objectId)
+        {
+            Substract();
+        }
     }
 }

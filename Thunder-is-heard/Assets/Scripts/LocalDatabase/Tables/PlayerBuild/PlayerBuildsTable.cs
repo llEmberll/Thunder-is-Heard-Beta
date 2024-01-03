@@ -1,35 +1,42 @@
-
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "Table", fileName = "table")]
-public class Table<T>:ScriptableObject where T : TableItem, new()
+[CreateAssetMenu(menuName = "player build table", fileName = "player builds")]
+public class PlayerBuildsTable : SomeTable
 {
-    public virtual string name { get; set; }
+    public List<BuildData> items;
+    public BuildData currentItem;
 
-    public List<T> items;
-    public T currentItem;
+    public new List<BuildData> Items { get { return items; } set { } }
 
-    public int currentIndex = 0;
+    public override string Name
+    {
+        get
+        {
+            return "PlayerBuild";
+        }
+    }
 
     public void AddElement()
     {
         if (items == null)
         {
-            items = new List<T>();
+            items = new List<BuildData>();
         }
 
-        currentItem = new T();
+        currentItem = new BuildData();
         items.Add(currentItem);
         currentIndex = items.Count - 1;
     }
+
     public void RemoveElement()
     {
         if (currentIndex > 0)
         {
-            currentItem = items[--currentIndex];
-            items.RemoveAt(++currentIndex);
+            currentItem = items[currentIndex - 1];
+            items.RemoveAt(currentIndex);
+            currentIndex--;
         }
 
         else
@@ -42,10 +49,10 @@ public class Table<T>:ScriptableObject where T : TableItem, new()
         }
     }
 
-    public T GetNext()
+    public BuildData GetNext()
     {
-        if (items.Count == 0) 
-        { 
+        if (items.Count == 0)
+        {
             return currentItem;
         }
 
@@ -63,9 +70,9 @@ public class Table<T>:ScriptableObject where T : TableItem, new()
         return currentItem;
     }
 
-    public T GetPrev()
+    public BuildData GetPrev()
     {
-        if ( currentIndex == 0)
+        if (currentIndex == 0)
         {
             if (items.Count == 0)
             {
@@ -90,7 +97,7 @@ public class Table<T>:ScriptableObject where T : TableItem, new()
         currentIndex = 0;
     }
 
-    public T this[int index]
+    public BuildData this[int index]
     {
         get
         {
@@ -98,13 +105,13 @@ public class Table<T>:ScriptableObject where T : TableItem, new()
             {
                 return items[index];
             }
-            return default(T);
+            return default(BuildData);
         }
         set
         {
             if (items == null)
             {
-                items = new List<T>();
+                items = new List<BuildData>();
             }
 
             if (index >= 0 && index < items.Count && value != null)

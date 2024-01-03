@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Mission : MonoBehaviour
 {
+    public int id;
+
     public Map map;
 
     public Scenario scenario;

@@ -12,11 +12,11 @@ public abstract class Item : UIElement
             return "Item";
         }
     }
-    
-    public string itemName;
+
     public int itemCount;
     public int objectId;
     public string objectName;
+    public string objectType;
 
 
     public void Awake()
@@ -34,5 +34,14 @@ public abstract class Item : UIElement
     {
         itemCount = newCount;
         TmpCount.text = newCount.ToString();
+        if (itemCount < 1)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void Substract(int number = 1)
+    {
+        UpdateCount(itemCount - number);
     }
 }
