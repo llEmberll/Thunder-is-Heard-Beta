@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "player resource table", fileName = "player resources")]
 public class PlayerResourcesTable : SomeTable
 {
-    public List<PlayerResourceData> items;
-    public PlayerResourceData currentItem;
+    public new List<PlayerResourceData> items;
+    public new PlayerResourceData currentItem;
 
     public new List<PlayerResourceData> Items { get { return items; } set { } }
 
@@ -18,7 +18,7 @@ public class PlayerResourcesTable : SomeTable
         }
     }
 
-    public void AddElement()
+    public new void AddElement()
     {
         if (items == null)
         {
@@ -30,7 +30,7 @@ public class PlayerResourcesTable : SomeTable
         currentIndex = items.Count - 1;
     }
 
-    public void RemoveElement()
+    public new void RemoveElement()
     {
         if (currentIndex > 0)
         {
@@ -49,7 +49,7 @@ public class PlayerResourcesTable : SomeTable
         }
     }
 
-    public PlayerResourceData GetNext()
+    public new PlayerResourceData GetNext()
     {
         if (items.Count == 0)
         {
@@ -70,7 +70,7 @@ public class PlayerResourcesTable : SomeTable
         return currentItem;
     }
 
-    public PlayerResourceData GetPrev()
+    public new PlayerResourceData GetPrev()
     {
         if (currentIndex == 0)
         {
@@ -91,13 +91,13 @@ public class PlayerResourcesTable : SomeTable
         }
     }
 
-    public void ClearAll()
+    public new void ClearAll()
     {
         items.Clear();
         currentIndex = 0;
     }
 
-    public PlayerResourceData this[int index]
+    public new PlayerResourceData this[int index]
     {
         get
         {

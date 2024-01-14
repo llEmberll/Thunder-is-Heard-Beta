@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Unit : Entity, IMovable, IDamageable, IAttack, ITransfer
 {
-    public override string entityType {
+    public override string EntityType {
 	get
         {
             return "Unit";
@@ -15,11 +15,6 @@ public class Unit : Entity, IMovable, IDamageable, IAttack, ITransfer
 
     public SceneState sceneState;
 
-    public void Awake()
-    {
-        
-    }
-
     public void Start()
     {
         sceneState = GameObject.FindWithTag("State").GetComponent<SceneState>();
@@ -28,6 +23,12 @@ public class Unit : Entity, IMovable, IDamageable, IAttack, ITransfer
         
         //OnChangeStateEvent
         EventMaster.current.StateChanged += OnChangeState;
+    }
+
+    public override void UpdateoccypiedPoses()
+    {
+        center = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+        occypiedPoses = new List<Vector2Int> { center };
     }
 
     public override void OnChangeState(State newState)

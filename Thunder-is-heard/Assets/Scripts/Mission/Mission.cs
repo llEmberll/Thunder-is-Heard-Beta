@@ -1,16 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
-public class Mission : MonoBehaviour
+public class Mission : Item
 {
-    public int id;
+    public override void Awake()
+    {
+        objectType = "Mission";
 
-    public Map map;
+        TmpText = transform.Find("Text").GetComponent<TMP_Text>();
 
-    public Scenario scenario;
+        TmpText.text = objectName;
+    }
+
+    public override void Interact()
+    {
+        Load();
+    }
+
     public void Load()
     {
         var mission = Instantiate(gameObject, gameObject.transform.position, Quaternion.identity);

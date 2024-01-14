@@ -5,8 +5,8 @@ using System.Collections.Generic;
 [CreateAssetMenu(menuName = "base cells table", fileName = "base cells")]
 public class BaseCellsTable : SomeTable
 {
-    public List<BaseCellsData> items;
-    public BaseCellsData currentItem;
+    public new List<BaseCellsData> items;
+    public new BaseCellsData currentItem;
 
     public new List<BaseCellsData> Items { get { return items; } set { } }
 
@@ -18,7 +18,7 @@ public class BaseCellsTable : SomeTable
         }
     }
 
-    public void AddElement()
+    public new void AddElement()
     {
         if (items == null)
         {
@@ -30,7 +30,7 @@ public class BaseCellsTable : SomeTable
         currentIndex = items.Count - 1;
     }
 
-    public void RemoveElement()
+    public new void RemoveElement()
     {
         if (currentIndex > 0)
         {
@@ -49,7 +49,7 @@ public class BaseCellsTable : SomeTable
         }
     }
 
-    public BaseCellsData GetNext()
+    public new BaseCellsData GetNext()
     {
         if (items.Count == 0)
         {
@@ -70,7 +70,7 @@ public class BaseCellsTable : SomeTable
         return currentItem;
     }
 
-    public BaseCellsData GetPrev()
+    public new BaseCellsData GetPrev()
     {
         if (currentIndex == 0)
         {
@@ -91,13 +91,13 @@ public class BaseCellsTable : SomeTable
         }
     }
 
-    public void ClearAll()
+    public new void ClearAll()
     {
         items.Clear();
         currentIndex = 0;
     }
 
-    public BaseCellsData this[int index]
+    public new BaseCellsData this[int index]
     {
         get
         {

@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "player build table", fileName = "player builds")]
 public class PlayerBuildsTable : SomeTable
 {
-    public List<BuildData> items;
-    public BuildData currentItem;
+    public new List<BuildData> items;
+    public new BuildData currentItem;
 
     public new List<BuildData> Items { get { return items; } set { } }
 
@@ -18,7 +18,7 @@ public class PlayerBuildsTable : SomeTable
         }
     }
 
-    public void AddElement()
+    public new void AddElement()
     {
         if (items == null)
         {
@@ -30,7 +30,7 @@ public class PlayerBuildsTable : SomeTable
         currentIndex = items.Count - 1;
     }
 
-    public void RemoveElement()
+    public new void RemoveElement()
     {
         if (currentIndex > 0)
         {
@@ -49,7 +49,7 @@ public class PlayerBuildsTable : SomeTable
         }
     }
 
-    public BuildData GetNext()
+    public new BuildData GetNext()
     {
         if (items.Count == 0)
         {
@@ -70,7 +70,7 @@ public class PlayerBuildsTable : SomeTable
         return currentItem;
     }
 
-    public BuildData GetPrev()
+    public new BuildData GetPrev()
     {
         if (currentIndex == 0)
         {
@@ -91,13 +91,13 @@ public class PlayerBuildsTable : SomeTable
         }
     }
 
-    public void ClearAll()
+    public new void ClearAll()
     {
         items.Clear();
         currentIndex = 0;
     }
 
-    public BuildData this[int index]
+    public new BuildData this[int index]
     {
         get
         {

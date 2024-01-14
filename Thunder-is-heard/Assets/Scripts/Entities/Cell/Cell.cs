@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Cell : Interactable
 {
-	public override string entityType {
+	public override string EntityType {
 	get
         {
             return "Cell";
@@ -25,8 +25,8 @@ public class Cell : Interactable
         Free();
 
         _meshRenderer = gameObject.GetComponent<MeshRenderer>();
-        basicMaterial = Resources.Load(Config.resources["materials"] + entityType + "/Basic", typeof(Material)) as Material;
-        selectMaterial = Resources.Load(Config.resources["materials"] + entityType + "/Select", typeof(Material)) as Material;
+        basicMaterial = Resources.Load(Config.resources["materials"] + EntityType + "/Basic", typeof(Material)) as Material;
+        selectMaterial = Resources.Load(Config.resources["materials"] + EntityType + "/Select", typeof(Material)) as Material;
         
         
         position = new Vector2Int((int)transform.position.x, (int)transform.position.z);

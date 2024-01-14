@@ -6,7 +6,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(menuName = "Table", fileName = "table")]
 public class Table<T>:ScriptableObject where T : TableItem, new()
 {
-    public virtual string name { get; set; }
+    public new virtual string name { get; set; }
 
     public List<T> items;
     public T currentItem;

@@ -2,11 +2,10 @@ using TMPro;
 
 public abstract class Item : UIElement
 {
-    
     public TMP_Text TmpText;
     public TMP_Text TmpCount;
     
-    public string entityType {
+    public virtual string EntityType {
         get
         {
             return "Item";
@@ -19,7 +18,7 @@ public abstract class Item : UIElement
     public string objectType;
 
 
-    public void Awake()
+    public virtual void Awake()
     {
         TmpText = transform.Find("Text").GetComponent<TMP_Text>();
         TmpCount = transform.Find("Count").GetComponent<TMP_Text>();

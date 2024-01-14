@@ -5,8 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "missions table", fileName = "missions")]
 public class MissionsTable : SomeTable
 {
-    public List<MissionData> items;
-    public MissionData currentItem;
+    public new List<MissionData> items;
+    public new MissionData currentItem;
 
     public new List<MissionData> Items { get { return items; } set { } }
 
@@ -18,7 +18,7 @@ public class MissionsTable : SomeTable
         }
     }
 
-    public void AddElement()
+    public new void AddElement()
     {
         if (items == null)
         {
@@ -30,7 +30,7 @@ public class MissionsTable : SomeTable
         currentIndex = items.Count - 1;
     }
 
-    public void RemoveElement()
+    public new void RemoveElement()
     {
         if (currentIndex > 0)
         {
@@ -49,7 +49,7 @@ public class MissionsTable : SomeTable
         }
     }
 
-    public MissionData GetNext()
+    public new MissionData GetNext()
     {
         if (items.Count == 0)
         {
@@ -70,7 +70,7 @@ public class MissionsTable : SomeTable
         return currentItem;
     }
 
-    public MissionData GetPrev()
+    public new MissionData GetPrev()
     {
         if (currentIndex == 0)
         {
@@ -91,13 +91,13 @@ public class MissionsTable : SomeTable
         }
     }
 
-    public void ClearAll()
+    public new void ClearAll()
     {
         items.Clear();
         currentIndex = 0;
     }
 
-    public MissionData this[int index]
+    public new MissionData this[int index]
     {
         get
         {

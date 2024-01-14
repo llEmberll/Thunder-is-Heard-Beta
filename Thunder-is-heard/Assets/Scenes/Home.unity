@@ -4406,6 +4406,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1756337350}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1805289220 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 786246370255976102, guid: 2dd3268bf9b064698a8d990b5f5f2550, type: 3}
+  m_PrefabInstance: {fileID: 8926172165490815837}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1810863309
 GameObject:
   m_ObjectHideFlags: 0
@@ -5275,6 +5286,26 @@ PrefabInstance:
     - target: {fileID: 221325437308694055, guid: 2dd3268bf9b064698a8d990b5f5f2550, type: 3}
       propertyPath: m_Name
       value: Mission
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837683675209582447, guid: 2dd3268bf9b064698a8d990b5f5f2550, type: 3}
+      propertyPath: TmpText
+      value: 
+      objectReference: {fileID: 1805289220}
+    - target: {fileID: 1837683675209582447, guid: 2dd3268bf9b064698a8d990b5f5f2550, type: 3}
+      propertyPath: objectName
+      value: "\u0412\u0441\u0442\u0443\u043F\u043B\u0435\u043D\u0438\u0435"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837683675209582447, guid: 2dd3268bf9b064698a8d990b5f5f2550, type: 3}
+      propertyPath: objectType
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6314159270818547317, guid: 2dd3268bf9b064698a8d990b5f5f2550, type: 3}
+      propertyPath: m_Name
+      value: Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 6534414080040319226, guid: 2dd3268bf9b064698a8d990b5f5f2550, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Interact
       objectReference: {fileID: 0}
     - target: {fileID: 8321051684967777422, guid: 2dd3268bf9b064698a8d990b5f5f2550, type: 3}
       propertyPath: m_Pivot.x

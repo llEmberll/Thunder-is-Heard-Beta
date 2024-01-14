@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public abstract class Interactable: MonoBehaviour
 {
-    public abstract string entityType { get; }
+    public abstract string EntityType { get; }
 
     public abstract void OnChangeState(State newState);
 

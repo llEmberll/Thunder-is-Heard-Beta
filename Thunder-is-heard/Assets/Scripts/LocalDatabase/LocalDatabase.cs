@@ -35,7 +35,8 @@ public class LocalDatabase : ScriptableObject
                 "Unit" => ((UnitsTable)table).Items[tableItemIndex].GetFields(),
                 "PlayerUnit" => ((UnitsTable)table).Items[tableItemIndex].GetFields(),
                 "PlayerCell" => ((BaseCellsTable)table).Items[tableItemIndex].GetFields(),
-                "PlayerResource" => ((PlayerResourcesTable)table).Items[tableItemIndex].GetFields()
+                "PlayerResource" => ((PlayerResourcesTable)table).Items[tableItemIndex].GetFields(),
+                _ => throw new System.NotImplementedException()
             };
         }
         catch 

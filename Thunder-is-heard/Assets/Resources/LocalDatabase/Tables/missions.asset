@@ -30,4 +30,7 @@ MonoBehaviour:
       maxStaff: 0
       exp: 0
       maxExp: 0
-    scenaio: {fileID: 0}
+    map: 
+    terrain: 
+    stages: []
+    landableCells: []

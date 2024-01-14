@@ -12,6 +12,7 @@ TagManager:
   - BuildingPanel
   - Preview
   - Model
+  - FightProcessor
   layers:
   - Default
   - TransparentFX

@@ -7,8 +7,8 @@ using UnityEngine;
 [System.Serializable]
 public class UnitsTable : SomeTable
 {
-    public List<UnitData> items;
-    public UnitData currentItem;
+    public new List<UnitData> items;
+    public new UnitData currentItem;
 
     public new List<UnitData> Items { get { return items; } set { } }
 
@@ -20,7 +20,7 @@ public class UnitsTable : SomeTable
         }
     }
 
-    public void AddElement()
+    public new void AddElement()
     {
         if (items == null)
         {
@@ -32,7 +32,7 @@ public class UnitsTable : SomeTable
         currentIndex = items.Count - 1;
     }
 
-    public void RemoveElement()
+    public new void RemoveElement()
     {
         if (currentIndex > 0)
         {
@@ -51,7 +51,7 @@ public class UnitsTable : SomeTable
         }
     }
 
-    public UnitData GetNext()
+    public new UnitData GetNext()
     {
         if (items.Count == 0)
         {
@@ -72,7 +72,7 @@ public class UnitsTable : SomeTable
         return currentItem;
     }
 
-    public UnitData GetPrev()
+    public new UnitData GetPrev()
     {
         if (currentIndex == 0)
         {
@@ -93,13 +93,13 @@ public class UnitsTable : SomeTable
         }
     }
 
-    public void ClearAll()
+    public new void ClearAll()
     {
         items.Clear();
         currentIndex = 0;
     }
 
-    public UnitData this[int index]
+    public new UnitData this[int index]
     {
         get
         {

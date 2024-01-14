@@ -29,11 +29,43 @@ public class MissionData : SomeTableItem
         set { }
     }
 
-    [Tooltip("Сценарий")]
-    [SerializeField] public Scenario scenaio;
-    public Scenario Scenario
+    [Tooltip("Карта(путь)")]
+    [SerializeField] public string map;
+    public string Map
     {
-        get { return scenaio; }
+        get { return map; }
+        set { }
+    }
+
+    [Tooltip("Местность(путь)")]
+    [SerializeField] public string terrain;
+    public string Terrain
+    {
+        get { return terrain; }
+        set { }
+    }
+
+    [Tooltip("Игровые объекты(позиция и путь)")]
+    [SerializeField] public Dictionary<Vector2Int, string> objects;
+    public Dictionary<Vector2Int, string> Objects
+    {
+        get { return objects; }
+        set { }
+    }
+
+    [Tooltip("Этапы(имена)")]
+    [SerializeField] public List<string> stages;
+    public List<string> Stages
+    {
+        get { return stages; }
+        set { }
+    }
+
+    [Tooltip("Координаты для расстановки войск")]
+    [SerializeField] public List<Vector2Int> landableCells;
+    public List<Vector2Int> LandableCells
+    {
+        get { return landableCells; }
         set { }
     }
 
@@ -43,7 +75,11 @@ public class MissionData : SomeTableItem
         {
             { "name", name },
             { "icon", icon },
-            { "scenario", scenaio }
+            { "map", map },
+            { "terrain", terrain },
+            { "objects", objects },
+            { "stages", stages },
+            { "landableCells", landableCells }
         };
     }
 }

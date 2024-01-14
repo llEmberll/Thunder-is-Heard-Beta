@@ -50,6 +50,18 @@ public class EventMaster: MonoBehaviour
         FightIsStarted?.Invoke();
     }
 
+    public event Action FightLost;
+    public void LoseFigth()
+    {
+        FightLost?.Invoke();
+    }
+
+    public event Action FightWon;
+    public void WinFight()
+    {
+        FightWon?.Invoke();
+    }
+
     public event Action<int, string> ObjectExposed;
     public void ExposeObject(int objId, string objType)
     {

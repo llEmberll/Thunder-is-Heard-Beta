@@ -26,4 +26,11 @@ public static class Config
         { "prefabPreview", "Prefabs/Custom/Preview" },
         { "emptyPrefab", "Prefabs/Entity/Basic/Empty" },
     };
+
+    public static Dictionary<string, string> tags = new Dictionary<string, string>
+    {
+        {"federation", "Federation" },
+        {"empire", "Empire" },
+        {"mission", "Mission" }
+    };
 }

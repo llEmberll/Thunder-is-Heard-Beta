@@ -9,10 +9,21 @@ public class Map : MonoBehaviour
 
 	public virtual void Awake()
 	{
-		FindCentralCell();
+        LoadCells();
+        FindCentralCell();
 	}
 
-	public void FindCentralCell()
+    public void LoadCells()
+    {
+        foreach (Transform child in transform)
+        {
+            Cell cell = child.GetComponent<Cell>();
+            Vector2Int cellPosition = new Vector2Int((int)child.transform.position.x, (int)child.transform.position.z);
+            cells.Add(cellPosition, cell);
+        }
+    }
+
+    public void FindCentralCell()
 	{
 		int cellsCount = cells.Count;
 		int mapSize = (int)Mathf.Sqrt(cellsCount);
