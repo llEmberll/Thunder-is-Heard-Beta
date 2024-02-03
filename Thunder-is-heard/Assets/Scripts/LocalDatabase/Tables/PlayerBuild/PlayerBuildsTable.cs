@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "player build table", fileName = "player builds")]
 public class PlayerBuildsTable : SomeTable
 {
-    public new List<BuildData> items;
+     public new List<BuildData> items;
     public new BuildData currentItem;
 
     public new List<BuildData> Items { get { return items; } set { } }
@@ -24,8 +24,14 @@ public class PlayerBuildsTable : SomeTable
         {
             items = new List<BuildData>();
         }
+        
+        if (currentItem == null)
+        {
+            currentItem = new BuildData();
+        }
 
-        currentItem = new BuildData();
+        currentItem = (BuildData)currentItem.Clone();
+        
         items.Add(currentItem);
         currentIndex = items.Count - 1;
     }
@@ -123,5 +129,10 @@ public class PlayerBuildsTable : SomeTable
                 Debug.Log("Выход за границы массива или передано нулевое значение");
             }
         }
+    }
+
+    public override ITableItem DefaultItem()
+    {
+        return new BuildData();
     }
 }

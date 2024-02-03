@@ -21,5 +21,12 @@ public class PlayerResourceData : SomeTableItem
             { "resources", resources }
         };
     }
+
+    public override ITableItem Clone()
+    {
+        PlayerResourceData clone = new PlayerResourceData();
+        clone.resources = resources.Clone();
+        return clone;
+    }
 }
 

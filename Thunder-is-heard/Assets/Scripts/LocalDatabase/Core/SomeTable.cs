@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Table", fileName = "table")]
-public class SomeTable : ScriptableObject, ITable
+public abstract class SomeTable : ScriptableObject, ITable
 {
-    public List<SomeTableItem> items = new List<SomeTableItem>();
-    public SomeTableItem currentItem;
+    public List<ITableItem> items = new List<ITableItem>();
+    public ITableItem currentItem;
 
     public int currentIndex = 0;
 
     public virtual string Name { get { return "Undefined"; } set { } }
 
-    public virtual List<SomeTableItem> Items { get { return items; } set { } }
+    public virtual List<ITableItem> Items { get { return items; } set { } }
 
-    public void AddElement()
+    public virtual void AddElement()
     {
         if (items == null)
         {
@@ -25,7 +25,7 @@ public class SomeTable : ScriptableObject, ITable
         items.Add(currentItem);
         currentIndex = items.Count - 1;
     }
-    public void RemoveElement()
+    public virtual void RemoveElement()
     {
         if (currentIndex > 0)
         {
@@ -44,7 +44,7 @@ public class SomeTable : ScriptableObject, ITable
         }
     }
 
-    public void GetNext()
+    public virtual void GetNext()
     {
         if (items.Count == 0)
         {
@@ -65,7 +65,7 @@ public class SomeTable : ScriptableObject, ITable
         return;
     }
 
-    public void GetPrev()
+    public virtual void GetPrev()
     {
         if (currentIndex == 0)
         {
@@ -87,13 +87,13 @@ public class SomeTable : ScriptableObject, ITable
         }
     }
 
-    public void ClearAll()
+    public virtual void ClearAll()
     {
         items.Clear();
         currentIndex = 0;
     }
 
-    public SomeTableItem this[int index]
+    public virtual ITableItem this[int index]
     {
         get
         {
@@ -123,11 +123,8 @@ public class SomeTable : ScriptableObject, ITable
 
     public virtual void DefaultItemList()
     {
-        items = new List<SomeTableItem>();
+        items = new List<ITableItem>();
     }
 
-    public virtual SomeTableItem DefaultItem()
-    {
-        return new SomeTableItem();
-    }
+    public abstract ITableItem DefaultItem();
 }

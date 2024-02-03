@@ -62,10 +62,10 @@ public class EventMaster: MonoBehaviour
         FightWon?.Invoke();
     }
 
-    public event Action<int, string> ObjectExposed;
-    public void ExposeObject(int objId, string objType)
+    public event Action<int, string, Vector2Int[], int> ObjectExposed;
+    public void ExposeObject(int objId, string objType, Vector2Int[] occypaton, int rotation)
     {
-        ObjectExposed?.Invoke(objId, objType);
+        ObjectExposed?.Invoke(objId, objType, occypaton, rotation);
     }
 
 }

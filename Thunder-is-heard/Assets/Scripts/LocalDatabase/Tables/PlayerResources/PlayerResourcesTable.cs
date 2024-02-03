@@ -25,7 +25,13 @@ public class PlayerResourcesTable : SomeTable
             items = new List<PlayerResourceData>();
         }
 
-        currentItem = new PlayerResourceData();
+        if (currentItem == null)
+        {
+            currentItem = new PlayerResourceData();
+        }
+
+        currentItem = (PlayerResourceData)currentItem.Clone();
+
         items.Add(currentItem);
         currentIndex = items.Count - 1;
     }
@@ -123,5 +129,10 @@ public class PlayerResourcesTable : SomeTable
                 Debug.Log("Выход за границы массива или передано нулевое значение");
             }
         }
+    }
+
+    public override ITableItem DefaultItem()
+    {
+        return new PlayerResourceData();
     }
 }

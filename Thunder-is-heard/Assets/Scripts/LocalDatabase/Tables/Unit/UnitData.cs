@@ -1,10 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Org.BouncyCastle.Utilities;
 
 
 [System.Serializable]
 public class UnitData : SomeTableItem
 {
+    [Tooltip("externalId")]
+    [SerializeField] public int externalId;
+    public int ExternalId
+    {
+        get { return externalId; }
+        set { }
+    }
+
     [Tooltip("»м€")]
     [SerializeField] public string name;
     public string Name
@@ -21,11 +30,11 @@ public class UnitData : SomeTableItem
         set { }
     }
 
-    [Tooltip("»конка")]
-    [SerializeField] public Sprite icon;
-    public Sprite Icon
+    [Tooltip("ѕуть до иконки")]
+    [SerializeField] public string iconPath;
+    public string IconPath
     {
-        get { return icon; }
+        get { return iconPath; }
         set { }
     }
 
@@ -115,9 +124,11 @@ public class UnitData : SomeTableItem
     {
         return new Dictionary<string, object>
         {
+            { "externalId", externalId },
             { "name", name },
             { "modelPath", modelPath },
-            { "icon", icon },
+            { "iconPath", iconPath },
+            { "cost", cost },
             { "weight", weight },
             { "health", health },
             { "damage", damage },
@@ -127,5 +138,26 @@ public class UnitData : SomeTableItem
             { "position", position },
             { "rotation", rotation }
         };
+    }
+
+    public override ITableItem Clone()
+    {
+        UnitData clone = new UnitData();
+        clone.externalId = externalId;
+        clone.name = name;
+        clone.modelPath = modelPath;
+        clone.iconPath = iconPath;
+        clone.weight = weight;
+        clone.cost = cost.Clone();
+        clone.buildTime = buildTime;
+        clone.health = health;
+        clone.damage = damage;
+        clone.speed = speed;
+        clone.distance = distance;
+        clone.skill = skill;
+        clone.position = new Vector2Int(position.x, position.y);
+
+        clone.rotation = rotation;
+        return clone;
     }
 }

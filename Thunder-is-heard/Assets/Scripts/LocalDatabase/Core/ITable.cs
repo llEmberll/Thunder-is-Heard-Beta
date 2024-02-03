@@ -4,7 +4,7 @@ public interface ITable
 {
     public abstract string Name { get; set; }
 
-    public abstract List<SomeTableItem> Items { get; set; }
+    public abstract List<ITableItem> Items { get; set; }
 
     public void AddElement();
     public void RemoveElement();
@@ -15,9 +15,9 @@ public interface ITable
 
     public void ClearAll();
 
-    public SomeTableItem this[int index] { get; set; }
+    public ITableItem this[int index] { get; set; }
 
     public void DefaultItemList();
 
-    public SomeTableItem DefaultItem();
+    public ITableItem DefaultItem();
 }

@@ -32,35 +32,23 @@ public class ObjectPreview: MonoBehaviour
     {
         map = GameObject.FindWithTag("Map").GetComponent<Map>();
 
-        EventMaster.current.ToggledOffBuildMode += Cancel;
+        EventMaster.current.ToggledOffBuildMode += OnExitBuildMode;
         EventMaster.current.PreviewRotated += Rotate;
     }
 
-    public void Init(int id, string type)
+    public void Init(Dictionary<string, object> data, string type, int id)
     {
+        SetObjData(data);
         SetObjectIdAndType(id, type);
-        SetObjData();
+        
         SetObjSize();
 
         InitModel();
     }
 
-    public void SetObjData()
+    public void SetObjData(Dictionary<string, object> data)
     {
-        ITable objsTable = LocalDatabase.GetTableByName(objectType);
-        if (objsTable == null)
-        {
-            Debug.Log("Undefined table by item type: " + objectType);
-            Cancel();
-            return;
-        }
-
-        objData = LocalDatabase.GetFieldsByTableAndTableItemIndex(objsTable, objectId);
-        if (objData == null) 
-        {
-            Cancel();
-            return;
-        }
+        objData = data;
     }
 
     public void SetObjectIdAndType(int id, string type)
@@ -167,7 +155,7 @@ public class ObjectPreview: MonoBehaviour
     
     public void Move(Vector2Int newRoot)
     {
-       bool success = UpdateOccypation(newRoot);
+       UpdateOccypation(newRoot);
 
         rootPoint = newRoot;
         transform.position = new Vector3(newRoot.x, 0, newRoot.y);
@@ -185,11 +173,29 @@ public class ObjectPreview: MonoBehaviour
 
         Transform entity = createObject();
 
-        prepareModelToExposing(entity);
+        Transform exposedBody = prepareModelToExposing(entity);
 
-        EventMaster.current.ExposeObject(objectId, objectType);
+        EventMaster.current.ExposeObject(objectId, objectType, GetOccypationPositions(), rotation);
 
-        Cancel();
+        AfterExpose(exposedBody);
+    }
+
+    public Vector2Int[] GetOccypationPositions()
+    {
+        Vector2Int[] positions = new Vector2Int[occypation.Count];
+        foreach (Cell cell in occypation)
+        {
+            positions[occypation.IndexOf(cell)] = cell.position;
+        }
+
+        return positions;
+    }
+
+    public void AfterExpose(Transform exposedBody)
+    {
+        InitModel();
+        body.transform.position = exposedBody.transform.position;
+        body.transform.rotation = exposedBody.transform.rotation;
     }
 
     public Transform createObject()
@@ -217,14 +223,18 @@ public class ObjectPreview: MonoBehaviour
 
     public void Cancel()
     {
-        UnsubscribeAll();
         EventMaster.current.OnExitBuildMode();
+    }
+
+    public void OnExitBuildMode()
+    {
+        UnsubscribeAll();
         Destroy(this.gameObject);
     }
 
     public void UnsubscribeAll()
     {
-        EventMaster.current.ToggledOffBuildMode -= Cancel;
+        EventMaster.current.ToggledOffBuildMode -= OnExitBuildMode;
         EventMaster.current.PreviewRotated -= Rotate;
     }
 }

@@ -13,6 +13,10 @@ TagManager:
   - Preview
   - Model
   - FightProcessor
+  - LandingPanel
+  - ObjectsOnScene
+  - BuildsOnScene
+  - UnitsOnScene
   layers:
   - Default
   - TransparentFX

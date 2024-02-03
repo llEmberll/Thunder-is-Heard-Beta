@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -81,5 +82,36 @@ public class MissionData : SomeTableItem
             { "stages", stages },
             { "landableCells", landableCells }
         };
+    }
+
+    public override ITableItem Clone()
+    {
+        MissionData clone = new MissionData();
+        clone.name = name;
+        clone.icon = icon;
+        clone.map = map;
+        clone.terrain = terrain;
+
+        Dictionary<Vector2Int, string> cloneObjects = new Dictionary<Vector2Int, string>();
+        foreach (var obj in objects)
+        {
+            cloneObjects.Add(new Vector2Int(obj.Key.x, obj.Key.y), obj.Value);
+        }
+        clone.objects = cloneObjects;
+
+        List<string> cloneStages = new List<string>();
+        foreach (var stage in stages)
+        {
+            cloneStages.Add(stage);
+        }
+        clone.stages = cloneStages;
+
+        List<Vector2Int> cloneLandableCells = new List<Vector2Int>();
+        foreach(var cell in landableCells)
+        {
+            cloneLandableCells.Add(new Vector2Int(cell.x, cell.y));
+        }
+
+        return clone;
     }
 }

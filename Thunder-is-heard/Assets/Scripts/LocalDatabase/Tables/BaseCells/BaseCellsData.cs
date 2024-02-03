@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -20,6 +21,13 @@ public class BaseCellsData : SomeTableItem
         {
             { "position", position },
         };
+    }
+
+    public override ITableItem Clone()
+    {
+        BaseCellsData clone = new BaseCellsData();
+        clone.position = new Vector2Int(position.x, position.y);
+        return clone;
     }
 }
 

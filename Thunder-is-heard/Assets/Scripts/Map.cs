@@ -5,6 +5,8 @@ using UnityEngine;
 public class Map : MonoBehaviour
 {
     public Dictionary<Vector2Int, Cell> cells = new Dictionary<Vector2Int, Cell>();
+    public Dictionary<Vector2Int, Cell> Cells {  get { return cells; } }
+
     public Cell centralCell;
 
 	public virtual void Awake()
@@ -30,4 +32,19 @@ public class Map : MonoBehaviour
 		int offset = cellsCount % 2 == 0 ? 0 : -1;
 		centralCell = cells[new Vector2Int(mapSize / 2 + offset, mapSize / 2 + offset)];
 	}
+
+    public Dictionary<Vector2Int, Cell> FindCellsByPosition(List<Vector2Int> positions)
+    {
+        Dictionary<Vector2Int, Cell> finded = new Dictionary<Vector2Int, Cell> ();
+
+        foreach (Vector2Int position in positions)
+        {
+            if (Cells.ContainsKey(position))
+            {
+                finded.Add(position, cells[position]);
+            }
+        }
+
+        return finded;
+    }
 }

@@ -27,7 +27,13 @@ public class PlayerUnitsTable : SomeTable
             items = new List<UnitData>();
         }
 
-        currentItem = new UnitData();
+        if (currentItem == null)
+        {
+            currentItem = new UnitData();
+        }
+
+        currentItem = (UnitData)currentItem.Clone();
+
         items.Add(currentItem);
         currentIndex = items.Count - 1;
     }
@@ -125,5 +131,10 @@ public class PlayerUnitsTable : SomeTable
                 Debug.Log("Выход за границы массива или передано нулевое значение");
             }
         }
+    }
+
+    public override ITableItem DefaultItem()
+    {
+        return new UnitData();
     }
 }

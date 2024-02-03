@@ -25,7 +25,13 @@ public class BaseCellsTable : SomeTable
             items = new List<BaseCellsData>();
         }
 
-        currentItem = new BaseCellsData();
+        if (currentItem == null)
+        {
+            currentItem = new BaseCellsData();
+        }
+
+        currentItem = (BaseCellsData)currentItem.Clone();
+
         items.Add(currentItem);
         currentIndex = items.Count - 1;
     }
@@ -140,5 +146,10 @@ public class BaseCellsTable : SomeTable
                 this.items.Add(data);
             }
         }
+    }
+
+    public override ITableItem DefaultItem()
+    {
+        return new BaseCellsData();
     }
 }

@@ -21,10 +21,13 @@ public static class Config
     {
         {"materials", "Materials/" },
         {"materialPreview", "Materials/Preview/" },
+        {"defaultCellMaterial", "Materials/Cell/Basic" },
+        {"landableCellMaterial", "Materials/Cell/Landable" },
         { "prefabs", "Prefabs/" },
         { "entityPrefabs", "Prefabs/Entity/" },
         { "prefabPreview", "Prefabs/Custom/Preview" },
         { "emptyPrefab", "Prefabs/Entity/Basic/Empty" },
+        { "landableUnitItem", "Prefabs/UI/GeneratedItems/UnitForLanding/LandableUnitItem" },
     };
 
     public static Dictionary<string, string> tags = new Dictionary<string, string>

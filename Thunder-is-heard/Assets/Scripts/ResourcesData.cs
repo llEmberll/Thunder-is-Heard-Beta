@@ -88,4 +88,22 @@ public class ResourcesData
         get { return maxExp; }
         set { }
     }
+
+    public ResourcesData Clone()
+    {
+        ResourcesData clone = new ResourcesData();
+        clone.exp = exp;
+        clone.rub = rub;
+        clone.oil = oil;
+        clone.frames = frames;
+        clone.steel = steel;
+        clone.staff = staff;
+        clone.maxExp = maxExp;
+        clone.maxFrames = maxFrames;
+        clone.maxOil = maxOil;
+        clone.maxSteel = maxSteel;
+        clone.maxStaff = maxStaff;
+        clone.maxRub = maxRub;
+        return clone;
+    }
 }

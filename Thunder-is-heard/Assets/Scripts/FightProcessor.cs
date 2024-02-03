@@ -14,6 +14,8 @@ public class FightProcessor : MonoBehaviour
 
     public void Awake()
     {
+        EventMaster.current.FightIsStarted += StartFight;
+
         mission = GameObject.FindWithTag(Config.tags["mission"]).GetComponent<Mission>();
 
         ConstructScenario();
@@ -115,16 +117,14 @@ public class FightProcessor : MonoBehaviour
 
     public void Landing()
     {
-        //TODO glow landable cells
-        //TODO show help text
+        GlowLandableCells();
         //TODO open landing panel
         //TODO switch state for building
     }
 
     public void StartFight()
     {
-        //TODO hide landable cells
-        //TODO hide help text
+        TurnOffLandableCells();
         //TODO hide landing panel
         //TODO return to fight state
 
@@ -144,5 +144,27 @@ public class FightProcessor : MonoBehaviour
     public void Victory()
     {
         DisableListeners();
+    }
+
+    public void GlowLandableCells()
+    {
+        Dictionary<Vector2Int, Cell> landableCells = Scenario.Map.FindCellsByPosition(Scenario.LandableCells);
+
+        foreach(var item in landableCells)
+        {
+            MeshRenderer renderer = item.Value.gameObject.GetComponent<MeshRenderer>();
+            renderer.material = Resources.Load(Config.resources["landableCellMaterial"], typeof(Material)) as Material;
+        }
+    }
+
+    public void TurnOffLandableCells()
+    {
+        Dictionary<Vector2Int, Cell> landableCells = Scenario.Map.FindCellsByPosition(Scenario.LandableCells);
+
+        foreach (var item in landableCells)
+        {
+            MeshRenderer renderer = item.Value.gameObject.GetComponent<MeshRenderer>();
+            renderer.material = Resources.Load(Config.resources["defaultCellMaterial"], typeof(Material)) as Material;
+        }
     }
 }

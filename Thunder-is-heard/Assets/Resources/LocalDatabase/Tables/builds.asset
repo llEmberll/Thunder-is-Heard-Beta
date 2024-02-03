@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentIndex: 2
   items:
-  - name: Academy
+  - externalId: 0
+    name: Academy
     modelPath: Prefabs/Entity/Builds/Academy/Model
-    icon: {fileID: 0}
+    iconPath: 
     sizeByX: 4
     sizeByY: 2
     cost:
@@ -51,9 +52,10 @@ MonoBehaviour:
     distance: 0
     position: []
     rotation: 0
-  - name: Headbuild
+  - externalId: 1
+    name: Headbuild
     modelPath: Prefabs/Entity/Builds/Headbuild/Model
-    icon: {fileID: 0}
+    iconPath: 
     sizeByX: 3
     sizeByY: 2
     cost:
@@ -88,13 +90,14 @@ MonoBehaviour:
     distance: 0
     position: []
     rotation: 0
-  - name: Mine
+  - externalId: 2
+    name: Mine
     modelPath: Prefabs/Entity/Builds/Mine/Model
-    icon: {fileID: 0}
+    iconPath: 
     sizeByX: 2
     sizeByY: 2
     cost:
-      rub: 1000
+      rub: 0
       maxRub: 0
       frames: 0
       maxFrames: 0
@@ -126,13 +129,14 @@ MonoBehaviour:
     position: []
     rotation: 0
   currentItem:
+    externalId: 2
     name: Mine
     modelPath: Prefabs/Entity/Builds/Mine/Model
-    icon: {fileID: 0}
+    iconPath: 
     sizeByX: 2
     sizeByY: 2
     cost:
-      rub: 1000
+      rub: 0
       maxRub: 0
       frames: 0
       maxFrames: 0

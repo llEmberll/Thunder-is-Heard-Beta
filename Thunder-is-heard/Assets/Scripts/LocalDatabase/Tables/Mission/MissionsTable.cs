@@ -25,7 +25,13 @@ public class MissionsTable : SomeTable
             items = new List<MissionData>();
         }
 
-        currentItem = new MissionData();
+        if (currentItem == null)
+        {
+            currentItem = new MissionData();
+        }
+
+        currentItem = (MissionData)currentItem.Clone();
+
         items.Add(currentItem);
         currentIndex = items.Count - 1;
     }
@@ -123,5 +129,10 @@ public class MissionsTable : SomeTable
                 Debug.Log("Выход за границы массива или передано нулевое значение");
             }
         }
+    }
+
+    public override ITableItem DefaultItem()
+    {
+        return new MissionData();
     }
 }

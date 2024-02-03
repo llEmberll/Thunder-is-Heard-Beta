@@ -1,6 +1,8 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class UIElement : MonoBehaviour
+public class UIElement : MonoBehaviour, IPointerEnterHandler
 {
     public void Toggle()
     {
@@ -16,5 +18,9 @@ public class UIElement : MonoBehaviour
     public void Hide()
     {
         this.gameObject.SetActive(false);
+    }
+
+    public virtual void OnPointerEnter(PointerEventData data)
+    {
     }
 }
