@@ -29,8 +29,10 @@ public class FightProcessor : MonoBehaviour
 
     public void ConstructScenario()
     {
-        ITable missionsTable = LocalDatabase.GetTableByName(mission.objectType);
-        Dictionary<string, object> data = LocalDatabase.GetFieldsByTableAndTableItemIndex(missionsTable, mission.objectId);
+        //TODO Создать CacheTable и CacheItem под миссии, реализовать под CacheTable
+
+        ITable missionsTable = LocalDatabase.GetTableByName(mission.type);
+        Dictionary<string, object> data = LocalDatabase.GetFieldsByTableAndTableItemIndex(missionsTable, 0); //mission.id
 
         Map map = GetMapFromData(data);
         Sprite terrain = GetTerrainFromData(data);

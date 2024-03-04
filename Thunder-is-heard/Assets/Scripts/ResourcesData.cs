@@ -5,6 +5,23 @@ using UnityEngine;
 [System.Serializable]
 public class ResourcesData
 {
+    public ResourcesData(
+        int rubCount = 0, int maxRubCount = 0,
+        int framesCount = 0,  int maxFramesCount = 0,
+        int oilCount = 0, int maxOilCount = 0,
+        int steelCount = 0, int maxSteelCount = 0,
+        int staffCount = 0,  int maxStaffCount = 0,
+        int expCount = 0, int maxExpCount = 0
+        )
+    {
+        rub = rubCount; maxRub = maxRubCount;
+        frames = framesCount; maxFrames = maxFramesCount;
+        oil = oilCount; maxOil = maxOilCount;
+        steel = steelCount; maxSteel = maxSteelCount;
+        staff = staffCount; maxStaff = maxStaffCount;
+        exp = expCount; maxExp = maxExpCount;
+    }
+
     [SerializeField] public int rub;
     public int Rub
     {

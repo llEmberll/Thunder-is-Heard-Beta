@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Missions : ItemList
+public class Campany : ItemList
 {
     public List<Mission> source;
     public GameObject missionPrefab;

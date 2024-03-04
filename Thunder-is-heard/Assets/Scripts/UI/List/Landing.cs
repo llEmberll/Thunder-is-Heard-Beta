@@ -7,7 +7,7 @@ public class Landing : ItemList
 {
     public string itemType = "PlayerUnit";
 
-    public Dictionary<int, ExposedItem> items;
+    public Dictionary<string, UnitInventoryItem> items;
 
     public PlayerUnitsTable playerUnitsTable;
 
@@ -18,7 +18,7 @@ public class Landing : ItemList
         foreach (UnitData unitData in playerUnitsTable.Items)
         {
             Dictionary<string, object> unitFields = unitData.GetFields();
-            int id = (int)unitFields["externalId"];
+            string id = (string)unitFields["externalId"];
 
             if (IsItemExist(id))
             {
@@ -32,25 +32,27 @@ public class Landing : ItemList
         }
     }
 
-    private bool IsItemExist(int id)
+    private bool IsItemExist(string id)
     {
         return items.ContainsKey(id);
     }
 
-    private void IncrementCountOfItem(int itemId)
+    private void IncrementCountOfItem(string itemId)
     {
         items[itemId].Increment();
     }
 
-    private void CreateAndAddItem(int id, string name, string pathToIcon)
+    private void CreateAndAddItem(string id, string name, string pathToIcon)
     {
         Sprite icon = Resources.Load<Sprite>(pathToIcon);
 
         GameObject unitItemPrefab = Resources.Load<GameObject>(Config.resources["landableUnitItem"]);
         GameObject unitItemObj = Instantiate(unitItemPrefab, unitItemPrefab.transform.position, Quaternion.identity);
-        ExposedItem unitItem = unitItemObj.GetComponent<ExposedItem>();
-        unitItem.Init(id, name, itemType, icon);
+        //ExposedItem unitItem = unitItemObj.GetComponent<ExposedItem>();
+        //unitItem.Init(id, name, itemType, 1, icon);
 
-        items.Add(id, unitItem);
+        //TODO Создать префаб-карточку для LandableUnit по аналогии с InventoryItem,  Реализовать под LandableUnit (UI Item)
+
+        //items.Add(id, unitItem);
     }
 }

@@ -62,10 +62,21 @@ public class EventMaster: MonoBehaviour
         FightWon?.Invoke();
     }
 
-    public event Action<int, string, Vector2Int[], int> ObjectExposed;
-    public void ExposeObject(int objId, string objType, Vector2Int[] occypaton, int rotation)
+    public event Action<string, string, Bector2Int[], int> ObjectExposed;
+    public void ExposeObject(string objId, string objType, Bector2Int[] occypaton, int rotation)
     {
         ObjectExposed?.Invoke(objId, objType, occypaton, rotation);
     }
 
+    public event Action<ObjectPreview> PreviewCreated;
+    public void OnCreatePreview(ObjectPreview preview)
+    {
+        PreviewCreated?.Invoke(preview);
+    }
+
+    public event Action PreviewDeleted;
+    public void OnDeletePreview()
+    {
+        PreviewDeleted?.Invoke();
+    }
 }

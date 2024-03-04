@@ -11,31 +11,40 @@ public class BuildsOnBase : ItemList, IObjectsOnScene
         base.Start();
     }
 
+    public override void OnBuildModeEnable()
+    {
+    }
+
     public override void FillContent()
     {
         base.FillContent();
 
-        PlayerBuildsTable playerBuildsTable = (PlayerBuildsTable)LocalDatabase.GetTableByName("PlayerBuild");
-        foreach (var item in playerBuildsTable.Items)
+        PlayerBuildCacheTable playerBuildsTable = Cache.LoadByType<PlayerBuildCacheTable>();
+        foreach (var pair in playerBuildsTable.Items)
         {
-            MappingBuild(item.GetFields());
+            PlayerBuildCacheItem currentPlayerBuild = new PlayerBuildCacheItem(pair.Value.Fields);
+            MappingBuild(currentPlayerBuild);
         }
     }
 
-    private void MappingBuild(Dictionary<string, object> data)
+    private void MappingBuild(PlayerBuildCacheItem playerBuildData)
     {
-        string name = (string)data["name"];
-        string modelPath = (string)data["modelPath"];
-        Vector2Int[] position = (Vector2Int[])data["position"];
-        int rotation = (int)data["rotation"];
-        int sizeX = (int)data["sizeByX"];
-        int sizeY = (int)data["sizeByY"];
+        BuildCacheTable buildsTable = Cache.LoadByType<BuildCacheTable>();
+        CacheItem buildAsCacheItem = buildsTable.GetById(playerBuildData.GetCoreId());
+        BuildCacheItem coreBuildData = new BuildCacheItem(buildAsCacheItem.Fields);
+        string modelPath = coreBuildData.GetModelPath();
+        Bector2Int size = coreBuildData.GetSize();
+
+        string name = playerBuildData.GetName();
+        Bector2Int[] position = playerBuildData.GetPosition();
+        int rotation = playerBuildData.GetRotation();
+
 
         GameObject buildObj = CreateBuildObject(position, name, this.transform);
         GameObject buildModel = CreateBuildModel(modelPath, rotation, buildObj.transform);
 
         OccypyCells(position);
-        SetModelOffsetByRotation(buildModel.transform, sizeX, sizeY, rotation);
+        SetModelOffsetByRotation(buildModel.transform, size, rotation);
     }
 
     private GameObject CreateBuildModel(string modelPath, int rotation, Transform parent)
@@ -48,7 +57,7 @@ public class BuildsOnBase : ItemList, IObjectsOnScene
             );
     }
 
-    private GameObject CreateBuildObject(Vector2Int[] position, string name, Transform parent)
+    private GameObject CreateBuildObject(Bector2Int[] position, string name, Transform parent)
     {
         var buildPrefab = Resources.Load<GameObject>(Config.resources["emptyPrefab"]);
         GameObject obj = Instantiate(
@@ -61,26 +70,23 @@ public class BuildsOnBase : ItemList, IObjectsOnScene
         return obj;
     }
 
-    private void OccypyCells(Vector2Int[] position)
+    private void OccypyCells(Bector2Int[] position)
     {
-        foreach (Vector2Int pos in position)
+        foreach (Bector2Int pos in position)
         {
-            var cell = map.cells[pos];
+            var cell = map.cells[new Vector2Int(pos.x, pos.y)];
             cell.Occupy();
         }
     }
 
-    public void SetModelOffsetByRotation(Transform model, int sizeX, int sizeY, int rotation)
+    public void SetModelOffsetByRotation(Transform model, Bector2Int size, int rotation)
     {
         if (rotation == 0 || rotation == 360 || rotation == 180) return;
 
-        Vector2Int size = GetSwappedSize(sizeX, sizeY);
-        sizeX = size.x; sizeY = size.y;
-
-        float sizeDiff = ((float)sizeX - (float)sizeY) / 2;
+        Bector2Int swappedSizeB = new Bector2Int(GetSwappedSize(size.x, size.y));
+        float sizeDiff = ((float)swappedSizeB.x - (float)swappedSizeB.y) / 2;
 
         Vector3 offset = new Vector3(sizeDiff, 0, -1 * sizeDiff);
-
         model.position += offset;
     }
 

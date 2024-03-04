@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BuildingState : State
 {
+    public ObjectPreview preview = GameObject.FindWithTag("Preview").GetComponent<ObjectPreview>();
+
     public override string stateName
     {
         get {
@@ -10,9 +12,20 @@ public class BuildingState : State
         }
     }
     
+    public void OnCreatePreview(ObjectPreview createdPreview)
+    {
+        preview = createdPreview;
+    }
+
+    public void OnDeletePreview()
+    {
+        preview = null;
+    }
+
     public override void Enter()
     {
-
+        EventMaster.current.PreviewCreated += OnCreatePreview;
+        EventMaster.current.PreviewDeleted += OnDeletePreview;
     }
 
     public override void HandleInput()
@@ -27,12 +40,18 @@ public class BuildingState : State
 
     public override void Exit()
     {
-
+        EventMaster.current.PreviewCreated -= OnCreatePreview;
+        EventMaster.current.PreviewDeleted -= OnDeletePreview;
     }
 
     public override void OnBuildClick(Build build)
     {
-        
+        if (preview == null)
+        {
+            //TODO Create preview with model of build
+
+            //TODO Придумать как вернуть модель на место при отмене
+        }
     }
 
     public override void OnBuildMouseEnter(Build build)
@@ -63,14 +82,18 @@ public class BuildingState : State
 
     public override void OnCellClick(Cell cell)
     {
-        ObjectPreview preview = GameObject.FindWithTag("Preview").GetComponent<ObjectPreview>();
-        preview.Expose();
+        if (preview != null) 
+        {
+            preview.Expose();
+        }
     }
 
     public override void OnCellMouseEnter(Cell cell)
     {
-        ObjectPreview preview = GameObject.FindWithTag("Preview").GetComponent<ObjectPreview>();
-        preview.Move(cell.position);
+        if (preview != null) 
+        {
+            preview.Move(cell.position);
+        }
     }
 
     public override void OnCellMouseExit(Cell cell)

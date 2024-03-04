@@ -1,14 +1,15 @@
-using Org.BouncyCastle.Security;
 using TMPro;
 using UnityEngine;
 
 public abstract class Item : UIElement
 {
-    public Sprite objectIcon;
+    public Sprite icon;
 
-    public TMP_Text TmpText;
-    public TMP_Text TmpCount;
-    
+    public TMP_Text TmpName;
+
+    public string id;
+    public string objName = "";
+
     public virtual string EntityType {
         get
         {
@@ -16,18 +17,9 @@ public abstract class Item : UIElement
         }
     }
 
-    public int itemCount = 1;
-    public int objectId;
-    public string objectName = "";
-    public string objectType;
-
-
-    public void Init(int id, string name, string type, Sprite icon)
+    public virtual void Init(string itemId, string itemName, Sprite itemIcon = null)
     {
-        objectId = id;
-        objectName = name;
-        objectType = type;
-        objectIcon = icon;
+        id = itemId; objName = itemName; icon = itemIcon;
 
         UpdateUI();
     }
@@ -35,37 +27,12 @@ public abstract class Item : UIElement
 
     public virtual void Awake()
     {
-        TmpText = transform.Find("Text").GetComponent<TMP_Text>();
-        TmpCount = transform.Find("Count").GetComponent<TMP_Text>();
-
-        UpdateUI();
     }
 
     public abstract void Interact();
 
-    public void UpdateCount(int newCount)
+    public virtual void UpdateUI()
     {
-        itemCount = newCount;
-        TmpCount.text = newCount.ToString();
-        if (itemCount < 1)
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
-    public void UpdateUI()
-    {
-        TmpText.text = objectName;
-        TmpCount.text = itemCount.ToString();
-    }
-
-    public void Substract(int number = 1)
-    {
-        UpdateCount(itemCount - number);
-    }
-
-    public void Increment(int number = 1)
-    {
-        UpdateCount(itemCount + number);
+        TmpName.text = objName;
     }
 }

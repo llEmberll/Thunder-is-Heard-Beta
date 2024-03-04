@@ -4,13 +4,15 @@ using TMPro;
 
 public class Mission : Item
 {
+    public string type = "Mission";
+
     public override void Awake()
     {
-        objectType = "Mission";
+        type = "Mission";
 
-        TmpText = transform.Find("Text").GetComponent<TMP_Text>();
+        TmpName = transform.Find("Text").GetComponent<TMP_Text>();
 
-        TmpText.text = objectName;
+        TmpName.text = objName;
     }
 
     public override void Interact()

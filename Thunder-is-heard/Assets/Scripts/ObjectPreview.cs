@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class ObjectPreview: MonoBehaviour
 {
-    private Dictionary<string, object> objData;
-    private int objectId;
-    private string objectType;
+    private string id;
+    private string name;
+    private string type;
+    private string pathToModel;
 
     public Transform body;
     public MeshRenderer meshRenderer;
     public Material materialBasic, materialAvailable, materialUnvailable, materialModel;
-    public Vector2Int size;
+    public Bector2Int size;
 
     public bool exposableStatus;
     public List<Cell> occypation;
@@ -34,43 +35,23 @@ public class ObjectPreview: MonoBehaviour
 
         EventMaster.current.ToggledOffBuildMode += OnExitBuildMode;
         EventMaster.current.PreviewRotated += Rotate;
+
+        EventMaster.current.OnCreatePreview(this);
     }
 
-    public void Init(Dictionary<string, object> data, string type, int id)
+    public void Init(string objName, string objType, string objId, Bector2Int objSize, string objModelPath)
     {
-        SetObjData(data);
-        SetObjectIdAndType(id, type);
-        
-        SetObjSize();
-
+        name = objName;
+        id = objId;
+        type = objType;
+        size = objSize;
+        pathToModel = objModelPath;
         InitModel();
-    }
-
-    public void SetObjData(Dictionary<string, object> data)
-    {
-        objData = data;
-    }
-
-    public void SetObjectIdAndType(int id, string type)
-    {
-        objectId = id;
-        objectType = type;
-    }
-
-    public void SetObjSize()
-    {
-        size = new Vector2Int(1, 1);
-        if (objData.ContainsKey("sizeByX") && objData.ContainsKey("sizeByY"))
-        {
-            size = new Vector2Int((int)objData["sizeByX"], (int)objData["sizeByY"]);
-        }
     }
 
     public void InitModel()
     {
-        string modelPath = (string)objData["modelPath"];
-
-        GameObject modelPrefab = Resources.Load<GameObject>(modelPath);
+        GameObject modelPrefab = Resources.Load<GameObject>(pathToModel);
         body = Instantiate(modelPrefab, modelPrefab.transform.position, Quaternion.identity).transform;
         body.SetParent(transform);
 
@@ -175,17 +156,17 @@ public class ObjectPreview: MonoBehaviour
 
         Transform exposedBody = prepareModelToExposing(entity);
 
-        EventMaster.current.ExposeObject(objectId, objectType, GetOccypationPositions(), rotation);
+        EventMaster.current.ExposeObject(id, type, GetOccypationPositions(), rotation);
 
         AfterExpose(exposedBody);
     }
 
-    public Vector2Int[] GetOccypationPositions()
+    public Bector2Int[] GetOccypationPositions()
     {
-        Vector2Int[] positions = new Vector2Int[occypation.Count];
+        Bector2Int[] positions = new Bector2Int[occypation.Count];
         foreach (Cell cell in occypation)
         {
-            positions[occypation.IndexOf(cell)] = cell.position;
+            positions[occypation.IndexOf(cell)] = new Bector2Int(cell.position);
         }
 
         return positions;
@@ -200,9 +181,11 @@ public class ObjectPreview: MonoBehaviour
 
     public Transform createObject()
     {
+
+        GameObject parent = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]);
         GameObject prefab = Resources.Load<GameObject>(Config.resources["emptyPrefab"]);
-        var obj = Instantiate(prefab, new Vector3(rootPoint.x, 0, rootPoint.y), Quaternion.identity).transform;
-        obj.name = (string)objData["name"];
+        var obj = Instantiate(prefab, new Vector3(rootPoint.x, 0, rootPoint.y), Quaternion.identity, parent.transform).transform;
+        obj.name = name;
         return obj;
     }
 
@@ -229,6 +212,7 @@ public class ObjectPreview: MonoBehaviour
     public void OnExitBuildMode()
     {
         UnsubscribeAll();
+        EventMaster.current.OnDeletePreview();
         Destroy(this.gameObject);
     }
 
