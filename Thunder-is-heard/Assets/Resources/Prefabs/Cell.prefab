@@ -20,8 +20,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5981081554735264472
-Transform:
+--- !u!224 &5981081554735264472
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -33,8 +33,13 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!33 &4903582461220878131
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -118,5 +123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b33353c21e39657f92084e3a24aef3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneState: {fileID: 0}
   position: {x: 0, y: 0}
   occupied: 0
+  _meshRenderer: {fileID: 0}
+  basicMaterial: {fileID: 0}
+  selectMaterial: {fileID: 0}

@@ -2,17 +2,26 @@
 
 using UnityEngine;
 
-public class UnitsOnBase : ItemList, IObjectsOnScene
+public class UnitsOnBase : ObjectsOnBase
 {
-    public Map map;
-
-    public override void Start()
+    public override Entity FindObjectById(string id)
     {
-        map = GameObject.FindWithTag("Map").GetComponent<Map>();
-        base.Start();
+        throw new System.NotImplementedException();
     }
 
     public override void OnBuildModeEnable()
     {
+    }
+
+    public static void AddAndPrepareUnitComponent(GameObject unitObj, Transform model, string id, Vector2Int size, Vector2Int[] occypation)
+    {
+        Unit component = unitObj.AddComponent<Unit>();
+        component.id = id;
+        component.currentSize = size;
+    }
+
+    public static GameObject CreateUnitObject(Vector2Int position, string name, Transform parent)
+    {
+        return null;
     }
 }

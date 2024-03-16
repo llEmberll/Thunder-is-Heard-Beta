@@ -28,6 +28,8 @@ public class SceneState : MonoBehaviour
     
     public void OnBuildMode()
     {
+        Debug.Log("On build mode!");
+
         currentState = StateConfig.buildingState;
         
         EventMaster.current.OnChangeState(currentState);
@@ -35,6 +37,8 @@ public class SceneState : MonoBehaviour
 
     public void OnExitBuildMode()
     {
+        Debug.Log("On Exit build mode!");
+
         SetBaseState();
         
         EventMaster.current.OnChangeState(currentState);

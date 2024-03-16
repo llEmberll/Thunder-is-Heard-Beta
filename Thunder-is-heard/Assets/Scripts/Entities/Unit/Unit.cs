@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Unit : Entity, IMovable, IDamageable, IAttack, ITransfer
 {
-    public override string EntityType {
+    public override string Type {
 	get
         {
             return "Unit";
@@ -23,12 +23,6 @@ public class Unit : Entity, IMovable, IDamageable, IAttack, ITransfer
         
         //OnChangeStateEvent
         EventMaster.current.StateChanged += OnChangeState;
-    }
-
-    public override void UpdateoccypiedPoses()
-    {
-        center = new Vector2Int((int)transform.position.x, (int)transform.position.z);
-        occypiedPoses = new List<Vector2Int> { center };
     }
 
     public override void OnChangeState(State newState)
@@ -66,17 +60,17 @@ public class Unit : Entity, IMovable, IDamageable, IAttack, ITransfer
         Debug.Log("Unit replaced!");
     }
 
-    protected override void OnMouseEnter()
+    public override void OnFocus()
     {
         stateMachine.currentState.OnUnitMouseEnter(this);
     }
 
-    protected override void OnMouseExit()
+    public override void OnDefocus()
     {
         stateMachine.currentState.OnUnitMouseExit(this);
     }
 
-    protected override void OnMouseDown()
+    public override void OnClick()
     {
         stateMachine.currentState.OnUnitClick(this);
     }

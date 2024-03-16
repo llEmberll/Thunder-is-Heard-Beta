@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public bool isMovable = true;
+
     public float cameraHeight = 9f;
     public float focusOffset;
     
@@ -20,6 +22,8 @@ public class CameraController : MonoBehaviour
 	public float screenWidth;
     public float screenHeight;
 
+    public float minX, maxX, minZ, maxZ;
+
     public Map map;
 
     private void Start()
@@ -29,7 +33,9 @@ public class CameraController : MonoBehaviour
         mainCamera = Camera.main;
         map = GameObject.FindGameObjectWithTag("Map").GetComponent<Map>();
         FocusOnPoint(map.centralCell.position);
-        
+        FindMovementThreshold();
+
+
         targetPosition = transform.position;
         
 
@@ -41,8 +47,19 @@ public class CameraController : MonoBehaviour
     {
         transform.position = new Vector3(point.x - focusOffset , cameraHeight, point.y - focusOffset);
     }
+
+    public void FindMovementThreshold()
+    {
+        maxX = ((float)-2.5) / 5 * map.size.x;
+        minX = (float)-6 / 5 * map.size.x;
+        minZ = (float)-6 / 5 * map.size.y;
+        maxZ = (float)-2.5 / 5 * map.size.y;
+        //TODO рассчитать min и max координаты камеры в зависимости от размера игрового поля
+    }
+
     private void Update()
     {
+
         // Move camera based on cursor position
         Vector3 cursorPosition = Input.mousePosition;
         Vector3 movement = Vector3.zero;
@@ -83,6 +100,8 @@ public class CameraController : MonoBehaviour
         
         movement.Normalize();
         targetPosition += movement * movementSpeed * currentSpeed * mainCamera.orthographicSize * Time.deltaTime;
+        targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
+        targetPosition.z = Mathf.Clamp(targetPosition.z, minZ, maxZ);
         // Zoom camera with mouse wheel
         float zoomAmount = Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
         mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - zoomAmount, sizeLimit.x, sizeLimit.y);

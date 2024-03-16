@@ -63,13 +63,12 @@ public abstract class ExposableInventoryItem : InventoryItem
         }
 
         string modelPath = (string)needleItemData.GetField("modelPath");
-        Bector2Int size = GetSize(needleItemData);
+        Vector2Int size = GetSize(needleItemData).ToVector2Int();
+        GameObject modelPrefab = Resources.Load<GameObject>(modelPath);
+        Transform model = Instantiate(modelPrefab).transform;
 
-        Transform previewPrefab = Resources.Load(Config.resources["prefabPreview"], typeof(Transform)) as Transform;
-        var previewObject = Instantiate(previewPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-
-        ObjectPreview preview = previewObject.GetComponent<ObjectPreview>();
-        preview.Init(objName, Type, id, size, modelPath);
+        ObjectPreview preview = ObjectPreview.Create();
+        preview.Init(objName, Type, id, size, model);
     }
 
     public virtual Bector2Int GetSize(CacheItem item)

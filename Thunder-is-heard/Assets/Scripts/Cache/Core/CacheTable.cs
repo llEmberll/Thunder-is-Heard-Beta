@@ -10,6 +10,7 @@ using UnityEngine;
 public class CacheTable : ICacheTable
 {
     public Dictionary<string, CacheItem> items;
+    public string name;
 
     public CacheTable(List<CacheItem> cacheItems = null) 
     {
@@ -20,7 +21,7 @@ public class CacheTable : ICacheTable
     }
 
     [JsonIgnore]
-    public virtual string Name { get { return ""; } }
+    public virtual string Name { get { return name; } set { name = value; } }
     [JsonIgnore]
     public Dictionary<string, CacheItem> Items { get { return items; } }
 

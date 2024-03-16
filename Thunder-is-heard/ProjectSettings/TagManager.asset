@@ -18,6 +18,7 @@ TagManager:
   - BuildsOnScene
   - UnitsOnScene
   - InventoryItems
+  - ObjectsProcessor
   layers:
   - Default
   - TransparentFX

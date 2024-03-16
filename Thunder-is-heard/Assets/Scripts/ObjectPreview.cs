@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -7,17 +8,20 @@ public class ObjectPreview: MonoBehaviour
     private string id;
     private string name;
     private string type;
-    private string pathToModel;
+    private Transform model;
 
-    public Transform body;
+    public ObjectsOnBase objectsPool;
+
     public MeshRenderer meshRenderer;
     public Material materialBasic, materialAvailable, materialUnvailable, materialModel;
-    public Bector2Int size;
+    public Vector2Int size;
 
     public bool exposableStatus;
-    public List<Cell> occypation;
+    public List<Vector2Int> occypation;
 	public Vector2Int rootPoint;
     public int rotation = 0;
+
+    public GameObject buildedObjectOnScene = null;
 
     public Map map;
 
@@ -31,31 +35,49 @@ public class ObjectPreview: MonoBehaviour
 
     public void Start()
     {
-        map = GameObject.FindWithTag("Map").GetComponent<Map>();
-
         EventMaster.current.ToggledOffBuildMode += OnExitBuildMode;
         EventMaster.current.PreviewRotated += Rotate;
 
         EventMaster.current.OnCreatePreview(this);
     }
 
-    public void Init(string objName, string objType, string objId, Bector2Int objSize, string objModelPath)
+    public static ObjectPreview Create()
     {
+        Transform previewPrefab = Resources.Load(Config.resources["prefabPreview"], typeof(Transform)) as Transform;
+        var previewObject = Instantiate(previewPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+        ObjectPreview preview = previewObject.GetComponent<ObjectPreview>();
+        preview.map = GameObject.FindWithTag("Map").GetComponent<Map>();
+
+        return preview;
+    }
+
+    public void Init(string objName, string objType, string objId, Vector2Int objSize, Transform objModel)
+    {
+        rotation = (int)objModel.eulerAngles.y;
         name = objName;
         id = objId;
         type = objType;
         size = objSize;
-        pathToModel = objModelPath;
+        model = objModel;
         InitModel();
+
+        objectsPool = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]).GetComponent<ObjectsOnBase>();
     }
 
     public void InitModel()
     {
-        GameObject modelPrefab = Resources.Load<GameObject>(pathToModel);
-        body = Instantiate(modelPrefab, modelPrefab.transform.position, Quaternion.identity).transform;
-        body.SetParent(transform);
+        buildedObjectOnScene = null;
 
-        meshRenderer = body.GetComponent<MeshRenderer>();
+        if (model.parent != null) 
+        {
+            buildedObjectOnScene = model.parent.gameObject;
+            transform.position = model.parent.transform.position;
+        }
+        
+        model.SetParent(transform);
+
+        meshRenderer = model.GetComponent<MeshRenderer>();
         materialModel = meshRenderer.material;
         meshRenderer.material = materialBasic;
     }
@@ -65,80 +87,57 @@ public class ObjectPreview: MonoBehaviour
         rotation += 90;
         if (rotation == 360) rotation = 0;
 
-        RotateModel();
+        RotateModel(rotation);
 
         if (size.x == size.y)
         {
             return;
         }
 
-        SwapSize();
-        UpdateOccypation(rootPoint);
-        SetModelOffsetByRotation();
+        size = Entity.GetSwappedSize(size);
+        occypation = map.GetOccypationPositionForObj(rootPoint, size);
+        UpdateExposableStatus();
+        SetPositiveModelOffsetByRotation();
     }
 
-    public void RotateModel()
+    public void RotateModel(int newRotation)
     {
-        Vector3 currentRotate = body.transform.eulerAngles;
-        currentRotate.y = rotation;
-        body.transform.rotation = Quaternion.Euler(currentRotate);
+        Vector3 currentRotate = model.transform.eulerAngles;
+        model.transform.rotation = Quaternion.Euler(currentRotate.x, newRotation, currentRotate.z);
     }
-
-    public void SetModelOffsetByRotation()
+    
+    public Vector3 GetModelOffsetByRotation()
     {
        float sizeDiff = ((float)size.x - (float)size.y)/2;
-
-       Vector3 offset = new Vector3(sizeDiff, 0, -1 * sizeDiff);
-
-        body.transform.position += offset;
+       return new Vector3(sizeDiff, 0, -1 * sizeDiff);
     }
 
-    public void SwapSize()
+    public void SetPositiveModelOffsetByRotation()
     {
-        size.x = size.y + size.x;
-        size.y = size.x - size.y;
-        size.x -= size.y;
+        model.transform.position += GetModelOffsetByRotation();
     }
 
-    public bool UpdateOccypation(Vector2Int rootPoint)
+    public void SetNegativeModelOffsetByRotation()
     {
-        occypation = new List<Cell>();
+        model.transform.position -= GetModelOffsetByRotation();
+    }
 
-        int maxX = rootPoint.x + size.x;
-        int maxZ = rootPoint.y + size.y;
-
-        exposableStatus = true;
-
-        for (int currentX = rootPoint.x; currentX < maxX; currentX++)
+    public void UpdateExposableStatus()
+    {
+        List<Vector2Int> positionForCheckOnFree = occypation;
+        if (buildedObjectOnScene != null)
         {
-            for (int currentZ = rootPoint.y; currentZ < maxZ; currentZ++)
-            {
-                Vector2Int currentCellPosition = new Vector2Int(currentX, currentZ);
-                if (!map.cells.ContainsKey(currentCellPosition))
-                {
-                    exposableStatus = false;
-                    break;
-                }
-                Cell currentCell = map.cells[currentCellPosition];
-                if (currentCell.occupied)
-                {
-                    exposableStatus = false;
-                    break;
-                    
-                }
-                occypation.Add(map.cells[currentCellPosition]);
-            }
+            positionForCheckOnFree = occypation.Except(buildedObjectOnScene.GetComponent<Entity>().occypiedPoses).ToList();
         }
-
+        exposableStatus = map.isPositionFree(positionForCheckOnFree);
         meshRenderer.material = exposableStatus ? materialAvailable : materialUnvailable;
-        return true;
     }
     
     public void Move(Vector2Int newRoot)
     {
-       UpdateOccypation(newRoot);
-
         rootPoint = newRoot;
+        occypation = map.GetOccypationPositionForObj(rootPoint, size);
+        UpdateExposableStatus();
         transform.position = new Vector3(newRoot.x, 0, newRoot.y);
     }
 
@@ -150,58 +149,124 @@ public class ObjectPreview: MonoBehaviour
             return;
         }
 
-        ApplyOccypation();
+        if (buildedObjectOnScene == null)
+        {
+            BuildObject();
+        }
 
-        Transform entity = createObject();
-
-        Transform exposedBody = prepareModelToExposing(entity);
-
-        EventMaster.current.ExposeObject(id, type, GetOccypationPositions(), rotation);
-
-        AfterExpose(exposedBody);
+        else
+        {
+            ReplaceObject();
+        }
     }
 
-    public Bector2Int[] GetOccypationPositions()
+    public void BuildObject()
+    {
+        if (type.Contains("Build"))
+        {
+            Transform entity = CreateBuildObject();
+            prepareModelToExposing(entity);
+            BuildsOnBase.AddAndPrepareBuildComponent(entity.gameObject, model, id, size, occypation.ToArray());
+        }
+        
+        else if (type.Contains("Unit"))
+        {
+            Transform entity = CreateUnitObject();
+            prepareModelToExposing(entity);
+            UnitsOnBase.AddAndPrepareUnitComponent(entity.gameObject, model, id, size, occypation.ToArray());
+        }
+
+        else
+        {
+            throw new System.Exception("Неожиданный тип объекта: " + type);
+        }
+
+        map.Occypy(occypation);
+        AfterExpose();
+        EventMaster.current.ExposeObject(id, type, GetOccypationPositionsAsBector(), rotation);
+    }
+
+    public void ReplaceObject()
+    {
+        Entity objectOnSceneAsEntity = buildedObjectOnScene.GetComponent<Entity>();
+        objectOnSceneAsEntity.transform.position = transform.position;
+        objectOnSceneAsEntity.SetModel(model);
+        prepareModelToExposing(objectOnSceneAsEntity.transform);
+        SaveReplace();
+        CompleteReplace();
+    }
+
+    public void SaveReplace()
+    {
+        Entity parentObjectAsEntity = buildedObjectOnScene.GetComponent<Entity>();
+        map.Free(parentObjectAsEntity.occypiedPoses);
+        parentObjectAsEntity.SetOccypation(occypation);
+        map.Occypy(occypation);
+
+        CacheTable objectsTable = Cache.LoadByName(type);
+        CacheItem currentObject = objectsTable.GetById(id);
+
+        currentObject.SetField("position", GetOccypationPositionsAsBector());
+        currentObject.SetField("rotation", rotation);
+        Cache.Save(objectsTable);
+    }
+
+    public Bector2Int[] GetOccypationPositionsAsBector()
     {
         Bector2Int[] positions = new Bector2Int[occypation.Count];
-        foreach (Cell cell in occypation)
+        foreach (Vector2Int pos in occypation)
         {
-            positions[occypation.IndexOf(cell)] = new Bector2Int(cell.position);
+            positions[occypation.IndexOf(pos)] = new Bector2Int(pos);
         }
 
         return positions;
     }
 
-    public void AfterExpose(Transform exposedBody)
+    public void AfterExpose()
     {
+        Transform newBody = Instantiate(model.gameObject, model.position, model.rotation, null).transform;
+        model = newBody;
+        model.name = "Model";
         InitModel();
-        body.transform.position = exposedBody.transform.position;
-        body.transform.rotation = exposedBody.transform.rotation;
     }
 
-    public Transform createObject()
+    public Transform CreateBuildObject()
     {
+        return BuildsOnBase.CreateBuildObject(rootPoint, name, objectsPool.transform).transform;
+    }
 
-        GameObject parent = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]);
-        GameObject prefab = Resources.Load<GameObject>(Config.resources["emptyPrefab"]);
-        var obj = Instantiate(prefab, new Vector3(rootPoint.x, 0, rootPoint.y), Quaternion.identity, parent.transform).transform;
-        obj.name = name;
-        return obj;
+    public Transform CreateUnitObject()
+    {
+        return UnitsOnBase.CreateUnitObject(rootPoint, name, objectsPool.transform).transform;
     }
 
     public Transform prepareModelToExposing(Transform parent)
     {
         meshRenderer.material = materialModel;
-        body.SetParent(parent);
-        return body;
+        model.SetParent(parent);
+        return model;
     }
 
-    public void ApplyOccypation()
+    public void CompleteReplace()
     {
-        foreach (var cell in occypation)
+        buildedObjectOnScene.transform.position = transform.position;
+        buildedObjectOnScene = null;
+        EventMaster.current.OnExitBuildMode();
+    }
+
+    public void BackModelToStartState()
+    {
+        transform.position = buildedObjectOnScene.transform.position;
+
+        int oldModelRotation = (int)model.transform.rotation.y;
+        RotateModel(buildedObjectOnScene.GetComponent<Entity>().rotation);
+        if (oldModelRotation != (int)model.transform.rotation.y) 
         {
-            cell.Occupy();
+            SetNegativeModelOffsetByRotation();
         }
+
+        model.transform.parent = buildedObjectOnScene.transform;
+        meshRenderer.material = materialModel;
     }
 
     public void Cancel()
@@ -211,6 +276,11 @@ public class ObjectPreview: MonoBehaviour
 
     public void OnExitBuildMode()
     {
+        if (buildedObjectOnScene != null)
+        {
+            BackModelToStartState();
+        }
+
         UnsubscribeAll();
         EventMaster.current.OnDeletePreview();
         Destroy(this.gameObject);

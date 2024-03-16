@@ -1,4 +1,23 @@
 ﻿{
   "name": "Inventory",
-  "items": {}
+  "items": {
+    "62d6496f-4af2-4bcf-a84d-bc0384b1f77e": {
+      "fields": {
+        "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
+        "type": "Build",
+        "count": 15,
+        "externalId": "62d6496f-4af2-4bcf-a84d-bc0384b1f77e",
+        "description": ""
+      }
+    },
+    "dfdde537-2796-404c-a7df-66c7b48d5907": {
+      "fields": {
+        "coreId": "9b2cf240-5f63-4107-8751-eb91b95b94d9",
+        "type": "Build",
+        "count": 4,
+        "externalId": "dfdde537-2796-404c-a7df-66c7b48d5907",
+        "description": ""
+      }
+    }
+  }
 }

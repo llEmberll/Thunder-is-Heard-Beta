@@ -1,97 +1,74 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Entity : Interactable
 {
-    public Vector2Int size;
+    public string id;
+    public Vector2Int originalSize;
+    public Vector2Int currentSize;
     public List<Vector2Int> occypiedPoses;
     public int rotation;
     public Vector2Int center;
-    public abstract override string EntityType { get; }
+    public abstract override string Type { get; }
+    public string Id { get { return id; } }
+
+    public Transform model;
+    public Map map;
 
 
     public void Awake()
     {
-        SetRotation();
-        UpdateoccypiedPoses();
+        map = GameObject.FindGameObjectWithTag("Map").GetComponent<Map>();
     }
 
-    public void SetRotation()
+    public void SetOriginalSize(Vector2Int newSize)
     {
-        rotation = (int)transform.eulerAngles.y;
+        originalSize = newSize;
+        currentSize = originalSize;
     }
 
-    public virtual void UpdateoccypiedPoses()
+    public void SetRotation(int newRotation)
     {
-        Vector2Int rootPose = center = new Vector2Int((int)transform.position.x, (int)transform.position.z);
+        rotation = newRotation;
+        currentSize = GetCorrectSizeByRotation(originalSize, rotation);
+    }
 
-        if (size.x < 2 && size.y < 2)
+    public void SetModel(Transform newModel)
+    {
+        model = newModel;
+        SetRotation(GetDeterminedRotationByModel(model));
+    }
+
+    public void SetOccypation(List<Vector2Int> position)
+    {
+        occypiedPoses = position;
+    }
+
+    public static int GetDeterminedRotationByModel(Transform modelForCheck)
+    {
+        return (int)modelForCheck.eulerAngles.y;
+    }
+
+    public static Vector2Int GetCorrectSizeByRotation(Vector2Int size, int currentRotation)
+    {
+        if (size.x == size.y)
         {
-            occypiedPoses = new List<Vector2Int> { center };
-            return;
+            return size;
+        }
+        if (currentRotation == 90 || currentRotation == 270)
+        {
+            size = GetSwappedSize(size);
         }
 
-        CorrectSizeByRotation();
-
-        Vector2Int directionForFillByX = FindDirectionForFillOcypyByX();
-        Vector2Int directionForFillByY = FindDirectionForFillOcypyByY();
-
-        int maxX = rootPose.x + (directionForFillByX.x * size.x);
-        int maxY = rootPose.y + (directionForFillByY.y * size.y);
-
-        center = new Vector2Int(((rootPose.x + (maxX - directionForFillByX.x))) / 2, ((rootPose.y + (maxY - directionForFillByY.y))) / 2);
-
-        FillOccypation(rootPose, directionForFillByX, directionForFillByY, new Vector2Int(maxX, maxY));
+        return size;
     }
 
-    public void CorrectSizeByRotation()
+    public static Vector2Int GetSwappedSize(Vector2Int currentSize)
     {
-        if (rotation == 90 || rotation == 270)
-        {
-            int oldSizeX = size.x;
-            size.x = size.y;
-            size.y = oldSizeX;
-        }
-    }
+        currentSize.x = currentSize.y + currentSize.x;
+        currentSize.y = currentSize.x - currentSize.y;
+        currentSize.x -= currentSize.y;
 
-    private Vector2Int FindDirectionForFillOcypyByX()
-    {
-        if (transform.forward.x != 0) return new Vector2Int((int)transform.forward.x, (int)transform.forward.z);
-        if (transform.right.x != 0) return new Vector2Int((int)transform.right.x, (int)transform.right.z);
-        return new Vector2Int(0, 0);
-    }
-
-    private Vector2Int FindDirectionForFillOcypyByY()
-    {
-        if (transform.right.z != 0) return new Vector2Int((int)transform.right.x, (int)transform.right.z);
-        if (transform.forward.z != 0) return new Vector2Int((int)transform.forward.x, (int)transform.forward.z);
-        return new Vector2Int(0, 0);
-    }
-
-    private void FillOccypation(Vector2Int rootPose, Vector2Int directionForFillByX, Vector2Int directionForFillByY, Vector2Int max)
-    {
-        Vector2Int currentPose = rootPose;
-        occypiedPoses = new List<Vector2Int>();
-
-        for (int x = rootPose.x; ;)
-        {
-            x = currentPose.x;
-            if (x == max.x)
-            {
-                break;
-            }
-            for (int y = rootPose.y; ;)
-            {
-                y = currentPose.y;
-                if (y == max.y)
-                {
-                    break;
-                }
-                occypiedPoses.Add(currentPose);
-                currentPose = currentPose + directionForFillByY;
-            }
-            currentPose = currentPose + directionForFillByX;
-        }
+        return currentSize;
     }
 }

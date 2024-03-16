@@ -1,9 +1,12 @@
-
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using Newtonsoft.Json;
 
 public class BuildingState : State
 {
-    public ObjectPreview preview = GameObject.FindWithTag("Preview").GetComponent<ObjectPreview>();
+    public ObjectPreview preview;
 
     public override string stateName
     {
@@ -48,9 +51,10 @@ public class BuildingState : State
     {
         if (preview == null)
         {
-            //TODO Create preview with model of build
+            Transform model = build.transform.Find("Model");
 
-            //TODO Придумать как вернуть модель на место при отмене
+            ObjectPreview preview = ObjectPreview.Create();
+            preview.Init(build.name, "PlayerBuild", build.Id, build.currentSize, model);
         }
     }
 

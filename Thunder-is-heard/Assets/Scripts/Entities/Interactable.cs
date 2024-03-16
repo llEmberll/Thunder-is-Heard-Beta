@@ -1,16 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public abstract class Interactable: MonoBehaviour
+public abstract class Interactable: MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
-    public abstract string EntityType { get; }
+    public abstract string Type { get; }
 
     public abstract void OnChangeState(State newState);
 
 
-    protected abstract void OnMouseEnter();
-    protected abstract void OnMouseExit();
-    protected abstract void OnMouseDown();
+    public abstract void OnFocus();
+    public abstract void OnDefocus();
+    public abstract void OnClick();
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        OnFocus();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        OnClick();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        OnDefocus();
+    }
 }

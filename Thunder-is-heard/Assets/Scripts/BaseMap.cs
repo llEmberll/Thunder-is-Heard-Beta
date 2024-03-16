@@ -1,18 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Text.Json;
-using Newtonsoft.Json;
 
 public class BaseMap : Map
 {
     public override void Awake()
     {
         base.Awake();
-        
     }
 
     public void Start()
     {
+        CreateInventory();
     }
 
     public void CreateResources()
@@ -133,7 +131,7 @@ public class BaseMap : Map
         {
             { "coreId", "9b2cf240-5f63-4107-8751-eb91b95b94d9" },
             { "type", "Build" },
-            { "count", 1 }
+            { "count", 2 }
         }
         );
 
@@ -141,11 +139,11 @@ public class BaseMap : Map
         {
             { "coreId", "4b8a1805-3af8-4144-8bdb-62c93852b443" },
             { "type", "Build" },
-            { "count", 1 }
+            { "count", 2 }
         }
         );
 
-        CacheItem[] itemsForAdd = new CacheItem[2] { headbuild, mine };
+        CacheItem[] itemsForAdd = new CacheItem[2] { mine, headbuild };
         inventoryTable.Add(itemsForAdd);
 
         Cache.Save(inventoryTable);

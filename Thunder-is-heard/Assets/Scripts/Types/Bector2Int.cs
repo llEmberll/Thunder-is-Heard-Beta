@@ -16,4 +16,15 @@ public class Bector2Int
     {
         return new Vector2Int(x, y);
     }
+
+    public static Vector2Int[] MassiveToVector2Int(Bector2Int[] massive)
+    {
+        Vector2Int[] positions = new Vector2Int[massive.Length];
+        for (int i = 0; i < massive.Length; i++)
+        {
+            positions[i] = massive[i].ToVector2Int();
+        }
+
+        return positions;
+    }
 }

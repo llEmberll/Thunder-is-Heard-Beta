@@ -1,16 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildsOnBase : ItemList, IObjectsOnScene
+public class BuildsOnBase : ObjectsOnBase
 {
-    public Map map;
-
-    public override void Start()
-    {
-        map = GameObject.FindWithTag("Map").GetComponent<Map>();
-        base.Start();
-    }
-
     public override void OnBuildModeEnable()
     {
     }
@@ -38,31 +30,38 @@ public class BuildsOnBase : ItemList, IObjectsOnScene
         string name = playerBuildData.GetName();
         Bector2Int[] position = playerBuildData.GetPosition();
         int rotation = playerBuildData.GetRotation();
+        string id = playerBuildData.GetExternalId();
 
-
-        GameObject buildObj = CreateBuildObject(position, name, this.transform);
+        GameObject buildObj = CreateBuildObject(position[0].ToVector2Int(), name, this.transform);
         GameObject buildModel = CreateBuildModel(modelPath, rotation, buildObj.transform);
 
         OccypyCells(position);
         SetModelOffsetByRotation(buildModel.transform, size, rotation);
+
+        AddAndPrepareBuildComponent(buildObj, buildModel.transform, id, size.ToVector2Int(), Bector2Int.MassiveToVector2Int(position));
     }
 
-    private GameObject CreateBuildModel(string modelPath, int rotation, Transform parent)
+    public static GameObject CreateBuildModel(string modelPath, int rotation, Transform parent)
     {
         GameObject buildModelPrefab = Resources.Load<GameObject>(modelPath);
-        return Instantiate(
+
+        Debug.Log("create build, rotation: " + rotation);
+
+        GameObject buildModel = Instantiate(
             buildModelPrefab, buildModelPrefab.transform.position + parent.transform.position,
             Quaternion.Euler(new Vector3(0, rotation, 0)),
             parent
             );
+        buildModel.name = "Model";
+        return buildModel;
     }
 
-    private GameObject CreateBuildObject(Bector2Int[] position, string name, Transform parent)
+    public static GameObject CreateBuildObject(Vector2Int position, string name, Transform parent)
     {
         var buildPrefab = Resources.Load<GameObject>(Config.resources["emptyPrefab"]);
         GameObject obj = Instantiate(
             buildPrefab,
-            new Vector3(position[0].x, 0, position[0].y),
+            new Vector3(position.x, 0, position.y),
             Quaternion.identity,
             parent
             );
@@ -97,5 +96,28 @@ public class BuildsOnBase : ItemList, IObjectsOnScene
         x -= y;
 
         return new Vector2Int(x, y);
+    }
+
+    public override Entity FindObjectById(string id)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Build childEntity = transform.GetChild(i).GetComponent<Build>();
+            if (childEntity != null && childEntity.Id == id)
+            {
+                return childEntity;
+            }
+        }
+        return null;
+    }
+
+    public static void AddAndPrepareBuildComponent(GameObject buildObj, Transform model, string id, Vector2Int size, Vector2Int[] occypation)
+    {
+        Build component = buildObj.AddComponent<Build>();
+        component.SetOriginalSize(size);
+        component.SetModel(model);
+        component.SetOccypation(new List<Vector2Int>(occypation));
+        component.id = id;
+        
     }
 }

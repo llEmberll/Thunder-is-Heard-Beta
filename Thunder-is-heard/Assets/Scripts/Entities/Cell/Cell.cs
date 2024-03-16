@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Cell : Interactable
 {
-	public override string EntityType {
+	public override string Type {
 	get
         {
             return "Cell";
@@ -25,8 +25,8 @@ public class Cell : Interactable
         Free();
 
         _meshRenderer = gameObject.GetComponent<MeshRenderer>();
-        basicMaterial = Resources.Load(Config.resources["materials"] + EntityType + "/Basic", typeof(Material)) as Material;
-        selectMaterial = Resources.Load(Config.resources["materials"] + EntityType + "/Select", typeof(Material)) as Material;
+        basicMaterial = Resources.Load(Config.resources["materials"] + Type + "/Basic", typeof(Material)) as Material;
+        selectMaterial = Resources.Load(Config.resources["materials"] + Type + "/Select", typeof(Material)) as Material;
         
         
         position = new Vector2Int((int)transform.position.x, (int)transform.position.z);
@@ -71,18 +71,19 @@ public class Cell : Interactable
     {
         _meshRenderer.enabled = render;
     }
-    protected override void OnMouseEnter()
+    public override void OnFocus()
     {
         stateMachine.currentState.OnCellMouseEnter(this);
     }
 
-    protected override void OnMouseExit()
+    public override void OnDefocus()
     {
         stateMachine.currentState.OnCellMouseExit(this);
     }
 
-    protected override void OnMouseDown()
+    public override void OnClick()
     {
+        Debug.Log("Clicked on Cell!");
         stateMachine.currentState.OnCellClick(this);
     }
 }

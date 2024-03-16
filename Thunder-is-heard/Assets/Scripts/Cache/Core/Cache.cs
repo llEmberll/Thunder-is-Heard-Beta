@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class Cache
@@ -14,8 +13,6 @@ public class Cache
         string serializedTable = JsonConvert.SerializeObject(table, Formatting.Indented, new JsonSerializerSettings());
         string filePath = Application.streamingAssetsPath + "/" + Config.streamingAssets["cachePath"] + table.Name + fileFormat;
 
-        Debug.Log("file path =" + filePath);
-
         File.WriteAllText(filePath, serializedTable, Encoding.UTF8);
     }
 
@@ -25,8 +22,6 @@ public class Cache
         string tableName = GetCacheFileName(type.ToString());
 
         string filePath = Application.streamingAssetsPath + "/" + Config.streamingAssets["cachePath"] + tableName + fileFormat;
-
-        Debug.Log("file path= " + filePath);
 
         return JsonConvert.DeserializeObject<T>(File.ReadAllText(filePath));
     }
@@ -41,7 +36,8 @@ public class Cache
     {
         string filePath = Application.streamingAssetsPath + "/" + Config.streamingAssets["cachePath"] + tableName + fileFormat;
 
-        Debug.Log("file path= " + filePath);
+        CacheTable table = JsonConvert.DeserializeObject<CacheTable>(File.ReadAllText(filePath));
+        table.name = tableName;
 
         return JsonConvert.DeserializeObject<CacheTable>(File.ReadAllText(filePath));
     }
