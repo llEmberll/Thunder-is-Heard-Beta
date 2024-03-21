@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 public class BaseMap : Map
 {
     public override void Awake()
@@ -10,7 +9,6 @@ public class BaseMap : Map
 
     public void Start()
     {
-        CreateInventory();
     }
 
     public void CreateResources()

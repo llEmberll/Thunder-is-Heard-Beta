@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Inventory : ItemList
 {
-    public List<Item> items;
+    public List<InventoryItem> items;
     public Transform content;
 
     public override void Start()
@@ -14,11 +14,28 @@ public class Inventory : ItemList
         ClearItems();
         
         base.Start();
+
+        EventMaster.current.InventoryIncreased += IncreaseItem; 
+    }
+
+    public void IncreaseItem(string id, string type, int count)
+    {
+        Debug.Log("increased inventory!");
+        Debug.Log("imput id: " + id);
+
+        foreach (var item in items)
+        {
+            if (item.coreId == id && item.Type == type)
+            {
+                item.Increment(count);
+                break;
+            }
+        }
     }
 
     public override void FillContent()
     {
-        items = new List<Item>();
+        items = new List<InventoryItem>();
 
         InventoryCacheTable inventoryTable = Cache.LoadByType<InventoryCacheTable>();
         foreach (var inventoryItemAsCacheItem in inventoryTable.Items)
@@ -42,7 +59,7 @@ public class Inventory : ItemList
 
     public BuildInventoryItem CreateBuild(InventoryCacheItem inventoryItemData, BuildCacheItem buildData)
     {
-        string id = inventoryItemData.GetCoreId();
+        string id = inventoryItemData.GetExternalId();
         string name = buildData.GetName();
         ResourcesData gives = buildData.GetGives();
         int health = buildData.GetHealth();
@@ -85,6 +102,6 @@ public class Inventory : ItemList
             Destroy(child);
         }
 
-        items = new List<Item>();
+        items = new List<InventoryItem>();
     }
 }

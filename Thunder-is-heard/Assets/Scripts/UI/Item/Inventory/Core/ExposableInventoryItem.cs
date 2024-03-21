@@ -15,11 +15,20 @@ public abstract class ExposableInventoryItem : InventoryItem
     public virtual void Init(string objectId, string objectName, ResourcesData objectGives, int objectHealth, int objectDamage, int objectDistance, int objectCount, string objectDescription = "", Sprite objectIcon = null)
     {
         id = objectId; objName = objectName; icon = objectIcon;
+        InitCoreId();
+
         gives = objectGives;
         description = objectDescription;
         health = objectHealth; damage = objectDamage; distance = objectDistance; count = objectCount;
 
         UpdateUI();
+    }
+
+    public void InitCoreId()
+    {
+        InventoryCacheTable inventory = Cache.LoadByType<InventoryCacheTable>();
+        InventoryCacheItem inventoryItem = new InventoryCacheItem(inventory.GetById(id).Fields);
+        coreId = inventoryItem.GetCoreId();
     }
 
     public override void UpdateUI()
@@ -54,10 +63,10 @@ public abstract class ExposableInventoryItem : InventoryItem
     {
         CacheTable itemsTable = Cache.LoadByName(Type);
 
-        CacheItem needleItemData = itemsTable.GetById(id);
+        CacheItem needleItemData = itemsTable.GetById(coreId);
         if (needleItemData == null)
         {
-            Debug.Log("CreatePreview | Can't find item by id: " + id);
+            Debug.Log("CreatePreview | Can't find item by id: " + coreId);
             Finish();
             return;
         }
@@ -68,7 +77,7 @@ public abstract class ExposableInventoryItem : InventoryItem
         Transform model = Instantiate(modelPrefab).transform;
 
         ObjectPreview preview = ObjectPreview.Create();
-        preview.Init(objName, Type, id, size, model);
+        preview.Init(objName, Type, coreId, size, model);
     }
 
     public virtual Bector2Int GetSize(CacheItem item)
@@ -106,7 +115,11 @@ public abstract class ExposableInventoryItem : InventoryItem
 
     public void OnObjectExposed(string objId, string objType, Bector2Int[] occypation, int rotation)
     {
-        if (objId == id && objType == Type)
+        Debug.Log("ExposableItem, object exposed!");
+        Debug.Log("obj id: " + objId);
+        Debug.Log("and exposable item id: " + id);
+
+        if (objId == coreId && objType == Type)
         {
             SaveExpose(occypation, rotation);
 

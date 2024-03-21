@@ -6,6 +6,8 @@ public class Mission : Item
 {
     public string type = "Mission";
 
+    public override string Type { get { return type;  } }
+
     public override void Awake()
     {
         type = "Mission";

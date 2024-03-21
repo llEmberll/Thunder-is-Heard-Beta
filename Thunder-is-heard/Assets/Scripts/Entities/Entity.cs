@@ -71,4 +71,11 @@ public abstract class Entity : Interactable
 
         return currentSize;
     }
+
+    public void OnDestroy()
+    {
+        Debug.Log("On destroy");
+
+        map.Free(occypiedPoses);
+    }
 }

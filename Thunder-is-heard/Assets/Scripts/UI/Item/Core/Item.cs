@@ -7,15 +7,11 @@ public abstract class Item : UIElement
 
     public TMP_Text TmpName;
 
+    public int count;
     public string id;
     public string objName = "";
 
-    public virtual string EntityType {
-        get
-        {
-            return "Item";
-        }
-    }
+    public abstract string Type { get; }
 
     public virtual void Init(string itemId, string itemName, Sprite itemIcon = null)
     {
@@ -34,5 +30,21 @@ public abstract class Item : UIElement
     public virtual void UpdateUI()
     {
         TmpName.text = objName;
+    }
+
+    public virtual void UpdateCount(int newCount)
+    {
+        if (newCount < 1)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        count = newCount;
+    }
+
+    public void Increment(int number = 1)
+    {
+        UpdateCount(count + number);
     }
 }

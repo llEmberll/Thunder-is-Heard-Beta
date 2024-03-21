@@ -62,6 +62,16 @@ public class CacheItem: ICacheItem
         SetField("description", value);
     }
 
+    public virtual string? GetCoreId()
+    {
+        return (string?)GetField("coreId");
+    }
+
+    public void SetCoreId(string value)
+    {
+        SetField("coreId", value);
+    }
+
     public virtual CacheItem Clone()
     {
         return new CacheItem(fields);

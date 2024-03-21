@@ -24,6 +24,7 @@ public class ObjectPreview: MonoBehaviour
     public GameObject buildedObjectOnScene = null;
 
     public Map map;
+    public ObjectProcessor objectProcessor;
 
 
     public void Awake()
@@ -48,7 +49,7 @@ public class ObjectPreview: MonoBehaviour
 
         ObjectPreview preview = previewObject.GetComponent<ObjectPreview>();
         preview.map = GameObject.FindWithTag("Map").GetComponent<Map>();
-
+        preview.objectProcessor = GameObject.FindWithTag("ObjectProcessor").GetComponent<ObjectProcessor>();
         return preview;
     }
 
@@ -67,6 +68,8 @@ public class ObjectPreview: MonoBehaviour
 
     public void InitModel()
     {
+        model.name = "Model";
+
         buildedObjectOnScene = null;
 
         if (model.parent != null) 
@@ -183,7 +186,7 @@ public class ObjectPreview: MonoBehaviour
 
         map.Occypy(occypation);
         AfterExpose();
-        EventMaster.current.ExposeObject(id, type, GetOccypationPositionsAsBector(), rotation);
+        EventMaster.current.ExposeObject(id, type, Bector2Int.GetVector2IntListAsBector(occypation), rotation);
     }
 
     public void ReplaceObject()
@@ -192,34 +195,8 @@ public class ObjectPreview: MonoBehaviour
         objectOnSceneAsEntity.transform.position = transform.position;
         objectOnSceneAsEntity.SetModel(model);
         prepareModelToExposing(objectOnSceneAsEntity.transform);
-        SaveReplace();
-        CompleteReplace();
-    }
-
-    public void SaveReplace()
-    {
-        Entity parentObjectAsEntity = buildedObjectOnScene.GetComponent<Entity>();
-        map.Free(parentObjectAsEntity.occypiedPoses);
-        parentObjectAsEntity.SetOccypation(occypation);
-        map.Occypy(occypation);
-
-        CacheTable objectsTable = Cache.LoadByName(type);
-        CacheItem currentObject = objectsTable.GetById(id);
-
-        currentObject.SetField("position", GetOccypationPositionsAsBector());
-        currentObject.SetField("rotation", rotation);
-        Cache.Save(objectsTable);
-    }
-
-    public Bector2Int[] GetOccypationPositionsAsBector()
-    {
-        Bector2Int[] positions = new Bector2Int[occypation.Count];
-        foreach (Vector2Int pos in occypation)
-        {
-            positions[occypation.IndexOf(pos)] = new Bector2Int(pos);
-        }
-
-        return positions;
+        objectProcessor.ReplaceObjectOnBase(buildedObjectOnScene, occypation, rotation);
+        AfterReplace();
     }
 
     public void AfterExpose()
@@ -247,7 +224,7 @@ public class ObjectPreview: MonoBehaviour
         return model;
     }
 
-    public void CompleteReplace()
+    public void AfterReplace()
     {
         buildedObjectOnScene.transform.position = transform.position;
         buildedObjectOnScene = null;

@@ -1,5 +1,40 @@
 ﻿{
-  "name": "PlayerBuild",
   "items": {
-  }
+    "aca7de0f-e741-479d-802b-69653ab28d5c": {
+      "fields": {
+        "externalId": "aca7de0f-e741-479d-802b-69653ab28d5c",
+        "description": "",
+        "rotation": 90,
+        "coreId": "9b2cf240-5f63-4107-8751-eb91b95b94d9",
+        "name": "Headbuild",
+        "position": [
+          {
+            "x": 3,
+            "y": 0
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 2
+          }
+        ]
+      }
+    }
+  },
+  "name": "PlayerBuild"
 }

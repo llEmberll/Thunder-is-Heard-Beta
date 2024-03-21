@@ -30,7 +30,7 @@ public class BuildsOnBase : ObjectsOnBase
         string name = playerBuildData.GetName();
         Bector2Int[] position = playerBuildData.GetPosition();
         int rotation = playerBuildData.GetRotation();
-        string id = playerBuildData.GetExternalId();
+        string id = playerBuildData.GetCoreId();
 
         GameObject buildObj = CreateBuildObject(position[0].ToVector2Int(), name, this.transform);
         GameObject buildModel = CreateBuildModel(modelPath, rotation, buildObj.transform);

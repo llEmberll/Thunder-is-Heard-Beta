@@ -51,7 +51,7 @@ public class BuildingState : State
     {
         if (preview == null)
         {
-            Transform model = build.transform.Find("Model");
+            Transform model = build.model;
 
             ObjectPreview preview = ObjectPreview.Create();
             preview.Init(build.name, "PlayerBuild", build.Id, build.currentSize, model);

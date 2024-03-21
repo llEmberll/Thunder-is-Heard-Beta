@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using UnityEngine;
 
@@ -78,5 +79,18 @@ public class EventMaster: MonoBehaviour
     public void OnDeletePreview()
     {
         PreviewDeleted?.Invoke();
+    }
+
+
+    public event Action<string, string, int> InventoryIncreased;
+    public void OnEncreaseInventory(string id, string type, int count)
+    {
+        InventoryIncreased?.Invoke(id, type, count);
+    }
+
+    public event Action<string, string> BaseObjectRemoved;
+    public void OnRemoveBaseObject(string id, string type)
+    {
+        BaseObjectRemoved?.Invoke(id, type);
     }
 }
