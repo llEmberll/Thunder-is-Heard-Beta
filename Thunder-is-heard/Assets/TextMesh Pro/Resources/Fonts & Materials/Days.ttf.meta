@@ -10,7 +10,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Days
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a401a2756b6e0b84bbd08029bcafa36c, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
