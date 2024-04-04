@@ -10,19 +10,15 @@ public class Inventory : ItemList
 
     public override void Start()
     {
+        EventMaster.current.InventoryChanged += UpdateContent;
+
         InitContent();
-        ClearItems();
         
         base.Start();
-
-        EventMaster.current.InventoryIncreased += IncreaseItem; 
     }
 
     public void IncreaseItem(string id, string type, int count)
     {
-        Debug.Log("increased inventory!");
-        Debug.Log("imput id: " + id);
-
         foreach (var item in items)
         {
             if (item.coreId == id && item.Type == type)
@@ -35,7 +31,7 @@ public class Inventory : ItemList
 
     public override void FillContent()
     {
-        items = new List<InventoryItem>();
+        ClearItems();
 
         InventoryCacheTable inventoryTable = Cache.LoadByType<InventoryCacheTable>();
         foreach (var inventoryItemAsCacheItem in inventoryTable.Items)
@@ -53,8 +49,19 @@ public class Inventory : ItemList
                     BuildInventoryItem build = CreateBuild(inventoryItemAsInventoryItem, buildData);
                     items.Add(build);
                     break;
+                case "Unit":
+                    UnitCacheItem unitData = new UnitCacheItem(item.Fields);
+                    UnitInventoryItem unit = CreateUnit(inventoryItemAsInventoryItem, unitData);
+                    items.Add(unit);
+                    break;
+
             }
         }
+    }
+
+    public void UpdateContent()
+    {
+        FillContent();
     }
 
     public BuildInventoryItem CreateBuild(InventoryCacheItem inventoryItemData, BuildCacheItem buildData)
@@ -75,6 +82,27 @@ public class Inventory : ItemList
 
         buildComponent.Init(id, name, gives, health, damage, distance, count, description, icon);
         return buildComponent;
+    }
+
+    public UnitInventoryItem CreateUnit(InventoryCacheItem inventoryItemData, UnitCacheItem unitData)
+    {
+        string id = inventoryItemData.GetExternalId();
+        string name = unitData.GetName();
+        ResourcesData gives = unitData.GetGives();
+        int health = unitData.GetHealth();
+        int damage = unitData.GetDamage();
+        int distance = unitData.GetDistance();
+        int mobility = unitData.GetMobility();
+        int count = inventoryItemData.GetCount();
+        string description = unitData.GetDescrption();
+        Sprite icon = Resources.Load<Sprite>(unitData.GetIconPath());
+
+        GameObject itemObject = CreateObject(Config.resources["UI" + "Unit" + "InventoryItemPrefab"]);
+        itemObject.name = name;
+        UnitInventoryItem unitComponent = itemObject.GetComponent<UnitInventoryItem>();
+
+        unitComponent.Init(id, name, gives, health, damage, distance, mobility, count, description, icon);
+        return unitComponent;
     }
 
     public GameObject CreateObject(string prefabPath)

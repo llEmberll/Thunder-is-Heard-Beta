@@ -1,14 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 public class BaseMap : Map
 {
     public override void Awake()
     {
         base.Awake();
+        InitTerrain();
     }
 
     public void Start()
     {
+
+    }
+
+    public void InitTerrain()
+    {
+        Transform terrainParent = transform.Find("Terrain");
+        Transform terrainObj = Instantiate(Resources.Load<Terrain>(Config.terrainsPath["Base"]).transform, parent: terrainParent);
+
+        terrainParent.transform.position -= new Vector3(5, 0, 5);
+
+        terrain = terrainObj.GetComponent<Terrain>();
+        TerrainData terrainData = terrain.terrainData;
+        terrainData.size = new Vector3(5 * 2 + size.x, terrainData.size.y, 5 * 2 + size.y);
+        terrain.terrainData = terrainData;
     }
 
     public void CreateResources()
@@ -121,6 +137,21 @@ public class BaseMap : Map
         Bector2Int[] position = savedHeadbuildOnBase.GetPosition();
     }
 
+    public void CreateUnits()
+    {
+        UnitCacheTable unitsTable = Cache.LoadByType<UnitCacheTable>();
+        UnitCacheItem assaulters = new UnitCacheItem(new Dictionary<string, object>());
+        assaulters.SetName("Assaulters");
+        assaulters.SetModelPath("Prefabs/Entity/Units/Assaulters/Model");
+        assaulters.SetHealth(3);
+        assaulters.SetDamage(1);
+        assaulters.SetDistance(2);
+        assaulters.SetMobility(2);
+
+        unitsTable.Add(new CacheItem[1] { assaulters });
+        Cache.Save(unitsTable);
+    }
+
     public void CreateInventory()
     {
         InventoryCacheTable inventoryTable = Cache.LoadByType<InventoryCacheTable>();
@@ -144,6 +175,21 @@ public class BaseMap : Map
         CacheItem[] itemsForAdd = new CacheItem[2] { mine, headbuild };
         inventoryTable.Add(itemsForAdd);
 
+        Cache.Save(inventoryTable);
+    }
+
+    public void CreateInventoryUnit()
+    {
+        InventoryCacheTable inventoryTable = Cache.LoadByType<InventoryCacheTable>();
+        InventoryCacheItem assaulters = new InventoryCacheItem(new Dictionary<string, object>()
+        {
+            { "coreId", "bd1b7986-cf1a-4d76-8b14-c68bf10f363f" },
+            { "type", "Unit" },
+            { "count", 2 }
+        }
+        );
+
+        inventoryTable.Add(new CacheItem[1] { assaulters });
         Cache.Save(inventoryTable);
     }
 }

@@ -1,45 +1,49 @@
 ﻿{
   "name": "PlayerBuild",
   "items": {
-    "1203a5aa-0b47-472c-a92b-0b71dca138ba": {
-      "fields": {
-        "externalId": "1203a5aa-0b47-472c-a92b-0b71dca138ba",
-        "description": "",
-        "rotation": 0,
-        "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
-        "name": "Mine",
-        "position": [
-          {
-            "x": 3,
-            "y": 0
-          },
-          {
-            "x": 3,
-            "y": 1
-          },
-          {
-            "x": 4,
-            "y": 0
-          },
-          {
-            "x": 4,
-            "y": 1
-          }
-        ]
-      }
-    },
     "380e2048-a142-47a3-a3eb-3f421027b62b": {
       "fields": {
         "externalId": "380e2048-a142-47a3-a3eb-3f421027b62b",
         "description": "",
-        "rotation": 90,
+        "rotation": 180,
         "coreId": "9b2cf240-5f63-4107-8751-eb91b95b94d9",
         "name": "Headbuild",
         "position": [
           {
-            "x": 3,
-            "y": 2
+            "x": 0,
+            "y": 3
           },
+          {
+            "x": 0,
+            "y": 4
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 4
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 4
+          }
+        ]
+      }
+    },
+    "dcadc71d-e3f5-46ad-97c5-d2b4b8322343": {
+      "fields": {
+        "externalId": "dcadc71d-e3f5-46ad-97c5-d2b4b8322343",
+        "description": "",
+        "rotation": 90,
+        "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
+        "name": "Mine",
+        "position": [
           {
             "x": 3,
             "y": 3
@@ -47,10 +51,6 @@
           {
             "x": 3,
             "y": 4
-          },
-          {
-            "x": 4,
-            "y": 2
           },
           {
             "x": 4,

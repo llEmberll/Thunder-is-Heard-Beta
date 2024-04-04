@@ -15,6 +15,7 @@ public class Cell : Interactable
     
     public Vector2Int position;
     public bool occupied;
+    public bool visible;
     
     public MeshRenderer _meshRenderer;
     public Material basicMaterial;
@@ -39,14 +40,16 @@ public class Cell : Interactable
         
         stateMachine.Initialize(sceneState.GetCurrentState());
         
-        //OnChangeStateEvent
         EventMaster.current.StateChanged += OnChangeState;
+
+        renderSwitch(stateMachine.currentState.IsCellMustBeVisible(this));
     }
 
 
     public override void OnChangeState(State newState)
     {
         stateMachine.ChangeState(newState);
+        renderSwitch(stateMachine.currentState.IsCellMustBeVisible(this));
     }
     
     
@@ -70,6 +73,7 @@ public class Cell : Interactable
     public void renderSwitch(bool render)
     {
         _meshRenderer.enabled = render;
+        visible = _meshRenderer.enabled;
     }
     public override void OnFocus()
     {

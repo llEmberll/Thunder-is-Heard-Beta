@@ -1,0 +1,74 @@
+﻿{
+  "name": "Unit",
+  "items": {
+    "bd1b7986-cf1a-4d76-8b14-c68bf10f363f": {
+      "fields": {
+        "externalId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "description": "",
+        "cost": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0,
+          "Rub": 0,
+          "MaxRub": 0,
+          "Frames": 0,
+          "MaxFrames": 0,
+          "Oil": 0,
+          "MaxOil": 0,
+          "Steel": 0,
+          "MaxSteel": 0,
+          "Staff": 0,
+          "MaxStaff": 0,
+          "Exp": 0,
+          "MaxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0,
+          "Rub": 0,
+          "MaxRub": 0,
+          "Frames": 0,
+          "MaxFrames": 0,
+          "Oil": 0,
+          "MaxOil": 0,
+          "Steel": 0,
+          "MaxSteel": 0,
+          "Staff": 0,
+          "MaxStaff": 0,
+          "Exp": 0,
+          "MaxExp": 0
+        },
+        "createTime": 3,
+        "health": 3,
+        "damage": 1,
+        "distance": 2,
+        "mobility": 2,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "name": "Assaulters",
+        "modelPath": "Prefabs/Entity/Units/Assaulters/Model"
+      }
+    }
+  }
+}

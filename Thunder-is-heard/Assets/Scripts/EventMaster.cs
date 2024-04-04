@@ -82,10 +82,10 @@ public class EventMaster: MonoBehaviour
     }
 
 
-    public event Action<string, string, int> InventoryIncreased;
-    public void OnEncreaseInventory(string id, string type, int count)
+    public event Action InventoryChanged;
+    public void OnChangeInventory()
     {
-        InventoryIncreased?.Invoke(id, type, count);
+        InventoryChanged?.Invoke();
     }
 
     public event Action<string, string> BaseObjectRemoved;

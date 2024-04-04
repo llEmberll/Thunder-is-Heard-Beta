@@ -19,6 +19,10 @@ TagManager:
   - UnitsOnScene
   - InventoryItems
   - ObjectProcessor
+  - Inventory
+  - Cells
+  - Terrain
+  - ResourceProcessor
   layers:
   - Default
   - TransparentFX

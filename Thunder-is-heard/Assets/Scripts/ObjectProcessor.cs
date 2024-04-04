@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Principal;
+using System.Linq;
 using UnityEngine;
 
-public class ObjectProcessor
-    : MonoBehaviour
+public class ObjectProcessor : MonoBehaviour
 {
     public Map map;
 
@@ -69,7 +68,7 @@ public class ObjectProcessor
         inventory.Add(itemsForAdd);
         Cache.Save(inventory);
 
-        EventMaster.current.OnEncreaseInventory(entity.id, entity.Type, count);
+        EventMaster.current.OnChangeInventory();
     }
 
     public static  void RemoveObjectFromBase(GameObject obj)
@@ -91,9 +90,68 @@ public class ObjectProcessor
         EventMaster.current.OnRemoveBaseObject(entity.id, entity.Type);
     }
 
+    public void CreateObjectOnBase(string id, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation)
+    {
+        Vector2Int rootPoint = occypation.First();
+        ObjectsOnBase objectsPool = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]).GetComponent<ObjectsOnBase>();
+
+        Transform entity = null;
+        if (type.Contains("Build"))
+        {
+            entity = CreateBuildObject(rootPoint, objName, objectsPool.transform).transform;
+            AddAndPrepareBuildComponent(entity.gameObject, model, id, size, occypation.ToArray());
+        }
+
+        else if (type.Contains("Unit"))
+        {
+            entity = CreateUnitObject(rootPoint, objName, objectsPool.transform).transform;
+            AddAndPrepareUnitComponent(entity.gameObject, model, id, size, occypation.ToArray());
+        }
+
+        else
+        {
+            throw new System.Exception("Неожиданный тип объекта: " + type);
+        }
+
+        model.SetParent(entity);
+
+        map.Occypy(occypation);
+        EventMaster.current.ExposeObject(id, type, Bector2Int.GetVector2IntListAsBector(occypation), entity.GetComponent<Entity>().rotation);
+    }
+
+    public static GameObject CreateBuildObject(Vector2Int position, string name, Transform parent)
+    {
+        var buildPrefab = Resources.Load<GameObject>(Config.resources["emptyPrefab"]);
+        GameObject obj = Instantiate(
+            buildPrefab,
+            new Vector3(position.x, 0, position.y),
+            Quaternion.identity,
+            parent
+            );
+        obj.name = name;
+        return obj;
+    }
+
+    public static GameObject CreateUnitObject(Vector2Int position, string name, Transform parent)
+    {
+        var unitPrefab = Resources.Load<GameObject>(Config.resources["emptyPrefab"]);
+        GameObject obj = Instantiate(
+            unitPrefab,
+            new Vector3(position.x, 0, position.y),
+            Quaternion.identity,
+            parent
+            );
+        obj.name = name;
+        return obj;
+    }
+
     public void ReplaceObjectOnBase(GameObject obj, List<Vector2Int> newPosition, int newRotation)
     {
         Entity entity = obj.GetComponent<Entity>();
+
+        obj.transform.position = new Vector3(newPosition.First().x, 0, newPosition.First().y);
+        entity.model.SetParent(entity.transform);
+
         map.Free(entity.occypiedPoses);
         entity.SetOccypation(newPosition);
         map.Occypy(newPosition);
@@ -105,5 +163,24 @@ public class ObjectProcessor
         baseObjectData.SetField("rotation", newRotation);
         baseObjectsTable.Items[baseObjectData.GetExternalId()] = baseObjectData;
         Cache.Save(baseObjectsTable);
+    }
+
+    public static void AddAndPrepareBuildComponent(GameObject buildObj, Transform model, string id, Vector2Int size, Vector2Int[] occypation)
+    {
+        Build component = buildObj.AddComponent<Build>();
+        component.SetOriginalSize(size);
+        component.SetModel(model);
+        component.SetOccypation(new List<Vector2Int>(occypation));
+        component.id = id;
+    }
+
+    public static void AddAndPrepareUnitComponent(GameObject unitObj, Transform model, string id, Vector2Int size, Vector2Int[] occypation)
+    {
+        Unit component = unitObj.AddComponent<Unit>();
+        component.SetOriginalSize(size);
+        component.SetModel(model);
+        component.SetOccypation(new List<Vector2Int>(occypation));
+
+        component.id = id;
     }
 }

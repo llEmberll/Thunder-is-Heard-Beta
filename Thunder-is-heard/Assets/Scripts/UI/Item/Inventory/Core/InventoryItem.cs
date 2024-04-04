@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine;
 
 public abstract class InventoryItem : Item
 {

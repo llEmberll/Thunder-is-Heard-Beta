@@ -123,4 +123,62 @@ public class ResourcesData
         clone.maxRub = maxRub;
         return clone;
     }
+
+    public void Add(ResourcesData data)
+    {
+        exp += data.exp;
+        rub += data.rub;
+        oil += data.oil;
+        frames += data.frames;
+        steel += data.steel;
+        staff += data.staff;
+
+        maxExp += data.maxExp;
+        maxFrames += data.maxFrames;
+        maxOil += data.maxOil;
+        maxOil += data.maxOil;
+        maxSteel += data.maxSteel;
+        maxStaff += data.maxStaff;
+        maxRub += data.maxRub;
+    }
+
+    public void Substract(ResourcesData data)
+    {
+        exp -= data.exp;
+        rub -= data.rub;
+        oil -= data.oil;
+        frames -= data.frames;
+        steel -= data.steel;
+        staff -= data.staff;
+
+        maxExp -= data.maxExp;
+        maxFrames -= data.maxFrames;
+        maxOil -= data.maxOil;
+        maxOil -= data.maxOil;
+        maxSteel -= data.maxSteel;
+        maxStaff -= data.maxStaff;
+        maxRub -= data.maxRub;
+    }
+
+    public bool IsValid()
+    {
+        if (
+            rub < 0 ||
+            oil < 0 ||
+            frames < 0 ||
+            steel < 0 ||
+            staff < 0 ||
+            maxExp < 0 ||
+            maxFrames < 0 ||
+            maxOil < 0 ||
+            maxSteel < 0 ||
+            maxRub < 0 ||
+            maxStaff < 0
+            )
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

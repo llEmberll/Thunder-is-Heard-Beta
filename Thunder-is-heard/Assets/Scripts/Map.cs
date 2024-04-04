@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Map : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class Map : MonoBehaviour
 
     public Cell centralCell;
     public Vector2Int size;
+
+    public Terrain terrain;
 
 	public virtual void Awake()
 	{
@@ -20,7 +24,9 @@ public class Map : MonoBehaviour
     {
         int sizeByX = 0;
         int sizeByY = 0;
-        foreach (Transform child in transform)
+
+        Transform cellsParent = GameObject.FindGameObjectWithTag("Cells").transform;
+        foreach (Transform child in cellsParent)
         {
             Cell cell = child.GetComponent<Cell>();
             Vector2Int cellPosition = new Vector2Int((int)child.transform.position.x, (int)child.transform.position.z);
@@ -34,10 +40,9 @@ public class Map : MonoBehaviour
 
     public void FindCentralCell()
 	{
-		int cellsCount = cells.Count;
-		int mapSize = (int)Mathf.Sqrt(cellsCount);
-		int offset = cellsCount % 2 == 0 ? 0 : -1;
-		centralCell = cells[new Vector2Int(mapSize / 2 + offset, mapSize / 2 + offset)];
+        int centralX = (int)Math.Floor(size.x / 2.0);
+        int centralY = (int)Math.Floor(size.y / 2.0);
+        centralCell = cells[new Vector2Int(centralX, centralY)];
 	}
 
     public Dictionary<Vector2Int, Cell> FindCellsByPosition(List<Vector2Int> positions)
@@ -99,5 +104,43 @@ public class Map : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void DisplayAll()
+    {
+        foreach (var keyValuePair in cells)
+        {
+            keyValuePair.Value.renderSwitch(true);
+        }
+    }
+
+    public void HideAll()
+    {
+        foreach (var keyValuePair in Cells)
+        {
+            keyValuePair.Value.renderSwitch(true);
+        }
+    }
+
+    public void Display(List<Vector2Int> cellsPosition)
+    {
+        foreach (Vector2Int position in cellsPosition)
+        {
+            if (Cells.ContainsKey(position))
+            {
+                Cells[position].renderSwitch(true);
+            }
+        }
+    }
+
+    public void Hide(List<Vector2Int> cellsPosition)
+    {
+        foreach (Vector2Int position in cellsPosition)
+        {
+            if (Cells.ContainsKey(position))
+            {
+                Cells[position].renderSwitch(false);
+            }
+        }
     }
 }

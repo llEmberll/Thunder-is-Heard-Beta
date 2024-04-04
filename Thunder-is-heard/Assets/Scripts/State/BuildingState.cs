@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using Newtonsoft.Json;
 
 public class BuildingState : State
 {
@@ -70,7 +68,15 @@ public class BuildingState : State
 
     public override void OnUnitClick(Unit unit)
     {
-        
+        {
+            if (preview == null)
+            {
+                Transform model = unit.model;
+
+                ObjectPreview preview = ObjectPreview.Create();
+                preview.Init(unit.name, "PlayerBuild", unit.Id, unit.currentSize, model);
+            }
+        }
     }
 
     public override void OnUnitMouseEnter(Unit unit)
@@ -103,5 +109,10 @@ public class BuildingState : State
     public override void OnCellMouseExit(Cell cell)
     {
         
+    }
+
+    public override bool IsCellMustBeVisible(Cell cell)
+    {
+        return true;
     }
 }

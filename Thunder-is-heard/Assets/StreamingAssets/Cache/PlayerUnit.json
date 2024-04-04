@@ -1,0 +1,35 @@
+﻿{
+  "items": {
+    "6586231d-72b5-4f16-b0f7-14ce6f2f76fa": {
+      "fields": {
+        "externalId": "6586231d-72b5-4f16-b0f7-14ce6f2f76fa",
+        "description": "",
+        "rotation": 0,
+        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "name": "Assaulters",
+        "position": [
+          {
+            "x": 1,
+            "y": 1
+          }
+        ]
+      }
+    },
+    "03c7ceb2-4e2f-4aab-abdd-dec449cf7a2d": {
+      "fields": {
+        "externalId": "03c7ceb2-4e2f-4aab-abdd-dec449cf7a2d",
+        "description": "",
+        "rotation": 0,
+        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "name": "Assaulters",
+        "position": [
+          {
+            "x": 2,
+            "y": 1
+          }
+        ]
+      }
+    }
+  },
+  "name": "PlayerUnit"
+}

@@ -15,16 +15,6 @@ public class PlayerBuildCacheItem : CacheItem
         }
     }
 
-    public string? GetCoreId()
-    {
-        return (string?)GetField("coreId");
-    }
-
-    public void SetCoreId(string value)
-    {
-        SetField("coreId", value);
-    }
-
     public Bector2Int[] GetPosition()
     {
         object value = GetField("position");

@@ -50,10 +50,10 @@ public class CameraController : MonoBehaviour
 
     public void FindMovementThreshold()
     {
-        maxX = ((float)-2.5) / 5 * map.size.x;
-        minX = (float)-6 / 5 * map.size.x;
-        minZ = (float)-6 / 5 * map.size.y;
-        maxZ = (float)-2.5 / 5 * map.size.y;
+        maxX = transform.position.x + ((map.size.y + map.size.x) / 4);
+        minX = transform.position.x - ((map.size.y + map.size.x) / 4);
+        minZ = transform.position.z - ((map.size.y + map.size.x) / 4);
+        maxZ = transform.position.z + ((map.size.y + map.size.x) / 4);
         //TODO рассчитать min и max координаты камеры в зависимости от размера игрового поля
     }
 

@@ -115,10 +115,6 @@ public abstract class ExposableInventoryItem : InventoryItem
 
     public void OnObjectExposed(string objId, string objType, Bector2Int[] occypation, int rotation)
     {
-        Debug.Log("ExposableItem, object exposed!");
-        Debug.Log("obj id: " + objId);
-        Debug.Log("and exposable item id: " + id);
-
         if (objId == coreId && objType == Type)
         {
             SaveExpose(occypation, rotation);

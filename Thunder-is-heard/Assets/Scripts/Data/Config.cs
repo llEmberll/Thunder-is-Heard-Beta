@@ -53,4 +53,10 @@ public static class Config
         {"PlayerUnit", "UnitsOnScene" },
         { "Unit", "UnitsOnScene" }
     };
+
+    public static Dictionary<string, string> terrainsPath = new Dictionary<string, string>
+    {
+        {"Base", "Prefabs/Terrain/Base/Terrain" },
+        { "Common", "Prefabs/Terrain/" }
+    };
 }

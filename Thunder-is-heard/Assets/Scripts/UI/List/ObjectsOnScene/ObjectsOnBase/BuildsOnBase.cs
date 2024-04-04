@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BuildsOnBase : ObjectsOnBase
@@ -32,13 +33,13 @@ public class BuildsOnBase : ObjectsOnBase
         int rotation = playerBuildData.GetRotation();
         string id = playerBuildData.GetCoreId();
 
-        GameObject buildObj = CreateBuildObject(position[0].ToVector2Int(), name, this.transform);
+        GameObject buildObj = ObjectProcessor.CreateBuildObject(position[0].ToVector2Int(), name, this.transform);
         GameObject buildModel = CreateBuildModel(modelPath, rotation, buildObj.transform);
 
-        OccypyCells(position);
+        map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());
         SetModelOffsetByRotation(buildModel.transform, size, rotation);
 
-        AddAndPrepareBuildComponent(buildObj, buildModel.transform, id, size.ToVector2Int(), Bector2Int.MassiveToVector2Int(position));
+       ObjectProcessor.AddAndPrepareBuildComponent(buildObj, buildModel.transform, id, size.ToVector2Int(), Bector2Int.MassiveToVector2Int(position));
     }
 
     public static GameObject CreateBuildModel(string modelPath, int rotation, Transform parent)
@@ -54,28 +55,6 @@ public class BuildsOnBase : ObjectsOnBase
             );
         buildModel.name = "Model";
         return buildModel;
-    }
-
-    public static GameObject CreateBuildObject(Vector2Int position, string name, Transform parent)
-    {
-        var buildPrefab = Resources.Load<GameObject>(Config.resources["emptyPrefab"]);
-        GameObject obj = Instantiate(
-            buildPrefab,
-            new Vector3(position.x, 0, position.y),
-            Quaternion.identity,
-            parent
-            );
-        obj.name = name;
-        return obj;
-    }
-
-    private void OccypyCells(Bector2Int[] position)
-    {
-        foreach (Bector2Int pos in position)
-        {
-            var cell = map.cells[new Vector2Int(pos.x, pos.y)];
-            cell.Occupy();
-        }
     }
 
     public void SetModelOffsetByRotation(Transform model, Bector2Int size, int rotation)
@@ -109,15 +88,5 @@ public class BuildsOnBase : ObjectsOnBase
             }
         }
         return null;
-    }
-
-    public static void AddAndPrepareBuildComponent(GameObject buildObj, Transform model, string id, Vector2Int size, Vector2Int[] occypation)
-    {
-        Build component = buildObj.AddComponent<Build>();
-        component.SetOriginalSize(size);
-        component.SetModel(model);
-        component.SetOccypation(new List<Vector2Int>(occypation));
-        component.id = id;
-        
     }
 }

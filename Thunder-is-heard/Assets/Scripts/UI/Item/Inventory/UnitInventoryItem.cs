@@ -17,6 +17,8 @@ public class UnitInventoryItem: ExposableInventoryItem
     public void Init(string objectId, string objectName, ResourcesData objectGives, int objectHealth, int objectDamage, int objectDistance, int objectMobility, int objectCount, string objectDescription = "", Sprite objectIcon = null)
     {
         id = objectId; objName = objectName; icon = objectIcon;
+        InitCoreId();
+
         gives = objectGives;
         description = objectDescription;
         health = objectHealth; damage = objectDamage; distance = objectDistance; mobility = objectMobility; count = objectCount;
@@ -32,17 +34,16 @@ public class UnitInventoryItem: ExposableInventoryItem
     }
 
 
-    //Реализовать после создания кеша для юнита
     public override void SaveExpose(Bector2Int[] occypation, int rotation)
     {
-        PlayerBuildCacheItem exposedBuildData = new PlayerBuildCacheItem(new Dictionary<string, object>());
-        exposedBuildData.SetCoreId(id);
-        exposedBuildData.SetName(name);
-        exposedBuildData.SetPosition(occypation);
-        exposedBuildData.SetRotation(rotation);
+        PlayerUnitCacheItem exposedUnitData = new PlayerUnitCacheItem(new Dictionary<string, object>());
+        exposedUnitData.SetCoreId(coreId);
+        exposedUnitData.SetName(name);
+        exposedUnitData.SetPosition(occypation);
+        exposedUnitData.SetRotation(rotation);
 
-        PlayerBuildCacheTable exposedBuilds = Cache.LoadByType<PlayerBuildCacheTable>();
-        exposedBuilds.Add(new CacheItem[1] { exposedBuildData });
-        Cache.Save(exposedBuilds);
+        PlayerUnitCacheTable exposedUnits = Cache.LoadByType<PlayerUnitCacheTable>();
+        exposedUnits.Add(new CacheItem[1] { exposedUnitData });
+        Cache.Save(exposedUnits);
     }
 }

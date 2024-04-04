@@ -1,27 +1,71 @@
-
-
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UnitsOnBase : ObjectsOnBase
 {
-    public override Entity FindObjectById(string id)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void OnBuildModeEnable()
     {
     }
 
-    public static void AddAndPrepareUnitComponent(GameObject unitObj, Transform model, string id, Vector2Int size, Vector2Int[] occypation)
+    public override void FillContent()
     {
-        Unit component = unitObj.AddComponent<Unit>();
-        component.id = id;
-        component.currentSize = size;
+        base.FillContent();
+
+        PlayerUnitCacheTable playerUnitsTable = Cache.LoadByType<PlayerUnitCacheTable>();
+        foreach (var pair in playerUnitsTable.Items)
+        {
+            PlayerUnitCacheItem currentPlayerBuild = new PlayerUnitCacheItem(pair.Value.Fields);
+            MappingUnit(currentPlayerBuild);
+        }
     }
 
-    public static GameObject CreateUnitObject(Vector2Int position, string name, Transform parent)
+    private void MappingUnit(PlayerUnitCacheItem playerUnitData)
     {
+        UnitCacheTable unitsTable = Cache.LoadByType<UnitCacheTable>();
+        CacheItem unitAsCacheItem = unitsTable.GetById(playerUnitData.GetCoreId());
+        UnitCacheItem coreUnitData = new UnitCacheItem(unitAsCacheItem.Fields);
+        string modelPath = coreUnitData.GetModelPath();
+        Bector2Int size = coreUnitData.GetSize();
+
+        string name = playerUnitData.GetName();
+        Bector2Int[] position = playerUnitData.GetPosition();
+        int rotation = playerUnitData.GetRotation();
+        string id = playerUnitData.GetCoreId();
+
+        GameObject unitObj = ObjectProcessor.CreateUnitObject(position[0].ToVector2Int(), name, this.transform);
+        GameObject unitModel = CreateUnitModel(modelPath, rotation, unitObj.transform);
+
+        map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());
+
+        ObjectProcessor.AddAndPrepareUnitComponent(unitObj, unitModel.transform, id, size.ToVector2Int(), Bector2Int.MassiveToVector2Int(position));
+    }
+
+    public static GameObject CreateUnitModel(string modelPath, int rotation, Transform parent)
+    {
+        GameObject unitModelPrefab = Resources.Load<GameObject>(modelPath);
+
+        Debug.Log("create build, rotation: " + rotation);
+
+        GameObject unitModel = Instantiate(
+            unitModelPrefab, unitModelPrefab.transform.position + parent.transform.position,
+            Quaternion.Euler(new Vector3(0, rotation, 0)),
+            parent
+            );
+        unitModel.name = "Model";
+        return unitModel;
+    }
+
+    public override Entity FindObjectById(string id)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Unit childEntity = transform.GetChild(i).GetComponent<Unit>();
+            if (childEntity != null && childEntity.Id == id)
+            {
+                return childEntity;
+            }
+        }
         return null;
     }
 }

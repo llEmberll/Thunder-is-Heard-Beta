@@ -74,4 +74,9 @@ public class FightState: State
     {
         
     }
+
+    public override bool IsCellMustBeVisible(Cell cell)
+    {
+        return false;
+    }
 }

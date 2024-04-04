@@ -44,4 +44,6 @@ public abstract class State
     public abstract void OnCellMouseEnter(Cell cell);
 
     public abstract void OnCellMouseExit(Cell cell);
+
+    public abstract bool IsCellMustBeVisible(Cell cell);
 }

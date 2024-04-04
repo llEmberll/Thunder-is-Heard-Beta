@@ -154,49 +154,18 @@ public class ObjectPreview: MonoBehaviour
 
         if (buildedObjectOnScene == null)
         {
-            BuildObject();
+            model = prepareModelToExposing();
+            objectProcessor.CreateObjectOnBase(id, type, model, name, size, occypation);
+            AfterExpose();
         }
 
         else
         {
-            ReplaceObject();
+            model = prepareModelToExposing();
+            buildedObjectOnScene.GetComponent<Entity>().SetModel(model);
+            objectProcessor.ReplaceObjectOnBase(buildedObjectOnScene, occypation, rotation);
+            AfterReplace();
         }
-    }
-
-    public void BuildObject()
-    {
-        if (type.Contains("Build"))
-        {
-            Transform entity = CreateBuildObject();
-            prepareModelToExposing(entity);
-            BuildsOnBase.AddAndPrepareBuildComponent(entity.gameObject, model, id, size, occypation.ToArray());
-        }
-        
-        else if (type.Contains("Unit"))
-        {
-            Transform entity = CreateUnitObject();
-            prepareModelToExposing(entity);
-            UnitsOnBase.AddAndPrepareUnitComponent(entity.gameObject, model, id, size, occypation.ToArray());
-        }
-
-        else
-        {
-            throw new System.Exception("Неожиданный тип объекта: " + type);
-        }
-
-        map.Occypy(occypation);
-        AfterExpose();
-        EventMaster.current.ExposeObject(id, type, Bector2Int.GetVector2IntListAsBector(occypation), rotation);
-    }
-
-    public void ReplaceObject()
-    {
-        Entity objectOnSceneAsEntity = buildedObjectOnScene.GetComponent<Entity>();
-        objectOnSceneAsEntity.transform.position = transform.position;
-        objectOnSceneAsEntity.SetModel(model);
-        prepareModelToExposing(objectOnSceneAsEntity.transform);
-        objectProcessor.ReplaceObjectOnBase(buildedObjectOnScene, occypation, rotation);
-        AfterReplace();
     }
 
     public void AfterExpose()
@@ -207,20 +176,9 @@ public class ObjectPreview: MonoBehaviour
         InitModel();
     }
 
-    public Transform CreateBuildObject()
-    {
-        return BuildsOnBase.CreateBuildObject(rootPoint, name, objectsPool.transform).transform;
-    }
-
-    public Transform CreateUnitObject()
-    {
-        return UnitsOnBase.CreateUnitObject(rootPoint, name, objectsPool.transform).transform;
-    }
-
-    public Transform prepareModelToExposing(Transform parent)
+    public Transform prepareModelToExposing()
     {
         meshRenderer.material = materialModel;
-        model.SetParent(parent);
         return model;
     }
 
