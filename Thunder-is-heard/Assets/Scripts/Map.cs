@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -108,7 +109,7 @@ public class Map : MonoBehaviour
 
     public void DisplayAll()
     {
-        foreach (var keyValuePair in cells)
+        foreach (var keyValuePair in Cells)
         {
             keyValuePair.Value.renderSwitch(true);
         }
@@ -140,6 +141,28 @@ public class Map : MonoBehaviour
             if (Cells.ContainsKey(position))
             {
                 Cells[position].renderSwitch(false);
+            }
+        }
+    }
+
+    public void DisplayFree()
+    {
+        foreach (var keyValuePair in Cells)
+        {
+            if (!keyValuePair.Value.occupied)
+            {
+                keyValuePair.Value.renderSwitch(true);
+            }
+        }
+    }
+
+    public void HideOccypied()
+    {
+        foreach (var keyValuePair in Cells)
+        {
+            if (keyValuePair.Value.occupied)
+            {
+                keyValuePair.Value.renderSwitch(false);
             }
         }
     }

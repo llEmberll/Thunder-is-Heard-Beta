@@ -1,4 +1,5 @@
 
+using Newtonsoft.Json;
 using UnityEngine;
 
 
@@ -30,6 +31,8 @@ public class ResourcesData
     }
 
     [SerializeField] public int maxRub;
+
+    [JsonIgnore]
     public int MaxRub
     {
         get { return maxRub; }
@@ -37,6 +40,8 @@ public class ResourcesData
     }
 
     [SerializeField] public int frames;
+
+    [JsonIgnore]
     public int Frames
     {
         get { return frames; }
@@ -44,6 +49,8 @@ public class ResourcesData
     }
 
     [SerializeField] public int maxFrames;
+
+    [JsonIgnore]
     public int MaxFrames
     {
         get { return maxFrames; }
@@ -51,6 +58,8 @@ public class ResourcesData
     }
 
     [SerializeField] public int oil;
+
+    [JsonIgnore]
     public int Oil
     {
         get { return oil; }
@@ -58,6 +67,8 @@ public class ResourcesData
     }
 
     [SerializeField] public int maxOil;
+
+    [JsonIgnore]
     public int MaxOil
     {
         get { return maxOil; }
@@ -65,6 +76,8 @@ public class ResourcesData
     }
 
     [SerializeField] public int steel;
+
+    [JsonIgnore]
     public int Steel
     {
         get { return steel; }
@@ -72,6 +85,8 @@ public class ResourcesData
     }
 
     [SerializeField] public int maxSteel;
+
+    [JsonIgnore]
     public int MaxSteel
     {
         get { return maxSteel; }
@@ -79,6 +94,8 @@ public class ResourcesData
     }
 
     [SerializeField] public int staff;
+
+    [JsonIgnore]
     public int Staff
     {
         get { return staff; }
@@ -86,6 +103,8 @@ public class ResourcesData
     }
 
     [SerializeField] public int maxStaff;
+
+    [JsonIgnore]
     public int MaxStaff
     {
         get { return Staff; }
@@ -93,6 +112,8 @@ public class ResourcesData
     }
 
     [SerializeField] public int exp;
+
+    [JsonIgnore]
     public int Exp
     {
         get { return exp; }
@@ -100,6 +121,8 @@ public class ResourcesData
     }
 
     [SerializeField] public int maxExp;
+
+    [JsonIgnore]
     public int MaxExp
     {
         get { return maxExp; }
@@ -136,7 +159,6 @@ public class ResourcesData
         maxExp += data.maxExp;
         maxFrames += data.maxFrames;
         maxOil += data.maxOil;
-        maxOil += data.maxOil;
         maxSteel += data.maxSteel;
         maxStaff += data.maxStaff;
         maxRub += data.maxRub;
@@ -153,7 +175,6 @@ public class ResourcesData
 
         maxExp -= data.maxExp;
         maxFrames -= data.maxFrames;
-        maxOil -= data.maxOil;
         maxOil -= data.maxOil;
         maxSteel -= data.maxSteel;
         maxStaff -= data.maxStaff;

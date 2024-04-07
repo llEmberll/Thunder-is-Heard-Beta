@@ -6,30 +6,18 @@
         "externalId": "5u5df540-5f63-3107-8781-eb91b95b84i1",
         "description": "",
         "resources": {
-          "rub": 0,
+          "rub": 1500,
           "maxRub": 0,
-          "frames": 0,
+          "frames": 10,
           "maxFrames": 0,
-          "oil": 0,
+          "oil": 3,
           "maxOil": 0,
-          "steel": 0,
+          "steel": 5,
           "maxSteel": 0,
           "staff": 0,
           "maxStaff": 0,
           "exp": 0,
-          "maxExp": 0,
-          "Rub": 0,
-          "MaxRub": 0,
-          "Frames": 0,
-          "MaxFrames": 0,
-          "Oil": 0,
-          "MaxOil": 0,
-          "Steel": 0,
-          "MaxSteel": 0,
-          "Staff": 0,
-          "MaxStaff": 0,
-          "Exp": 0,
-          "MaxExp": 0
+          "maxExp": 0
         }
       }
     }

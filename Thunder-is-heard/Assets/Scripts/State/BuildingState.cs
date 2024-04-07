@@ -113,6 +113,6 @@ public class BuildingState : State
 
     public override bool IsCellMustBeVisible(Cell cell)
     {
-        return true;
+        return !cell.occupied;
     }
 }

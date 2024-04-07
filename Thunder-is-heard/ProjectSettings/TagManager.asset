@@ -22,7 +22,8 @@ TagManager:
   - Inventory
   - Cells
   - Terrain
-  - ResourceProcessor
+  - ResourcesProcessor
+  - ResourcesPanel
   layers:
   - Default
   - TransparentFX
