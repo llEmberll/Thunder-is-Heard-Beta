@@ -3079,6 +3079,7 @@ MonoBehaviour:
   framesText: {fileID: 2071601897}
   expSlider: {fileID: 1808067078}
   expText: {fileID: 1205981206}
+  rankIcon: {fileID: 672199548}
   oilSlider: {fileID: 1226579152}
   oilText: {fileID: 183362687}
   steelSlider: {fileID: 1607196781}
@@ -3775,6 +3776,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d832076b5e52c94a9507c1fe74a9b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resources:
+    rub: 0
+    maxRub: 0
+    frames: 0
+    maxFrames: 0
+    oil: 0
+    maxOil: 0
+    steel: 0
+    maxSteel: 0
+    staff: 0
+    maxStaff: 0
+    exp: 0
+    maxExp: 0
+  resourcesUI: {fileID: 0}
 --- !u!1 &575668403
 GameObject:
   m_ObjectHideFlags: 0

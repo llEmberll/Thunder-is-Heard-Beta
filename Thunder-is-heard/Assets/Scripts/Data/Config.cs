@@ -36,6 +36,51 @@ public static class Config
         { "UIBuildInventoryItemPrefab", "Prefabs/UI/GeneratedItems/Inventory/BuildItem" },
         { "UIUnitInventoryItemPrefab", "Prefabs/UI/GeneratedItems/Inventory/UnitItem" },
         { "landableUnitItem", "Prefabs/UI/GeneratedItems/UnitForLanding/LandableUnitItem" },
+        { "ranks", "Textures/Interface/Panels/Ranks" }
+    };
+
+    public static Dictionary<int, int> ranksByExp = new Dictionary<int, int>
+    {
+        { 0, 0 },
+        { 250, 1 },
+        { 500, 2 },
+        { 1100, 3 },
+        { 2050, 4 },
+        { 3400, 5 },
+        { 5200, 6 },
+        { 8600, 7 },
+        { 12500, 8 },
+        { 18250, 9 },
+        { 25700, 10 },
+        { 34000, 11 },
+        { 44100, 12 },
+        { 55500, 13 },
+        { 68450, 14 },
+        { 84000, 15 },
+        { 105800, 16 },
+        { 130000, 17 }
+    };
+
+    public static Dictionary<int, int> maxExpByRank = new Dictionary<int, int>
+    {
+        { 0, 0 },
+        { 250, 1 },
+        { 500, 2 },
+        { 1100, 3 },
+        { 2050, 4 },
+        { 3400, 5 },
+        { 5200, 6 },
+        { 8600, 7 },
+        { 12500, 8 },
+        { 18250, 9 },
+        { 25700, 10 },
+        { 34000, 11 },
+        { 44100, 12 },
+        { 55500, 13 },
+        { 68450, 14 },
+        { 84000, 15 },
+        { 105800, 16 },
+        { 130000, 17 }
     };
 
     public static Dictionary<string, string> tags = new Dictionary<string, string>
