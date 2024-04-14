@@ -24,6 +24,7 @@ TagManager:
   - Terrain
   - ResourcesProcessor
   - ResourcesPanel
+  - ShopItems
   layers:
   - Default
   - TransparentFX

@@ -13,16 +13,6 @@ public class InventoryCacheItem : CacheItem
         }
     }
 
-    public string? GetCoreId()
-    {
-        return (string?)GetField("coreId");
-    }
-
-    public void SetCoreId(string value)
-    {
-        SetField("coreId", value);
-    }
-
     public string? GetType()
     {
         return (string?)GetField("type");

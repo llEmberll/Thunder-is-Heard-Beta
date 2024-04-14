@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class ObjectProcessor : MonoBehaviour
@@ -88,6 +89,7 @@ public class ObjectProcessor : MonoBehaviour
         Destroy(obj);
 
         EventMaster.current.OnRemoveBaseObject(entity.id, entity.Type);
+        EventMaster.current.OnChangeBaseObjects();
     }
 
     public void CreateObjectOnBase(string id, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation)
@@ -117,6 +119,7 @@ public class ObjectProcessor : MonoBehaviour
 
         map.Occypy(occypation);
         EventMaster.current.ExposeObject(id, type, Bector2Int.GetVector2IntListAsBector(occypation), entity.GetComponent<Entity>().rotation);
+        EventMaster.current.OnChangeBaseObjects();
     }
 
     public static GameObject CreateBuildObject(Vector2Int position, string name, Transform parent)
@@ -182,5 +185,49 @@ public class ObjectProcessor : MonoBehaviour
         component.SetOccypation(new List<Vector2Int>(occypation));
 
         component.id = id;
+    }
+
+    public static void OnExposedBuild(string buildId, string name, Bector2Int[] occypation, int rotation)
+    {
+        PlayerBuildCacheItem exposedBuildData = new PlayerBuildCacheItem(new Dictionary<string, object>());
+        exposedBuildData.SetCoreId(buildId);
+        exposedBuildData.SetName(name);
+        exposedBuildData.SetPosition(occypation);
+        exposedBuildData.SetRotation(rotation);
+
+        PlayerBuildCacheTable exposedBuilds = Cache.LoadByType<PlayerBuildCacheTable>();
+        exposedBuilds.Add(new CacheItem[1] { exposedBuildData });
+        Cache.Save(exposedBuilds);
+    }
+
+    public static void OnExposedUnit(string unitId, string name, Bector2Int[] occypation, int rotation)
+    {
+        PlayerUnitCacheItem exposedUnitData = new PlayerUnitCacheItem(new Dictionary<string, object>());
+        exposedUnitData.SetCoreId(unitId);
+        exposedUnitData.SetName(name);
+        exposedUnitData.SetPosition(occypation);
+        exposedUnitData.SetRotation(rotation);
+
+        PlayerUnitCacheTable exposedUnits = Cache.LoadByType<PlayerUnitCacheTable>();
+        exposedUnits.Add(new CacheItem[1] { exposedUnitData });
+        Cache.Save(exposedUnits);
+    }
+
+    public static void OnBuyMaterial(string materialId)
+    {
+        InventoryCacheTable inventory = Cache.LoadByType<InventoryCacheTable>();
+        InventoryCacheItem newItem = new InventoryCacheItem(new Dictionary<string, object>()
+        {
+            { "coreId", materialId },
+            { "type", "Material" },
+            { "count", 1 }
+        }
+        );
+
+        CacheItem[] itemsForAdd = new CacheItem[1] { newItem };
+        inventory.Add(itemsForAdd);
+        Cache.Save(inventory);
+
+        EventMaster.current.OnChangeInventory();
     }
 }

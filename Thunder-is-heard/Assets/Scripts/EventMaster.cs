@@ -81,11 +81,22 @@ public class EventMaster: MonoBehaviour
         PreviewDeleted?.Invoke();
     }
 
-
     public event Action InventoryChanged;
     public void OnChangeInventory()
     {
         InventoryChanged?.Invoke();
+    }
+
+    public event Action BaseObjectsChanged;
+    public void OnChangeBaseObjects()
+    {
+        BaseObjectsChanged?.Invoke();
+    }
+
+    public event Action ShopChanged;
+    public void OnChangeShop()
+    {
+        ShopChanged?.Invoke();
     }
 
     public event Action<string, string> BaseObjectRemoved;

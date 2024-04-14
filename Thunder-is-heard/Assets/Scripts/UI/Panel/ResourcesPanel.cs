@@ -36,7 +36,6 @@ public class ResourcesPanel : Panel
         Sprite[] sprites = Resources.LoadAll<Sprite>(Config.resources["ranks"]);
         int rank = Config.ranksByExp[readings.maxExp];
         Sprite rankSprite = sprites[rank];
-
         rankIcon.sprite = rankSprite;
 
 

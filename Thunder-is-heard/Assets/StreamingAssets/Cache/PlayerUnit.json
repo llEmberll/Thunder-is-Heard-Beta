@@ -1,30 +1,75 @@
 ﻿{
   "items": {
-    "6586231d-72b5-4f16-b0f7-14ce6f2f76fa": {
+    "c7b51f4d-ea6a-4821-88b0-845c0e9aa15e": {
       "fields": {
-        "externalId": "6586231d-72b5-4f16-b0f7-14ce6f2f76fa",
+        "externalId": "c7b51f4d-ea6a-4821-88b0-845c0e9aa15e",
         "description": "",
         "rotation": 0,
         "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
         "name": "Assaulters",
         "position": [
           {
-            "x": 1,
+            "x": 7,
+            "y": 3
+          }
+        ]
+      }
+    },
+    "3b4d95ba-c0bc-430d-9888-13d5171aff74": {
+      "fields": {
+        "externalId": "3b4d95ba-c0bc-430d-9888-13d5171aff74",
+        "description": "",
+        "rotation": 0,
+        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "name": "Assaulters",
+        "position": [
+          {
+            "x": 7,
+            "y": 4
+          }
+        ]
+      }
+    },
+    "8217f8bd-9fe1-4c9d-aa14-8be082e4072f": {
+      "fields": {
+        "externalId": "8217f8bd-9fe1-4c9d-aa14-8be082e4072f",
+        "description": "",
+        "rotation": 0,
+        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "name": "Assaulters",
+        "position": [
+          {
+            "x": 7,
+            "y": 5
+          }
+        ]
+      }
+    },
+    "6e681671-f625-4293-a94b-175ad924e9af": {
+      "fields": {
+        "externalId": "6e681671-f625-4293-a94b-175ad924e9af",
+        "description": "",
+        "rotation": 0,
+        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "name": "Assaulters",
+        "position": [
+          {
+            "x": 3,
             "y": 1
           }
         ]
       }
     },
-    "03c7ceb2-4e2f-4aab-abdd-dec449cf7a2d": {
+    "f076a122-a413-4e25-9e20-9fb4ddda221a": {
       "fields": {
-        "externalId": "03c7ceb2-4e2f-4aab-abdd-dec449cf7a2d",
+        "externalId": "f076a122-a413-4e25-9e20-9fb4ddda221a",
         "description": "",
         "rotation": 0,
         "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
         "name": "Assaulters",
         "position": [
           {
-            "x": 2,
+            "x": 4,
             "y": 1
           }
         ]

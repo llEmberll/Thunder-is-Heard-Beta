@@ -36,29 +36,83 @@
         ]
       }
     },
-    "dcadc71d-e3f5-46ad-97c5-d2b4b8322343": {
+    "571b44c7-9e38-4edc-8e58-75dfdd2ffc16": {
       "fields": {
-        "externalId": "dcadc71d-e3f5-46ad-97c5-d2b4b8322343",
+        "externalId": "571b44c7-9e38-4edc-8e58-75dfdd2ffc16",
         "description": "",
         "rotation": 90,
         "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
         "name": "Mine",
         "position": [
           {
-            "x": 3,
-            "y": 3
+            "x": 6,
+            "y": 6
           },
           {
-            "x": 3,
+            "x": 6,
+            "y": 7
+          },
+          {
+            "x": 7,
+            "y": 6
+          },
+          {
+            "x": 7,
+            "y": 7
+          }
+        ]
+      }
+    },
+    "7143df9b-f3fe-4baf-864d-33ea923e373a": {
+      "fields": {
+        "externalId": "7143df9b-f3fe-4baf-864d-33ea923e373a",
+        "description": "",
+        "rotation": 0,
+        "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
+        "name": "Mine",
+        "position": [
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 7
+          },
+          {
+            "x": 5,
+            "y": 6
+          },
+          {
+            "x": 5,
+            "y": 7
+          }
+        ]
+      }
+    },
+    "406bf5da-6673-43db-9354-c2d38b900bb6": {
+      "fields": {
+        "externalId": "406bf5da-6673-43db-9354-c2d38b900bb6",
+        "description": "",
+        "rotation": 0,
+        "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
+        "name": "Mine",
+        "position": [
+          {
+            "x": 4,
             "y": 4
           },
           {
             "x": 4,
-            "y": 3
+            "y": 5
           },
           {
-            "x": 4,
+            "x": 5,
             "y": 4
+          },
+          {
+            "x": 5,
+            "y": 5
           }
         ]
       }

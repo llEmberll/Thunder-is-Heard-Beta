@@ -48,6 +48,11 @@ public class UnitCacheItem : CacheItem
         {
             SetSize(new Bector2Int(new UnityEngine.Vector2Int(1, 1)));
         }
+
+        if (!objFields.ContainsKey("iconPath"))
+        {
+            SetIconPath("");
+        }
     }
 
     public string? GetModelPath()

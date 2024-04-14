@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ResourcesProcessor : MonoBehaviour
 {
     public ResourcesData resources;
@@ -15,6 +16,11 @@ public class ResourcesProcessor : MonoBehaviour
 
         resourcesUI = GameObject.FindGameObjectWithTag("ResourcesPanel").GetComponent<ResourcesPanel>();
         UpdateUI();
+    }
+
+    public void Start()
+    {
+        EventMaster.current.BaseObjectsChanged += UpdateResourcesFromBaseObjects;
     }
 
     public void UpdateUI()
@@ -73,11 +79,6 @@ public class ResourcesProcessor : MonoBehaviour
         return resourcesFromUnits;
     }
 
-    public int LoadStaffFromBaseData()
-    {
-        return 0;
-    }
-
     public ResourcesData LoadResourcesFromResourcesData()
     {
         ResourcesCacheTable resourceTable = Cache.LoadByType<ResourcesCacheTable>();
@@ -87,8 +88,9 @@ public class ResourcesProcessor : MonoBehaviour
     public void Save()
     {
         ResourcesCacheTable resourceTable = Cache.LoadByType<ResourcesCacheTable>();
-        resourceTable.SetResources(resources);
+        resourceTable.SetResources(resources.GetResourcesWithoutLimits());
         Cache.Save(resourceTable);
+        resourcesUI.UpdateAll(resources);
     }
 
     public void AddResources(ResourcesData resourcesForAdd)
@@ -100,9 +102,22 @@ public class ResourcesProcessor : MonoBehaviour
     {
         resources.Substract(resourcesForSubstract);
         if (!resources.IsValid()) {
+            resources.Add(resourcesForSubstract);
             throw new Exception("shortage of resources");
         }
 
         return;
+    }
+
+    public bool IsAvailableToBuy(ResourcesData cost)
+    {
+        return resources.IsCoveringCost(cost);
+    }
+
+    public void UpdateResourcesFromBaseObjects()
+    {
+        resources = resources.GetResourcesWithoutLimits();
+        resources.Add(LoadResourcesFromObjectsOnBase());
+        UpdateUI();
     }
 }

@@ -33,35 +33,19 @@ public static class Config
         { "entityPrefabs", "Prefabs/Entity/" },
         { "prefabPreview", "Prefabs/Custom/Preview" },
         { "emptyPrefab", "Prefabs/Entity/Basic/Empty" },
+        { "resourceForUIItem", "Prefabs/UI/GeneratedItems/Common/Resource/ResourceElement" },
         { "UIBuildInventoryItemPrefab", "Prefabs/UI/GeneratedItems/Inventory/BuildItem" },
         { "UIUnitInventoryItemPrefab", "Prefabs/UI/GeneratedItems/Inventory/UnitItem" },
+        { "UIMaterialInventoryItemPrefab", "Prefabs/UI/GeneratedItems/Inventory/MaterialItem" },
+        { "UIBuildShopItemPrefab", "Prefabs/UI/GeneratedItems/Shop/BuildItem" },
+        { "UIUnitShopItemPrefab", "Prefabs/UI/GeneratedItems/Shop/UnitItem" },
+        { "UIMaterialShopItemPrefab", "Prefabs/UI/GeneratedItems/Shop/MaterialItem" },
         { "landableUnitItem", "Prefabs/UI/GeneratedItems/UnitForLanding/LandableUnitItem" },
-        { "ranks", "Textures/Interface/Panels/Ranks" }
+        { "ranks", "Textures/Interface/Icons/Ranks/Ranks" },
+        { "resourcesIcons", "Textures/Interface/Resources/Resources" }
     };
 
     public static Dictionary<int, int> ranksByExp = new Dictionary<int, int>
-    {
-        { 0, 0 },
-        { 250, 1 },
-        { 500, 2 },
-        { 1100, 3 },
-        { 2050, 4 },
-        { 3400, 5 },
-        { 5200, 6 },
-        { 8600, 7 },
-        { 12500, 8 },
-        { 18250, 9 },
-        { 25700, 10 },
-        { 34000, 11 },
-        { 44100, 12 },
-        { 55500, 13 },
-        { 68450, 14 },
-        { 84000, 15 },
-        { 105800, 16 },
-        { 130000, 17 }
-    };
-
-    public static Dictionary<int, int> maxExpByRank = new Dictionary<int, int>
     {
         { 0, 0 },
         { 250, 1 },
@@ -88,7 +72,8 @@ public static class Config
         {"federation", "Federation" },
         {"empire", "Empire" },
         {"mission", "Mission" },
-        { "inventoryItems", "InventoryItems" }
+        { "inventoryItems", "InventoryItems" },
+        { "shopItems", "ShopItems" }
     };
 
     public static Dictionary<string, string> exposableObjectsTypeToObjectsOnSceneTag = new Dictionary<string, string>

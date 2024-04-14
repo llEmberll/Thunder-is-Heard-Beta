@@ -1,0 +1,32 @@
+﻿{
+  "name": "Shop",
+  "items": {
+    "17a0b5c7-8fb1-4f6f-958a-16cdda359b61": {
+      "fields": {
+        "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
+        "type": "Build",
+        "count": 7,
+        "externalId": "17a0b5c7-8fb1-4f6f-958a-16cdda359b61",
+        "description": ""
+      }
+    },
+    "161700de-7dec-4897-9810-aedef0db8719": {
+      "fields": {
+        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "type": "Unit",
+        "count": 2,
+        "externalId": "161700de-7dec-4897-9810-aedef0db8719",
+        "description": ""
+      }
+    },
+    "5a5d8f47-1368-4d59-8f48-a1f1d1aefabe": {
+      "fields": {
+        "coreId": "31391161-4be3-4149-833d-7fdde496946c",
+        "type": "Material",
+        "count": 3,
+        "externalId": "5a5d8f47-1368-4d59-8f48-a1f1d1aefabe",
+        "description": ""
+      }
+    }
+  }
+}

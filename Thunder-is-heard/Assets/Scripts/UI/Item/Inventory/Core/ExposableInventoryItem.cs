@@ -24,13 +24,6 @@ public abstract class ExposableInventoryItem : InventoryItem
         UpdateUI();
     }
 
-    public void InitCoreId()
-    {
-        InventoryCacheTable inventory = Cache.LoadByType<InventoryCacheTable>();
-        InventoryCacheItem inventoryItem = new InventoryCacheItem(inventory.GetById(id).Fields);
-        coreId = inventoryItem.GetCoreId();
-    }
-
     public override void UpdateUI()
     {
         TmpHealth.text = health.ToString();

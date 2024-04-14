@@ -10,15 +10,6 @@ public class BuildInventoryItem: ExposableInventoryItem
 
     public override void SaveExpose(Bector2Int[] occypation, int rotation)
     {
-        PlayerBuildCacheItem exposedBuildData = new PlayerBuildCacheItem(new Dictionary<string, object>());
-        exposedBuildData.SetCoreId(coreId);
-        exposedBuildData.SetName(name);
-        exposedBuildData.SetPosition(occypation);
-        exposedBuildData.SetRotation(rotation);
-
-        PlayerBuildCacheTable exposedBuilds = Cache.LoadByType<PlayerBuildCacheTable>();
-        exposedBuilds.Add(new CacheItem[1] { exposedBuildData });
-        Cache.Save(exposedBuilds);
-
+        ObjectProcessor.OnExposedBuild(coreId, name, occypation, rotation);
     }
 }

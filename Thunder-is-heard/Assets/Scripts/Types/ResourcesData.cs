@@ -144,9 +144,32 @@ public class ResourcesData
         clone.maxSteel = maxSteel;
         clone.maxStaff = maxStaff;
         clone.maxRub = maxRub;
+     return clone;
+    }
+
+    public ResourcesData GetResourcesWithoutLimits()
+    {
+        ResourcesData clone = new ResourcesData();
+        clone.exp = exp;
+        clone.rub = rub;
+        clone.oil = oil;
+        clone.frames = frames;
+        clone.steel = steel;
         return clone;
     }
 
+    public ResourcesData GetLimits()
+    {
+        ResourcesData clone = new ResourcesData();
+        clone.maxExp = maxExp;
+        clone.maxFrames = maxFrames;
+        clone.maxOil = maxOil;
+        clone.maxSteel = maxSteel;
+        clone.maxStaff = maxStaff;
+        clone.maxRub = maxRub;
+        return clone;
+    }
+    
     public void Add(ResourcesData data)
     {
         exp += data.exp;
@@ -201,5 +224,26 @@ public class ResourcesData
         }
 
         return true;
+    }
+
+    public bool IsCoveringCost(ResourcesData cost)
+    {
+        ResourcesData clone = this.Clone();
+        clone.Substract(cost);
+        return clone.IsValid();
+    }
+
+    public bool IsOverflow()
+    {
+        if (
+            maxOil < oil ||
+            maxSteel < steel ||
+            maxStaff < staff
+            )
+        {
+            return true;
+        }
+
+        return false;
     }
 }

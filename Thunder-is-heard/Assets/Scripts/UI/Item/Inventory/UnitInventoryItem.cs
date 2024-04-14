@@ -36,14 +36,6 @@ public class UnitInventoryItem: ExposableInventoryItem
 
     public override void SaveExpose(Bector2Int[] occypation, int rotation)
     {
-        PlayerUnitCacheItem exposedUnitData = new PlayerUnitCacheItem(new Dictionary<string, object>());
-        exposedUnitData.SetCoreId(coreId);
-        exposedUnitData.SetName(name);
-        exposedUnitData.SetPosition(occypation);
-        exposedUnitData.SetRotation(rotation);
-
-        PlayerUnitCacheTable exposedUnits = Cache.LoadByType<PlayerUnitCacheTable>();
-        exposedUnits.Add(new CacheItem[1] { exposedUnitData });
-        Cache.Save(exposedUnits);
+        ObjectProcessor.OnExposedUnit(coreId, name, occypation, rotation);
     }
 }

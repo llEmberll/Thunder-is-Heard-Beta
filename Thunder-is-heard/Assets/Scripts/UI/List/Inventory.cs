@@ -54,7 +54,11 @@ public class Inventory : ItemList
                     UnitInventoryItem unit = CreateUnit(inventoryItemAsInventoryItem, unitData);
                     items.Add(unit);
                     break;
-
+                case "Material":
+                    MaterialCacheItem materialData = new MaterialCacheItem(item.Fields);
+                    MaterialInventoryItem material = CreateMaterial(inventoryItemAsInventoryItem, materialData);
+                    items.Add(material);
+                    break;
             }
         }
     }
@@ -103,6 +107,22 @@ public class Inventory : ItemList
 
         unitComponent.Init(id, name, gives, health, damage, distance, mobility, count, description, icon);
         return unitComponent;
+    }
+
+    public MaterialInventoryItem CreateMaterial(InventoryCacheItem inventoryItemData, MaterialCacheItem materialData)
+    {
+        string id = inventoryItemData.GetExternalId();
+        string name = materialData.GetName();
+        int count = inventoryItemData.GetCount();
+        string description = materialData.GetDescrption();
+        Sprite icon = Resources.Load<Sprite>(materialData.GetIconPath());
+
+        GameObject itemObject = CreateObject(Config.resources["UI" + "Material" + "InventoryItemPrefab"]);
+        itemObject.name = name;
+        MaterialInventoryItem materialComponent = itemObject.GetComponent<MaterialInventoryItem>();
+
+        materialComponent.Init(id, name, count, description, icon);
+        return materialComponent;
     }
 
     public GameObject CreateObject(string prefabPath)

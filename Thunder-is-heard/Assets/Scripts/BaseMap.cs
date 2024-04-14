@@ -11,7 +11,6 @@ public class BaseMap : Map
 
     public void Start()
     {
-
     }
 
     public void InitTerrain()
@@ -152,6 +151,16 @@ public class BaseMap : Map
         Cache.Save(unitsTable);
     }
 
+    public void CreateMaterial()
+    {
+        MaterialCacheTable materialsTable = Cache.LoadByType<MaterialCacheTable>();
+        MaterialCacheItem megaphone = new MaterialCacheItem(new Dictionary<string, object>());
+        megaphone.SetName("Megaphone");
+
+        materialsTable.Add(new CacheItem[1] { megaphone });
+        Cache.Save(materialsTable);
+    }
+
     public void CreateInventory()
     {
         InventoryCacheTable inventoryTable = Cache.LoadByType<InventoryCacheTable>();
@@ -191,5 +200,68 @@ public class BaseMap : Map
 
         inventoryTable.Add(new CacheItem[1] { assaulters });
         Cache.Save(inventoryTable);
+    }
+
+    public void CreateInventoryMaterial()
+    {
+        InventoryCacheTable inventoryTable = Cache.LoadByType<InventoryCacheTable>();
+        InventoryCacheItem megaphone = new InventoryCacheItem(new Dictionary<string, object>()
+        {
+            { "coreId", "31391161-4be3-4149-833d-7fdde496946c" },
+            { "type", "Material" },
+            { "count", 1 }
+        }
+        );
+
+        inventoryTable.Add(new CacheItem[1] { megaphone });
+        Cache.Save(inventoryTable);
+    }
+
+    public void CreateShopMaterial()
+    {
+        ShopCacheTable shopTable = Cache.LoadByType<ShopCacheTable>();
+
+        ShopCacheItem megaphone = new ShopCacheItem(new Dictionary<string, object>()
+        {
+            { "coreId", "31391161-4be3-4149-833d-7fdde496946c" },
+            { "type", "Material" },
+            { "count", 2 }
+        }
+        );
+
+
+        CacheItem[] itemsForAdd = new CacheItem[1] { megaphone };
+        shopTable.Add(itemsForAdd);
+
+        Cache.Save(shopTable);
+    }
+
+
+    public void CreateShop()
+    {
+        ShopCacheTable shopTable = Cache.LoadByType<ShopCacheTable>();
+
+
+        ShopCacheItem mine = new ShopCacheItem(new Dictionary<string, object>()
+        {
+            { "coreId", "4b8a1805-3af8-4144-8bdb-62c93852b443" },
+            { "type", "Build" },
+            { "count", 2 }
+        }
+        );
+
+        ShopCacheItem assaulters = new ShopCacheItem(new Dictionary<string, object>()
+        {
+            { "coreId", "bd1b7986-cf1a-4d76-8b14-c68bf10f363f" },
+            { "type", "Unit" },
+            { "count", 2 }
+        }
+        );
+
+
+        CacheItem[] itemsForAdd = new CacheItem[2] { mine, assaulters };
+        shopTable.Add(itemsForAdd);
+
+        Cache.Save(shopTable);
     }
 }
