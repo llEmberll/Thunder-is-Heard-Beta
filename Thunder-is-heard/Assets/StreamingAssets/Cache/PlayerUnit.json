@@ -1,20 +1,6 @@
 ﻿{
+  "name": "PlayerUnit",
   "items": {
-    "c7b51f4d-ea6a-4821-88b0-845c0e9aa15e": {
-      "fields": {
-        "externalId": "c7b51f4d-ea6a-4821-88b0-845c0e9aa15e",
-        "description": "",
-        "rotation": 0,
-        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-        "name": "Assaulters",
-        "position": [
-          {
-            "x": 7,
-            "y": 3
-          }
-        ]
-      }
-    },
     "3b4d95ba-c0bc-430d-9888-13d5171aff74": {
       "fields": {
         "externalId": "3b4d95ba-c0bc-430d-9888-13d5171aff74",
@@ -74,7 +60,21 @@
           }
         ]
       }
+    },
+    "7564f949-cceb-4b33-9a7b-f160809c3a2d": {
+      "fields": {
+        "externalId": "7564f949-cceb-4b33-9a7b-f160809c3a2d",
+        "description": "",
+        "rotation": 0,
+        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "name": "Assaulters",
+        "position": [
+          {
+            "x": 4,
+            "y": 2
+          }
+        ]
+      }
     }
-  },
-  "name": "PlayerUnit"
+  }
 }

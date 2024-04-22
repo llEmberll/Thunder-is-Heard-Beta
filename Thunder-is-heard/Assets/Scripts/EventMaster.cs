@@ -104,4 +104,16 @@ public class EventMaster: MonoBehaviour
     {
         BaseObjectRemoved?.Invoke(id, type);
     }
+
+    public event Action<Entity> EnteredOnObject;
+    public void OnObjectEnter(Entity obj)
+    {
+        EnteredOnObject?.Invoke(obj);
+    }
+
+    public event Action<Entity> ExitedOnObject;
+    public void OnObjectExit(Entity obj)
+    {
+        ExitedOnObject?.Invoke(obj);
+    }
 }

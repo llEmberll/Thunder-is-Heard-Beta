@@ -100,14 +100,29 @@ public class ObjectProcessor : MonoBehaviour
         Transform entity = null;
         if (type.Contains("Build"))
         {
+            BuildCacheTable coreBuildDatas = Cache.LoadByType<BuildCacheTable>();
+            CacheItem coreItemData = coreBuildDatas.GetById(id);
+            BuildCacheItem coreBuildData = new BuildCacheItem(coreItemData.Fields);
+            int health = coreBuildData.GetHealth();
+            int damage = coreBuildData.GetDamage();
+            int distance = coreBuildData.GetDistance();
+
             entity = CreateBuildObject(rootPoint, objName, objectsPool.transform).transform;
-            AddAndPrepareBuildComponent(entity.gameObject, model, id, size, occypation.ToArray());
+            AddAndPrepareBuildComponent(entity.gameObject, model, id, objName, size, occypation.ToArray(), health, damage, distance, Config.sides["ally"]);
         }
 
         else if (type.Contains("Unit"))
         {
+            UnitCacheTable coreUnitDatas = Cache.LoadByType<UnitCacheTable>();
+            CacheItem coreItemData = coreUnitDatas.GetById(id);
+            UnitCacheItem coreUnitData = new UnitCacheItem(coreItemData.Fields);
+            int health = coreUnitData.GetHealth();
+            int damage = coreUnitData.GetDamage();
+            int distance = coreUnitData.GetDistance();
+            int mobility = coreUnitData.GetMobility();
+
             entity = CreateUnitObject(rootPoint, objName, objectsPool.transform).transform;
-            AddAndPrepareUnitComponent(entity.gameObject, model, id, size, occypation.ToArray());
+            AddAndPrepareUnitComponent(entity.gameObject, model, id, objName, size, occypation.ToArray(), health, damage, distance, mobility, Config.sides["ally"]);
         }
 
         else
@@ -168,21 +183,28 @@ public class ObjectProcessor : MonoBehaviour
         Cache.Save(baseObjectsTable);
     }
 
-    public static void AddAndPrepareBuildComponent(GameObject buildObj, Transform model, string id, Vector2Int size, Vector2Int[] occypation)
+    public static void AddAndPrepareBuildComponent(GameObject buildObj, Transform model, string id, string objName,  Vector2Int size, Vector2Int[] occypation, int health, int damage, int distance, string side)
     {
         Build component = buildObj.AddComponent<Build>();
+        component.SetName(objName);
         component.SetOriginalSize(size);
         component.SetModel(model);
         component.SetOccypation(new List<Vector2Int>(occypation));
+        component.SetAttributes(health, damage, distance, 0);
+        component.SetSide(side);
+
         component.id = id;
     }
 
-    public static void AddAndPrepareUnitComponent(GameObject unitObj, Transform model, string id, Vector2Int size, Vector2Int[] occypation)
+    public static void AddAndPrepareUnitComponent(GameObject unitObj, Transform model, string id, string objName, Vector2Int size, Vector2Int[] occypation, int health, int damage, int distance, int mobility, string side)
     {
         Unit component = unitObj.AddComponent<Unit>();
+        component.SetName(objName);
         component.SetOriginalSize(size);
         component.SetModel(model);
         component.SetOccypation(new List<Vector2Int>(occypation));
+        component.SetAttributes(health, damage, distance, mobility);
+        component.SetSide(side);
 
         component.id = id;
     }

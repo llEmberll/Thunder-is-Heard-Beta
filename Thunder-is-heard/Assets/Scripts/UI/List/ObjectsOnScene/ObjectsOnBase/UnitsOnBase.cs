@@ -27,18 +27,23 @@ public class UnitsOnBase : ObjectsOnBase
         UnitCacheItem coreUnitData = new UnitCacheItem(unitAsCacheItem.Fields);
         string modelPath = coreUnitData.GetModelPath();
         Bector2Int size = coreUnitData.GetSize();
+        int health = coreUnitData.GetHealth();
+        int damage = coreUnitData.GetDamage();
+        int distance = coreUnitData.GetDistance();
+        int mobility = coreUnitData.GetMobility();
 
         string name = playerUnitData.GetName();
         Bector2Int[] position = playerUnitData.GetPosition();
         int rotation = playerUnitData.GetRotation();
         string id = playerUnitData.GetCoreId();
 
+
         GameObject unitObj = ObjectProcessor.CreateUnitObject(position[0].ToVector2Int(), name, this.transform);
         GameObject unitModel = CreateUnitModel(modelPath, rotation, unitObj.transform);
 
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());
 
-        ObjectProcessor.AddAndPrepareUnitComponent(unitObj, unitModel.transform, id, size.ToVector2Int(), Bector2Int.MassiveToVector2Int(position));
+        ObjectProcessor.AddAndPrepareUnitComponent(unitObj, unitModel.transform, id, name, size.ToVector2Int(), Bector2Int.MassiveToVector2Int(position), health, damage, distance, mobility, Config.sides["ally"]);
     }
 
     public static GameObject CreateUnitModel(string modelPath, int rotation, Transform parent)

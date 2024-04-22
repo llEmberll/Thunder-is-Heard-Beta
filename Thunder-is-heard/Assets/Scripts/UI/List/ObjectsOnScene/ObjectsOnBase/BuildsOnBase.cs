@@ -27,6 +27,9 @@ public class BuildsOnBase : ObjectsOnBase
         BuildCacheItem coreBuildData = new BuildCacheItem(buildAsCacheItem.Fields);
         string modelPath = coreBuildData.GetModelPath();
         Bector2Int size = coreBuildData.GetSize();
+        int health = coreBuildData.GetHealth();
+        int damage = coreBuildData.GetDamage();
+        int distance = coreBuildData.GetDistance();
 
         string name = playerBuildData.GetName();
         Bector2Int[] position = playerBuildData.GetPosition();
@@ -39,7 +42,7 @@ public class BuildsOnBase : ObjectsOnBase
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());
         SetModelOffsetByRotation(buildModel.transform, size, rotation);
 
-       ObjectProcessor.AddAndPrepareBuildComponent(buildObj, buildModel.transform, id, size.ToVector2Int(), Bector2Int.MassiveToVector2Int(position));
+       ObjectProcessor.AddAndPrepareBuildComponent(buildObj, buildModel.transform, id, name, size.ToVector2Int(), Bector2Int.MassiveToVector2Int(position), health, damage, distance, Config.sides["ally"]);
     }
 
     public static GameObject CreateBuildModel(string modelPath, int rotation, Transform parent)

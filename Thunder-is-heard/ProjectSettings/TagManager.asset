@@ -25,6 +25,7 @@ TagManager:
   - ResourcesProcessor
   - ResourcesPanel
   - ShopItems
+  - Selector
   layers:
   - Default
   - TransparentFX

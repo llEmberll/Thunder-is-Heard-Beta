@@ -42,7 +42,12 @@ public static class Config
         { "UIMaterialShopItemPrefab", "Prefabs/UI/GeneratedItems/Shop/MaterialItem" },
         { "landableUnitItem", "Prefabs/UI/GeneratedItems/UnitForLanding/LandableUnitItem" },
         { "ranks", "Textures/Interface/Icons/Ranks/Ranks" },
-        { "resourcesIcons", "Textures/Interface/Resources/Resources" }
+        { "resourcesIcons", "Textures/Interface/Resources/Resources" },
+        { "enemySelector", "Textures/Interface/Selections/EnemySelector" },
+        { "allySelector", "Textures/Interface/Selections/AllySelector" },
+        { "neutralSelector", "Textures/Interface/Selections/NeutralSelector" },
+        { "attackableSelector", "Textures/Interface/Selections/AttackableSelector" },
+        { "attackRadius", "Textures/Interface/Selections/AttackRadius" },
     };
 
     public static Dictionary<int, int> ranksByExp = new Dictionary<int, int>
@@ -88,5 +93,12 @@ public static class Config
     {
         {"Base", "Prefabs/Terrain/Base/Terrain" },
         { "Common", "Prefabs/Terrain/" }
+    };
+
+    public static Dictionary<string, string> sides = new Dictionary<string, string>
+    {
+        {"ally", "Ally" },
+        { "enemy", "Enemy" },
+        { "neutral", "Neutral" }
     };
 }

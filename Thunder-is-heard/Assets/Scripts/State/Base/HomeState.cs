@@ -1,3 +1,6 @@
+using UnityEngine;
+
+
 public class HomeState: State
 {
     public override string stateName
@@ -34,12 +37,12 @@ public class HomeState: State
 
     public override void OnBuildMouseEnter(Build build)
     {
-        
+        EventMaster.current.OnObjectEnter(build);
     }
 
     public override void OnBuildMouseExit(Build build)
     {
-        
+        EventMaster.current.OnObjectExit(build);
     }
 
     public override void OnUnitClick(Unit unit)
@@ -49,12 +52,12 @@ public class HomeState: State
 
     public override void OnUnitMouseEnter(Unit unit)
     {
-        
+        EventMaster.current.OnObjectEnter(unit);
     }
 
     public override void OnUnitMouseExit(Unit unit)
     {
-        
+        EventMaster.current.OnObjectExit(unit);
     }
 
 

@@ -10,25 +10,7 @@ public class Unit : Entity, IMovable, IDamageable, IAttack, ITransfer
         {
             return "Unit";
         }
-	}	
-    public StateMachine stateMachine = new StateMachine();
-
-    public SceneState sceneState;
-
-    public void Start()
-    {
-        sceneState = GameObject.FindWithTag("State").GetComponent<SceneState>();
-        
-        stateMachine.Initialize(sceneState.GetCurrentState());
-        
-        //OnChangeStateEvent
-        EventMaster.current.StateChanged += OnChangeState;
-    }
-
-    public override void OnChangeState(State newState)
-    {
-        stateMachine.ChangeState(newState);
-    }
+	}
     
     public void Move()
     {
