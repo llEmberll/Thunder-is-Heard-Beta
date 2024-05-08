@@ -30,11 +30,15 @@ public class BuildsOnBase : ObjectsOnBase
         int health = coreBuildData.GetHealth();
         int damage = coreBuildData.GetDamage();
         int distance = coreBuildData.GetDistance();
+        string interactionComponentName = coreBuildData.GetInteractionComponentName();
+        string interactionComponentType = coreBuildData.GetInteractionComponentType();
 
         string name = playerBuildData.GetName();
         Bector2Int[] position = playerBuildData.GetPosition();
         int rotation = playerBuildData.GetRotation();
-        string id = playerBuildData.GetCoreId();
+        string coreId = playerBuildData.GetCoreId();
+        string childId = playerBuildData.GetExternalId();
+        string workStatus = playerBuildData.GetWorkStatus();
 
         GameObject buildObj = ObjectProcessor.CreateBuildObject(position[0].ToVector2Int(), name, this.transform);
         GameObject buildModel = CreateBuildModel(modelPath, rotation, buildObj.transform);
@@ -42,7 +46,22 @@ public class BuildsOnBase : ObjectsOnBase
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());
         SetModelOffsetByRotation(buildModel.transform, size, rotation);
 
-       ObjectProcessor.AddAndPrepareBuildComponent(buildObj, buildModel.transform, id, name, size.ToVector2Int(), Bector2Int.MassiveToVector2Int(position), health, damage, distance, Config.sides["ally"]);
+        ObjectProcessor.AddAndPrepareBuildComponent(
+            buildObj, 
+            buildModel.transform, 
+            coreId, 
+            childId, 
+            name, 
+            size.ToVector2Int(), 
+            Bector2Int.MassiveToVector2Int(position), 
+            health, 
+            damage, 
+            distance, 
+            Config.sides["ally"], 
+            interactionComponentName, 
+            interactionComponentType,
+            workStatus
+            );
     }
 
     public static GameObject CreateBuildModel(string modelPath, int rotation, Transform parent)
@@ -85,7 +104,7 @@ public class BuildsOnBase : ObjectsOnBase
         for (int i = 0; i < transform.childCount; i++)
         {
             Build childEntity = transform.GetChild(i).GetComponent<Build>();
-            if (childEntity != null && childEntity.Id == id)
+            if (childEntity != null && childEntity.CoreId == id)
             {
                 return childEntity;
             }

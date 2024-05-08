@@ -109,8 +109,8 @@ public abstract class ExposableShopItem : ShopItem
     {
         if (objId == coreId && objType == Type)
         {
-            SaveExpose(occypation, rotation);
-
+            resourcesProcessor.SubstractResources(costData);
+            resourcesProcessor.Save();
             if (count < 2)
             {
                 Finish();
@@ -133,7 +133,5 @@ public abstract class ExposableShopItem : ShopItem
             EventMaster.current.OnExitBuildMode();
         }
     }
-
-    public abstract void SaveExpose(Bector2Int[] occypation, int rotation);
 }
 

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class ObjectProcessor : MonoBehaviour
@@ -11,6 +10,8 @@ public class ObjectProcessor : MonoBehaviour
     public void Start()
     {
         map = GameObject.FindGameObjectWithTag("Map").GetComponent<Map>();
+
+        EventMaster.current.ObjectOnBaseWorkStatusChanged += ChangeObjectOnBaseWorkStatus;
     }
 
     public static void PutSelectedObjectOnBaseToInventory()
@@ -88,11 +89,11 @@ public class ObjectProcessor : MonoBehaviour
         Cache.Save(baseObjectsTable);
         Destroy(obj);
 
-        EventMaster.current.OnRemoveBaseObject(entity.id, entity.Type);
+        EventMaster.current.OnRemoveBaseObject(entity.coreId, entity.Type);
         EventMaster.current.OnChangeBaseObjects();
     }
 
-    public void CreateObjectOnBase(string id, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation)
+    public void CreateObjectOnBase(string coreId, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation)
     {
         Vector2Int rootPoint = occypation.First();
         ObjectsOnBase objectsPool = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]).GetComponent<ObjectsOnBase>();
@@ -101,20 +102,46 @@ public class ObjectProcessor : MonoBehaviour
         if (type.Contains("Build"))
         {
             BuildCacheTable coreBuildDatas = Cache.LoadByType<BuildCacheTable>();
-            CacheItem coreItemData = coreBuildDatas.GetById(id);
+            CacheItem coreItemData = coreBuildDatas.GetById(coreId);
             BuildCacheItem coreBuildData = new BuildCacheItem(coreItemData.Fields);
             int health = coreBuildData.GetHealth();
             int damage = coreBuildData.GetDamage();
             int distance = coreBuildData.GetDistance();
+            string interactionComponentName = coreBuildData.GetInteractionComponentName();
+            string interactionComponentType = coreBuildData.GetInteractionComponentType();
 
             entity = CreateBuildObject(rootPoint, objName, objectsPool.transform).transform;
-            AddAndPrepareBuildComponent(entity.gameObject, model, id, objName, size, occypation.ToArray(), health, damage, distance, Config.sides["ally"]);
+
+            PlayerBuildCacheItem playerBuildCacheItem = AddNewBuildOnBaseToCache(
+                coreId, 
+                objName, 
+                Bector2Int.GetVector2IntListAsBector(occypation), 
+                Entity.GetDeterminedRotationByModel(model),
+                WorkStatuses.idle
+                );
+
+            AddAndPrepareBuildComponent(
+                entity.gameObject, 
+                model, 
+                coreId, 
+                playerBuildCacheItem.GetExternalId(), 
+                objName, 
+                size, 
+                occypation.ToArray(), 
+                health, 
+                damage, 
+                distance, 
+                Config.sides["ally"], 
+                interactionComponentName,
+                interactionComponentType,
+                WorkStatuses.idle
+                );
         }
 
         else if (type.Contains("Unit"))
         {
             UnitCacheTable coreUnitDatas = Cache.LoadByType<UnitCacheTable>();
-            CacheItem coreItemData = coreUnitDatas.GetById(id);
+            CacheItem coreItemData = coreUnitDatas.GetById(coreId);
             UnitCacheItem coreUnitData = new UnitCacheItem(coreItemData.Fields);
             int health = coreUnitData.GetHealth();
             int damage = coreUnitData.GetDamage();
@@ -122,7 +149,28 @@ public class ObjectProcessor : MonoBehaviour
             int mobility = coreUnitData.GetMobility();
 
             entity = CreateUnitObject(rootPoint, objName, objectsPool.transform).transform;
-            AddAndPrepareUnitComponent(entity.gameObject, model, id, objName, size, occypation.ToArray(), health, damage, distance, mobility, Config.sides["ally"]);
+
+            PlayerUnitCacheItem playerUnitCacheItem = AddNewUnitOnBaseToCache(
+                coreId, 
+                objName, 
+                Bector2Int.GetVector2IntListAsBector(occypation), 
+                Entity.GetDeterminedRotationByModel(model)
+                );
+
+            AddAndPrepareUnitComponent(
+                entity.gameObject, 
+                model, 
+                coreId, 
+                playerUnitCacheItem.GetExternalId(), 
+                objName, 
+                size,
+                occypation.ToArray(), 
+                health, 
+                damage, 
+                distance, 
+                mobility, 
+                Config.sides["ally"]
+                );
         }
 
         else
@@ -133,7 +181,13 @@ public class ObjectProcessor : MonoBehaviour
         model.SetParent(entity);
 
         map.Occypy(occypation);
-        EventMaster.current.ExposeObject(id, type, Bector2Int.GetVector2IntListAsBector(occypation), entity.GetComponent<Entity>().rotation);
+        EventMaster.current.ExposeObject(
+            coreId, 
+            type,
+            Bector2Int.GetVector2IntListAsBector(occypation), 
+            entity.GetComponent<Entity>().rotation
+            );
+
         EventMaster.current.OnChangeBaseObjects();
     }
 
@@ -183,7 +237,22 @@ public class ObjectProcessor : MonoBehaviour
         Cache.Save(baseObjectsTable);
     }
 
-    public static void AddAndPrepareBuildComponent(GameObject buildObj, Transform model, string id, string objName,  Vector2Int size, Vector2Int[] occypation, int health, int damage, int distance, string side)
+    public static void AddAndPrepareBuildComponent(
+        GameObject buildObj, 
+        Transform model, 
+        string coreId, 
+        string childId,
+        string objName, 
+        Vector2Int size, 
+        Vector2Int[] occypation,
+        int health, 
+        int damage, 
+        int distance, 
+        string side, 
+        string interactionComponentName,
+        string interactionComponentType,
+        string workStatus
+        )
     {
         Build component = buildObj.AddComponent<Build>();
         component.SetName(objName);
@@ -192,11 +261,33 @@ public class ObjectProcessor : MonoBehaviour
         component.SetOccypation(new List<Vector2Int>(occypation));
         component.SetAttributes(health, damage, distance, 0);
         component.SetSide(side);
+        component.coreId = coreId;
+        component.childId = childId;
 
-        component.id = id;
+        component.interactionComponent = InteractionComponentFactory.GetComponentById(interactionComponentName);
+        component.interactionComponent.Init(childId, interactionComponentType);
+        component.ChangeWorkStatus(workStatus);
+
+        if (IsObjectIdleAndNotHaveProductsNotification(component))
+        {
+            CreateProductsNotification(component.ChildId, ProductsNotificationTypes.idle);
+        }
     }
 
-    public static void AddAndPrepareUnitComponent(GameObject unitObj, Transform model, string id, string objName, Vector2Int size, Vector2Int[] occypation, int health, int damage, int distance, int mobility, string side)
+    public static void AddAndPrepareUnitComponent(
+        GameObject unitObj, 
+        Transform model, 
+        string coreId, 
+        string childId,
+        string objName, 
+        Vector2Int size, 
+        Vector2Int[] occypation,
+        int health, 
+        int damage,
+        int distance,
+        int mobility, 
+        string side
+        )
     {
         Unit component = unitObj.AddComponent<Unit>();
         component.SetName(objName);
@@ -206,23 +297,27 @@ public class ObjectProcessor : MonoBehaviour
         component.SetAttributes(health, damage, distance, mobility);
         component.SetSide(side);
 
-        component.id = id;
+        component.coreId = coreId;
+        component.childId = childId;
     }
 
-    public static void OnExposedBuild(string buildId, string name, Bector2Int[] occypation, int rotation)
+    public static PlayerBuildCacheItem AddNewBuildOnBaseToCache(string buildId, string name, Bector2Int[] occypation, int rotation, string workStatus)
     {
         PlayerBuildCacheItem exposedBuildData = new PlayerBuildCacheItem(new Dictionary<string, object>());
         exposedBuildData.SetCoreId(buildId);
         exposedBuildData.SetName(name);
         exposedBuildData.SetPosition(occypation);
         exposedBuildData.SetRotation(rotation);
+        exposedBuildData.SetWorkStatus(workStatus);
 
         PlayerBuildCacheTable exposedBuilds = Cache.LoadByType<PlayerBuildCacheTable>();
         exposedBuilds.Add(new CacheItem[1] { exposedBuildData });
         Cache.Save(exposedBuilds);
+
+        return exposedBuildData;
     }
 
-    public static void OnExposedUnit(string unitId, string name, Bector2Int[] occypation, int rotation)
+    public static PlayerUnitCacheItem AddNewUnitOnBaseToCache(string unitId, string name, Bector2Int[] occypation, int rotation)
     {
         PlayerUnitCacheItem exposedUnitData = new PlayerUnitCacheItem(new Dictionary<string, object>());
         exposedUnitData.SetCoreId(unitId);
@@ -233,6 +328,8 @@ public class ObjectProcessor : MonoBehaviour
         PlayerUnitCacheTable exposedUnits = Cache.LoadByType<PlayerUnitCacheTable>();
         exposedUnits.Add(new CacheItem[1] { exposedUnitData });
         Cache.Save(exposedUnits);
+
+        return exposedUnitData;
     }
 
     public static void OnBuyMaterial(string materialId)
@@ -251,5 +348,72 @@ public class ObjectProcessor : MonoBehaviour
         Cache.Save(inventory);
 
         EventMaster.current.OnChangeInventory();
+    }
+
+    public void ChangeObjectOnBaseWorkStatus(string objectOnBaseId, string newStatus)
+    {
+        PlayerBuildCacheTable buildsOnBaseTable = Cache.LoadByType<PlayerBuildCacheTable>();
+        CacheItem buildOnBaseCacheItem = buildsOnBaseTable.GetById(objectOnBaseId);
+        PlayerBuildCacheItem buildOnBase = new PlayerBuildCacheItem(buildOnBaseCacheItem.Fields);
+
+        buildOnBase.SetWorkStatus(newStatus);
+        buildsOnBaseTable.AddOne(buildOnBase);
+
+        Cache.Save(buildsOnBaseTable);
+    }
+
+    public static bool IsObjectIdleAndNotHaveProductsNotification(Build build)
+    {
+        if (build.workStatus != WorkStatuses.idle)
+        {
+            return false;
+        }
+
+        ProductsNotificationCacheTable productsNotificationsTable = Cache.LoadByType<ProductsNotificationCacheTable>();
+        return productsNotificationsTable.FindBySourceObjectId(build.ChildId) == null;
+    }
+
+    public static void CreateProductsNotification(
+        string sourceObjectId,
+        string notificationType, 
+        string iconPath = "", 
+        string backgroundIconPath = "",
+        int count = 1, 
+        ResourcesData gives = null, 
+        string unitId = null
+        )
+    {
+        ProductsNotificationCacheTable productsNotificationsTable = Cache.LoadByType<ProductsNotificationCacheTable>();
+
+        ProductsNotificationCacheItem newProductsNotification = new ProductsNotificationCacheItem(new Dictionary<string, object>());
+        newProductsNotification.SetSourceObjectId(sourceObjectId);
+        newProductsNotification.SetType(notificationType);
+        newProductsNotification.SetIconPath(iconPath);
+        newProductsNotification.SetBackgroundIconPath(backgroundIconPath);
+        newProductsNotification.SetCount(count);
+        newProductsNotification.SetGives(gives);
+        newProductsNotification.SetUnitId(unitId);
+
+        productsNotificationsTable.AddOne(newProductsNotification);
+        Cache.Save(productsNotificationsTable);
+
+        EventMaster.current.OnCreateProductsNotification(newProductsNotification);
+    }
+
+    public static void DeleteProductsNotificationBySourceObjectId(
+        string sourceObjectId
+        )
+    {
+        ProductsNotificationCacheTable productsNotificationsTable = Cache.LoadByType<ProductsNotificationCacheTable>();
+        ProductsNotificationCacheItem itemForDeletion = productsNotificationsTable.FindBySourceObjectId(sourceObjectId);
+        if ( itemForDeletion == null ) 
+        {
+            return;
+        }
+
+        productsNotificationsTable.DeleteById(itemForDeletion.GetExternalId());
+        Cache.Save(productsNotificationsTable);
+
+        EventMaster.current.OnDeleteProductsNotification(itemForDeletion);
     }
 }

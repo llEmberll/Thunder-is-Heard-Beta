@@ -35,7 +35,8 @@ public class UnitsOnBase : ObjectsOnBase
         string name = playerUnitData.GetName();
         Bector2Int[] position = playerUnitData.GetPosition();
         int rotation = playerUnitData.GetRotation();
-        string id = playerUnitData.GetCoreId();
+        string coreId = playerUnitData.GetCoreId();
+        string childId = playerUnitData.GetExternalId();
 
 
         GameObject unitObj = ObjectProcessor.CreateUnitObject(position[0].ToVector2Int(), name, this.transform);
@@ -43,7 +44,20 @@ public class UnitsOnBase : ObjectsOnBase
 
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());
 
-        ObjectProcessor.AddAndPrepareUnitComponent(unitObj, unitModel.transform, id, name, size.ToVector2Int(), Bector2Int.MassiveToVector2Int(position), health, damage, distance, mobility, Config.sides["ally"]);
+        ObjectProcessor.AddAndPrepareUnitComponent(
+            unitObj, 
+            unitModel.transform, 
+            coreId, 
+            childId, 
+            name, 
+            size.ToVector2Int(), 
+            Bector2Int.MassiveToVector2Int(position), 
+            health, 
+            damage, 
+            distance, 
+            mobility, 
+            Config.sides["ally"]
+            );
     }
 
     public static GameObject CreateUnitModel(string modelPath, int rotation, Transform parent)
@@ -66,7 +80,7 @@ public class UnitsOnBase : ObjectsOnBase
         for (int i = 0; i < transform.childCount; i++)
         {
             Unit childEntity = transform.GetChild(i).GetComponent<Unit>();
-            if (childEntity != null && childEntity.Id == id)
+            if (childEntity != null && childEntity.CoreId == id)
             {
                 return childEntity;
             }

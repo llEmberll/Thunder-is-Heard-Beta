@@ -34,29 +34,29 @@ public class Inventory : ItemList
         ClearItems();
 
         InventoryCacheTable inventoryTable = Cache.LoadByType<InventoryCacheTable>();
-        foreach (var inventoryItemAsCacheItem in inventoryTable.Items)
+        foreach (var keyValuePair in inventoryTable.Items)
         {
-            InventoryCacheItem inventoryItemAsInventoryItem = new InventoryCacheItem(inventoryItemAsCacheItem.Value.Fields);
-            string type = inventoryItemAsInventoryItem.GetType();
+            InventoryCacheItem inventoryItemData = new InventoryCacheItem(keyValuePair.Value.Fields);
+            string type = inventoryItemData.GetType();
 
             CacheTable itemTable = Cache.LoadByName(type);
-            CacheItem item = itemTable.GetById(inventoryItemAsInventoryItem.GetCoreId());
+            CacheItem item = itemTable.GetById(inventoryItemData.GetCoreId());
 
             switch (type)
             {
                 case "Build":
                     BuildCacheItem buildData = new BuildCacheItem(item.Fields);
-                    BuildInventoryItem build = CreateBuild(inventoryItemAsInventoryItem, buildData);
+                    BuildInventoryItem build = CreateBuild(inventoryItemData, buildData);
                     items.Add(build);
                     break;
                 case "Unit":
                     UnitCacheItem unitData = new UnitCacheItem(item.Fields);
-                    UnitInventoryItem unit = CreateUnit(inventoryItemAsInventoryItem, unitData);
+                    UnitInventoryItem unit = CreateUnit(inventoryItemData, unitData);
                     items.Add(unit);
                     break;
                 case "Material":
                     MaterialCacheItem materialData = new MaterialCacheItem(item.Fields);
-                    MaterialInventoryItem material = CreateMaterial(inventoryItemAsInventoryItem, materialData);
+                    MaterialInventoryItem material = CreateMaterial(inventoryItemData, materialData);
                     items.Add(material);
                     break;
             }
@@ -80,11 +80,21 @@ public class Inventory : ItemList
         string description = buildData.GetDescrption();
         Sprite icon = Resources.Load<Sprite>(buildData.GetIconPath());
 
-        GameObject itemObject = CreateObject(Config.resources["UI" + "Build" + "InventoryItemPrefab"]);
+        GameObject itemObject = CreateObject(Config.resources["UI" + "Build" + "InventoryItemPrefab"], content);
         itemObject.name = name;
         BuildInventoryItem buildComponent = itemObject.GetComponent<BuildInventoryItem>();
 
-        buildComponent.Init(id, name, gives, health, damage, distance, count, description, icon);
+        buildComponent.Init(
+            id, 
+            name, 
+            gives,
+            health, 
+            damage, 
+            distance, 
+            count, 
+            description,
+            icon
+            );
         return buildComponent;
     }
 
@@ -101,11 +111,22 @@ public class Inventory : ItemList
         string description = unitData.GetDescrption();
         Sprite icon = Resources.Load<Sprite>(unitData.GetIconPath());
 
-        GameObject itemObject = CreateObject(Config.resources["UI" + "Unit" + "InventoryItemPrefab"]);
+        GameObject itemObject = CreateObject(Config.resources["UI" + "Unit" + "InventoryItemPrefab"], content);
         itemObject.name = name;
         UnitInventoryItem unitComponent = itemObject.GetComponent<UnitInventoryItem>();
 
-        unitComponent.Init(id, name, gives, health, damage, distance, mobility, count, description, icon);
+        unitComponent.Init(
+            id, 
+            name, 
+            gives, 
+            health, 
+            damage, 
+            distance, 
+            mobility, 
+            count, 
+            description,
+            icon
+            );
         return unitComponent;
     }
 
@@ -117,7 +138,7 @@ public class Inventory : ItemList
         string description = materialData.GetDescrption();
         Sprite icon = Resources.Load<Sprite>(materialData.GetIconPath());
 
-        GameObject itemObject = CreateObject(Config.resources["UI" + "Material" + "InventoryItemPrefab"]);
+        GameObject itemObject = CreateObject(Config.resources["UI" + "Material" + "InventoryItemPrefab"], content);
         itemObject.name = name;
         MaterialInventoryItem materialComponent = itemObject.GetComponent<MaterialInventoryItem>();
 
@@ -125,17 +146,9 @@ public class Inventory : ItemList
         return materialComponent;
     }
 
-    public GameObject CreateObject(string prefabPath)
-    {
-        GameObject itemPrefab = Resources.Load<GameObject>(prefabPath);
-        GameObject itemObject = Instantiate(itemPrefab);
-        itemObject.transform.SetParent(content, false);
-        return itemObject;
-    }
-
     public void InitContent()
     {
-        content = GameObject.FindGameObjectWithTag(Config.tags["inventoryItems"]).transform;
+        content = GameObject.FindGameObjectWithTag(Tags.inventoryItems).transform;
     }
 
     public void ClearItems()

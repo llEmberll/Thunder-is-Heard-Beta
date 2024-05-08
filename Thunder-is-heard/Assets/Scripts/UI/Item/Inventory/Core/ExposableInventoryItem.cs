@@ -110,8 +110,6 @@ public abstract class ExposableInventoryItem : InventoryItem
     {
         if (objId == coreId && objType == Type)
         {
-            SaveExpose(occypation, rotation);
-
             if (count < 2)
             {
                 Finish();
@@ -125,7 +123,5 @@ public abstract class ExposableInventoryItem : InventoryItem
             Continue();
         }
     }
-
-    public abstract void SaveExpose(Bector2Int[] occypation, int rotation);
 }
 

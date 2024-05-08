@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 5564626673130751736}
   m_Layer: 5
   m_Name: Content
-  m_TagString: Untagged
+  m_TagString: Cost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -951,7 +951,7 @@ GameObject:
   - component: {fileID: 8380571992562118983}
   m_Layer: 5
   m_Name: Content
-  m_TagString: Untagged
+  m_TagString: Gives
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

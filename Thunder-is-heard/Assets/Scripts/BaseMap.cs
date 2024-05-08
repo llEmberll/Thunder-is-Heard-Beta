@@ -59,24 +59,20 @@ public class BaseMap : Map
     public void CreateBuilds()
     {
         BuildCacheTable buildTable = Cache.LoadByType<BuildCacheTable>();
-        PlayerBuildCacheTable playerBuildTable = Cache.LoadByType<PlayerBuildCacheTable>();
 
-        ResourcesData cost = new ResourcesData();
-        ResourcesData gives = new ResourcesData();
+        ResourcesData headBuildCost = new ResourcesData();
+        ResourcesData mineCost = new ResourcesData();
+        mineCost.rub = 750;
+        mineCost.oil = 2;
+        mineCost.steel = 3;
 
-        PlayerBuildCacheItem headbuildOnBase = new PlayerBuildCacheItem(new Dictionary<string, object>());
+        ResourcesData headBuildGives = new ResourcesData();
+        headBuildGives.maxOil = 8;
+        headBuildGives.maxSteel = 10;
+        headBuildGives.maxStaff = 10;
 
-        headbuildOnBase.SetExternalId("9b2cf240-5f63-4107-8751-eb91b95b94d9");
-        headbuildOnBase.SetName("Headbuild");
-        headbuildOnBase.SetRotation(0);
-        headbuildOnBase.SetPosition(new Bector2Int[4]
-        {
-            new Bector2Int(new Vector2Int(0, 1)),
-            new Bector2Int(new Vector2Int(1, 0)),
-            new Bector2Int(new Vector2Int(1, 1)),
-            new Bector2Int(new Vector2Int(2, 0))
-        });
-
+        ResourcesData mineGives = new ResourcesData();
+        mineGives.maxSteel = 2;
 
 
         BuildCacheItem headbuild = new BuildCacheItem(new Dictionary<string, object>());
@@ -85,10 +81,10 @@ public class BaseMap : Map
         headbuild.SetName("Headbuild");
         headbuild.SetModelPath("Prefabs/Entity/Builds/Headbuild/Model");
         headbuild.SetSize(new Bector2Int(new Vector2Int(3, 2)));
-        headbuild.SetCost(cost);
-        headbuild.SetGives(gives);
+        headbuild.SetCost(headBuildCost);
+        headbuild.SetGives(headBuildGives);
         headbuild.SetCreateTime(0);
-        headbuild.SetHealth(0);
+        headbuild.SetHealth(12);
 
         BuildCacheItem mine = new BuildCacheItem(new Dictionary<string, object>());
 
@@ -96,44 +92,23 @@ public class BaseMap : Map
         mine.SetName("Mine");
         mine.SetModelPath("Prefabs/Entity/Builds/Mine/Model");
         mine.SetSize(new Bector2Int(new Vector2Int(2, 2)));
-        mine.SetCost(cost);
-        mine.SetGives(gives);
+        mine.SetCost(mineCost);
+        mine.SetGives(mineGives);
         mine.SetCreateTime(0);
-        mine.SetHealth(0);
+        mine.SetHealth(6);
         mine.SetDistance(0);
+        mine.SetInteractionComponentName("ContractComponent");
+        mine.SetInteractionComponentType(InteractionComponentTypes.steelContract);
 
         Debug.Log("build created and prepared");
 
         CacheItem[] itemsForAdd = new CacheItem[2] { headbuild, mine };
-        CacheItem[] baseItemsForAdd = new CacheItem[1] { headbuildOnBase };
         buildTable.Add(itemsForAdd);
-        playerBuildTable.Add(baseItemsForAdd);
 
         Debug.Log("build added to table");
 
-        Debug.Log("Now count: " +  buildTable.Items.Count);
-
         Cache.Save(buildTable);
-        Cache.Save(playerBuildTable);
 
-
-        Debug.Log("table saved in cache");
-
-
-        BuildCacheTable newBuildTable = Cache.LoadByType<BuildCacheTable>();
-        PlayerBuildCacheTable newPlayerBuildTable = Cache.LoadByType<PlayerBuildCacheTable>();
-
-        CacheItem savedHeadbuildItem = newBuildTable.GetById("9b2cf240-5f63-4107-8751-eb91b95b94d9");
-        BuildCacheItem savedHeadbuild =  new BuildCacheItem(savedHeadbuildItem.Fields);
-
-        CacheItem savedHeadbuildItemOnBase = newPlayerBuildTable.GetById("9b2cf240-5f63-4107-8751-eb91b95b94d9");
-        PlayerBuildCacheItem savedHeadbuildOnBase = new PlayerBuildCacheItem(savedHeadbuildItemOnBase.Fields);
-
-        Bector2Int dict = savedHeadbuild.GetSize();
-        ResourcesData savedCost = savedHeadbuild.GetCost();
-
-        int headbuildOnBaseRotation = savedHeadbuildOnBase.GetRotation();
-        Bector2Int[] position = savedHeadbuildOnBase.GetPosition();
     }
 
     public void CreateUnits()

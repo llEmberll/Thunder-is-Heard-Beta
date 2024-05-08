@@ -13,6 +13,21 @@ public class PlayerBuildCacheItem : CacheItem
         {
             SetRotation(0);
         }
+
+        if (!objFields.ContainsKey("workStatus"))
+        {
+            SetWorkStatus(WorkStatuses.idle);
+        }
+    }
+
+    public string? GetWorkStatus()
+    {
+        return (string?)GetField("workStatus");
+    }
+
+    public void SetWorkStatus(string value)
+    {
+        SetField("workStatus", value);
     }
 
     public Bector2Int[] GetPosition()

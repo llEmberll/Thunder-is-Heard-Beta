@@ -227,7 +227,7 @@ TextureImporter:
       name: "\u0418\u043D\u0432\u0435\u043D\u0442\u0430\u0440\u044C"
       rect:
         serializedVersion: 2
-        x: 2178
+        x: 2170
         y: 7098
         width: 1912
         height: 1097
@@ -396,7 +396,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2818
-        y: 5455
+        y: 5469
         width: 1883
         height: 780
       alignment: 0
@@ -455,13 +455,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_16"
+      name: "\u041A\u043E\u043D\u0442\u0440\u0430\u043A\u0442\u044B"
       rect:
         serializedVersion: 2
-        x: 2789
-        y: 4281
-        width: 1913
-        height: 933
+        x: 2769
+        y: 4258
+        width: 1958
+        height: 986
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -522,7 +522,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2779
-        y: 3033
+        y: 3019
         width: 1979
         height: 989
       alignment: 0
@@ -543,7 +543,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 5017
-        y: 3651
+        y: 3645
         width: 1933
         height: 1029
       alignment: 0
@@ -823,6 +823,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       "\u0418\u043D\u0432\u0435\u043D\u0442\u0430\u0440\u044C": 1405040719
+      "\u041A\u043E\u043D\u0442\u0440\u0430\u043A\u0442\u044B": -652191122
       "\u041C\u0430\u0433\u0430\u0437\u0438\u043D": -835247809
       "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_0": 1608835862
       "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_1": 787685478
@@ -832,7 +833,6 @@ TextureImporter:
       "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_13": 1527834171
       "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_14": 353919458
       "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_15": 1485937187
-      "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_16": -652191122
       "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_17": 1216767276
       "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_18": 1625097997
       "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_19": -550923447

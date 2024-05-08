@@ -1,0 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ContractComponent : InteractionComponent
+{
+    public override void Finished()
+    {
+        //Если на складе хватает места, то начислить gives и перевести здание в состояние idle
+        //Удалить сбор в кеше по данным завершенного процесса
+        throw new System.NotImplementedException();
+    }
+
+    public override void HandleFinishedProcess(ProcessOnBaseCacheItem processCacheItem)
+    {
+        //Создать сбор в кеше для целевого здания по данным завершенного процесса
+        throw new System.NotImplementedException();
+    }
+
+    public override void Idle()
+    {
+        Contracts contractsUI = GameObject.FindGameObjectWithTag(Tags.contracts).GetComponent<Contracts>();
+        contractsUI.Toggle();
+        contractsUI.Init(type, id);
+    }
+
+    public override void Working()
+    {
+        //Показать оставшееся время выполнения
+        Debug.Log("working...");
+    }
+}

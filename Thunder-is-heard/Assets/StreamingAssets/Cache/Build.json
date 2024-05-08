@@ -37,6 +37,9 @@
         "health": 12,
         "damage": 0,
         "distance": 0,
+        "iconPath": "",
+        "interactionComponentName": "Inaction",
+        "interactionComponentType": "",
         "name": "Headbuild",
         "modelPath": "Prefabs/Entity/Builds/Headbuild/Model",
         "size": {
@@ -81,6 +84,9 @@
         "health": 6,
         "damage": 0,
         "distance": 0,
+        "iconPath": "",
+        "interactionComponentName": "ContractComponent",
+        "interactionComponentType": "Steel",
         "name": "Mine",
         "modelPath": "Prefabs/Entity/Builds/Mine/Model",
         "size": {

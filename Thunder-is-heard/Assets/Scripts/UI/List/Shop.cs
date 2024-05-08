@@ -36,29 +36,29 @@ public class Shop : ItemList
         //Согласно рангу, проверить лимиты купленных объектов и сделать нужное количество
 
         ShopCacheTable shopTable = Cache.LoadByType<ShopCacheTable>();
-        foreach (var shopItemAsCacheItem in shopTable.Items)
+        foreach (var keyValuePair in shopTable.Items)
         {
-            ShopCacheItem shopItemAsShopItem = new ShopCacheItem(shopItemAsCacheItem.Value.Fields);
-            string type = shopItemAsShopItem.GetType();
+            ShopCacheItem shopItemData = new ShopCacheItem(keyValuePair.Value.Fields);
+            string type = shopItemData.GetType();
 
             CacheTable itemTable = Cache.LoadByName(type);
-            CacheItem item = itemTable.GetById(shopItemAsShopItem.GetCoreId());
+            CacheItem item = itemTable.GetById(shopItemData.GetCoreId());
 
             switch (type)
             {
                 case "Build":
                     BuildCacheItem buildData = new BuildCacheItem(item.Fields);
-                    BuildShopItem build = CreateBuild(shopItemAsShopItem, buildData);
+                    BuildShopItem build = CreateBuild(shopItemData, buildData);
                     items.Add(build);
                     break;
                 case "Unit":
                     UnitCacheItem unitData = new UnitCacheItem(item.Fields);
-                    UnitShopItem unit = CreateUnit(shopItemAsShopItem, unitData);
+                    UnitShopItem unit = CreateUnit(shopItemData, unitData);
                     items.Add(unit);
                     break;
                 case "Material":
                     MaterialCacheItem materialData = new MaterialCacheItem(item.Fields);
-                    MaterialShopItem material = CreateMaterial(shopItemAsShopItem, materialData);
+                    MaterialShopItem material = CreateMaterial(shopItemData, materialData);
                     items.Add(material);
                     break;
             }
@@ -83,11 +83,22 @@ public class Shop : ItemList
         string description = buildData.GetDescrption();
         Sprite icon = Resources.Load<Sprite>(buildData.GetIconPath());
 
-        GameObject itemObject = CreateObject(Config.resources["UI" + "Build" + "ShopItemPrefab"]);
+        GameObject itemObject = CreateObject(Config.resources["UI" + "Build" + "ShopItemPrefab"], content);
         itemObject.name = name;
         BuildShopItem buildComponent = itemObject.GetComponent<BuildShopItem>();
 
-        buildComponent.Init(id, name, cost, gives, health, damage, distance, count, description, icon);
+        buildComponent.Init(
+            id, 
+            name, 
+            cost, 
+            gives, 
+            health, 
+            damage, 
+            distance, 
+            count, 
+            description, 
+            icon
+            );
         return buildComponent;
     }
 
@@ -105,11 +116,23 @@ public class Shop : ItemList
         string description = unitData.GetDescrption();
         Sprite icon = Resources.Load<Sprite>(unitData.GetIconPath());
 
-        GameObject itemObject = CreateObject(Config.resources["UI" + "Unit" + "ShopItemPrefab"]);
+        GameObject itemObject = CreateObject(Config.resources["UI" + "Unit" + "ShopItemPrefab"], content);
         itemObject.name = name;
         UnitShopItem unitComponent = itemObject.GetComponent<UnitShopItem>();
 
-        unitComponent.Init(id, name, cost, gives, health, damage, distance, mobility, count, description, icon);
+        unitComponent.Init(
+            id, 
+            name, 
+            cost,
+            gives, 
+            health, 
+            damage, 
+            distance, 
+            mobility,
+            count,
+            description, 
+            icon
+            );
         return unitComponent;
     }
 
@@ -122,7 +145,7 @@ public class Shop : ItemList
         string description = materialData.GetDescrption();
         Sprite icon = Resources.Load<Sprite>(materialData.GetIconPath());
 
-        GameObject itemObject = CreateObject(Config.resources["UI" + "Material" + "ShopItemPrefab"]);
+        GameObject itemObject = CreateObject(Config.resources["UI" + "Material" + "ShopItemPrefab"], content);
         itemObject.name = name;
         MaterialShopItem materialComponent = itemObject.GetComponent<MaterialShopItem>();
 
@@ -130,17 +153,11 @@ public class Shop : ItemList
         return materialComponent;
     }
 
-    public GameObject CreateObject(string prefabPath)
-    {
-        GameObject itemPrefab = Resources.Load<GameObject>(prefabPath);
-        GameObject itemObject = Instantiate(itemPrefab);
-        itemObject.transform.SetParent(content, false);
-        return itemObject;
-    }
+    
 
     public void InitContent()
     {
-        content = GameObject.FindGameObjectWithTag(Config.tags["shopItems"]).transform;
+        content = GameObject.FindGameObjectWithTag(Tags.shopItems).transform;
     }
 
     public void ClearItems()

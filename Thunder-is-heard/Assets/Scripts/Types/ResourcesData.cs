@@ -24,6 +24,8 @@ public class ResourcesData
     }
 
     [SerializeField] public int rub;
+
+    [JsonIgnore]
     public int Rub
     {
         get { return rub; }

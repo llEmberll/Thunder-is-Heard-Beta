@@ -32,7 +32,7 @@ public class HomeState: State
 
     public override void OnBuildClick(Build build)
     {
-        
+        build.InteractionComponent.Interact(build.workStatus);
     }
 
     public override void OnBuildMouseEnter(Build build)

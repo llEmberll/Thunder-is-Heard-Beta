@@ -52,7 +52,7 @@ public class Cache
         }
 
         CacheTable table = Cache.LoadByName("Player" + entity.Type);
-        return table.GetByCoreId(entity.Id);
+        return table.GetByCoreId(entity.CoreId);
     }
 
     public static CacheItem GetBaseObjectCoreData(GameObject obj)
@@ -65,7 +65,7 @@ public class Cache
         }
 
         CacheTable coreObjectsTable = Cache.LoadByName(obj.GetComponent<Entity>().Type);
-        return coreObjectsTable.GetById(entity.id);
+        return coreObjectsTable.GetById(entity.coreId);
 
     }
 }

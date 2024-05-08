@@ -8,7 +8,7 @@ public class DestroyAllEnemy : BasicCondition
     {
         foreach (var item in Scenario.Objects)
         {
-            if (item.Value.tag == Config.tags["empire"])
+            if (item.Value.tag == Tags.empire)
             {
                 return false;
             }

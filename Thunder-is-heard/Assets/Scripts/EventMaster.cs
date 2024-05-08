@@ -116,4 +116,40 @@ public class EventMaster: MonoBehaviour
     {
         ExitedOnObject?.Invoke(obj);
     }
+
+    public event Action<ProcessOnBaseCacheItem> ProcessOnBaseFinished;
+    public void OnProcessOnBaseFinish(ProcessOnBaseCacheItem process)
+    {
+        ProcessOnBaseFinished?.Invoke(process);
+    }
+
+    public event Action<ProcessOnBaseCacheItem> ProcessOnBaseStarted;
+    public void OnProcessOnBaseStart(ProcessOnBaseCacheItem process)
+    {
+        ProcessOnBaseStarted?.Invoke(process);
+    }
+
+    public event Action<string> ProcessOnBaseHandled;
+    public void OnProcessOnBaseHandle(string processId)
+    {
+        ProcessOnBaseHandled?.Invoke(processId);
+    }
+
+    public event Action<string, string> ObjectOnBaseWorkStatusChanged;
+    public void OnChangeObjectOnBaseWorkStatus(string objectOnBaseId, string newStatus)
+    {
+        ObjectOnBaseWorkStatusChanged?.Invoke(objectOnBaseId, newStatus);
+    }
+
+    public event Action<ProductsNotificationCacheItem> ProductsNotificationDeleted;
+    public void OnDeleteProductsNotification(ProductsNotificationCacheItem deletedProductsNotification)
+    {
+        ProductsNotificationDeleted?.Invoke(deletedProductsNotification);
+    }
+
+    public event Action<ProductsNotificationCacheItem> ProductsNotificationCreated;
+    public void OnCreateProductsNotification(ProductsNotificationCacheItem createdProductsNotification)
+    {
+        ProductsNotificationCreated?.Invoke(createdProductsNotification);
+    }
 }

@@ -26,6 +26,14 @@ TagManager:
   - ResourcesPanel
   - ShopItems
   - Selector
+  - ProcessWorker
+  - Shop
+  - Gives
+  - Cost
+  - ContractItems
+  - UnitProductionItems
+  - Contracts
+  - UnitProductions
   layers:
   - Default
   - TransparentFX

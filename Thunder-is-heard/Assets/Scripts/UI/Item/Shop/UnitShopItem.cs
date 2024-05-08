@@ -33,12 +33,4 @@ public class UnitShopItem: ExposableShopItem
 
         base.UpdateUI();
     }
-
-
-    public override void SaveExpose(Bector2Int[] occypation, int rotation)
-    {
-        ObjectProcessor.OnExposedUnit(coreId, name, occypation, rotation);
-        resourcesProcessor.SubstractResources(costData);
-        resourcesProcessor.Save();
-    }
 }

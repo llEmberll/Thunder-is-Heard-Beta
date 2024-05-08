@@ -16,7 +16,7 @@ public class FightProcessor : MonoBehaviour
     {
         EventMaster.current.FightIsStarted += StartFight;
 
-        mission = GameObject.FindWithTag(Config.tags["mission"]).GetComponent<Mission>();
+        mission = GameObject.FindWithTag(Tags.mission).GetComponent<Mission>();
 
         ConstructScenario();
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class Entity : Interactable
 {
-    public string id;
+    public string coreId;
+    public string childId;
     public string name;
 
     public Vector2Int originalSize;
@@ -14,7 +15,8 @@ public abstract class Entity : Interactable
     public Vector2Int center;
 
     public abstract override string Type { get; }
-    public string Id { get { return id; } }
+    public string CoreId { get { return coreId; } }
+    public string ChildId { get { return childId; } }
 
     public Transform model;
     public Map map;
@@ -27,12 +29,12 @@ public abstract class Entity : Interactable
     public int health, damage, distance, mobility;
 
 
-    public void Awake()
+    public virtual void Awake()
     {
         map = GameObject.FindGameObjectWithTag("Map").GetComponent<Map>();
     }
 
-    public void Start()
+    public virtual void Start()
     {
         sceneState = GameObject.FindWithTag("State").GetComponent<SceneState>();
 

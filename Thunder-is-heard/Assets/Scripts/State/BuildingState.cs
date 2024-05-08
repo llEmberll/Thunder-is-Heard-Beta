@@ -52,7 +52,7 @@ public class BuildingState : State
             Transform model = build.model;
 
             ObjectPreview preview = ObjectPreview.Create();
-            preview.Init(build.name, "PlayerBuild", build.Id, build.currentSize, model);
+            preview.Init(build.name, "PlayerBuild", build.CoreId, build.currentSize, model);
         }
     }
 
@@ -74,7 +74,7 @@ public class BuildingState : State
                 Transform model = unit.model;
 
                 ObjectPreview preview = ObjectPreview.Create();
-                preview.Init(unit.name, "PlayerBuild", unit.Id, unit.currentSize, model);
+                preview.Init(unit.name, "PlayerBuild", unit.CoreId, unit.currentSize, model);
             }
         }
     }

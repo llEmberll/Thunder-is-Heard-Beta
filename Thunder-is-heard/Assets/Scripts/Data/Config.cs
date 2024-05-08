@@ -39,6 +39,8 @@ public static class Config
         { "UIMaterialInventoryItemPrefab", "Prefabs/UI/GeneratedItems/Inventory/MaterialItem" },
         { "UIBuildShopItemPrefab", "Prefabs/UI/GeneratedItems/Shop/BuildItem" },
         { "UIUnitShopItemPrefab", "Prefabs/UI/GeneratedItems/Shop/UnitItem" },
+        { "UIContractItemPrefab", "Prefabs/UI/GeneratedItems/Contract/ContractItem" },
+        { "UIUnitProductionItemPrefab", "Prefabs/UI/GeneratedItems/UnitProduction/UnitItem" },
         { "UIMaterialShopItemPrefab", "Prefabs/UI/GeneratedItems/Shop/MaterialItem" },
         { "landableUnitItem", "Prefabs/UI/GeneratedItems/UnitForLanding/LandableUnitItem" },
         { "ranks", "Textures/Interface/Icons/Ranks/Ranks" },
@@ -70,15 +72,6 @@ public static class Config
         { 84000, 15 },
         { 105800, 16 },
         { 130000, 17 }
-    };
-
-    public static Dictionary<string, string> tags = new Dictionary<string, string>
-    {
-        {"federation", "Federation" },
-        {"empire", "Empire" },
-        {"mission", "Mission" },
-        { "inventoryItems", "InventoryItems" },
-        { "shopItems", "ShopItems" }
     };
 
     public static Dictionary<string, string> exposableObjectsTypeToObjectsOnSceneTag = new Dictionary<string, string>

@@ -8,7 +8,7 @@ public class DestroyAllAllies : BasicCondition
     {
         foreach (var item in Scenario.Objects)
         {
-            if (item.Value.tag == Config.tags["federation"])
+            if (item.Value.tag == Tags.federation)
             {
                 return false;
             }

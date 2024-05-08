@@ -2,6 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
+using System.Reflection;
 
 
 public class ResourcesProcessor : MonoBehaviour
@@ -119,5 +122,82 @@ public class ResourcesProcessor : MonoBehaviour
         resources = resources.GetResourcesWithoutLimits();
         resources.Add(LoadResourcesFromObjectsOnBase());
         UpdateUI();
+    }
+
+    public static void UpdateResources(Transform resourcesParent, ResourcesData resourcesData)
+    {
+        if (resourcesParent == null || resourcesData == null) return;
+        ClearResources(resourcesParent);
+
+        Type type = resourcesData.GetType();
+        FieldInfo[] resources = type.GetFields();
+
+        foreach (FieldInfo resource in resources)
+        {
+            if (resource.FieldType == typeof(int))
+            {
+                int value = (int)resource.GetValue(resourcesData);
+                if (value != 0)
+                {
+                    string resourceName = resource.Name;
+                    CreateResourceElement(resourceName, value, resourcesParent);
+                }
+            }
+        }
+    }
+
+    public static void CreateResourceElement(string name, int count, Transform parent)
+    {
+        Sprite[] icons = Resources.LoadAll<Sprite>(Config.resources["resourcesIcons"]);
+        Sprite resourceIcon = null;
+
+        name = name.ToLower();
+        foreach (Sprite icon in icons)
+        {
+            if (name.Contains(icon.name))
+            {
+                resourceIcon = icon;
+            }
+        }
+
+        string beginPrefix = "";
+        string endPrefix = "";
+        if (parent.tag == Tags.givesList)
+        {
+            if (count < 0)
+            {
+                beginPrefix = "- ";
+            }
+            else
+            {
+                beginPrefix = "+ ";
+            }
+
+            if (name.Contains("max"))
+            {
+                endPrefix = " max";
+            }
+        }
+
+        string countText = beginPrefix + count.ToString() + endPrefix;
+
+        GameObject prefab = Resources.Load<GameObject>(Config.resources["resourceForUIItem"]);
+        GameObject resourceObject = Instantiate(prefab);
+        resourceObject.transform.SetParent(parent, false);
+
+        Image resourceImage = resourceObject.transform.Find("Icon").GetComponent<Image>();
+        resourceImage.sprite = resourceIcon;
+
+        GameObject resourceCount = resourceObject.transform.Find("Count").gameObject;
+        TMP_Text resourceCountText = resourceCount.GetComponent<TMP_Text>();
+        resourceCountText.text = countText;
+    }
+
+    public static void ClearResources(Transform parent)
+    {
+        foreach (Transform child in parent)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }

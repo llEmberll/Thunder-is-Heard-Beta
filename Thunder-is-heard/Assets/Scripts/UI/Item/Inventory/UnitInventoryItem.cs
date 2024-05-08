@@ -32,10 +32,4 @@ public class UnitInventoryItem: ExposableInventoryItem
 
         base.UpdateUI();
     }
-
-
-    public override void SaveExpose(Bector2Int[] occypation, int rotation)
-    {
-        ObjectProcessor.OnExposedUnit(coreId, name, occypation, rotation);
-    }
 }

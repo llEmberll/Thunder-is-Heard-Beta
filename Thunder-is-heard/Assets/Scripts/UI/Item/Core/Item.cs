@@ -5,8 +5,9 @@ public abstract class Item : UIElement
 {
     public Sprite icon;
 
-    public TMP_Text TmpName;
+    public TMP_Text TmpName, TmpDescription;
 
+    public string description;
     public int count;
     public string id;
     public string objName = "";

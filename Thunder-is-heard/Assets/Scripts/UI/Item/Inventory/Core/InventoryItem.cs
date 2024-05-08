@@ -5,9 +5,7 @@ public abstract class InventoryItem : Item
 {
     public string coreId;
 
-    public TMP_Text TmpCount, TmpDescription;
-
-    public string description;
+    public TMP_Text TmpCount;
 
     public abstract override void Interact();
 
