@@ -172,7 +172,7 @@ public class ResourcesData
         return clone;
     }
     
-    public void Add(ResourcesData data)
+    public ResourcesData Add(ResourcesData data)
     {
         exp += data.exp;
         rub += data.rub;
@@ -187,9 +187,10 @@ public class ResourcesData
         maxSteel += data.maxSteel;
         maxStaff += data.maxStaff;
         maxRub += data.maxRub;
+        return this;
     }
 
-    public void Substract(ResourcesData data)
+    public ResourcesData Substract(ResourcesData data)
     {
         exp -= data.exp;
         rub -= data.rub;
@@ -204,6 +205,7 @@ public class ResourcesData
         maxSteel -= data.maxSteel;
         maxStaff -= data.maxStaff;
         maxRub -= data.maxRub;
+        return this;
     }
 
     public bool IsValid()

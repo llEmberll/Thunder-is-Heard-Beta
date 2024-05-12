@@ -18,7 +18,7 @@ public class ProcessWorker : MonoBehaviour
         string objectOnBaseId, 
         float startTime, 
         float EndTime, 
-        string processData = null
+        ProcessSource source = null
         )
     {
         ProcessOnBaseCacheTable processesTable = Cache.LoadByType<ProcessOnBaseCacheTable>();
@@ -29,7 +29,7 @@ public class ProcessWorker : MonoBehaviour
         process.SetObjectOnBaseId( objectOnBaseId );
         process.SetStartTime( startTime );
         process.SetEndTime( EndTime );
-        process.SetProcessData( processData );
+        process.SetSource( source );
 
         processesTable.AddOne( process );
         Cache.Save(processesTable);

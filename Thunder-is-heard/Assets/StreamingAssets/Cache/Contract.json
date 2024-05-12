@@ -1,1 +1,119 @@
-﻿{}
+﻿{
+  "name": "Contract",
+  "items": {
+    "4281f66a-b908-46b2-bf32-416b1394a38b": {
+      "fields": {
+        "externalId": "4281f66a-b908-46b2-bf32-416b1394a38b",
+        "description": "",
+        "type": "Steel",
+        "cost": {
+          "rub": 500,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 2,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "duration": 10,
+        "iconPath": "Textures/Interface/Cards/Builds/cards/mine_card",
+        "name": "Steel express"
+      }
+    },
+    "efc35a98-c8c0-4ce5-b207-93fd8622ef8b": {
+      "fields": {
+        "externalId": "efc35a98-c8c0-4ce5-b207-93fd8622ef8b",
+        "description": "",
+        "type": "Steel",
+        "cost": {
+          "rub": 1200,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 6,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "duration": 25,
+        "iconPath": "Textures/Interface/Cards/Builds/cards/mine_card",
+        "name": "Half a shift"
+      }
+    },
+    "4022d8dd-3957-4001-952e-72373a59f301": {
+      "fields": {
+        "externalId": "4022d8dd-3957-4001-952e-72373a59f301",
+        "description": "",
+        "type": "Steel",
+        "cost": {
+          "rub": 2150,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 15,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "duration": 60,
+        "iconPath": "Textures/Interface/Cards/Builds/cards/mine_card",
+        "name": "Full shift"
+      }
+    }
+  }
+}

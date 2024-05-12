@@ -930,15 +930,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
+  itemImage: {fileID: 9130132270917659888}
   TmpName: {fileID: 3285853606128306467}
+  TmpDescription: {fileID: 858349764803094757}
+  description: 
   count: 0
   id: 
   objName: 
   resourcesProcessor: {fileID: 0}
   coreId: 
   TmpCount: {fileID: 7397174513267906687}
-  TmpDescription: {fileID: 858349764803094757}
-  description: 
   costData:
     rub: 0
     maxRub: 0

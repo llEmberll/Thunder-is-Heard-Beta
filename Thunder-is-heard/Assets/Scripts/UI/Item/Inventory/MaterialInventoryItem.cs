@@ -12,7 +12,7 @@ public class MaterialInventoryItem: InventoryItem
 
     public void Init(string objectId, string objectName, int objectCount, string objectDescription = "", Sprite objectIcon = null)
     {
-        id = objectId; objName = objectName; icon = objectIcon;
+        id = objectId; objName = objectName; icon = objectIcon; itemImage.sprite = icon;
         InitCoreId();
 
         description = objectDescription;

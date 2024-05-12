@@ -1,9 +1,11 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Item : UIElement
 {
     public Sprite icon;
+    public Image itemImage;
 
     public TMP_Text TmpName, TmpDescription;
 
@@ -17,6 +19,7 @@ public abstract class Item : UIElement
     public virtual void Init(string itemId, string itemName, Sprite itemIcon = null)
     {
         id = itemId; objName = itemName; icon = itemIcon;
+        itemImage.sprite = icon;
 
         UpdateUI();
     }

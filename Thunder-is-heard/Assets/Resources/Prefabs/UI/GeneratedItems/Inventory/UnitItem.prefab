@@ -962,14 +962,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
+  itemImage: {fileID: 1903387980374628900}
   TmpName: {fileID: 3285853606128306467}
+  TmpDescription: {fileID: 2718758011025365764}
+  description: 
   count: 0
   id: 
   objName: 
   coreId: 
   TmpCount: {fileID: 663022644728535422}
-  TmpDescription: {fileID: 2718758011025365764}
-  description: 
   gives:
     rub: 0
     maxRub: 0

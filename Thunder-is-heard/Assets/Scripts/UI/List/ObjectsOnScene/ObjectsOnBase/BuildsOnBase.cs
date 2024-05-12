@@ -1,9 +1,21 @@
+using Org.BouncyCastle.Asn1.Mozilla;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class BuildsOnBase : ObjectsOnBase
 {
+    public Transform productsNotificationsBucket;
+
+    public override void Start()
+    {
+        productsNotificationsBucket = GameObject.FindGameObjectWithTag(Tags.productsNotifications).transform;
+
+        EventMaster.current.ProductsNotificationCreated += PutOnProductsNotification;
+
+        base.Start();
+    }
+
     public override void OnBuildModeEnable()
     {
     }
@@ -12,12 +24,47 @@ public class BuildsOnBase : ObjectsOnBase
     {
         base.FillContent();
 
+        FillBuilds();
+
+        FillProductsNotifcations();
+    }
+
+    public void FillBuilds()
+    {
         PlayerBuildCacheTable playerBuildsTable = Cache.LoadByType<PlayerBuildCacheTable>();
         foreach (var pair in playerBuildsTable.Items)
         {
             PlayerBuildCacheItem currentPlayerBuild = new PlayerBuildCacheItem(pair.Value.Fields);
             MappingBuild(currentPlayerBuild);
         }
+    }
+
+    public void FillProductsNotifcations()
+    {
+        PlayerBuildCacheTable buildsOnBaseTable = Cache.LoadByType<PlayerBuildCacheTable>();
+        ProductsNotificationCacheTable productsNotificationsTable = Cache.LoadByType<ProductsNotificationCacheTable>();
+        foreach (var pair in productsNotificationsTable.Items)
+        {
+            ProductsNotificationCacheItem currentNotificationItem = new ProductsNotificationCacheItem(pair.Value.Fields);
+            PutOnProductsNotification(currentNotificationItem);
+        }
+    }
+
+    private void MappingProductsNotification(ProductsNotificationCacheItem productsNotificationData, PlayerBuildCacheItem sourceBuildData)
+    {
+        List<Vector2Int> buildPosition = Bector2Int.MassiveToVector2Int(sourceBuildData.GetPosition()).ToList();
+        Vector2Int buildCenter = Entity.CalculateCenter(buildPosition);
+        Sprite icon = Resources.Load<Sprite>(productsNotificationData.GetIconPath());
+
+        GameObject productsNotificationObj = ObjectProcessor.CreateProductsNotificationObject(buildCenter, sourceBuildData.GetName() + "ProductsNotification", productsNotificationsBucket);
+        ObjectProcessor.AddAndPrepareProductsNotificationComponent(
+            productsNotificationObj,
+            productsNotificationData.GetSourceObjectId(),
+            productsNotificationData.GetType(),
+            icon,
+            productsNotificationData.GetCount(),
+            productsNotificationData.GetGives()
+            );
     }
 
     private void MappingBuild(PlayerBuildCacheItem playerBuildData)
@@ -110,5 +157,20 @@ public class BuildsOnBase : ObjectsOnBase
             }
         }
         return null;
+    }
+
+    public void PutOnProductsNotification(ProductsNotificationCacheItem productsNotification)
+    {
+        PlayerBuildCacheTable buildsOnBaseTable = Cache.LoadByType<PlayerBuildCacheTable>();
+        CacheItem currentBuildItem = buildsOnBaseTable.GetById(productsNotification.GetSourceObjectId());
+        if (currentBuildItem == null)
+        {
+            Debug.Log("Build for finded productsNotification not found: " + productsNotification.GetSourceObjectId());
+            return;
+        }
+
+        PlayerBuildCacheItem currentBuildData = new PlayerBuildCacheItem(currentBuildItem.Fields);
+
+        MappingProductsNotification(productsNotification, currentBuildData);
     }
 }

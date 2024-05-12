@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UnitProductionComponent : InteractionComponent
@@ -19,7 +22,7 @@ public class UnitProductionComponent : InteractionComponent
 
     public override void Idle()
     {
-        UnitProductions unitProductionsUI = GameObject.FindGameObjectWithTag(Tags.unitProductions).GetComponent<UnitProductions>();
+        UnitProductions unitProductionsUI = Resources.FindObjectsOfTypeAll(typeof(UnitProductions)).First().GetComponent<UnitProductions>();
         unitProductionsUI.Toggle();
         unitProductionsUI.Init(type, id);
     }

@@ -88,7 +88,7 @@ public abstract class Entity : Interactable
     public void SetOccypation(List<Vector2Int> position)
     {
         occypiedPoses = position;
-        CalculateCenter(occypiedPoses);
+        center = CalculateCenter(occypiedPoses);
     }
 
     public static int GetDeterminedRotationByModel(Transform modelForCheck)
@@ -119,11 +119,11 @@ public abstract class Entity : Interactable
         return currentSize;
     }
 
-    public void CalculateCenter(List<Vector2Int> positions)
+    public static Vector2Int CalculateCenter(List<Vector2Int> positions)
     {
         if (positions.Count == 1) 
         { 
-            center = positions[0]; return; 
+            return positions[0];
         }
 
         int minX = int.MaxValue;
@@ -149,7 +149,7 @@ public abstract class Entity : Interactable
         float differenceY = (Math.Abs(maxY + minY)) / 2;
         int centerY = (int)Math.Floor(differenceY);
 
-        center = new Vector2Int(centerX, centerY);
+        return new Vector2Int(centerX, centerY);
     }
 
     public void OnDestroy()

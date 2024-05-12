@@ -26,6 +26,7 @@ public static class Config
     public static Dictionary<string, string> resources = new Dictionary<string, string>
     {
         {"materials", "Materials/" },
+        {"UICards", "Textures/Interface/Cards/" },
         {"materialPreview", "Materials/Preview/" },
         {"defaultCellMaterial", "Materials/Cell/Basic" },
         {"landableCellMaterial", "Materials/Cell/Landable" },
@@ -42,6 +43,7 @@ public static class Config
         { "UIContractItemPrefab", "Prefabs/UI/GeneratedItems/Contract/ContractItem" },
         { "UIUnitProductionItemPrefab", "Prefabs/UI/GeneratedItems/UnitProduction/UnitItem" },
         { "UIMaterialShopItemPrefab", "Prefabs/UI/GeneratedItems/Shop/MaterialItem" },
+        { "UIProductsNotificationPrefab", "Prefabs/UI/GeneratedItems/Common/ProductsNotification/ProductsNotification" },
         { "landableUnitItem", "Prefabs/UI/GeneratedItems/UnitForLanding/LandableUnitItem" },
         { "ranks", "Textures/Interface/Icons/Ranks/Ranks" },
         { "resourcesIcons", "Textures/Interface/Resources/Resources" },
@@ -50,6 +52,9 @@ public static class Config
         { "neutralSelector", "Textures/Interface/Selections/NeutralSelector" },
         { "attackableSelector", "Textures/Interface/Selections/AttackableSelector" },
         { "attackRadius", "Textures/Interface/Selections/AttackRadius" },
+        { "productsCollectionBackgroundIconIdle", "Textures/Interface/Icons/ProductsCollection/ProductsCollectionBackgroundIdle" },
+        { "productsCollectionBackgroundIconAllow", "Textures/Interface/Icons/ProductsCollection/ProductsCollectionBackgroundAllow" },
+        { "productsCollectionBackgroundIconForbidden", "Textures/Interface/Icons/ProductsCollection/ProductsCollectionBackgroundForbidden" },
     };
 
     public static Dictionary<int, int> ranksByExp = new Dictionary<int, int>

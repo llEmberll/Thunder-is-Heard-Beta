@@ -4,11 +4,14 @@ using UnityEngine;
 
 public abstract class InteractionComponent
 {
+    public ResourcesProcessor resourceProcessor;
+
     public string id;
     public string type;
 
     public virtual void Init(string objectOnBaseId, string componentType)
     {
+        resourceProcessor = GameObject.FindGameObjectWithTag("ResourcesProcessor").GetComponent<ResourcesProcessor>();
         id = objectOnBaseId;
         type = componentType;
         EventMaster.current.ProcessOnBaseFinished += OnProcessOnBaseFinished;

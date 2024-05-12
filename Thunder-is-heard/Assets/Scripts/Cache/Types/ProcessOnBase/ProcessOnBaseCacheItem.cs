@@ -30,9 +30,9 @@ public class ProcessOnBaseCacheItem : CacheItem
             SetProcessType(null);
         }
 
-        if (!objFields.ContainsKey("processData"))
+        if (!objFields.ContainsKey("source"))
         {
-            SetProcessData(null);
+            SetSource(null);
         }
     }
 
@@ -80,15 +80,20 @@ public class ProcessOnBaseCacheItem : CacheItem
         SetField("processType", value);
     }
 
-    public string GetProcessData()
+    public ProcessSource GetSource()
     {
-        object value = GetField("processData");
-        return value == null ? (string)value : null;
+        object value = GetField("source");
+        if (value == null)
+        {
+            return null;
+        }
+
+        return JsonConvert.DeserializeObject<ProcessSource>(value.ToString());
     }
 
-    public void SetProcessData(string value)
+    public void SetSource(ProcessSource value)
     {
-        SetField("processData", value);
+        SetField("source", value);
     }
 
     public override CacheItem Clone()

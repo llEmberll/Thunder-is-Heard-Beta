@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 1426761002598614955}
   - component: {fileID: 2345663577835787138}
   - component: {fileID: 6431415586969269461}
+  - component: {fileID: 6076956814295821432}
   m_Layer: 0
   m_Name: ProductsNotification
   m_TagString: Untagged
@@ -296,7 +297,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &2345663577835787138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,6 +327,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 528504300e65bb740aec543fea6c7720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourcesProcessor: {fileID: 0}
+  _sourceObjectId: 
+  _type: 
+  _countText: {fileID: 8197147623829095322}
+  _gives:
+    rub: 0
+    maxRub: 0
+    frames: 0
+    maxFrames: 0
+    oil: 0
+    maxOil: 0
+    steel: 0
+    maxSteel: 0
+    staff: 0
+    maxStaff: 0
+    exp: 0
+    maxExp: 0
+  _icon: {fileID: 6627184611053106882}
+  _background: {fileID: 4201023056248144981}
+  _isAvailableToCollect: 0
+  backgroundWhenCollectionAllowed: {fileID: 0}
+  backgroundWhenCollectionForbidden: {fileID: 0}
+  backgroundWhenIdle: {fileID: 0}
+--- !u!95 &6076956814295821432
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6518606757991007434}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4fce69a62feb71f4b8db5a4a4d4eef60, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6983309097245453559
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +384,7 @@ GameObject:
   - component: {fileID: 6698809622632254499}
   - component: {fileID: 7237743901981751915}
   m_Layer: 5
-  m_Name: Health
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

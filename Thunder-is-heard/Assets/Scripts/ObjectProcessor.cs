@@ -217,6 +217,19 @@ public class ObjectProcessor : MonoBehaviour
         return obj;
     }
 
+    public static GameObject CreateProductsNotificationObject(Vector2Int position, string name, Transform parent)
+    {
+        var productsNotificationPrefab = Resources.Load<GameObject>(Config.resources["UIProductsNotificationPrefab"]);
+        GameObject obj = Instantiate(
+            productsNotificationPrefab,
+            new Vector3(position.x, productsNotificationPrefab.transform.position.y, position.y),
+            productsNotificationPrefab.transform.rotation,
+            parent
+            );
+        obj.name = name;
+        return obj;
+    }
+
     public void ReplaceObjectOnBase(GameObject obj, List<Vector2Int> newPosition, int newRotation)
     {
         Entity entity = obj.GetComponent<Entity>();
@@ -268,7 +281,7 @@ public class ObjectProcessor : MonoBehaviour
         component.interactionComponent.Init(childId, interactionComponentType);
         component.ChangeWorkStatus(workStatus);
 
-        if (IsObjectIdleAndNotHaveProductsNotification(component))
+        if (interactionComponentType != "" && IsObjectIdleAndNotHaveProductsNotification(component))
         {
             CreateProductsNotification(component.ChildId, ProductsNotificationTypes.idle);
         }
@@ -299,6 +312,19 @@ public class ObjectProcessor : MonoBehaviour
 
         component.coreId = coreId;
         component.childId = childId;
+    }
+
+    public static void AddAndPrepareProductsNotificationComponent(
+        GameObject productsNotificationObj,
+        string sourceObjectId,
+        string type,
+        Sprite icon, 
+        int productionCount,
+        ResourcesData gives
+        )
+    {
+        ProductsNotifcation component = productsNotificationObj.GetComponent<ProductsNotifcation>();
+        component.Init(sourceObjectId, type, icon, productionCount, gives);
     }
 
     public static PlayerBuildCacheItem AddNewBuildOnBaseToCache(string buildId, string name, Bector2Int[] occypation, int rotation, string workStatus)
@@ -377,7 +403,6 @@ public class ObjectProcessor : MonoBehaviour
         string sourceObjectId,
         string notificationType, 
         string iconPath = "", 
-        string backgroundIconPath = "",
         int count = 1, 
         ResourcesData gives = null, 
         string unitId = null
@@ -389,7 +414,6 @@ public class ObjectProcessor : MonoBehaviour
         newProductsNotification.SetSourceObjectId(sourceObjectId);
         newProductsNotification.SetType(notificationType);
         newProductsNotification.SetIconPath(iconPath);
-        newProductsNotification.SetBackgroundIconPath(backgroundIconPath);
         newProductsNotification.SetCount(count);
         newProductsNotification.SetGives(gives);
         newProductsNotification.SetUnitId(unitId);
@@ -400,9 +424,7 @@ public class ObjectProcessor : MonoBehaviour
         EventMaster.current.OnCreateProductsNotification(newProductsNotification);
     }
 
-    public static void DeleteProductsNotificationBySourceObjectId(
-        string sourceObjectId
-        )
+    public static void DeleteProductsNotificationBySourceObjectId(string sourceObjectId)
     {
         ProductsNotificationCacheTable productsNotificationsTable = Cache.LoadByType<ProductsNotificationCacheTable>();
         ProductsNotificationCacheItem itemForDeletion = productsNotificationsTable.FindBySourceObjectId(sourceObjectId);
@@ -415,5 +437,17 @@ public class ObjectProcessor : MonoBehaviour
         Cache.Save(productsNotificationsTable);
 
         EventMaster.current.OnDeleteProductsNotification(itemForDeletion);
+    }
+
+    public static void DeleteProductsNotificationByItemId(string itemId)
+    {
+        ProductsNotificationCacheTable productsNotificationsTable = Cache.LoadByType<ProductsNotificationCacheTable>();
+        CacheItem item = productsNotificationsTable.GetById(itemId);
+        if ( item == null ) { return; }
+
+        ProductsNotificationCacheItem productsNotificationForDeletion = new ProductsNotificationCacheItem(item.Fields);
+        productsNotificationsTable.DeleteById(itemId);
+        Cache.Save(productsNotificationsTable);
+        EventMaster.current.OnDeleteProductsNotification(productsNotificationForDeletion);
     }
 }

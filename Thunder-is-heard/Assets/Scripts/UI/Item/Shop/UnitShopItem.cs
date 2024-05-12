@@ -16,7 +16,7 @@ public class UnitShopItem: ExposableShopItem
 
     public void Init(string objectId, string objectName, ResourcesData objectCost, ResourcesData objectGives, int objectHealth, int objectDamage, int objectDistance, int objectMobility, int objectCount, string objectDescription = "", Sprite objectIcon = null)
     {
-        id = objectId; objName = objectName; icon = objectIcon;
+        id = objectId; objName = objectName; icon = objectIcon; itemImage.sprite = icon;
         InitCoreId();
 
         costData = objectCost;

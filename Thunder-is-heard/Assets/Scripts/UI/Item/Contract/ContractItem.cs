@@ -37,7 +37,7 @@ public class ContractItem : Item
         Sprite contractIcon = null
         )
     {
-        id = contractId; objName = contractName; icon = contractIcon; 
+        id = contractId; objName = contractName; icon = contractIcon; itemImage.sprite = icon;
         _contractType = contractType; _sourceObjectId = sourceObjectId;
 
         costData = contractCost;

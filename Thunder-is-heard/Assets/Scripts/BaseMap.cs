@@ -239,4 +239,44 @@ public class BaseMap : Map
 
         Cache.Save(shopTable);
     }
+
+    public void CreateContracts()
+    {
+        ContractCacheTable contractsTable = Cache.LoadByType<ContractCacheTable>();
+
+        string cardIconPath = Config.resources["UICards"] + "Builds/" + "cards/" + "mine_card";
+
+        ContractCacheItem contractOnSteel_1 = new ContractCacheItem(new Dictionary<string, object>());
+        ResourcesData costForContract_1 = new ResourcesData(rubCount: 500);
+        contractOnSteel_1.SetCost(costForContract_1);
+        ResourcesData givesForContract_1 = new ResourcesData(steelCount: 2);
+        contractOnSteel_1.SetGives(givesForContract_1);
+        contractOnSteel_1.SetType("Steel");
+        contractOnSteel_1.SetDuration(10);
+        contractOnSteel_1.SetName("Steel express");
+        contractOnSteel_1.SetIconPath(cardIconPath);
+
+        ContractCacheItem contractOnSteel_2 = new ContractCacheItem(new Dictionary<string, object>());
+        ResourcesData costForContract_2 = new ResourcesData(rubCount: 1200);
+        contractOnSteel_2.SetCost(costForContract_2);
+        ResourcesData givesForContract_2 = new ResourcesData(steelCount: 6);
+        contractOnSteel_2.SetGives(givesForContract_2);
+        contractOnSteel_2.SetType("Steel");
+        contractOnSteel_2.SetDuration(25);
+        contractOnSteel_2.SetName("Half a shift");
+        contractOnSteel_2.SetIconPath(cardIconPath);
+
+        ContractCacheItem contractOnSteel_3 = new ContractCacheItem(new Dictionary<string, object>());
+        ResourcesData costForContract_3 = new ResourcesData(rubCount: 2150);
+        contractOnSteel_3.SetCost(costForContract_3);
+        ResourcesData givesForContract_3 = new ResourcesData(steelCount: 15);
+        contractOnSteel_3.SetGives(givesForContract_3);
+        contractOnSteel_3.SetType("Steel");
+        contractOnSteel_3.SetDuration(60);
+        contractOnSteel_3.SetName("Full shift");
+        contractOnSteel_3.SetIconPath(cardIconPath);
+
+        contractsTable.Add(new CacheItem[] { contractOnSteel_1, contractOnSteel_2, contractOnSteel_3 });
+        Cache.Save(contractsTable);
+    }
 }

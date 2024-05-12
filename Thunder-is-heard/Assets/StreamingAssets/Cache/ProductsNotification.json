@@ -1,1 +1,41 @@
-﻿{}
+﻿{
+  "name": "ProductsNotification",
+  "items": {
+    "2afa39f2-65c4-4f2d-9176-a64dae610b83": {
+      "fields": {
+        "externalId": "2afa39f2-65c4-4f2d-9176-a64dae610b83",
+        "description": "",
+        "sourceObjectId": "571b44c7-9e38-4edc-8e58-75dfdd2ffc16",
+        "type": "Idle",
+        "gives": null,
+        "iconPath": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "3146fc8a-acae-40d5-8d79-ddb7189c1679": {
+      "fields": {
+        "externalId": "3146fc8a-acae-40d5-8d79-ddb7189c1679",
+        "description": "",
+        "sourceObjectId": "7143df9b-f3fe-4baf-864d-33ea923e373a",
+        "type": "Idle",
+        "gives": null,
+        "iconPath": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "9877434a-1a7f-4473-a686-1f44ea443206": {
+      "fields": {
+        "externalId": "9877434a-1a7f-4473-a686-1f44ea443206",
+        "description": "",
+        "sourceObjectId": "406bf5da-6673-43db-9354-c2d38b900bb6",
+        "type": "Idle",
+        "gives": null,
+        "iconPath": "",
+        "count": 1,
+        "unitId": null
+      }
+    }
+  }
+}

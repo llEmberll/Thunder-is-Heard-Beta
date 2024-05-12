@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Reflection;
+using Org.BouncyCastle.Utilities;
 
 
 public class ResourcesProcessor : MonoBehaviour
@@ -93,7 +94,14 @@ public class ResourcesProcessor : MonoBehaviour
         ResourcesCacheTable resourceTable = Cache.LoadByType<ResourcesCacheTable>();
         resourceTable.SetResources(resources.GetResourcesWithoutLimits());
         Cache.Save(resourceTable);
-        resourcesUI.UpdateAll(resources);
+        EventMaster.current.OnChangeResources(resources);
+    }
+
+    public bool IsAvailableToAddResources(ResourcesData resourcesForAdd)
+    {
+        ResourcesData newResources = resources;
+        newResources.Add(resourcesForAdd);
+        return !newResources.IsOverflow();
     }
 
     public void AddResources(ResourcesData resourcesForAdd)
@@ -199,5 +207,33 @@ public class ResourcesProcessor : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+    }
+
+    public static Dictionary<string, string> GetFirstNotEmptyResourceData(ResourcesData resourcesData)
+    {
+        Dictionary<string, string> result = new Dictionary<string, string>()
+        {
+            { "iconPath", "" },
+            { "count", 1.ToString() } 
+        };
+
+        Type type = resourcesData.GetType();
+        FieldInfo[] resources = type.GetFields();
+
+        foreach (FieldInfo resource in resources)
+        {
+            if (resource.FieldType == typeof(int))
+            {
+                int value = (int)resource.GetValue(resourcesData);
+                if (value != 0)
+                {
+                    string resourceName = resource.Name;
+                    result["iconPath"] = Config.resources["resourcesIcons"] + "/" + resourceName.ToLower();
+                    result["count"] = value.ToString();
+                }
+            }
+        }
+
+        return result;
     }
 }

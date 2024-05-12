@@ -20,6 +20,11 @@ public class ResourcesPanel : Panel
     public Slider staffSlider;
     public TMP_Text staffText;
 
+    public void Start()
+    {
+        EventMaster.current.ResourcesChanged += UpdateAll;
+    }
+
     public void UpdateAll(ResourcesData readings)
     {
         rubText.text = readings.rub.ToString();

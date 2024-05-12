@@ -99,6 +99,12 @@ public class EventMaster: MonoBehaviour
         ShopChanged?.Invoke();
     }
 
+    public event Action<ResourcesData> ResourcesChanged;
+    public void OnChangeResources(ResourcesData newResources)
+    {
+        ResourcesChanged?.Invoke(newResources);
+    }
+
     public event Action<string, string> BaseObjectRemoved;
     public void OnRemoveBaseObject(string id, string type)
     {

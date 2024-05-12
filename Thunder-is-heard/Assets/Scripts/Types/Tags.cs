@@ -18,7 +18,14 @@ public static class Tags
     public static string contractItems = "ContractItems";
     public static string unitProductionItems = "UnitProductionItems";
 
+    public static string objectsOnBase = "ObjectsOnScene";
+    public static string buildsOnBase = "UnitsOnScene";
+    public static string unitsOnBase = "UnitsOnScene";
+    public static string productsNotifications = "ProductsNotifications";
+
     public static string givesList = "Gives";
     public static string costList = "Cost";
+
+    public static string resourcesProcessor = "ResourcesProcessor";
 
 }

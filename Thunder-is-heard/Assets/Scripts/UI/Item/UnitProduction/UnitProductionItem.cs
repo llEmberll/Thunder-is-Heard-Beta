@@ -44,7 +44,7 @@ public class UnitProductionItem: Item
         Sprite productionIcon = null
         )
     {
-        id = productionId; objName = productionName; icon = productionIcon;
+        id = productionId; objName = productionName; icon = productionIcon; itemImage.sprite = icon;
 
         _unitProductionType = productionType; _sourceObjectId = sourceObjectId;
         _unitId = unitId;

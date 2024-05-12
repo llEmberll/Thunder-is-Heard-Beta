@@ -27,11 +27,6 @@ public class ProductsNotificationCacheItem : CacheItem
         {
             SetIconPath("");
         }
-
-        if (!objFields.ContainsKey("backgroundIconPath"))
-        {
-            SetBackgroundIconPath("");
-        }
     }
 
     public string? GetType()
@@ -52,16 +47,6 @@ public class ProductsNotificationCacheItem : CacheItem
     public void SetIconPath(string value)
     {
         SetField("iconPath", value);
-    }
-
-    public string? GetBackgroundIconPath()
-    {
-        return (string?)GetField("backgroundIconPath");
-    }
-
-    public void SetBackgroundIconPath(string value)
-    {
-        SetField("backgroundIconPath", value);
     }
 
     public string? GetUnitId()
