@@ -22,6 +22,17 @@ public class Selector : MonoBehaviour
 
     public Image damagePanel;
     public TMP_Text damageCount;
+
+
+    public Canvas productsInfoCanvas;
+    public Vector3 productsInfoCanvasOffset = new Vector3(0.591f, 0, 0.591f);
+    public int productsEndTime;
+    public bool isSelectedObjectProducts = false;
+    public TMP_Text productInfoText;
+    public Image productionImage;
+    public TMP_Text productionCount;
+
+
     void Start()
     {
         InitSelectorSprites();
@@ -40,6 +51,14 @@ public class Selector : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        if (isSelectedObjectProducts)
+        {
+            UpdateProductsLeftTimeText();
+        }
+    }
+
     public void OnEnterObject(Entity obj)
     {
         objectInfoCanvas.enabled = true;
@@ -50,6 +69,15 @@ public class Selector : MonoBehaviour
         ConfigureHealthSlider(obj);
         ConfigureHealth(obj);
         ConfigureDamage(obj);
+
+        if (obj is Build)
+        {
+            Build build = (Build)obj;
+            if (build.workStatus == WorkStatuses.working)
+            {
+                ConfigureProductsInfo(build);
+            }
+        }
     }
 
     public void OnExitObject(Entity obj)
@@ -59,8 +87,9 @@ public class Selector : MonoBehaviour
 
     public void TurnOff()
     {
-        objectInfoCanvas.enabled = attackRadiusCanvas.enabled =  false;
+        objectInfoCanvas.enabled = attackRadiusCanvas.enabled =  productsInfoCanvas.enabled = false;
         selector.SetActive(false);
+        isSelectedObjectProducts = false;
     }
 
     public void ConfigureName(Entity obj)
@@ -179,5 +208,66 @@ public class Selector : MonoBehaviour
 
         damagePanel.gameObject.SetActive(true);
         damageCount.text = obj.damage.ToString();
+    }
+
+
+    public void ConfigureProductsInfo(Build build)
+    {
+        ConfigureProductsInfoCanvasPosition(build);
+
+        isSelectedObjectProducts = true;
+
+        ProcessOnBaseCacheTable processesOnBaseTable = Cache.LoadByType<ProcessOnBaseCacheTable>();
+        ProcessOnBaseCacheItem productsProcessData = processesOnBaseTable.FindBySourceObjectId(build.ChildId);
+        if (productsProcessData != null)
+        {
+            return;
+        }
+
+        productsEndTime = productsProcessData.GetEndTime();
+        UpdateProductsLeftTimeText();
+
+        ProcessSource processSource = productsProcessData.GetSource();
+
+        switch (processSource.type)
+        {
+            case "Contract":
+                ConfigureProductionForContract(processSource.id);
+                break;
+            case "Improvement":
+                //TODO реализовать
+                break;
+            case "UnitProduction":
+                //TODO реализовать
+                break;
+        }
+    }
+
+    public void ConfigureProductsInfoCanvasPosition(Build build)
+    {
+        productsInfoCanvas.transform.position = new Vector3(
+            build.model.transform.position.x + productsInfoCanvasOffset.x,
+            productsInfoCanvas.transform.position.y + productsInfoCanvasOffset.y,
+            build.model.transform.position.z + productsInfoCanvasOffset.z
+        );
+    }
+
+    public void ConfigureProductionForContract(string contractId)
+    {
+        ContractCacheTable contractsTable = Cache.LoadByType<ContractCacheTable>();
+        CacheItem itemData = contractsTable.GetById(contractId);
+        ContractCacheItem contractItemData = new ContractCacheItem(itemData.Fields);
+
+        ResourcesData gives = contractItemData.GetGives();
+        Dictionary<string, string> resourceData = ResourcesProcessor.GetFirstNotEmptyResourceData(gives);
+        productionCount.text = resourceData["count"].ToString();
+        productionImage.sprite = Resources.Load<Sprite>(resourceData["iconPath"]);
+    }
+
+    public void UpdateProductsLeftTimeText()
+    {
+        int currentTime = (int)Time.realtimeSinceStartup;
+        int leftTime = productsEndTime - currentTime;
+        productInfoText.text = "через " + TimeUtils.GetTimeAsStringBySeconds(leftTime);
     }
 }

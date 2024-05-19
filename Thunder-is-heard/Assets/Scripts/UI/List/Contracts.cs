@@ -52,7 +52,8 @@ public class Contracts : ItemList
         ResourcesData gives = contractCacheData.GetGives();
         int duration = contractCacheData.GetDuration();
         string description = contractCacheData.GetDescrption();
-        Sprite icon = Resources.Load<Sprite>(contractCacheData.GetIconPath());
+        Sprite[] iconSection = Resources.LoadAll<Sprite>(Config.resources[contractCacheData.GetIconSection()]);
+        Sprite icon = SpriteUtils.FindSpriteByName(contractCacheData.GetIconName(), iconSection);
 
         GameObject itemObject = CreateObject(Config.resources["UI" + "ContractItemPrefab"], content);
         itemObject.name = name;

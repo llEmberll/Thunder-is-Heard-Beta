@@ -154,19 +154,25 @@ public class ResourcesProcessor : MonoBehaviour
         }
     }
 
-    public static void CreateResourceElement(string name, int count, Transform parent)
+    public static Sprite GetResourceSpriteByName(string name)
     {
         Sprite[] icons = Resources.LoadAll<Sprite>(Config.resources["resourcesIcons"]);
-        Sprite resourceIcon = null;
 
         name = name.ToLower();
         foreach (Sprite icon in icons)
         {
             if (name.Contains(icon.name))
             {
-                resourceIcon = icon;
+                return icon;
             }
         }
+
+        return null;
+    }
+
+    public static void CreateResourceElement(string name, int count, Transform parent)
+    {
+        Sprite resourceIcon = GetResourceSpriteByName(name);
 
         string beginPrefix = "";
         string endPrefix = "";

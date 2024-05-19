@@ -62,7 +62,7 @@ public class UnitProductionItem: Item
         TmpDistance.text = distance.ToString();
         TmpMobility.text = mobility.ToString();
 
-        TmpDuration.text = TimeUtils.GetTimeAsStringByMinutes(_duration);
+        TmpDuration.text = TimeUtils.GetTimeAsStringBySeconds(_duration);
 
         base.UpdateUI();
     }
@@ -81,8 +81,8 @@ public class UnitProductionItem: Item
 
     public void OnBuy()
     {
-        float startTime = Time.realtimeSinceStartup;
-        float endTime = startTime + (_duration * 60);
+        int startTime = (int)Time.realtimeSinceStartup;
+        int endTime = startTime + (_duration * 60 * 60);
 
         ProcessWorker.CreateProcess(
             "UnitProduction",

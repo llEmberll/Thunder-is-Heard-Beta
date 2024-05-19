@@ -244,8 +244,6 @@ public class BaseMap : Map
     {
         ContractCacheTable contractsTable = Cache.LoadByType<ContractCacheTable>();
 
-        string cardIconPath = Config.resources["UICards"] + "Builds/" + "cards/" + "mine_card";
-
         ContractCacheItem contractOnSteel_1 = new ContractCacheItem(new Dictionary<string, object>());
         ResourcesData costForContract_1 = new ResourcesData(rubCount: 500);
         contractOnSteel_1.SetCost(costForContract_1);
@@ -254,7 +252,7 @@ public class BaseMap : Map
         contractOnSteel_1.SetType("Steel");
         contractOnSteel_1.SetDuration(10);
         contractOnSteel_1.SetName("Steel express");
-        contractOnSteel_1.SetIconPath(cardIconPath);
+        contractOnSteel_1.SetIconSection("UIBuildCards");
 
         ContractCacheItem contractOnSteel_2 = new ContractCacheItem(new Dictionary<string, object>());
         ResourcesData costForContract_2 = new ResourcesData(rubCount: 1200);
@@ -264,7 +262,7 @@ public class BaseMap : Map
         contractOnSteel_2.SetType("Steel");
         contractOnSteel_2.SetDuration(25);
         contractOnSteel_2.SetName("Half a shift");
-        contractOnSteel_2.SetIconPath(cardIconPath);
+        contractOnSteel_2.SetIconSection("UIBuildCards");
 
         ContractCacheItem contractOnSteel_3 = new ContractCacheItem(new Dictionary<string, object>());
         ResourcesData costForContract_3 = new ResourcesData(rubCount: 2150);
@@ -274,7 +272,7 @@ public class BaseMap : Map
         contractOnSteel_3.SetType("Steel");
         contractOnSteel_3.SetDuration(60);
         contractOnSteel_3.SetName("Full shift");
-        contractOnSteel_3.SetIconPath(cardIconPath);
+        contractOnSteel_3.SetIconSection("UIBuildCards");
 
         contractsTable.Add(new CacheItem[] { contractOnSteel_1, contractOnSteel_2, contractOnSteel_3 });
         Cache.Save(contractsTable);

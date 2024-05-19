@@ -16,8 +16,8 @@ public class ProcessWorker : MonoBehaviour
         string processName, 
         string processType, 
         string objectOnBaseId, 
-        float startTime, 
-        float EndTime, 
+        int startTime, 
+        int EndTime, 
         ProcessSource source = null
         )
     {

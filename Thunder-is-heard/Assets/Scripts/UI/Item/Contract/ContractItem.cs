@@ -61,7 +61,7 @@ public class ContractItem : Item
         ResourcesProcessor.UpdateResources(cost, costData);
         ResourcesProcessor.UpdateResources(gives, givesData);
 
-        TmpDuration.text = TimeUtils.GetTimeAsStringByMinutes(_duration);
+        TmpDuration.text = TimeUtils.GetTimeAsStringBySeconds(_duration);
 
         base.UpdateUI();
     }
@@ -80,8 +80,8 @@ public class ContractItem : Item
 
     public void OnBuy()
     {
-        float startTime = Time.realtimeSinceStartup;
-        float endTime = startTime + (_duration * 60);
+        int startTime = (int)Time.realtimeSinceStartup;
+        int endTime = startTime + (_duration * 60 * 60);
 
         ProcessWorker.CreateProcess(
             "Contract",

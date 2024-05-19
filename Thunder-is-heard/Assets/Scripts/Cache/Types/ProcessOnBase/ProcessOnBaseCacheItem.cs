@@ -12,12 +12,12 @@ public class ProcessOnBaseCacheItem : CacheItem
     {
         if (!objFields.ContainsKey("startTime"))
         {
-            SetStartTime(Time.realtimeSinceStartup);
+            SetStartTime((int)Time.realtimeSinceStartup);
         }
 
         if (!objFields.ContainsKey("endTime"))
         {
-            SetEndTime(Time.realtimeSinceStartup);
+            SetEndTime((int)Time.realtimeSinceStartup);
         }
 
         if (!objFields.ContainsKey("objectOnBaseId"))
@@ -36,24 +36,24 @@ public class ProcessOnBaseCacheItem : CacheItem
         }
     }
 
-    public float GetStartTime()
+    public int GetStartTime()
     {
         object value = GetField("startTime");
         return Convert.ToInt32(value);
     }
 
-    public void SetStartTime(float value)
+    public void SetStartTime(int value)
     {
         SetField("startTime", value);
     }
 
-    public float GetEndTime()
+    public int GetEndTime()
     {
         object value = GetField("endTime");
         return Convert.ToInt32(value);
     }
 
-    public void SetEndTime(float value)
+    public void SetEndTime(int value)
     {
         SetField("endTime", value);
     }

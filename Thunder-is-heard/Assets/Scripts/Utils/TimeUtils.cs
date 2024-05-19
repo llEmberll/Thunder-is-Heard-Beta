@@ -6,16 +6,16 @@ using UnityEngine;
 
 public static class TimeUtils
 {
-    public static string GetTimeAsStringByMinutes(int totalMinutes)
+    public static string GetTimeAsStringBySeconds(int totalSeconds)
     {
-        if (totalMinutes < 1)
+        if (totalSeconds < 1)
         {
             return "мгновенно";
         }
 
-        int days = totalMinutes / (24 * 60);
-        int hours = (totalMinutes % (24 * 60)) / 60;
-        int remainingMinutes = totalMinutes % 60;
+        int days = totalSeconds / (24 * 60 * 60);
+        int hours = (totalSeconds % (24 * 60 * 60)) / 60;
+        int remainingMinutes = totalSeconds % (60 * 60);
 
         string result = "";
         if (days > 0)

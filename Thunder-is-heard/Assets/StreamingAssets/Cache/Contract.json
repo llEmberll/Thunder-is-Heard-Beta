@@ -35,7 +35,8 @@
           "maxExp": 0
         },
         "duration": 10,
-        "iconPath": "Textures/Interface/Cards/Builds/cards/mine_card",
+        "iconSection": "UIBuildCards",
+        "iconName": "mine_card",
         "name": "Steel express"
       }
     },
@@ -73,7 +74,8 @@
           "maxExp": 0
         },
         "duration": 25,
-        "iconPath": "Textures/Interface/Cards/Builds/cards/mine_card",
+        "iconSection": "UIBuildCards",
+        "iconName": "mine_card",
         "name": "Half a shift"
       }
     },
@@ -111,7 +113,8 @@
           "maxExp": 0
         },
         "duration": 60,
-        "iconPath": "Textures/Interface/Cards/Builds/cards/mine_card",
+        "iconSection": "UIBuildCards",
+        "iconName": "mine_card",
         "name": "Full shift"
       }
     }
