@@ -7422,7 +7422,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 875150195}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7431,8 +7431,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -50.9, y: -87}
-  m_SizeDelta: {x: 698.4, y: 174}
+  m_AnchoredPosition: {x: 127.7, y: -87}
+  m_SizeDelta: {x: 544.5, y: 174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &875150197
 CanvasRenderer:
@@ -7462,7 +7462,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0447\u0435\u0440\u0435\u0437 1\u0447 05\u043C"
+  m_text: "\u0447\u0435\u0440\u0435\u0437 2\u0414 1\u0447 05\u043C 05\u0421"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7489,14 +7489,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 55.6
   m_fontSizeBase: 56.5
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -7505,7 +7505,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -13707,7 +13707,7 @@ MonoBehaviour:
   healthCount: {fileID: 1202080964089461990}
   damagePanel: {fileID: 8703191308225541642}
   damageCount: {fileID: 1501115412502900486}
-  productsInfoCanvas: {fileID: 0}
+  productsInfoCanvas: {fileID: 422317277}
   productsInfoCanvasOffset: {x: 0.591, y: 0, z: 0.591}
   productsEndTime: 0
   isSelectedObjectProducts: 0

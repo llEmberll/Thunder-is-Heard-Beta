@@ -1,4 +1,5 @@
 using Org.BouncyCastle.Asn1.Mozilla;
+using Org.BouncyCastle.Crypto;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -54,7 +55,24 @@ public class BuildsOnBase : ObjectsOnBase
     {
         List<Vector2Int> buildPosition = Bector2Int.MassiveToVector2Int(sourceBuildData.GetPosition()).ToList();
         Vector2Int buildCenter = Entity.CalculateCenter(buildPosition);
-        Sprite icon = Resources.Load<Sprite>(productsNotificationData.GetIconPath());
+
+        Sprite[] iconSection = Resources.LoadAll<Sprite>(productsNotificationData.GetIconSection());
+        Sprite icon = null;
+        if (iconSection.Length == 1) 
+        { 
+            icon = iconSection[0];
+        }
+        else if (productsNotificationData.GetIconName() != "")
+        {
+            foreach (Sprite i in iconSection)
+            {
+                if (i.name == productsNotificationData.GetIconName())
+                {
+                    icon = i;
+                    break;
+                }
+            }
+        }
 
         GameObject productsNotificationObj = ObjectProcessor.CreateProductsNotificationObject(buildCenter, sourceBuildData.GetName() + "ProductsNotification", productsNotificationsBucket);
         ObjectProcessor.AddAndPrepareProductsNotificationComponent(

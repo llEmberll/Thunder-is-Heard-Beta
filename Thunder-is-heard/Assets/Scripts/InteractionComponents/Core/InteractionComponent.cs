@@ -11,7 +11,7 @@ public abstract class InteractionComponent
 
     public virtual void Init(string objectOnBaseId, string componentType)
     {
-        resourceProcessor = GameObject.FindGameObjectWithTag("ResourcesProcessor").GetComponent<ResourcesProcessor>();
+        resourceProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
         id = objectOnBaseId;
         type = componentType;
         EventMaster.current.ProcessOnBaseFinished += OnProcessOnBaseFinished;
@@ -29,9 +29,9 @@ public abstract class InteractionComponent
     public abstract void Working();
     public abstract void Finished();
 
-    public bool IsProcessBelongsToComponent(string objectOnBaseId, string type)
+    public bool IsProcessBelongsToComponent(string objectOnBaseId, string processType)
     {
-        return id == objectOnBaseId && ProcessTypes.component == type;
+        return id == objectOnBaseId && ProcessTypes.component == processType;
     }
 
     public void OnProcessOnBaseFinished(ProcessOnBaseCacheItem process)
@@ -42,10 +42,11 @@ public abstract class InteractionComponent
         AfterProcessHandle(process.GetExternalId(), process.GetObjectOnBaseId());
     }
 
-    public void OnProcessOnBaseStarted(ProcessOnBaseCacheItem process)
+    public virtual void OnProcessOnBaseStarted(ProcessOnBaseCacheItem process)
     {
         if (!IsProcessBelongsToComponent(process.GetObjectOnBaseId(), process.GetProcessType())) return;
 
+        HideUI();
         ObjectProcessor.DeleteProductsNotificationBySourceObjectId(process.GetObjectOnBaseId());
         EventMaster.current.OnChangeObjectOnBaseWorkStatus(id, WorkStatuses.working);
     }
@@ -57,4 +58,8 @@ public abstract class InteractionComponent
         EventMaster.current.OnProcessOnBaseHandle(processId);
         EventMaster.current.OnChangeObjectOnBaseWorkStatus(objectOnBaseId, WorkStatuses.finished);
     }
+
+    public abstract void HideUI();
+    public abstract void ToggleUI();
+
 }

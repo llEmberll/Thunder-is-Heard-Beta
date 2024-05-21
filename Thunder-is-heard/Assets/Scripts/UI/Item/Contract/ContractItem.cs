@@ -14,8 +14,6 @@ public class ContractItem : Item
 
     public ResourcesProcessor resourcesProcessor;
 
-    public string coreId;
-
     public int _duration;
     public TMP_Text TmpDuration;
 
@@ -50,18 +48,17 @@ public class ContractItem : Item
 
     public override void Awake()
     {
-        resourcesProcessor = GameObject.FindGameObjectWithTag("ResourcesProcessor").GetComponent<ResourcesProcessor>();
+        resourcesProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
     }
 
     public override void UpdateUI()
     {
-        TmpDuration.text = count.ToString();
         TmpDescription.text = description;
 
         ResourcesProcessor.UpdateResources(cost, costData);
         ResourcesProcessor.UpdateResources(gives, givesData);
 
-        TmpDuration.text = TimeUtils.GetTimeAsStringBySeconds(_duration);
+        TmpDuration.text = TimeUtils.GetDHMTimeAsStringBySeconds(_duration);
 
         base.UpdateUI();
     }
@@ -81,18 +78,17 @@ public class ContractItem : Item
     public void OnBuy()
     {
         int startTime = (int)Time.realtimeSinceStartup;
-        int endTime = startTime + (_duration * 60 * 60);
+        int endTime = startTime + (_duration * 60);
 
         ProcessWorker.CreateProcess(
-            "Contract",
+            Type,
             ProcessTypes.component,
             _sourceObjectId,
             startTime,
-            endTime
+            endTime,
+            new ProcessSource(Type, id)
             );
         resourcesProcessor.SubstractResources(costData);
         resourcesProcessor.Save();
-
-        this.Toggle();
     }
 }

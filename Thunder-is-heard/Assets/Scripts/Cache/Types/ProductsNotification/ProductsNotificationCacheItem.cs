@@ -23,9 +23,14 @@ public class ProductsNotificationCacheItem : CacheItem
             SetGives(new ResourcesData());
         }
 
-        if (!objFields.ContainsKey("iconPath"))
+        if (!objFields.ContainsKey("iconSection"))
         {
-            SetIconPath("");
+            SetIconSection("");
+        }
+
+        if (!objFields.ContainsKey("iconName"))
+        {
+            SetIconName("");
         }
     }
 
@@ -39,14 +44,24 @@ public class ProductsNotificationCacheItem : CacheItem
         SetField("type", value);
     }
 
-    public string? GetIconPath()
+    public string? GetIconSection()
     {
-        return (string?)GetField("iconPath");
+        return (string?)GetField("iconSection");
     }
 
-    public void SetIconPath(string value)
+    public void SetIconSection(string value)
     {
-        SetField("iconPath", value);
+        SetField("iconSection", value);
+    }
+
+    public string? GetIconName()
+    {
+        return (string?)GetField("iconName");
+    }
+
+    public void SetIconName(string value)
+    {
+        SetField("iconName", value);
     }
 
     public string? GetUnitId()

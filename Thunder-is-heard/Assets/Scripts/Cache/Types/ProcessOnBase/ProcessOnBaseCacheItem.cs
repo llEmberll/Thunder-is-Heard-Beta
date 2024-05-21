@@ -60,8 +60,7 @@ public class ProcessOnBaseCacheItem : CacheItem
 
     public string GetObjectOnBaseId()
     {
-        object value = GetField("objectOnBaseId");
-        return value == null ? (string)value : null;
+        return (string)GetField("objectOnBaseId");
     }
 
     public void SetObjectOnBaseId(string value)
@@ -71,8 +70,7 @@ public class ProcessOnBaseCacheItem : CacheItem
 
     public string GetProcessType()
     {
-        object value = GetField("processType");
-        return value == null ? (string)value : null;
+        return (string)GetField("processType");
     }
 
     public void SetProcessType(string value)

@@ -219,7 +219,7 @@ public class ResourcesProcessor : MonoBehaviour
     {
         Dictionary<string, string> result = new Dictionary<string, string>()
         {
-            { "iconPath", "" },
+            { "name", "" },
             { "count", 1.ToString() } 
         };
 
@@ -234,7 +234,7 @@ public class ResourcesProcessor : MonoBehaviour
                 if (value != 0)
                 {
                     string resourceName = resource.Name;
-                    result["iconPath"] = Config.resources["resourcesIcons"] + "/" + resourceName.ToLower();
+                    result["name"] = resourceName.ToLower();
                     result["count"] = value.ToString();
                 }
             }

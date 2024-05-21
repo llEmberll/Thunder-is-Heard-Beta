@@ -11,6 +11,16 @@ using Unity.VisualScripting;
 
 public class ContractComponent : InteractionComponent
 {
+    public Contracts _contractsUI;
+
+    public override void Init(string objectOnBaseId, string componentType)
+    {
+        base.Init(objectOnBaseId, componentType);
+
+        _contractsUI = Resources.FindObjectsOfTypeAll(typeof(Contracts)).First().GetComponent<Contracts>();
+    }
+
+
     public override void Finished()
     {
         ProductsNotificationCacheTable productsNotificationCacheTable = Cache.LoadByType<ProductsNotificationCacheTable>();
@@ -55,22 +65,32 @@ public class ContractComponent : InteractionComponent
         ResourcesData gives = contractItem.GetGives();
 
         Dictionary<string, string> resourceData = ResourcesProcessor.GetFirstNotEmptyResourceData(gives);
-        string resourceIconPath = resourceData["iconPath"];
+        string resourceIconSection = Config.resources["resourcesIcons"];
+        string resourceIconName = resourceData["name"];
         int resourceCount = int.Parse(resourceData["count"]);
 
-        ObjectProcessor.CreateProductsNotification(id, ProductsNotificationTypes.waitingResourceCollection, resourceIconPath, resourceCount, gives);
+        ObjectProcessor.CreateProductsNotification(id, ProductsNotificationTypes.waitingResourceCollection, resourceIconSection, resourceIconName, resourceCount, gives);
     }
 
     public override void Idle()
     {
-        Contracts contractsUI = Resources.FindObjectsOfTypeAll(typeof(Contracts)).First().GetComponent<Contracts>();
-        contractsUI.Toggle();
-        contractsUI.Init(type, id);
+        ToggleUI();
+        _contractsUI.Init(type, id);
     }
 
     public override void Working()
     {
         //Показать оставшееся время выполнения
         Debug.Log("working...");
+    }
+
+    public override void ToggleUI()
+    {
+        _contractsUI.Toggle();
+    }
+
+    public override void HideUI()
+    {
+        _contractsUI.Hide();
     }
 }

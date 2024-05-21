@@ -23,4 +23,12 @@ public class ImprovementComponent : InteractionComponent
     {
         throw new System.NotImplementedException();
     }
+
+    public override void HideUI()
+    {
+    }
+
+    public override void ToggleUI()
+    {
+    }
 }

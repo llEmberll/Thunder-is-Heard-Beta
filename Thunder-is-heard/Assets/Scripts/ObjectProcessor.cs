@@ -9,7 +9,7 @@ public class ObjectProcessor : MonoBehaviour
 
     public void Start()
     {
-        map = GameObject.FindGameObjectWithTag("Map").GetComponent<Map>();
+        map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
 
         EventMaster.current.ObjectOnBaseWorkStatusChanged += ChangeObjectOnBaseWorkStatus;
     }
@@ -402,7 +402,8 @@ public class ObjectProcessor : MonoBehaviour
     public static void CreateProductsNotification(
         string sourceObjectId,
         string notificationType, 
-        string iconPath = "", 
+        string iconSection = "",
+        string iconName = "",
         int count = 1, 
         ResourcesData gives = null, 
         string unitId = null
@@ -413,7 +414,8 @@ public class ObjectProcessor : MonoBehaviour
         ProductsNotificationCacheItem newProductsNotification = new ProductsNotificationCacheItem(new Dictionary<string, object>());
         newProductsNotification.SetSourceObjectId(sourceObjectId);
         newProductsNotification.SetType(notificationType);
-        newProductsNotification.SetIconPath(iconPath);
+        newProductsNotification.SetIconSection(iconSection);
+        newProductsNotification.SetIconName(iconName);
         newProductsNotification.SetCount(count);
         newProductsNotification.SetGives(gives);
         newProductsNotification.SetUnitId(unitId);

@@ -23,13 +23,13 @@ public class ProductsNotifcation : UIElement
 
     public void Init(string sourceObjectId, string type, Sprite icon = null, int count = 1, ResourcesData gives = null)
     {
-        InitDependencies();
-        InitSprites();
-        InitEvents();
-
         _sourceObjectId = sourceObjectId;
         _type = type;
         _gives = gives;
+
+        InitDependencies();
+        InitSprites();
+        InitEvents();
 
         _countText.text = count.ToString();
         if (count < 2)
@@ -65,7 +65,11 @@ public class ProductsNotifcation : UIElement
 
     public void InitEvents()
     {
-        EventMaster.current.ResourcesChanged += UpdateAvailability;
+        if (_type == ProductsNotificationTypes.waitingResourceCollection)
+        {
+            EventMaster.current.ResourcesChanged += UpdateAvailability;
+        }
+        
         EventMaster.current.ProductsNotificationDeleted += SomeProductsNotificationDeleted;
     }
 
@@ -94,7 +98,7 @@ public class ProductsNotifcation : UIElement
     {
         if (productsNotification.GetSourceObjectId() == _sourceObjectId) 
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 

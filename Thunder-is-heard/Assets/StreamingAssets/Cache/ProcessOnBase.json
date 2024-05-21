@@ -1,1 +1,20 @@
-﻿{}
+﻿{
+  "name": "ProcessOnBase",
+  "items": {
+    "2e4b697d-3bf4-49ce-b4e5-9faa42184698": {
+      "fields": {
+        "externalId": "2e4b697d-3bf4-49ce-b4e5-9faa42184698",
+        "description": "",
+        "startTime": 4,
+        "endTime": 184004,
+        "objectOnBaseId": "406bf5da-6673-43db-9354-c2d38b900bb6",
+        "processType": "Component",
+        "source": {
+          "type": "Contract",
+          "id": "4281f66a-b908-46b2-bf32-416b1394a38b"
+        },
+        "name": "Contract"
+      }
+    }
+  }
+}

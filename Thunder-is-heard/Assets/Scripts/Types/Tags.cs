@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class Tags
 {
+    public static string map = "Map";
+
     public static string federation = "Federation";
     public static string empire = "Empire";
 

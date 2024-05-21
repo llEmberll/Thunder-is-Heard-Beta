@@ -33,7 +33,8 @@
             "x": 2,
             "y": 4
           }
-        ]
+        ],
+        "workStatus": "Idle"
       }
     },
     "571b44c7-9e38-4edc-8e58-75dfdd2ffc16": {
@@ -60,7 +61,8 @@
             "x": 7,
             "y": 7
           }
-        ]
+        ],
+        "workStatus": "Idle"
       }
     },
     "7143df9b-f3fe-4baf-864d-33ea923e373a": {
@@ -87,7 +89,8 @@
             "x": 5,
             "y": 7
           }
-        ]
+        ],
+        "workStatus": "Idle"
       }
     },
     "406bf5da-6673-43db-9354-c2d38b900bb6": {
@@ -114,7 +117,8 @@
             "x": 5,
             "y": 5
           }
-        ]
+        ],
+        "workStatus": "Working"
       }
     }
   }

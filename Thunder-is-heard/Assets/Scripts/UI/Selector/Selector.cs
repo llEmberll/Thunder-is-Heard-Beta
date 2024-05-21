@@ -61,7 +61,6 @@ public class Selector : MonoBehaviour
 
     public void OnEnterObject(Entity obj)
     {
-        objectInfoCanvas.enabled = true;
         ConfigureName(obj);
         ConfigureInfoPanel(obj);
         ConfigureRadius(obj);
@@ -99,6 +98,7 @@ public class Selector : MonoBehaviour
 
     public void ConfigureInfoPanel(Entity obj)
     {
+        objectInfoCanvas.enabled = true;
         ConfigureInfoPanelPosition(obj);
     }
 
@@ -213,13 +213,14 @@ public class Selector : MonoBehaviour
 
     public void ConfigureProductsInfo(Build build)
     {
+        productsInfoCanvas.enabled = true;
         ConfigureProductsInfoCanvasPosition(build);
 
         isSelectedObjectProducts = true;
 
         ProcessOnBaseCacheTable processesOnBaseTable = Cache.LoadByType<ProcessOnBaseCacheTable>();
         ProcessOnBaseCacheItem productsProcessData = processesOnBaseTable.FindBySourceObjectId(build.ChildId);
-        if (productsProcessData != null)
+        if (productsProcessData == null)
         {
             return;
         }
@@ -261,13 +262,13 @@ public class Selector : MonoBehaviour
         ResourcesData gives = contractItemData.GetGives();
         Dictionary<string, string> resourceData = ResourcesProcessor.GetFirstNotEmptyResourceData(gives);
         productionCount.text = resourceData["count"].ToString();
-        productionImage.sprite = Resources.Load<Sprite>(resourceData["iconPath"]);
+        productionImage.sprite = ResourcesProcessor.GetResourceSpriteByName(resourceData["name"]);
     }
 
     public void UpdateProductsLeftTimeText()
     {
         int currentTime = (int)Time.realtimeSinceStartup;
         int leftTime = productsEndTime - currentTime;
-        productInfoText.text = "через " + TimeUtils.GetTimeAsStringBySeconds(leftTime);
+        productInfoText.text = "через " + TimeUtils.GetDHMSTimeAsStringBySeconds(leftTime);
     }
 }
