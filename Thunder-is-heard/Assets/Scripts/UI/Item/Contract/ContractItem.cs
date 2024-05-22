@@ -78,7 +78,7 @@ public class ContractItem : Item
     public void OnBuy()
     {
         int startTime = (int)Time.realtimeSinceStartup;
-        int endTime = startTime + (_duration * 60);
+        int endTime = startTime + (_duration);
 
         ProcessWorker.CreateProcess(
             Type,

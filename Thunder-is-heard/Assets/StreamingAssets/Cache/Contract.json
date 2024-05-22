@@ -34,7 +34,7 @@
           "exp": 0,
           "maxExp": 0
         },
-        "duration": 10,
+        "duration": 100,
         "iconSection": "UIBuildCards",
         "iconName": "mine_card",
         "name": "Steel express"
@@ -73,7 +73,7 @@
           "exp": 0,
           "maxExp": 0
         },
-        "duration": 25,
+        "duration": 1500,
         "iconSection": "UIBuildCards",
         "iconName": "mine_card",
         "name": "Half a shift"
@@ -112,7 +112,7 @@
           "exp": 0,
           "maxExp": 0
         },
-        "duration": 60,
+        "duration": 3600,
         "iconSection": "UIBuildCards",
         "iconName": "mine_card",
         "name": "Full shift"

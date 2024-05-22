@@ -99,7 +99,7 @@ public class ResourcesProcessor : MonoBehaviour
 
     public bool IsAvailableToAddResources(ResourcesData resourcesForAdd)
     {
-        ResourcesData newResources = resources;
+        ResourcesData newResources = resources.Clone();
         newResources.Add(resourcesForAdd);
         return !newResources.IsOverflow();
     }

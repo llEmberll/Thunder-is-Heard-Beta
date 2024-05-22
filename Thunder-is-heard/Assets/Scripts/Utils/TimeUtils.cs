@@ -7,30 +7,40 @@ using UnityEngine;
 
 public static class TimeUtils
 {
-    public static string GetDHMTimeAsStringBySeconds(int totalSeconds)
+    public static string GetDHMTimeAsStringBySeconds(int seconds)
     {
-        if (totalSeconds < 1)
+        if (seconds < 1)
         {
             return "мгновенно";
         }
 
-        int days = totalSeconds / (24 * 60 * 60);
-        int hours = (totalSeconds % (24 * 60 * 60)) / 60;
-        int remainingMinutes = totalSeconds % (60 * 60);
+        TimeSpan timeSpan = TimeSpan.FromSeconds(seconds);
 
         string result = "";
-        if (days > 0)
+
+        if (timeSpan.Days > 0)
         {
-            result += $"{days}Д ";
+            result += $"{timeSpan.Days}Д ";
         }
-        if (hours > 0)
+
+        if (timeSpan.Hours > 0)
         {
-            result += $"{hours}Ч ";
+            result += $"{timeSpan.Hours}Ч ";
         }
-        
-        result += $"{remainingMinutes}М";
-        
-        return result.Trim();
+
+        if (timeSpan.Minutes > 0)
+        {
+            result += $"{timeSpan.Minutes}М ";
+        }
+        else
+        {
+            if (result == "") 
+            {
+                result += $"{timeSpan.Seconds}С";
+            }
+        }
+
+        return result.TrimEnd();
     }
 
     public static string GetDHMSTimeAsStringBySeconds(int seconds)

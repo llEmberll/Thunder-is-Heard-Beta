@@ -73,6 +73,16 @@ public class ProductsNotifcation : UIElement
         EventMaster.current.ProductsNotificationDeleted += SomeProductsNotificationDeleted;
     }
 
+    public void TurnOffEvents()
+    {
+        if (_type == ProductsNotificationTypes.waitingResourceCollection)
+        {
+            EventMaster.current.ResourcesChanged -= UpdateAvailability;
+        }
+
+        EventMaster.current.ProductsNotificationDeleted -= SomeProductsNotificationDeleted;
+    }
+
     public void InitDependencies()
     {
         resourcesProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
@@ -98,6 +108,7 @@ public class ProductsNotifcation : UIElement
     {
         if (productsNotification.GetSourceObjectId() == _sourceObjectId) 
         {
+            TurnOffEvents();
             Destroy(this.gameObject);
         }
     }

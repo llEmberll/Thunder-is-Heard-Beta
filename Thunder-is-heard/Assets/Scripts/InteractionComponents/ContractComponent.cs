@@ -25,7 +25,7 @@ public class ContractComponent : InteractionComponent
     {
         ProductsNotificationCacheTable productsNotificationCacheTable = Cache.LoadByType<ProductsNotificationCacheTable>();
         ProductsNotificationCacheItem productsCollectionData = productsNotificationCacheTable.FindBySourceObjectId(id);
-        if (productsCollectionData != null )
+        if (productsCollectionData == null )
         {
             throw new System.NotImplementedException("Contract component waiting for collection, but collectionData not found");
         }
@@ -35,6 +35,7 @@ public class ContractComponent : InteractionComponent
             resourceProcessor.AddResources(productsCollectionData.GetGives());
             resourceProcessor.Save();
             ObjectProcessor.DeleteProductsNotificationByItemId(productsCollectionData.GetExternalId());
+            EventMaster.current.OnChangeObjectOnBaseWorkStatus(id, WorkStatuses.idle);
         }
 
         else

@@ -11,10 +11,9 @@ public class BuildsOnBase : ObjectsOnBase
     public override void Start()
     {
         productsNotificationsBucket = GameObject.FindGameObjectWithTag(Tags.productsNotifications).transform;
+        base.Start();
 
         EventMaster.current.ProductsNotificationCreated += PutOnProductsNotification;
-
-        base.Start();
     }
 
     public override void OnBuildModeEnable()
@@ -42,7 +41,6 @@ public class BuildsOnBase : ObjectsOnBase
 
     public void FillProductsNotifcations()
     {
-        PlayerBuildCacheTable buildsOnBaseTable = Cache.LoadByType<PlayerBuildCacheTable>();
         ProductsNotificationCacheTable productsNotificationsTable = Cache.LoadByType<ProductsNotificationCacheTable>();
         foreach (var pair in productsNotificationsTable.Items)
         {

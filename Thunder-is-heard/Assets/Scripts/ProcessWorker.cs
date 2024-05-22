@@ -9,7 +9,6 @@ public class ProcessWorker : MonoBehaviour
     public void Start()
     {
         currentTime = Time.realtimeSinceStartup;
-        EventMaster.current.ProcessOnBaseHandled += ClearHandledProcess;
     }
 
     public static void CreateProcess(
@@ -37,7 +36,7 @@ public class ProcessWorker : MonoBehaviour
         EventMaster.current.OnProcessOnBaseStart( process );
     }
 
-    public void ClearHandledProcess(string processId)
+    public void ClearProcess(string processId)
     {
         ProcessOnBaseCacheTable processTable = Cache.LoadByType<ProcessOnBaseCacheTable>();
         processTable.DeleteById(processId);
@@ -61,9 +60,10 @@ public class ProcessWorker : MonoBehaviour
         foreach (CacheItem processCacheItem in processTable.Items.Values)
         {
             ProcessOnBaseCacheItem process = new ProcessOnBaseCacheItem(processCacheItem.Fields);
-            if (process.GetEndTime()  > currentTime)
+            if (currentTime > process.GetEndTime())
             {
                 EventMaster.current.OnProcessOnBaseFinish(process);
+                ClearProcess(process.GetExternalId());
             }
         }
     }

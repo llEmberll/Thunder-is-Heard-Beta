@@ -417,7 +417,7 @@ public class ObjectProcessor : MonoBehaviour
         newProductsNotification.SetIconSection(iconSection);
         newProductsNotification.SetIconName(iconName);
         newProductsNotification.SetCount(count);
-        newProductsNotification.SetGives(gives);
+        if (gives != null) newProductsNotification.SetGives(gives);
         newProductsNotification.SetUnitId(unitId);
 
         productsNotificationsTable.AddOne(newProductsNotification);

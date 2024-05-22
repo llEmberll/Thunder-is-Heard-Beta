@@ -18,7 +18,7 @@ public class ProductsNotificationCacheItem : CacheItem
             SetType("Undefined");
         }
 
-        if (!objFields.ContainsKey("gives"))
+        if (!objFields.ContainsKey("gives") || objFields["gives"] == null)
         {
             SetGives(new ResourcesData());
         }
@@ -92,7 +92,15 @@ public class ProductsNotificationCacheItem : CacheItem
             return new ResourcesData();
         }
 
-        return JsonConvert.DeserializeObject<ResourcesData>(value.ToString());
+        try
+        {
+            return JsonConvert.DeserializeObject<ResourcesData>(value.ToString());
+        }
+        catch
+        {
+            return (ResourcesData)value;
+        }
+        
     }
 
     public void SetGives(ResourcesData value)
