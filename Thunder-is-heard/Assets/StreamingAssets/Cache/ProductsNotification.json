@@ -1,1 +1,83 @@
-﻿{}
+﻿{
+  "name": "ProductsNotification",
+  "items": {
+    "4b2bab91-b85c-45e2-87e8-8dbde110ea3f": {
+      "fields": {
+        "externalId": "4b2bab91-b85c-45e2-87e8-8dbde110ea3f",
+        "description": "",
+        "sourceObjectId": "571b44c7-9e38-4edc-8e58-75dfdd2ffc16",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "0df24ef4-576e-4741-9366-e9cd9315b79d": {
+      "fields": {
+        "externalId": "0df24ef4-576e-4741-9366-e9cd9315b79d",
+        "description": "",
+        "sourceObjectId": "406bf5da-6673-43db-9354-c2d38b900bb6",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "343c4ced-c57c-4ac2-b995-2e8914230d86": {
+      "fields": {
+        "externalId": "343c4ced-c57c-4ac2-b995-2e8914230d86",
+        "description": "",
+        "sourceObjectId": "7143df9b-f3fe-4baf-864d-33ea923e373a",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    }
+  }
+}

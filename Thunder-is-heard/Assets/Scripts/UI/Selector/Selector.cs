@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class Selector : MonoBehaviour
 {
+    public Build selectedBuild = null;
+
     public GameObject selector;
     public Sprite friendlySelectorSprite, enemySelectorSprite, neutralSelectorSprite, attackableSelector;
 
@@ -53,14 +55,23 @@ public class Selector : MonoBehaviour
 
     private void Update()
     {
-        if (isSelectedObjectProducts)
+        if (isSelectedObjectProducts && selectedBuild != null)
         {
-            UpdateProductsLeftTimeText();
+            if (selectedBuild.workStatus == WorkStatuses.working) 
+            {
+                UpdateProductsLeftTimeText();
+            }
+            else
+            {
+                OffProductsInfo(selectedBuild);
+            }
         }
     }
 
     public void OnEnterObject(Entity obj)
     {
+        Debug.Log("on enter obj");
+
         ConfigureName(obj);
         ConfigureInfoPanel(obj);
         ConfigureRadius(obj);
@@ -72,6 +83,7 @@ public class Selector : MonoBehaviour
         if (obj is Build)
         {
             Build build = (Build)obj;
+            selectedBuild = build;
             if (build.workStatus == WorkStatuses.working)
             {
                 ConfigureProductsInfo(build);
@@ -211,6 +223,12 @@ public class Selector : MonoBehaviour
     }
 
 
+    public void OffProductsInfo(Build build)
+    {
+        productsInfoCanvas.enabled = false;
+        isSelectedObjectProducts = false;
+    }
+
     public void ConfigureProductsInfo(Build build)
     {
         productsInfoCanvas.enabled = true;
@@ -269,6 +287,6 @@ public class Selector : MonoBehaviour
     {
         int currentTime = (int)Time.realtimeSinceStartup;
         int leftTime = productsEndTime - currentTime;
-        productInfoText.text = "через " + TimeUtils.GetDHMSTimeAsStringBySeconds(leftTime);
+        productInfoText.text = "after " + TimeUtils.GetDHMSTimeAsStringBySeconds(leftTime);
     }
 }

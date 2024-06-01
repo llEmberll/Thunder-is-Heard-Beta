@@ -158,4 +158,10 @@ public class EventMaster: MonoBehaviour
     {
         ProductsNotificationCreated?.Invoke(createdProductsNotification);
     }
+
+    public event Action<bool> UIListToggled;
+    public void OnUIListToggle(bool isNowActive)
+    {
+        UIListToggled?.Invoke(isNowActive);
+    }
 }

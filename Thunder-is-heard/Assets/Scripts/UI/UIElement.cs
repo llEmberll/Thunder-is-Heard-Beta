@@ -2,12 +2,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIElement : MonoBehaviour, IPointerEnterHandler
+public class UIElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public void Toggle()
+    public virtual void Toggle()
     {
-
-        this.gameObject.SetActive(!this.gameObject.activeSelf);
+        if (this.gameObject.activeSelf)
+        {
+            Hide();
+        }
+        else
+        {
+            Show();
+        }
     }
 
     public virtual void Show()
@@ -21,6 +27,10 @@ public class UIElement : MonoBehaviour, IPointerEnterHandler
     }
 
     public virtual void OnPointerEnter(PointerEventData data)
+    {
+    }
+
+    public virtual void OnPointerExit(PointerEventData eventData)
     {
     }
 }

@@ -61,10 +61,47 @@ public class BaseMap : Map
         BuildCacheTable buildTable = Cache.LoadByType<BuildCacheTable>();
 
         ResourcesData headBuildCost = new ResourcesData();
+
+        ResourcesData oilStationCost = new ResourcesData();
+
         ResourcesData mineCost = new ResourcesData();
+
+        ResourcesData officeCost = new ResourcesData();
+
+        ResourcesData tentCost = new ResourcesData();
+
+        ResourcesData warehouseCost = new ResourcesData();
+
+        ResourcesData trainingCenterCost = new ResourcesData();
+
+        ResourcesData factoryCost = new ResourcesData();
+
         mineCost.rub = 750;
         mineCost.oil = 2;
         mineCost.steel = 3;
+
+        oilStationCost.rub = 650;
+        oilStationCost.oil = 1;
+        oilStationCost.steel = 3;
+
+        officeCost.rub = 1250;
+        officeCost.oil = 3;
+        officeCost.steel = 5;
+
+        tentCost.rub = 600;
+        tentCost.oil = 1;
+        tentCost.steel = 2;
+
+        warehouseCost.rub = 500;
+        warehouseCost.steel = 3;
+
+        trainingCenterCost.rub = 1600;
+        trainingCenterCost.oil = 2;
+        trainingCenterCost.steel = 6;
+
+        factoryCost.rub = 3500;
+        factoryCost.oil = 5;
+        factoryCost.steel = 10;
 
         ResourcesData headBuildGives = new ResourcesData();
         headBuildGives.maxOil = 8;
@@ -74,6 +111,22 @@ public class BaseMap : Map
         ResourcesData mineGives = new ResourcesData();
         mineGives.maxSteel = 2;
 
+        ResourcesData oilStationGives = new ResourcesData();
+        oilStationGives.maxOil = 2;
+
+        ResourcesData officeGives = new ResourcesData();
+
+        ResourcesData tentGives = new ResourcesData();
+        tentGives.maxStaff = 5;
+
+        ResourcesData warehouseGives = new ResourcesData();
+        warehouseGives.maxOil = 5;
+        warehouseGives.maxSteel = 8;
+
+        ResourcesData trainingCenterGives = new ResourcesData();
+        trainingCenterGives.maxStaff = 2;
+
+        ResourcesData factoryGives = new ResourcesData();
 
         BuildCacheItem headbuild = new BuildCacheItem(new Dictionary<string, object>());
 
@@ -85,6 +138,8 @@ public class BaseMap : Map
         headbuild.SetGives(headBuildGives);
         headbuild.SetCreateTime(0);
         headbuild.SetHealth(12);
+        headbuild.SetIconSection(Config.resources["UICards"] + "Builds/" + "cards");
+        headbuild.SetIconName("headbuild_card");
 
         BuildCacheItem mine = new BuildCacheItem(new Dictionary<string, object>());
 
@@ -97,12 +152,102 @@ public class BaseMap : Map
         mine.SetCreateTime(0);
         mine.SetHealth(6);
         mine.SetDistance(0);
+        mine.SetIconSection(Config.resources["UICards"] + "Builds/" + "cards");
+        mine.SetIconName("mine_card");
         mine.SetInteractionComponentName("ContractComponent");
         mine.SetInteractionComponentType(InteractionComponentTypes.steelContract);
 
+        BuildCacheItem oilStation = new BuildCacheItem(new Dictionary<string, object>());
+
+        oilStation.SetExternalId("64a4568c-bfaf-408e-9537-8e489ccaca56");
+        oilStation.SetName("OilStation");
+        oilStation.SetModelPath("Prefabs/Entity/Builds/OilStation/Model");
+        oilStation.SetSize(new Bector2Int(new Vector2Int(2, 2)));
+        oilStation.SetCost(oilStationCost);
+        oilStation.SetGives(oilStationGives);
+        oilStation.SetCreateTime(0);
+        oilStation.SetHealth(6);
+        oilStation.SetDistance(0);
+        oilStation.SetIconSection(Config.resources["UICards"] + "Builds/" + "cards");
+        oilStation.SetIconName("oil_station_card");
+        oilStation.SetInteractionComponentName("ContractComponent");
+        oilStation.SetInteractionComponentType(InteractionComponentTypes.oilContract);
+
+        BuildCacheItem office = new BuildCacheItem(new Dictionary<string, object>());
+
+        office.SetExternalId("8878498b-a4bc-4dc8-8f39-bc9e987a689f");
+        office.SetName("Office");
+        office.SetModelPath("Prefabs/Entity/Builds/Office/Model");
+        office.SetSize(new Bector2Int(new Vector2Int(3, 3)));
+        office.SetCost(officeCost);
+        office.SetGives(officeGives);
+        office.SetCreateTime(0);
+        office.SetHealth(8);
+        office.SetDistance(0);
+        office.SetIconSection(Config.resources["UICards"] + "Builds/" + "cards");
+        office.SetIconName("office_card");
+        office.SetInteractionComponentName("ContractComponent");
+        office.SetInteractionComponentType(InteractionComponentTypes.rubContract);
+
+        BuildCacheItem tent = new BuildCacheItem(new Dictionary<string, object>());
+
+        tent.SetExternalId("ba290dde-968d-46ab-868b-b0f7598a7787");
+        tent.SetName("Tent");
+        tent.SetModelPath("Prefabs/Entity/Builds/Tent/Model");
+        tent.SetSize(new Bector2Int(new Vector2Int(2, 3)));
+        tent.SetCost(tentCost);
+        tent.SetGives(tentGives);
+        tent.SetCreateTime(0);
+        tent.SetHealth(5);
+        tent.SetDistance(0);
+        tent.SetIconSection(Config.resources["UICards"] + "Builds/" + "cards");
+        tent.SetIconName("tent_card");
+
+        BuildCacheItem warehouse = new BuildCacheItem(new Dictionary<string, object>());
+
+        warehouse.SetExternalId("3d9f0f22-409e-40d7-8511-f4584b583dc0");
+        warehouse.SetName("Warehouse");
+        warehouse.SetModelPath("Prefabs/Entity/Builds/Warehouse/Model");
+        warehouse.SetSize(new Bector2Int(new Vector2Int(2, 3)));
+        warehouse.SetCost(warehouseCost);
+        warehouse.SetGives(warehouseGives);
+        warehouse.SetCreateTime(0);
+        warehouse.SetHealth(7);
+        warehouse.SetDistance(0);
+        warehouse.SetIconSection(Config.resources["UICards"] + "Builds/" + "cards");
+        warehouse.SetIconName("warehouse_card");
+
+        BuildCacheItem trainingCenter = new BuildCacheItem(new Dictionary<string, object>());
+
+        trainingCenter.SetExternalId("065a4f61-5b0e-450e-b89b-299651f90b4d");
+        trainingCenter.SetName("TrainingCenter");
+        trainingCenter.SetModelPath("Prefabs/Entity/Builds/TrainingCenter/Model");
+        trainingCenter.SetSize(new Bector2Int(new Vector2Int(3, 3)));
+        trainingCenter.SetCost(trainingCenterCost);
+        trainingCenter.SetGives(trainingCenterGives);
+        trainingCenter.SetCreateTime(0);
+        trainingCenter.SetHealth(8);
+        trainingCenter.SetDistance(0);
+        trainingCenter.SetIconSection(Config.resources["UICards"] + "Builds/" + "cards");
+        trainingCenter.SetIconName("training_center_card");
+
+        BuildCacheItem factory = new BuildCacheItem(new Dictionary<string, object>());
+
+        factory.SetExternalId("065a4f61-5b0e-450e-b89b-299651f90b4d");
+        factory.SetName("Factory");
+        factory.SetModelPath("Prefabs/Entity/Builds/factory/Model");
+        factory.SetSize(new Bector2Int(new Vector2Int(2, 2)));
+        factory.SetCost(factoryCost);
+        factory.SetGives(factoryGives);
+        factory.SetCreateTime(0);
+        factory.SetHealth(9);
+        factory.SetDistance(0);
+        factory.SetIconSection(Config.resources["UICards"] + "Builds/" + "cards");
+        factory.SetIconName("factory_card");
+
         Debug.Log("build created and prepared");
 
-        CacheItem[] itemsForAdd = new CacheItem[2] { headbuild, mine };
+        CacheItem[] itemsForAdd = new CacheItem[8] { headbuild, mine , oilStation , office, tent, warehouse , trainingCenter, factory};
         buildTable.Add(itemsForAdd);
 
         Debug.Log("build added to table");

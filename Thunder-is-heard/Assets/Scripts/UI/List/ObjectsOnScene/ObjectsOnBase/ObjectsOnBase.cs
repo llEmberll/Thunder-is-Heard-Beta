@@ -11,4 +11,9 @@ public abstract class ObjectsOnBase : ItemList, IObjectsOnScene
     }
 
     public abstract Entity FindObjectById(string id);
+
+    public override void OnClickOutside()
+    {
+        
+    }
 }

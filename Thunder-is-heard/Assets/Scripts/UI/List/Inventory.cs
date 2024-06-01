@@ -78,7 +78,8 @@ public class Inventory : ItemList
         int distance = buildData.GetDistance();
         int count = inventoryItemData.GetCount();
         string description = buildData.GetDescrption();
-        Sprite icon = Resources.Load<Sprite>(buildData.GetIconPath());
+        Sprite[] iconSection = Resources.LoadAll<Sprite>(buildData.GetIconSection());
+        Sprite icon = SpriteUtils.FindSpriteByName(buildData.GetIconName(), iconSection);
 
         GameObject itemObject = CreateObject(Config.resources["UI" + "Build" + "InventoryItemPrefab"], content);
         itemObject.name = name;

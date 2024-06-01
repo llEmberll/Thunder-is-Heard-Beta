@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public bool isMovable = true;
+    public bool _isMovable = true;
 
     public float cameraHeight = 9f;
     public float focusOffset;
@@ -41,6 +41,13 @@ public class CameraController : MonoBehaviour
 
 		screenWidth = Screen.width;
         screenHeight = Screen.height;
+
+        EventMaster.current.UIListToggled += SetIsMovable;
+    }
+
+    public void SetIsMovable(bool isMovementForbidden)
+    {
+        _isMovable = !isMovementForbidden;
     }
 
     private void FocusOnPoint(Vector2Int point)
@@ -59,7 +66,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-
+        if (!_isMovable) return;
         // Move camera based on cursor position
         Vector3 cursorPosition = Input.mousePosition;
         Vector3 movement = Vector3.zero;

@@ -8,6 +8,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Linq;
 using Unity.VisualScripting;
+using System.ComponentModel;
 
 public class ContractComponent : InteractionComponent
 {
@@ -35,6 +36,7 @@ public class ContractComponent : InteractionComponent
             resourceProcessor.AddResources(productsCollectionData.GetGives());
             resourceProcessor.Save();
             ObjectProcessor.DeleteProductsNotificationByItemId(productsCollectionData.GetExternalId());
+            ObjectProcessor.CreateProductsNotification(id, ProductsNotificationTypes.idle);
             EventMaster.current.OnChangeObjectOnBaseWorkStatus(id, WorkStatuses.idle);
         }
 
