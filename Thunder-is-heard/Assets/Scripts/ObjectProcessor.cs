@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 public class ObjectProcessor : MonoBehaviour
@@ -21,7 +22,7 @@ public class ObjectProcessor : MonoBehaviour
         {
             Debug.Log("selected object putted to inv");
 
-            AddObjectToInventory(preview.buildedObjectOnScene);
+            AddGameObjectToInventory(preview.buildedObjectOnScene);
             RemoveObjectFromBase(preview.buildedObjectOnScene);
             preview.buildedObjectOnScene = null;
             preview.Cancel();
@@ -45,7 +46,18 @@ public class ObjectProcessor : MonoBehaviour
         return true;
     }
 
-    public static void AddObjectToInventory(GameObject obj)
+    public static void AddToInventory(InventoryCacheItem newItem)
+    {
+        InventoryCacheTable inventory = Cache.LoadByType<InventoryCacheTable>();
+
+        CacheItem[] itemsForAdd = new CacheItem[1] { newItem };
+        inventory.Add(itemsForAdd);
+        Cache.Save(inventory);
+
+        EventMaster.current.OnChangeInventory();
+    }
+
+    public static void AddGameObjectToInventory(GameObject obj)
     {
         CacheItem coreObjectData = Cache.GetBaseObjectCoreData(obj);
         if (coreObjectData == null)
@@ -56,21 +68,28 @@ public class ObjectProcessor : MonoBehaviour
 
         Entity entity = obj.GetComponent<Entity>();
 
-        int count = 1;
-        InventoryCacheTable inventory = Cache.LoadByType<InventoryCacheTable>();
         InventoryCacheItem newItem = new InventoryCacheItem(new Dictionary<string, object>()
         {
             { "coreId", coreObjectData.GetExternalId() },
             { "type", entity.Type },
+            { "count", 1 }
+        }
+        );
+
+        AddToInventory(newItem);
+    }
+
+    public static void AddUnitToInventory(string unitId, int count = 1)
+    {
+        InventoryCacheItem newItem = new InventoryCacheItem(new Dictionary<string, object>()
+        {
+            { "coreId", unitId },
+            { "type", "Unit" },
             { "count", count }
         }
         );
 
-        CacheItem[] itemsForAdd = new CacheItem[1] { newItem };
-        inventory.Add(itemsForAdd);
-        Cache.Save(inventory);
-
-        EventMaster.current.OnChangeInventory();
+        AddToInventory(newItem);
     }
 
     public static  void RemoveObjectFromBase(GameObject obj)
@@ -88,6 +107,13 @@ public class ObjectProcessor : MonoBehaviour
         baseObjectsTable.DeleteById(objectData.GetExternalId());
         Cache.Save(baseObjectsTable);
         Destroy(obj);
+
+        ProductsNotificationCacheTable notificationsTable = Cache.LoadByType<ProductsNotificationCacheTable>();
+        ProductsNotificationCacheItem notificationByObject = notificationsTable.FindBySourceObjectId(entity.ChildId);
+        if (notificationByObject != null)
+        {
+            DeleteProductsNotificationByItemId(notificationByObject.GetExternalId());
+        }
 
         EventMaster.current.OnRemoveBaseObject(entity.coreId, entity.Type);
         EventMaster.current.OnChangeBaseObjects();
@@ -248,6 +274,8 @@ public class ObjectProcessor : MonoBehaviour
         baseObjectData.SetField("rotation", newRotation);
         baseObjectsTable.Items[baseObjectData.GetExternalId()] = baseObjectData;
         Cache.Save(baseObjectsTable);
+
+        EventMaster.current.OnReplaceBaseObject(entity);
     }
 
     public static void AddAndPrepareBuildComponent(

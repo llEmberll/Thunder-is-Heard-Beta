@@ -63,7 +63,7 @@ public abstract class ExposableShopItem : ShopItem
             return;
         }
 
-        string modelPath = (string)needleItemData.GetField("modelPath");
+        string modelPath = (string)needleItemData.GetField("modelPath") + "/" + Tags.federation;
         Vector2Int size = GetSize(needleItemData).ToVector2Int();
         GameObject modelPrefab = Resources.Load<GameObject>(modelPath);
         Transform model = Instantiate(modelPrefab).transform;

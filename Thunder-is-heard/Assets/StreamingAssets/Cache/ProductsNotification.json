@@ -1,11 +1,37 @@
 ﻿{
   "name": "ProductsNotification",
   "items": {
-    "4b2bab91-b85c-45e2-87e8-8dbde110ea3f": {
+    "9c3c259d-f903-4975-b0b1-b535674633aa": {
       "fields": {
-        "externalId": "4b2bab91-b85c-45e2-87e8-8dbde110ea3f",
+        "externalId": "9c3c259d-f903-4975-b0b1-b535674633aa",
         "description": "",
-        "sourceObjectId": "571b44c7-9e38-4edc-8e58-75dfdd2ffc16",
+        "sourceObjectId": "1670831d-3577-4140-a646-47ae24b75cb6",
+        "type": "ResourceCollection",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 2,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "Textures/Interface/Resources/Resources",
+        "iconName": "steel",
+        "count": 2,
+        "unitId": null
+      }
+    },
+    "0773ed7e-73b6-4bfa-b60a-fa50440bfa35": {
+      "fields": {
+        "externalId": "0773ed7e-73b6-4bfa-b60a-fa50440bfa35",
+        "description": "",
+        "sourceObjectId": "56a3b5c1-cb7c-4267-b38f-a7e3091758b5",
         "type": "Idle",
         "gives": {
           "rub": 0,
@@ -27,11 +53,11 @@
         "unitId": null
       }
     },
-    "0df24ef4-576e-4741-9366-e9cd9315b79d": {
+    "9fa1b7b5-7848-4b94-8d7e-928471d26f8f": {
       "fields": {
-        "externalId": "0df24ef4-576e-4741-9366-e9cd9315b79d",
+        "externalId": "9fa1b7b5-7848-4b94-8d7e-928471d26f8f",
         "description": "",
-        "sourceObjectId": "406bf5da-6673-43db-9354-c2d38b900bb6",
+        "sourceObjectId": "438d908b-5101-4c4b-bded-31ffec9e96f8",
         "type": "Idle",
         "gives": {
           "rub": 0,
@@ -53,11 +79,89 @@
         "unitId": null
       }
     },
-    "343c4ced-c57c-4ac2-b995-2e8914230d86": {
+    "ff3828c9-61c5-4ac0-9516-af474ebb643b": {
       "fields": {
-        "externalId": "343c4ced-c57c-4ac2-b995-2e8914230d86",
+        "externalId": "ff3828c9-61c5-4ac0-9516-af474ebb643b",
         "description": "",
-        "sourceObjectId": "7143df9b-f3fe-4baf-864d-33ea923e373a",
+        "sourceObjectId": "de25b740-a229-46d3-b066-8b7248f5facf",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "93a67fab-2ac5-4f85-b487-ff1a1cf2c956": {
+      "fields": {
+        "externalId": "93a67fab-2ac5-4f85-b487-ff1a1cf2c956",
+        "description": "",
+        "sourceObjectId": "43d618a7-6155-47bb-b684-ba43c7502e51",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "56eab4e2-ee77-4b0f-9f10-51964fa6fa6c": {
+      "fields": {
+        "externalId": "56eab4e2-ee77-4b0f-9f10-51964fa6fa6c",
+        "description": "",
+        "sourceObjectId": "3151b7c3-cde3-43a6-92f7-55266c1cdda8",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "31fc87f7-b909-43b8-8419-12a1ab948d82": {
+      "fields": {
+        "externalId": "31fc87f7-b909-43b8-8419-12a1ab948d82",
+        "description": "",
+        "sourceObjectId": "e79e55ac-11f9-444a-bd09-1879d091a6fc",
         "type": "Idle",
         "gives": {
           "rub": 0,

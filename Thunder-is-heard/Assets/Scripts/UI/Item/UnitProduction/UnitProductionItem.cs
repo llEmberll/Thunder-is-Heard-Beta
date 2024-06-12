@@ -14,6 +14,8 @@ public class UnitProductionItem: Item
     public string _sourceObjectId;
 
     public ResourcesData costData;
+    public Transform cost;
+
     public string _unitId;
     public int health, damage, distance, mobility;
 
@@ -62,6 +64,8 @@ public class UnitProductionItem: Item
         TmpDistance.text = distance.ToString();
         TmpMobility.text = mobility.ToString();
 
+        ResourcesProcessor.UpdateResources(cost, costData);
+
         TmpDuration.text = TimeUtils.GetDHMTimeAsStringBySeconds(_duration);
 
         base.UpdateUI();
@@ -82,7 +86,7 @@ public class UnitProductionItem: Item
     public void OnBuy()
     {
         int startTime = (int)Time.realtimeSinceStartup;
-        int endTime = startTime + (_duration * 60);
+        int endTime = startTime + (_duration);
 
         ProcessWorker.CreateProcess(
             Type,

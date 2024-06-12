@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -18,15 +15,53 @@ public class UnitProductionComponent : InteractionComponent
 
     public override void Finished()
     {
-        //Поместить юнита по unitId в инвентарь и перевести здание в состояние idle
-        //Удалить сбор в кеше по данным завершенного процесса
-        throw new System.NotImplementedException();
+        ProductsNotificationCacheTable productsNotificationCacheTable = Cache.LoadByType<ProductsNotificationCacheTable>();
+        ProductsNotificationCacheItem productsCollectionData = productsNotificationCacheTable.FindBySourceObjectId(id);
+        if (productsCollectionData == null)
+        {
+            throw new System.NotImplementedException("Unit production component waiting for collection, but collectionData not found");
+        }
+
+
+        ObjectProcessor.AddUnitToInventory(productsCollectionData.GetUnitId());
+        ObjectProcessor.DeleteProductsNotificationByItemId(productsCollectionData.GetExternalId());
+        ObjectProcessor.CreateProductsNotification(id, ProductsNotificationTypes.idle);
+        EventMaster.current.OnChangeObjectOnBaseWorkStatus(id, WorkStatuses.idle);
+        
     }
 
     public override void HandleFinishedProcess(ProcessOnBaseCacheItem processCacheItem)
     {
-        //Создать сбор в кеше для целевого здания по данным завершенного процесса
-        throw new System.NotImplementedException();
+        if (processCacheItem.GetSource() == null)
+        {
+            throw new System.NotImplementedException("Process source for unit production component not found");
+        }
+
+        string sourceType = processCacheItem.GetSource().type;
+        string sourceId = processCacheItem.GetSource().id;
+
+        if (sourceType != "UnitProduction")
+        {
+            throw new System.NotImplementedException("Process source for unit production component must be type of UnitProduction, but is not");
+        }
+
+        UnitProductionCacheTable sourceTable = Cache.LoadByType<UnitProductionCacheTable>();
+        CacheItem sourceItem = sourceTable.GetById(sourceId);
+        UnitProductionCacheItem unitProductionItem = new UnitProductionCacheItem(sourceItem.Fields);
+        string unitId = unitProductionItem.GetUnitId();
+
+        string unitIconSection = Config.resources[unitProductionItem.GetIconSection()];
+        string unitIconName = unitProductionItem.GetIconName();
+        int unitCount = 1;
+
+        ObjectProcessor.CreateProductsNotification(
+            id,
+            ProductsNotificationTypes.waitingUnitCollection,
+            unitIconSection,
+            unitIconName,
+            unitCount,
+            unitId: unitId
+            );
     }
 
     public override void Idle()

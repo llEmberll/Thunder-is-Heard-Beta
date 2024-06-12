@@ -1,36 +1,6 @@
 ﻿{
   "name": "PlayerUnit",
   "items": {
-    "3b4d95ba-c0bc-430d-9888-13d5171aff74": {
-      "fields": {
-        "externalId": "3b4d95ba-c0bc-430d-9888-13d5171aff74",
-        "description": "",
-        "rotation": 0,
-        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-        "name": "Assaulters",
-        "position": [
-          {
-            "x": 7,
-            "y": 4
-          }
-        ]
-      }
-    },
-    "8217f8bd-9fe1-4c9d-aa14-8be082e4072f": {
-      "fields": {
-        "externalId": "8217f8bd-9fe1-4c9d-aa14-8be082e4072f",
-        "description": "",
-        "rotation": 0,
-        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-        "name": "Assaulters",
-        "position": [
-          {
-            "x": 7,
-            "y": 5
-          }
-        ]
-      }
-    },
     "6e681671-f625-4293-a94b-175ad924e9af": {
       "fields": {
         "externalId": "6e681671-f625-4293-a94b-175ad924e9af",
@@ -40,8 +10,8 @@
         "name": "Assaulters",
         "position": [
           {
-            "x": 3,
-            "y": 1
+            "x": 4,
+            "y": 8
           }
         ]
       }
@@ -72,6 +42,51 @@
           {
             "x": 4,
             "y": 2
+          }
+        ]
+      }
+    },
+    "3fb27738-ecc5-4299-86e6-a8ae12b97a02": {
+      "fields": {
+        "externalId": "3fb27738-ecc5-4299-86e6-a8ae12b97a02",
+        "description": "",
+        "rotation": 270,
+        "coreId": "035655f8-a347-4057-87cc-83385fa20660",
+        "name": "Osoka",
+        "position": [
+          {
+            "x": 1,
+            "y": 3
+          }
+        ]
+      }
+    },
+    "4bd45c9b-7f02-4f43-a375-017b5f40f6a0": {
+      "fields": {
+        "externalId": "4bd45c9b-7f02-4f43-a375-017b5f40f6a0",
+        "description": "",
+        "rotation": 180,
+        "coreId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
+        "name": "Vortex",
+        "position": [
+          {
+            "x": 7,
+            "y": 1
+          }
+        ]
+      }
+    },
+    "c272acae-76e5-4559-928d-1b977586b11d": {
+      "fields": {
+        "externalId": "c272acae-76e5-4559-928d-1b977586b11d",
+        "description": "",
+        "rotation": 0,
+        "coreId": "035655f8-a347-4057-87cc-83385fa20660",
+        "name": "Osoka",
+        "position": [
+          {
+            "x": 6,
+            "y": 8
           }
         ]
       }

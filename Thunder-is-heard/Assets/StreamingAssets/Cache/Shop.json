@@ -27,6 +27,51 @@
         "externalId": "5a5d8f47-1368-4d59-8f48-a1f1d1aefabe",
         "description": ""
       }
+    },
+    "17c2e2ee-36b7-463a-bb12-23739be81a28": {
+      "fields": {
+        "coreId": "065a4f61-5b0e-450e-b89b-299651f90b4d",
+        "type": "Build",
+        "count": 1,
+        "externalId": "17c2e2ee-36b7-463a-bb12-23739be81a28",
+        "description": ""
+      }
+    },
+    "fa913483-5e42-4148-9ced-da32fd9f45f6": {
+      "fields": {
+        "coreId": "ba290dde-968d-46ab-868b-b0f7598a7787",
+        "type": "Build",
+        "count": 2,
+        "externalId": "fa913483-5e42-4148-9ced-da32fd9f45f6",
+        "description": ""
+      }
+    },
+    "ae563172-3f86-40a2-9d33-64e281adf808": {
+      "fields": {
+        "coreId": "3d9f0f22-409e-40d7-8511-f4584b583dc0",
+        "type": "Build",
+        "count": 2,
+        "externalId": "ae563172-3f86-40a2-9d33-64e281adf808",
+        "description": ""
+      }
+    },
+    "3a3e6dee-2c9e-4e57-9727-bb7d5ab02e5d": {
+      "fields": {
+        "coreId": "7dfc9c80-ddac-45e9-bcdf-61166e068cad",
+        "type": "Build",
+        "count": 1,
+        "externalId": "3a3e6dee-2c9e-4e57-9727-bb7d5ab02e5d",
+        "description": ""
+      }
+    },
+    "b2494958-d8f5-4648-a567-fe7fecce9534": {
+      "fields": {
+        "coreId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
+        "type": "Unit",
+        "count": 1,
+        "externalId": "b2494958-d8f5-4648-a567-fe7fecce9534",
+        "description": ""
+      }
     }
   }
 }

@@ -25,7 +25,7 @@ public class UnitsOnBase : ObjectsOnBase
         UnitCacheTable unitsTable = Cache.LoadByType<UnitCacheTable>();
         CacheItem unitAsCacheItem = unitsTable.GetById(playerUnitData.GetCoreId());
         UnitCacheItem coreUnitData = new UnitCacheItem(unitAsCacheItem.Fields);
-        string modelPath = coreUnitData.GetModelPath();
+        string modelPath = coreUnitData.GetModelPath()  + "/" + Tags.federation;
         Bector2Int size = coreUnitData.GetSize();
         int health = coreUnitData.GetHealth();
         int damage = coreUnitData.GetDamage();

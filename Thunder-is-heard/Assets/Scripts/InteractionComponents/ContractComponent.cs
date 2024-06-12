@@ -72,7 +72,14 @@ public class ContractComponent : InteractionComponent
         string resourceIconName = resourceData["name"];
         int resourceCount = int.Parse(resourceData["count"]);
 
-        ObjectProcessor.CreateProductsNotification(id, ProductsNotificationTypes.waitingResourceCollection, resourceIconSection, resourceIconName, resourceCount, gives);
+        ObjectProcessor.CreateProductsNotification(
+            id, 
+            ProductsNotificationTypes.waitingResourceCollection, 
+            resourceIconSection, 
+            resourceIconName, 
+            resourceCount, 
+            gives
+            );
     }
 
     public override void Idle()

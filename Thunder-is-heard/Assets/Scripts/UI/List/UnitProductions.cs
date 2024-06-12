@@ -59,7 +59,13 @@ public class UnitProductions : ItemList
         ResourcesData cost = unitProductionData.GetCost();
         int duration = unitProductionData.GetDuration();
         string description = unitProductionData.GetDescrption();
-        Sprite icon = Resources.Load<Sprite>(unitProductionData.GetIconPath());
+
+        Sprite icon = null;
+        Sprite[] iconSection = Resources.LoadAll<Sprite>(Config.resources[unitProductionData.GetIconSection()]);
+        if (iconSection != null) 
+        {
+            icon = SpriteUtils.FindSpriteByName(unitProductionData.GetIconName(), iconSection);
+        }
 
         GameObject itemObject = CreateObject(Config.resources["UI" + "UnitProductionItemPrefab"], content);
         itemObject.name = name;

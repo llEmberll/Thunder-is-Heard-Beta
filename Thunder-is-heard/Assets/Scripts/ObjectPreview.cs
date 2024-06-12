@@ -12,7 +12,7 @@ public class ObjectPreview: MonoBehaviour
 
     public ObjectsOnBase objectsPool;
 
-    public MeshRenderer meshRenderer;
+    public Dictionary<string, Material[]> modelMaterials = new Dictionary<string, Material[]>();
     public Material materialBasic, materialAvailable, materialUnvailable, materialModel;
     public Vector2Int size;
 
@@ -80,9 +80,99 @@ public class ObjectPreview: MonoBehaviour
         
         model.SetParent(transform);
 
-        meshRenderer = model.GetComponent<MeshRenderer>();
-        materialModel = meshRenderer.material;
-        meshRenderer.material = materialBasic;
+        modelMaterials = new Dictionary<string, Material[]>();
+        SaveMaterialsAndSetRecursive(model.gameObject, materialBasic);
+    }
+
+    public void SaveMaterialsAndSetRecursive(GameObject obj, Material material)
+    {
+        MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
+        if (meshRenderer != null)
+        {
+            if (!modelMaterials.ContainsKey(obj.name))
+            {
+                modelMaterials.Add(obj.name, meshRenderer.materials);
+            }
+            
+            meshRenderer.materials = GetChangedMaterials(meshRenderer.materials, material);
+        }
+
+        else
+        {
+            SkinnedMeshRenderer skinnedMeshRenderer = obj.GetComponent<SkinnedMeshRenderer>();
+            if (skinnedMeshRenderer != null)
+            {
+                if (!modelMaterials.ContainsKey(obj.name))
+                {
+                    modelMaterials.Add(obj.name, skinnedMeshRenderer.materials);
+                }
+
+                skinnedMeshRenderer.materials = GetChangedMaterials(skinnedMeshRenderer.materials, material);
+            }
+        }
+
+        foreach (Transform child in obj.transform)
+        {
+            SaveMaterialsAndSetRecursive(child.gameObject, material);
+        }
+    }
+
+    public void SetMaterialsRecursive(GameObject obj, Dictionary<string, Material[]> objNameAndMaterialsPair)
+    {
+        if (objNameAndMaterialsPair.ContainsKey(obj.name))
+        {
+            MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
+            if (meshRenderer != null)
+            {
+                meshRenderer.materials = objNameAndMaterialsPair[obj.name];
+            }
+            else
+            {
+                SkinnedMeshRenderer skinnedMeshRenderer = obj.GetComponent<SkinnedMeshRenderer>();
+                if (skinnedMeshRenderer != null)
+                {
+                    skinnedMeshRenderer.materials = objNameAndMaterialsPair[obj.name];
+                }
+            }
+        }
+
+        foreach (Transform child in obj.transform)
+        {
+            SetMaterialsRecursive(child.gameObject, objNameAndMaterialsPair);
+        }
+    }
+
+    public void SetMaterialRecursive(GameObject obj, Material material)
+    {
+        MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
+        if (meshRenderer != null)
+        {
+            meshRenderer.materials = GetChangedMaterials(meshRenderer.materials, material);
+        }
+        else
+        {
+            SkinnedMeshRenderer skinnedMeshRenderer = obj.GetComponent<SkinnedMeshRenderer>();
+            if (skinnedMeshRenderer != null)
+            {
+                skinnedMeshRenderer.materials = GetChangedMaterials(skinnedMeshRenderer.materials, material);
+            }
+        }
+
+        foreach (Transform child in obj.transform)
+        {
+            SetMaterialRecursive(child.gameObject, material);
+        }
+    }
+
+    public Material[] GetChangedMaterials(Material[] materials, Material newMaterial)
+    {
+        Material[] changedMaterials = new Material[materials.Length];
+        for (int i = 0; i < materials.Length; i++)
+        {
+            changedMaterials[i] = newMaterial;
+        }
+
+        return changedMaterials;
     }
 
     public void Rotate()
@@ -133,7 +223,8 @@ public class ObjectPreview: MonoBehaviour
             positionForCheckOnFree = occypation.Except(buildedObjectOnScene.GetComponent<Entity>().occypiedPoses).ToList();
         }
         exposableStatus = map.isPositionFree(positionForCheckOnFree);
-        meshRenderer.material = exposableStatus ? materialAvailable : materialUnvailable;
+        Material newMaterial = exposableStatus ? materialAvailable : materialUnvailable;
+        SetMaterialRecursive(model.gameObject, newMaterial);
     }
     
     public void Move(Vector2Int newRoot)
@@ -178,7 +269,7 @@ public class ObjectPreview: MonoBehaviour
 
     public Transform prepareModelToExposing()
     {
-        meshRenderer.material = materialModel;
+        SetMaterialsRecursive(model.gameObject, modelMaterials);
         return model;
     }
 
@@ -201,7 +292,7 @@ public class ObjectPreview: MonoBehaviour
         }
 
         model.transform.parent = buildedObjectOnScene.transform;
-        meshRenderer.material = materialModel;
+        SetMaterialsRecursive(model.gameObject, modelMaterials);
     }
 
     public void Cancel()

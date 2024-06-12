@@ -1559,6 +1559,7 @@ MonoBehaviour:
     maxStaff: 0
     exp: 0
     maxExp: 0
+  cost: {fileID: 7762706752848672157}
   _unitId: 
   health: 0
   damage: 0

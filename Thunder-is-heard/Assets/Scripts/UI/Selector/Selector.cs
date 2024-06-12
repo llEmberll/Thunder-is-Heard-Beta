@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -257,7 +258,7 @@ public class Selector : MonoBehaviour
                 //TODO реализовать
                 break;
             case "UnitProduction":
-                //TODO реализовать
+                ConfigureProductionForUnitProduction(processSource.id);
                 break;
         }
     }
@@ -279,8 +280,25 @@ public class Selector : MonoBehaviour
 
         ResourcesData gives = contractItemData.GetGives();
         Dictionary<string, string> resourceData = ResourcesProcessor.GetFirstNotEmptyResourceData(gives);
-        productionCount.text = resourceData["count"].ToString();
+        ConfigureProductionCountText(Convert.ToInt32(resourceData["count"]));
         productionImage.sprite = ResourcesProcessor.GetResourceSpriteByName(resourceData["name"]);
+    }
+
+    public void ConfigureProductionForUnitProduction(string unitProductionId)
+    {
+        UnitProductionCacheTable unitProductionsTable = Cache.LoadByType<UnitProductionCacheTable>();
+        CacheItem itemData = unitProductionsTable.GetById(unitProductionId);
+        UnitProductionCacheItem unitProductionItemData = new UnitProductionCacheItem(itemData.Fields);
+
+        ConfigureProductionCountText(1);
+        Sprite[] unitIconSection = Resources.LoadAll<Sprite>(Config.resources[unitProductionItemData.GetIconSection()]);
+        productionImage.sprite = SpriteUtils.FindSpriteByName(unitProductionItemData.GetIconName(), unitIconSection);
+    }
+
+    public void ConfigureProductionCountText(int count)
+    {
+        productionCount.text = count.ToString();
+        productionCount.gameObject.SetActive(count > 1);
     }
 
     public void UpdateProductsLeftTimeText()

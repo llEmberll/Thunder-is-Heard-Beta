@@ -6,9 +6,9 @@
         "externalId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
         "description": "",
         "cost": {
-          "rub": 0,
+          "rub": 750,
           "maxRub": 0,
-          "frames": 1,
+          "frames": 0,
           "maxFrames": 0,
           "oil": 0,
           "maxOil": 0,
@@ -28,7 +28,7 @@
           "maxOil": 0,
           "steel": 0,
           "maxSteel": 0,
-          "staff": 1,
+          "staff": 2,
           "maxStaff": 0,
           "exp": 0,
           "maxExp": 0
@@ -42,8 +42,101 @@
           "x": 1,
           "y": 1
         },
+        "iconPath": "",
         "name": "Assaulters",
-        "modelPath": "Prefabs/Entity/Units/Assaulters/Model"
+        "modelPath": "Prefabs/Entity/Units/Assaulters"
+      }
+    },
+    "035655f8-a347-4057-87cc-83385fa20660": {
+      "fields": {
+        "externalId": "035655f8-a347-4057-87cc-83385fa20660",
+        "description": "",
+        "cost": {
+          "rub": 3500,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 4,
+          "maxOil": 0,
+          "steel": 8,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 11,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 3,
+        "health": 6,
+        "damage": 3,
+        "distance": 3,
+        "mobility": 4,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconPath": "",
+        "name": "Osoka",
+        "modelPath": "Prefabs/Entity/Units/Osoka"
+      }
+    },
+    "a480c091-6b22-43f2-b26d-bbd3d2c2905b": {
+      "fields": {
+        "externalId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
+        "description": "",
+        "cost": {
+          "rub": 2900,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 3,
+          "maxOil": 0,
+          "steel": 5,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 10,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 3,
+        "health": 5,
+        "damage": 2,
+        "distance": 2,
+        "mobility": 6,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconPath": "",
+        "name": "Vortex",
+        "modelPath": "Prefabs/Entity/Units/Vortex"
       }
     }
   }

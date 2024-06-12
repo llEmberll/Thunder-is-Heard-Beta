@@ -111,6 +111,12 @@ public class EventMaster: MonoBehaviour
         BaseObjectRemoved?.Invoke(id, type);
     }
 
+    public event Action<Entity> BaseObjectReplaced;
+    public void OnReplaceBaseObject(Entity obj)
+    {
+        BaseObjectReplaced?.Invoke(obj);
+    }
+
     public event Action<Entity> EnteredOnObject;
     public void OnObjectEnter(Entity obj)
     {

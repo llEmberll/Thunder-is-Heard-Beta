@@ -88,7 +88,7 @@ public class BuildsOnBase : ObjectsOnBase
         BuildCacheTable buildsTable = Cache.LoadByType<BuildCacheTable>();
         CacheItem buildAsCacheItem = buildsTable.GetById(playerBuildData.GetCoreId());
         BuildCacheItem coreBuildData = new BuildCacheItem(buildAsCacheItem.Fields);
-        string modelPath = coreBuildData.GetModelPath();
+        string modelPath = coreBuildData.GetModelPath() + "/" + Tags.federation;
         Bector2Int size = coreBuildData.GetSize();
         int health = coreBuildData.GetHealth();
         int damage = coreBuildData.GetDamage();

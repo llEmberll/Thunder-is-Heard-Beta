@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
 using UnityEngine.UI;
-using System.IO;
 
 public class ProductsNotifcation : UIElement
 {
@@ -71,6 +67,7 @@ public class ProductsNotifcation : UIElement
         }
         
         EventMaster.current.ProductsNotificationDeleted += SomeProductsNotificationDeleted;
+        EventMaster.current.BaseObjectReplaced += SomeBaseObjectReplaced;
     }
 
     public void TurnOffEvents()
@@ -110,6 +107,15 @@ public class ProductsNotifcation : UIElement
         {
             TurnOffEvents();
             Destroy(this.gameObject);
+        }
+    }
+
+    public void SomeBaseObjectReplaced(Entity obj)
+    {
+        if (obj.Type != "Build") { return; }
+        if (obj.ChildId != _sourceObjectId) { return; }
+        {
+            transform.position = new Vector3(obj.center.x, transform.position.y, obj.center.y);
         }
     }
 

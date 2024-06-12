@@ -1,1 +1,83 @@
-﻿{}
+﻿{
+  "name": "UnitProduction",
+  "items": {
+    "7e940ae4-6d78-40a8-962b-0f1c154cf20d": {
+      "fields": {
+        "externalId": "7e940ae4-6d78-40a8-962b-0f1c154cf20d",
+        "description": "",
+        "type": "Infantry",
+        "cost": {
+          "rub": 300,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "duration": 5,
+        "iconSection": "UIUnitCards",
+        "name": "Train assaulters",
+        "iconName": "assaulters"
+      }
+    },
+    "51112095-826c-4436-91e8-5684dc94ca84": {
+      "fields": {
+        "externalId": "51112095-826c-4436-91e8-5684dc94ca84",
+        "description": "",
+        "type": "Vehicle",
+        "cost": {
+          "rub": 1600,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 1,
+          "maxOil": 0,
+          "steel": 2,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
+        "duration": 20,
+        "iconSection": "UIUnitCards",
+        "name": "Produce a light combat vehicle",
+        "iconName": "vortex"
+      }
+    },
+    "957bb263-524a-4460-8375-234b86055d7c": {
+      "fields": {
+        "externalId": "957bb263-524a-4460-8375-234b86055d7c",
+        "description": "",
+        "type": "Vehicle",
+        "cost": {
+          "rub": 2000,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 2,
+          "maxOil": 0,
+          "steel": 4,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "035655f8-a347-4057-87cc-83385fa20660",
+        "duration": 30,
+        "iconSection": "UIUnitCards",
+        "name": "Produce a BMP",
+        "iconName": "osoka"
+      }
+    }
+  }
+}
