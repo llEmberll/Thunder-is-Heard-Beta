@@ -53,84 +53,6 @@
         "unitId": null
       }
     },
-    "9fa1b7b5-7848-4b94-8d7e-928471d26f8f": {
-      "fields": {
-        "externalId": "9fa1b7b5-7848-4b94-8d7e-928471d26f8f",
-        "description": "",
-        "sourceObjectId": "438d908b-5101-4c4b-bded-31ffec9e96f8",
-        "type": "Idle",
-        "gives": {
-          "rub": 0,
-          "maxRub": 0,
-          "frames": 0,
-          "maxFrames": 0,
-          "oil": 0,
-          "maxOil": 0,
-          "steel": 0,
-          "maxSteel": 0,
-          "staff": 0,
-          "maxStaff": 0,
-          "exp": 0,
-          "maxExp": 0
-        },
-        "iconSection": "",
-        "iconName": "",
-        "count": 1,
-        "unitId": null
-      }
-    },
-    "ff3828c9-61c5-4ac0-9516-af474ebb643b": {
-      "fields": {
-        "externalId": "ff3828c9-61c5-4ac0-9516-af474ebb643b",
-        "description": "",
-        "sourceObjectId": "de25b740-a229-46d3-b066-8b7248f5facf",
-        "type": "Idle",
-        "gives": {
-          "rub": 0,
-          "maxRub": 0,
-          "frames": 0,
-          "maxFrames": 0,
-          "oil": 0,
-          "maxOil": 0,
-          "steel": 0,
-          "maxSteel": 0,
-          "staff": 0,
-          "maxStaff": 0,
-          "exp": 0,
-          "maxExp": 0
-        },
-        "iconSection": "",
-        "iconName": "",
-        "count": 1,
-        "unitId": null
-      }
-    },
-    "93a67fab-2ac5-4f85-b487-ff1a1cf2c956": {
-      "fields": {
-        "externalId": "93a67fab-2ac5-4f85-b487-ff1a1cf2c956",
-        "description": "",
-        "sourceObjectId": "43d618a7-6155-47bb-b684-ba43c7502e51",
-        "type": "Idle",
-        "gives": {
-          "rub": 0,
-          "maxRub": 0,
-          "frames": 0,
-          "maxFrames": 0,
-          "oil": 0,
-          "maxOil": 0,
-          "steel": 0,
-          "maxSteel": 0,
-          "staff": 0,
-          "maxStaff": 0,
-          "exp": 0,
-          "maxExp": 0
-        },
-        "iconSection": "",
-        "iconName": "",
-        "count": 1,
-        "unitId": null
-      }
-    },
     "56eab4e2-ee77-4b0f-9f10-51964fa6fa6c": {
       "fields": {
         "externalId": "56eab4e2-ee77-4b0f-9f10-51964fa6fa6c",
@@ -180,6 +102,84 @@
         "iconSection": "",
         "iconName": "",
         "count": 1,
+        "unitId": null
+      }
+    },
+    "d01d0b6c-f344-4b76-98aa-692ad9ea25f6": {
+      "fields": {
+        "externalId": "d01d0b6c-f344-4b76-98aa-692ad9ea25f6",
+        "description": "",
+        "sourceObjectId": "de25b740-a229-46d3-b066-8b7248f5facf",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "40fbccdd-ea62-4a8f-b728-386cf01c41e2": {
+      "fields": {
+        "externalId": "40fbccdd-ea62-4a8f-b728-386cf01c41e2",
+        "description": "",
+        "sourceObjectId": "438d908b-5101-4c4b-bded-31ffec9e96f8",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "d28e35e1-2aab-400c-81b2-68b11404f3da": {
+      "fields": {
+        "externalId": "d28e35e1-2aab-400c-81b2-68b11404f3da",
+        "description": "",
+        "sourceObjectId": "43d618a7-6155-47bb-b684-ba43c7502e51",
+        "type": "ResourceCollection",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 15,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "Textures/Interface/Resources/Resources",
+        "iconName": "steel",
+        "count": 15,
         "unitId": null
       }
     }

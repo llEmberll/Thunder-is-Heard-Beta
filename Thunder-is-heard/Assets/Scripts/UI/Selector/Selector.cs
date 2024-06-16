@@ -17,6 +17,7 @@ public class Selector : MonoBehaviour
     public int attackRadiusSizePerCell = 800;
 
     public Canvas objectInfoCanvas;
+    public Vector3 objectInfoCanvasOffset = new Vector3(-1, 2, -1);
     public TMP_Text name;
 
     public Slider healthSlider;
@@ -28,7 +29,7 @@ public class Selector : MonoBehaviour
 
 
     public Canvas productsInfoCanvas;
-    public Vector3 productsInfoCanvasOffset = new Vector3(0.591f, 0, 0.591f);
+    public Vector3 productsInfoCanvasOffset = new Vector3(-0.408f, 2.83f, -0.408f);
     public int productsEndTime;
     public bool isSelectedObjectProducts = false;
     public TMP_Text productInfoText;
@@ -118,9 +119,9 @@ public class Selector : MonoBehaviour
     public void ConfigureInfoPanelPosition(Entity obj)
     {
         objectInfoCanvas.transform.position = new Vector3(
-            obj.model.transform.position.x,
-            objectInfoCanvas.transform.position.y,
-            obj.model.transform.position.z
+            obj.model.transform.position.x + objectInfoCanvasOffset.x,
+            objectInfoCanvasOffset.y,
+            obj.model.transform.position.z + objectInfoCanvasOffset.z
         );
     }
 
@@ -267,7 +268,7 @@ public class Selector : MonoBehaviour
     {
         productsInfoCanvas.transform.position = new Vector3(
             build.model.transform.position.x + productsInfoCanvasOffset.x,
-            productsInfoCanvas.transform.position.y + productsInfoCanvasOffset.y,
+            productsInfoCanvasOffset.y,
             build.model.transform.position.z + productsInfoCanvasOffset.z
         );
     }

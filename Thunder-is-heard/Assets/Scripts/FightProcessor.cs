@@ -31,16 +31,16 @@ public class FightProcessor : MonoBehaviour
     {
         //TODO Создать CacheTable и CacheItem под миссии, реализовать под CacheTable
 
-        ITable missionsTable = LocalDatabase.GetTableByName(mission.type);
-        Dictionary<string, object> data = LocalDatabase.GetFieldsByTableAndTableItemIndex(missionsTable, 0); //mission.id
+        //ITable missionsTable = LocalDatabase.GetTableByName(mission.type);
+        //Dictionary<string, object> data = LocalDatabase.GetFieldsByTableAndTableItemIndex(missionsTable, 0); //mission.id
 
-        Map map = GetMapFromData(data);
-        Sprite terrain = GetTerrainFromData(data);
-        Dictionary<Vector2Int, Entity> objects = GetObjectsFromData(data);
-        List<IStage> stages = GetStagesFromData(data);
-        List<Vector2Int> landableCells = GetLandableCellsFromData(data);
+        //Map map = GetMapFromData(data);
+        //Sprite terrain = GetTerrainFromData(data);
+        //Dictionary<Vector2Int, Entity> objects = GetObjectsFromData(data);
+        //List<IStage> stages = GetStagesFromData(data);
+        //List<Vector2Int> landableCells = GetLandableCellsFromData(data);
 
-        scenario = new Scenario(map, terrain, objects, stages, landableCells) ;
+        //scenario = new Scenario(map, terrain, objects, stages, landableCells) ;
     }
 
     public Map GetMapFromData(Dictionary<string, object> data)

@@ -5,25 +5,25 @@
       "fields": {
         "externalId": "3151b7c3-cde3-43a6-92f7-55266c1cdda8",
         "description": "",
-        "rotation": 90,
+        "rotation": 180,
         "workStatus": "Idle",
         "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
         "name": "Mine",
         "position": [
           {
-            "x": 2,
+            "x": 3,
             "y": 3
           },
           {
-            "x": 2,
+            "x": 3,
             "y": 4
           },
           {
-            "x": 3,
+            "x": 4,
             "y": 3
           },
           {
-            "x": 3,
+            "x": 4,
             "y": 4
           }
         ]
@@ -82,7 +82,7 @@
         "externalId": "43d618a7-6155-47bb-b684-ba43c7502e51",
         "description": "",
         "rotation": 180,
-        "workStatus": "Idle",
+        "workStatus": "Finished",
         "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
         "name": "Mine",
         "position": [

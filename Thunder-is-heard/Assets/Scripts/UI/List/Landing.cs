@@ -5,31 +5,10 @@ using UnityEngine;
 
 public class Landing : ItemList
 {
-    public string itemType = "PlayerUnit";
-
     public Dictionary<string, UnitInventoryItem> items;
-
-    public PlayerUnitsTable playerUnitsTable;
 
     public override void FillContent()
     {
-        playerUnitsTable = (PlayerUnitsTable)LocalDatabase.GetTableByName(itemType);
-
-        foreach (UnitData unitData in playerUnitsTable.Items)
-        {
-            Dictionary<string, object> unitFields = unitData.GetFields();
-            string id = (string)unitFields["externalId"];
-
-            if (IsItemExist(id))
-            {
-                IncrementCountOfItem(id);
-            }
-
-            else
-            {
-                CreateAndAddItem(id, (string)unitFields["name"], (string)unitFields["icon"]);
-            }
-        }
     }
 
     private bool IsItemExist(string id)

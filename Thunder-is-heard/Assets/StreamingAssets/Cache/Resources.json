@@ -1,18 +1,18 @@
 ﻿{
   "name": "Resources",
   "items": {
-    "27990988-c1d4-4d96-8849-ce9931c20496": {
+    "5a44b712-820a-4c36-a4bd-e0bab038e2da": {
       "fields": {
-        "externalId": "27990988-c1d4-4d96-8849-ce9931c20496",
+        "externalId": "5a44b712-820a-4c36-a4bd-e0bab038e2da",
         "description": "",
         "resources": {
-          "rub": 4300,
+          "rub": 1400,
           "maxRub": 0,
           "frames": 298,
           "maxFrames": 0,
-          "oil": 2,
+          "oil": 4,
           "maxOil": 0,
-          "steel": 5,
+          "steel": 9,
           "maxSteel": 0,
           "staff": 0,
           "maxStaff": 0,

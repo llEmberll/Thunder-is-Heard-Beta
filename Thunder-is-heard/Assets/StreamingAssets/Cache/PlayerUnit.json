@@ -1,17 +1,16 @@
 ﻿{
-  "name": "PlayerUnit",
   "items": {
     "6e681671-f625-4293-a94b-175ad924e9af": {
       "fields": {
         "externalId": "6e681671-f625-4293-a94b-175ad924e9af",
         "description": "",
-        "rotation": 0,
+        "rotation": 180,
         "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
         "name": "Assaulters",
         "position": [
           {
-            "x": 4,
-            "y": 8
+            "x": 5,
+            "y": 1
           }
         ]
       }
@@ -91,5 +90,6 @@
         ]
       }
     }
-  }
+  },
+  "name": "PlayerUnit"
 }

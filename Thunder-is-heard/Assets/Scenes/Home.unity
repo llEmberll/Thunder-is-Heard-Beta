@@ -3233,7 +3233,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 422317273}
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: 0, y: 0, z: 0.591}
+  m_LocalPosition: {x: 0, y: 0, z: -0.408}
   m_LocalScale: {x: 0.002, y: 0.002, z: 0.002}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3244,7 +3244,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.591, y: 1.636}
+  m_AnchoredPosition: {x: -0.408, y: 2.83}
   m_SizeDelta: {x: 800, y: 180.9083}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &422317275
@@ -13735,6 +13735,7 @@ MonoBehaviour:
   attackRadiusCanvas: {fileID: 1706393506}
   attackRadiusSizePerCell: 800
   objectInfoCanvas: {fileID: 1851732900598532272}
+  objectInfoCanvasOffset: {x: -1, y: 2, z: -1}
   name: {fileID: 6770299399886053924}
   healthSlider: {fileID: 2418065758196187446}
   healthPanel: {fileID: 4438943730073613151}
@@ -13742,7 +13743,7 @@ MonoBehaviour:
   damagePanel: {fileID: 8703191308225541642}
   damageCount: {fileID: 1501115412502900486}
   productsInfoCanvas: {fileID: 422317277}
-  productsInfoCanvasOffset: {x: 0.591, y: 0, z: 0.591}
+  productsInfoCanvasOffset: {x: -0.408, y: 2.83, z: -0.408}
   productsEndTime: 0
   isSelectedObjectProducts: 0
   productInfoText: {fileID: 875150198}
@@ -15964,7 +15965,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4258723401759800246}
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0.002, y: 0.002, z: 0.002}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15977,7 +15978,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.8}
+  m_AnchoredPosition: {x: -1, y: 2}
   m_SizeDelta: {x: 800, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3413895837474318813
