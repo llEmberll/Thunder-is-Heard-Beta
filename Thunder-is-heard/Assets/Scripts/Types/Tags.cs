@@ -8,6 +8,7 @@ public static class Tags
 
     public static string federation = "Federation";
     public static string empire = "Empire";
+    public static string neutral = "Neutral";
 
     public static string inventory = "Inventory";
     public static string shop = "Shop";
@@ -29,5 +30,5 @@ public static class Tags
     public static string costList = "Cost";
 
     public static string resourcesProcessor = "ResourcesProcessor";
-
+    public static string fightProcessor = "FightProcessor";
 }

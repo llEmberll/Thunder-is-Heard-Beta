@@ -157,7 +157,7 @@ public class ObjectProcessor : MonoBehaviour
                 health, 
                 damage, 
                 distance, 
-                Config.sides["ally"], 
+                Sides.federation, 
                 interactionComponentName,
                 interactionComponentType,
                 WorkStatuses.idle
@@ -195,7 +195,7 @@ public class ObjectProcessor : MonoBehaviour
                 damage, 
                 distance, 
                 mobility, 
-                Config.sides["ally"]
+                Sides.federation
                 );
         }
 

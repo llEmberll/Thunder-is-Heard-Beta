@@ -17,8 +17,8 @@ public class Scenario
     public Sprite Terrain { get { return terrain; } }
 
 
-    [SerializeField] public Dictionary<Vector2Int, Entity> objects;
-    public Dictionary<Vector2Int, Entity> Objects { get { return objects; } }
+    [SerializeField] public Dictionary<string, Entity> objects;
+    public Dictionary<string, Entity> Objects { get { return objects; } }
 
 
     [SerializeField] public List<IStage> stages;
@@ -31,7 +31,7 @@ public class Scenario
     [SerializeField] public int currentStageIndex = 0;
     public int CurrentStageIndex { get { return currentStageIndex; } }
 
-    public Scenario(Map scenarioMap, Sprite scenarioTerrain, Dictionary<Vector2Int, Entity> scenarioObjects, List<IStage> scenarioStages, List<Vector2Int> scenarioLandableCells)
+    public Scenario(Map scenarioMap, Sprite scenarioTerrain, Dictionary<string, Entity> scenarioObjects, List<IStage> scenarioStages, List<Vector2Int> scenarioLandableCells)
     {
         map = scenarioMap;
         terrain = scenarioTerrain;

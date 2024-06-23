@@ -138,9 +138,9 @@ public class Selector : MonoBehaviour
     {
         Dictionary<string, Sprite> selectorSpriteBySide = new Dictionary<string, Sprite>()
         {
-            { Config.sides["ally"], friendlySelectorSprite },
-            { Config.sides["enemy"], enemySelectorSprite },
-            { Config.sides["neutral"], neutralSelectorSprite },
+            { Sides.federation, friendlySelectorSprite },
+            { Sides.empire, enemySelectorSprite },
+            { Sides.neutral, neutralSelectorSprite },
         };
 
         SpriteRenderer selectorImage = selector.GetComponent<SpriteRenderer>();

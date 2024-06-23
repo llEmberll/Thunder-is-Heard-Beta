@@ -77,7 +77,7 @@ public class Inventory : ItemList
         int damage = buildData.GetDamage();
         int distance = buildData.GetDistance();
         int count = inventoryItemData.GetCount();
-        string description = buildData.GetDescrption();
+        string description = buildData.GetDescription();
         Sprite[] iconSection = Resources.LoadAll<Sprite>(buildData.GetIconSection());
         Sprite icon = SpriteUtils.FindSpriteByName(buildData.GetIconName(), iconSection);
 
@@ -109,7 +109,7 @@ public class Inventory : ItemList
         int distance = unitData.GetDistance();
         int mobility = unitData.GetMobility();
         int count = inventoryItemData.GetCount();
-        string description = unitData.GetDescrption();
+        string description = unitData.GetDescription();
         Sprite icon = Resources.Load<Sprite>(unitData.GetIconPath());
 
         GameObject itemObject = CreateObject(Config.resources["UI" + "Unit" + "InventoryItemPrefab"], content);
@@ -136,7 +136,7 @@ public class Inventory : ItemList
         string id = inventoryItemData.GetExternalId();
         string name = materialData.GetName();
         int count = inventoryItemData.GetCount();
-        string description = materialData.GetDescrption();
+        string description = materialData.GetDescription();
         Sprite icon = Resources.Load<Sprite>(materialData.GetIconPath());
 
         GameObject itemObject = CreateObject(Config.resources["UI" + "Material" + "InventoryItemPrefab"], content);

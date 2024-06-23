@@ -8,7 +8,6 @@ public class BaseMap : Map
     {
         base.Awake();
         InitTerrain();
-
     }
 
     public void Start()
@@ -26,6 +25,45 @@ public class BaseMap : Map
         TerrainData terrainData = terrain.terrainData;
         terrainData.size = new Vector3(5 * 2 + size.x, terrainData.size.y, 5 * 2 + size.y);
         terrain.terrainData = terrainData;
+    }
+
+    public void CreateBattleForTest()
+    {
+        BattleCacheTable table = Cache.LoadByType<BattleCacheTable>();
+
+        BattleCacheItem battleItem = new BattleCacheItem(new Dictionary<string, object>());
+        string missionId = "123";
+        string turn = Sides.empire;
+
+        CellData[] map = new CellData[]
+        {
+            new CellData("land", new Bector2Int(new Vector2Int(0, 0))),
+            new CellData("water", new Bector2Int(new Vector2Int(0, 1))),
+        };
+
+        UnitOnBattle[] units = new UnitOnBattle[]
+        {
+            new UnitOnBattle("124", new Bector2Int(new Vector2Int(0, 0)), 0, 1, Sides.empire),
+            new UnitOnBattle("125", new Bector2Int(new Vector2Int(0, 1)), 0, 1, Sides.federation, new SkillOnBattle("224", 1, false))
+        };
+
+        Bector2Int[] positionForBuild1 = new Bector2Int[] {new Bector2Int(new Vector2Int(0, 0))};
+        Bector2Int[] positionForBuild2 = new Bector2Int[] { new Bector2Int(new Vector2Int(0, 1)), new Bector2Int(new Vector2Int(1, 1)) };
+
+        BuildOnBattle[] builds = new BuildOnBattle[]
+        {
+            new BuildOnBattle("124", positionForBuild1, 0, 1, Sides.empire, WorkStatuses.idle),
+            new BuildOnBattle("125", positionForBuild2, 0, 1, Sides.federation, WorkStatuses.idle)
+        };
+
+        battleItem.SetMissionId(missionId);
+        battleItem.SetMap(map);
+        battleItem.SetUnits(units);
+        battleItem.SetBuilds(builds);
+        battleItem.SetTurn(turn);
+
+        table.AddOne(battleItem);
+        Cache.Save(table);
     }
 
     public void CreateResources()

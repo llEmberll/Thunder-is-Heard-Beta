@@ -34,6 +34,7 @@ public static class Config
         { "entityPrefabs", "Prefabs/Entity/" },
         { "prefabPreview", "Prefabs/Custom/Preview" },
         { "emptyPrefab", "Prefabs/Entity/Basic/Empty" },
+        { "fightProcessorPrefab", "Prefabs/Battle/FightProcessor" },
         { "resourceForUIItem", "Prefabs/UI/GeneratedItems/Common/Resource/ResourceElement" },
         { "UIBuildInventoryItemPrefab", "Prefabs/UI/GeneratedItems/Inventory/BuildItem" },
         { "UIUnitInventoryItemPrefab", "Prefabs/UI/GeneratedItems/Inventory/UnitItem" },
@@ -93,12 +94,5 @@ public static class Config
     {
         {"Base", "Prefabs/Terrain/Base/Terrain" },
         { "Common", "Prefabs/Terrain/" }
-    };
-
-    public static Dictionary<string, string> sides = new Dictionary<string, string>
-    {
-        {"ally", "Ally" },
-        { "enemy", "Enemy" },
-        { "neutral", "Neutral" }
     };
 }

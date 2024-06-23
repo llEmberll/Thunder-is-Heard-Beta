@@ -56,7 +56,7 @@ public class UnitsOnBase : ObjectsOnBase
             damage, 
             distance, 
             mobility, 
-            Config.sides["ally"]
+            Sides.federation
             );
     }
 

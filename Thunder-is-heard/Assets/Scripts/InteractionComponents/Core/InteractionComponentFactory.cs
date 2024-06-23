@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public class InteractionComponentFactory
+public static class InteractionComponentFactory
 {
     public static Dictionary<string, Type> components = new Dictionary<string, Type>()
     {

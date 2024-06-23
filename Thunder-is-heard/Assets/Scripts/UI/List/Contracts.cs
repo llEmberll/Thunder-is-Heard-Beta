@@ -51,7 +51,7 @@ public class Contracts : ItemList
         ResourcesData cost = contractCacheData.GetCost();
         ResourcesData gives = contractCacheData.GetGives();
         int duration = contractCacheData.GetDuration();
-        string description = contractCacheData.GetDescrption();
+        string description = contractCacheData.GetDescription();
 
         Sprite icon = null;
         Sprite[] iconSection = Resources.LoadAll<Sprite>(Config.resources[contractCacheData.GetIconSection()]);

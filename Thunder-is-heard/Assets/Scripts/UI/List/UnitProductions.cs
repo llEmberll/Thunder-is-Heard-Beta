@@ -58,7 +58,7 @@ public class UnitProductions : ItemList
         string name = unitProductionData.GetName();
         ResourcesData cost = unitProductionData.GetCost();
         int duration = unitProductionData.GetDuration();
-        string description = unitProductionData.GetDescrption();
+        string description = unitProductionData.GetDescription();
 
         Sprite icon = null;
         Sprite[] iconSection = Resources.LoadAll<Sprite>(Config.resources[unitProductionData.GetIconSection()]);

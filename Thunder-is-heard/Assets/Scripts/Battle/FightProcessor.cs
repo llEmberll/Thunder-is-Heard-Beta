@@ -6,17 +6,16 @@ using System;
 
 public class FightProcessor : MonoBehaviour
 {
-    public Mission mission;
-    public Mission Mission { get { return mission; } }
+    public BattleCacheItem battleData;
 
     public Scenario scenario;
     public Scenario Scenario { get { return scenario; } }
 
-    public void Awake()
+    public void Init(string battleId)
     {
-        EventMaster.current.FightIsStarted += StartFight;
+        InitBattleData(battleId);
 
-        mission = GameObject.FindWithTag(Tags.mission).GetComponent<Mission>();
+        InitEvents();
 
         ConstructScenario();
 
@@ -27,18 +26,29 @@ public class FightProcessor : MonoBehaviour
         EnableListeners();
     }
 
+    public void InitBattleData(string battleId)
+    {
+        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
+        CacheItem cacheItem = battleTable.GetById(battleId);
+        battleData = new BattleCacheItem(cacheItem.Fields);
+    }
+
+    public void InitEvents()
+    {
+        EventMaster.current.FightIsStarted += StartFight;
+    }
+
     public void ConstructScenario()
     {
-        //TODO Создать CacheTable и CacheItem под миссии, реализовать под CacheTable
+        MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
+        CacheItem cacheItemMission = missionTable.GetById(battleData.GetMissionId());
+        MissionCacheItem missionData = new MissionCacheItem(cacheItemMission.Fields);
 
-        //ITable missionsTable = LocalDatabase.GetTableByName(mission.type);
-        //Dictionary<string, object> data = LocalDatabase.GetFieldsByTableAndTableItemIndex(missionsTable, 0); //mission.id
+        ScenarioCacheTable scenarioTable = Cache.LoadByType<ScenarioCacheTable>();
+        CacheItem cacheItemScenario = scenarioTable.GetById(missionData.GetScenarioId());
+        ScenarioCacheItem scenarioData = new ScenarioCacheItem(cacheItemScenario.Fields);
 
-        //Map map = GetMapFromData(data);
-        //Sprite terrain = GetTerrainFromData(data);
-        //Dictionary<Vector2Int, Entity> objects = GetObjectsFromData(data);
-        //List<IStage> stages = GetStagesFromData(data);
-        //List<Vector2Int> landableCells = GetLandableCellsFromData(data);
+        //TODO решить, как создавать клетки из сценария(генератором, или расширить класс Map)
 
         //scenario = new Scenario(map, terrain, objects, stages, landableCells) ;
     }
@@ -95,14 +105,16 @@ public class FightProcessor : MonoBehaviour
     
     public void InstantiateObjects() 
     {
-        foreach (var objectData in scenario.Objects)
-        {
-            Instantiate(objectData.Value.gameObject, new Vector3(
-                objectData.Key.x, 
-                objectData.Value.transform.position.y, 
-                objectData.Key.y
-                ), Quaternion.identity);
-        }
+        //TODO создать на сцене юниты и здания из battleData
+
+        //foreach (var objectData in scenario.Objects)
+        //{
+        //    Instantiate(objectData.Value.gameObject, new Vector3(
+        //        objectData.Key.x, 
+        //        objectData.Value.transform.position.y, 
+        //        objectData.Key.y
+        //        ), Quaternion.identity);
+        //}
     }
 
     public void EnableListeners()

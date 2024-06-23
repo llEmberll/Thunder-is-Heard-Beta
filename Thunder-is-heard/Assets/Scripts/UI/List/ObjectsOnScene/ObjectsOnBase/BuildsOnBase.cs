@@ -120,7 +120,7 @@ public class BuildsOnBase : ObjectsOnBase
             health, 
             damage, 
             distance, 
-            Config.sides["ally"], 
+            Sides.federation, 
             interactionComponentName, 
             interactionComponentType,
             workStatus

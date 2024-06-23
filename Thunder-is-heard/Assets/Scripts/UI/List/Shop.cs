@@ -80,7 +80,7 @@ public class Shop : ItemList
         int damage = buildData.GetDamage();
         int distance = buildData.GetDistance();
         int count = shopItemData.GetCount();
-        string description = buildData.GetDescrption();
+        string description = buildData.GetDescription();
         Sprite[] iconSection = Resources.LoadAll<Sprite>(buildData.GetIconSection());
         Sprite icon = SpriteUtils.FindSpriteByName(buildData.GetIconName(), iconSection);
 
@@ -114,7 +114,7 @@ public class Shop : ItemList
         int distance = unitData.GetDistance();
         int mobility = unitData.GetMobility();
         int count = ShopItemData.GetCount();
-        string description = unitData.GetDescrption();
+        string description = unitData.GetDescription();
         Sprite icon = Resources.Load<Sprite>(unitData.GetIconPath());
 
         GameObject itemObject = CreateObject(Config.resources["UI" + "Unit" + "ShopItemPrefab"], content);
@@ -143,7 +143,7 @@ public class Shop : ItemList
         string name = materialData.GetName();
         ResourcesData cost = materialData.GetCost();
         int count = ShopItemData.GetCount();
-        string description = materialData.GetDescrption();
+        string description = materialData.GetDescription();
         Sprite icon = Resources.Load<Sprite>(materialData.GetIconPath());
 
         GameObject itemObject = CreateObject(Config.resources["UI" + "Material" + "ShopItemPrefab"], content);

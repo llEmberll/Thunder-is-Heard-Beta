@@ -52,7 +52,7 @@ public class CacheItem: ICacheItem
         SetField("externalId", value);
     }
 
-    public string? GetDescrption()
+    public string? GetDescription()
     {
         return (string?)GetField("description");
     }
