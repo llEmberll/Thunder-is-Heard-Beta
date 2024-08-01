@@ -4,9 +4,15 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class Map : MonoBehaviour
 {
+    public GameObject cellPrefab;
+
+    public GameObject cellsParent;
+    public GameObject terrainParent;
+
     public Dictionary<Vector2Int, Cell> cells = new Dictionary<Vector2Int, Cell>();
     public Dictionary<Vector2Int, Cell> Cells {  get { return cells; } }
 
@@ -17,26 +23,74 @@ public class Map : MonoBehaviour
 
 	public virtual void Awake()
 	{
-        LoadCells();
-        FindCentralCell();
 	}
 
-    public void LoadCells()
+    public void InitPrefabs()
     {
-        int sizeByX = 0;
-        int sizeByY = 0;
+        cellPrefab = Resources.Load<GameObject>(Config.mapResources["cellPrefab"]);
+    }
 
-        Transform cellsParent = GameObject.FindGameObjectWithTag("Cells").transform;
-        foreach (Transform child in cellsParent)
+    public void InitParents()
+    {
+        GameObject cellsParentPrefab = Resources.Load<GameObject>(Config.mapResources["cellsParent"]);
+        cellsParent = Instantiate(cellsParentPrefab, cellsParentPrefab.transform.position, Quaternion.identity, transform);
+
+        GameObject terrainParentPrefab = Resources.Load<GameObject>(Config.mapResources["terrainParent"]);
+        terrainParent = Instantiate(terrainParentPrefab, terrainParentPrefab.transform.position, Quaternion.identity, transform);
+    }
+
+    public void Init(Vector2Int mapSize, string terrainPath)
+    {
+        size = mapSize;
+        InitPrefabs();
+        InitParents();
+        GenerateCells(size);
+        FindCentralCell();
+        InitTerrain(terrainPath);
+    }
+
+    public void InitTerrain(string terrainPath)
+    {
+        Transform terrainObj = Instantiate(Resources.Load<Terrain>(terrainPath).transform, parent: terrainParent.transform);
+
+        terrainParent.transform.position -= new Vector3(5, 0, 5);
+
+        terrain = terrainObj.GetComponent<Terrain>();
+        TerrainData terrainData = terrain.terrainData;
+        terrainData.size = new Vector3(5 * 2 + size.x, terrainData.size.y, 5 * 2 + size.y);
+        terrain.terrainData = terrainData;
+    }
+
+    [ContextMenu("Generate grid")]
+    public void GenerateCells(Vector2Int size)
+    {
+        DeleteCells();
+
+        var cellsize = cellPrefab.GetComponent<MeshRenderer>().bounds.size;
+
+        for (int x = 0; x < size.x; x++)
         {
-            Cell cell = child.GetComponent<Cell>();
-            Vector2Int cellPosition = new Vector2Int((int)child.transform.position.x, (int)child.transform.position.z);
-            if (cellPosition.x > sizeByX) { sizeByX = cellPosition.x; }
-            if (cellPosition.y > sizeByY) { sizeByY = cellPosition.y; }
-            cells.Add(cellPosition, cell);
-        }
+            for (int y = 0; y < size.y; y++)
+            {
+                var position = new Vector3(x * (cellsize.x), 0, y * (cellsize.z));
+                var cell = Instantiate(cellPrefab, position, Quaternion.identity, cellsParent.transform);
+                Cell currentCellComponent = cell.GetComponent<Cell>();
+                cells.Add(currentCellComponent.position, currentCellComponent);
 
-        size = new Vector2Int(sizeByX+1, sizeByY+1);
+                cell.name = $"|X:{x}||Y:{y}|";
+                cell.tag = "Cell";
+            }
+        }
+    }
+
+    [ContextMenu("Delete Cells")]
+    public void DeleteCells()
+    {
+        GameObject[] cells = GameObject.FindGameObjectsWithTag("Cell");
+        foreach (GameObject obj in cells)
+        {
+            DestroyImmediate(obj);
+        }
     }
 
     public void FindCentralCell()

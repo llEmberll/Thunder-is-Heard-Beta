@@ -36,6 +36,7 @@ public static class Config
         { "emptyPrefab", "Prefabs/Entity/Basic/Empty" },
         { "fightProcessorPrefab", "Prefabs/Battle/FightProcessor" },
         { "resourceForUIItem", "Prefabs/UI/GeneratedItems/Common/Resource/ResourceElement" },
+
         { "UIBuildInventoryItemPrefab", "Prefabs/UI/GeneratedItems/Inventory/BuildItem" },
         { "UIUnitInventoryItemPrefab", "Prefabs/UI/GeneratedItems/Inventory/UnitItem" },
         { "UIMaterialInventoryItemPrefab", "Prefabs/UI/GeneratedItems/Inventory/MaterialItem" },
@@ -44,20 +45,34 @@ public static class Config
         { "UIContractItemPrefab", "Prefabs/UI/GeneratedItems/Contract/ContractItem" },
         { "UIUnitProductionItemPrefab", "Prefabs/UI/GeneratedItems/UnitProduction/UnitItem" },
         { "UIMaterialShopItemPrefab", "Prefabs/UI/GeneratedItems/Shop/MaterialItem" },
+        { "UIMissionItemPrefab", "Prefabs/UI/GeneratedItems/Campany/MissionItem" },
+        { "UIUnitLandablePrefab", "Prefabs/UI/GeneratedItems/LandableUnit/LandableUnit" },
+
         { "UIProductsNotificationPrefab", "Prefabs/UI/GeneratedItems/Common/ProductsNotification/ProductsNotification" },
         { "UIBuildCards", "Textures/Interface/Cards/Builds/cards/" },
         { "UIUnitCards", "Textures/Interface/Cards/Unit/cards/" },
         { "landableUnitItem", "Prefabs/UI/GeneratedItems/UnitForLanding/LandableUnitItem" },
         { "ranks", "Textures/Interface/Icons/Ranks/Ranks" },
         { "resourcesIcons", "Textures/Interface/Resources/Resources" },
+
         { "enemySelector", "Textures/Interface/Selections/EnemySelector" },
         { "allySelector", "Textures/Interface/Selections/AllySelector" },
         { "neutralSelector", "Textures/Interface/Selections/NeutralSelector" },
         { "attackableSelector", "Textures/Interface/Selections/AttackableSelector" },
         { "attackRadius", "Textures/Interface/Selections/AttackRadius" },
+
         { "productsCollectionBackgroundIconIdle", "Textures/Interface/Icons/ProductsCollection/ProductsCollectionBackgroundIdle" },
         { "productsCollectionBackgroundIconAllow", "Textures/Interface/Icons/ProductsCollection/ProductsCollectionBackgroundAllow" },
         { "productsCollectionBackgroundIconForbidden", "Textures/Interface/Icons/ProductsCollection/ProductsCollectionBackgroundForbidden" },
+
+        { "missionIconsSection", "Textures/Interface/Icons/Campany/MissionIcons" },
+    };
+
+    public static Dictionary<string, string> mapResources = new Dictionary<string, string>
+    {
+        { "terrainParent", "Prefabs/Map/TerrainParent/Terrain" },
+        { "cellsParent", "Prefabs/Map/CellsParent/Cells" },
+        { "cellPrefab", "Prefabs/Cell" },
     };
 
     public static Dictionary<int, int> ranksByExp = new Dictionary<int, int>

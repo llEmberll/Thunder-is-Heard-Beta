@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5606325847209713583}
   m_Layer: 0
   m_Name: Cell
-  m_TagString: Untagged
+  m_TagString: Cell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,6 +126,7 @@ MonoBehaviour:
   sceneState: {fileID: 0}
   position: {x: 0, y: 0}
   occupied: 0
+  visible: 0
   _meshRenderer: {fileID: 0}
   basicMaterial: {fileID: 0}
   selectMaterial: {fileID: 0}

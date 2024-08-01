@@ -39,8 +39,8 @@ public abstract class ShopItem : Item
 
     public override void UpdateUI()
     {
-        TmpCount.text = count.ToString();
-        TmpDescription.text = description;
+        TmpCount.text = _count.ToString();
+        TmpDescription.text = _description;
 
         ResourcesProcessor.UpdateResources(cost, costData);
         ResourcesProcessor.UpdateResources(gives, givesData);
@@ -57,7 +57,7 @@ public abstract class ShopItem : Item
     public virtual void Substract(int number = 1)
     {
         ShopCacheTable shopItemsTable = Cache.LoadByType<ShopCacheTable>();
-        CacheItem cacheItem = shopItemsTable.GetById(id);
+        CacheItem cacheItem = shopItemsTable.GetById(_id);
         ShopCacheItem shopItem = new ShopCacheItem(cacheItem.Fields);
         shopItem.SetCount(shopItem.GetCount() - 1);
         if (shopItem.GetCount() < 1)
@@ -71,13 +71,13 @@ public abstract class ShopItem : Item
 
         Cache.Save(shopItemsTable);
 
-        UpdateCount(count - number);
+        UpdateCount(_count - number);
     }
 
     public void InitCoreId()
     {
         ShopCacheTable shop = Cache.LoadByType<ShopCacheTable>();
-        ShopCacheItem shopItem = new ShopCacheItem(shop.GetById(id).Fields);
+        ShopCacheItem shopItem = new ShopCacheItem(shop.GetById(_id).Fields);
         coreId = shopItem.GetCoreId();
     }
 }

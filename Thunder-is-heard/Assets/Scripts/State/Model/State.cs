@@ -46,4 +46,8 @@ public abstract class State
     public abstract void OnCellMouseExit(Cell cell);
 
     public abstract bool IsCellMustBeVisible(Cell cell);
+
+
+    public abstract void OnCreatePreviewObject(ObjectPreview preview);
+    public abstract void OnReplacePreviewObject(ObjectPreview preview);
 }

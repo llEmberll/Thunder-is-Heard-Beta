@@ -17,13 +17,17 @@ public static class Tags
 
     public static string mission = "Mission";
     public static string inventoryItems = "InventoryItems";
+    public static string landableUnits = "LandableUnits";
     public static string shopItems = "ShopItems";
     public static string contractItems = "ContractItems";
     public static string unitProductionItems = "UnitProductionItems";
 
-    public static string objectsOnBase = "ObjectsOnScene";
-    public static string buildsOnBase = "UnitsOnScene";
-    public static string unitsOnBase = "UnitsOnScene";
+    public static string missionDetalization = "MissionDetalization";
+
+    public static string objectsOnScene = "ObjectsOnScene";
+    public static string buildsOnScene = "UnitsOnScene";
+    public static string unitsOnScene = "UnitsOnScene";
+
     public static string productsNotifications = "ProductsNotifications";
 
     public static string givesList = "Gives";

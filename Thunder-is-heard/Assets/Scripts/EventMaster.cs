@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -44,7 +44,13 @@ public class EventMaster: MonoBehaviour
     {
         StateChanged?.Invoke(newState);
     }
-    
+
+    public event Action<List<Vector2Int>, int> StartLanding;
+    public void Landing(List<Vector2Int> landableCells, int landingMaxStaff)
+    {
+        StartLanding?.Invoke(landableCells, landingMaxStaff);
+    }
+
     public event Action FightIsStarted;
     public void StartFight()
     {
@@ -91,6 +97,12 @@ public class EventMaster: MonoBehaviour
     public void OnChangeBaseObjects()
     {
         BaseObjectsChanged?.Invoke();
+    }
+
+    public event Action BattleObjectsChanged;
+    public void OnChangeBattleObjects()
+    {
+        BattleObjectsChanged?.Invoke();
     }
 
     public event Action ShopChanged;
@@ -169,5 +181,23 @@ public class EventMaster: MonoBehaviour
     public void OnUIListToggle(bool isNowActive)
     {
         UIListToggled?.Invoke(isNowActive);
+    }
+
+    public event Action<LandableUnit> LandableUnitFocused;
+    public void OnLandableUnitFocus(LandableUnit unit)
+    {
+        LandableUnitFocused?.Invoke(unit);
+    }
+
+    public event Action<LandableUnit> LandableUnitDefocused;
+    public void OnLandableUnitDefocus(LandableUnit unit)
+    {
+        LandableUnitDefocused?.Invoke(unit);
+    }
+
+    public event Action<string> BattleChanged;
+    public void OnChangeBattle(string battleId)
+    {
+        BattleChanged?.Invoke(battleId);
     }
 }

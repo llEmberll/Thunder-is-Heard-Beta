@@ -16,12 +16,12 @@ public class UnitInventoryItem: ExposableInventoryItem
 
     public void Init(string objectId, string objectName, ResourcesData objectGives, int objectHealth, int objectDamage, int objectDistance, int objectMobility, int objectCount, string objectDescription = "", Sprite objectIcon = null)
     {
-        id = objectId; objName = objectName; icon = objectIcon; itemImage.sprite = icon;
+        _id = objectId; _objName = objectName; _icon = objectIcon; _itemImage.sprite = _icon;
         InitCoreId();
 
         gives = objectGives;
-        description = objectDescription;
-        health = objectHealth; damage = objectDamage; distance = objectDistance; mobility = objectMobility; count = objectCount;
+        _description = objectDescription;
+        health = objectHealth; damage = objectDamage; distance = objectDistance; mobility = objectMobility; _count = objectCount;
 
         UpdateUI();
     }

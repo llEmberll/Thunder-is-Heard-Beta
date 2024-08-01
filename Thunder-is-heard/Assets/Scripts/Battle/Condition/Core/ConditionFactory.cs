@@ -11,14 +11,29 @@ public static class ConditionFactory
         { "DestroyAllEnemy", typeof(DestroyAllEnemy) }
     };
 
-    public static BasicCondition GetConditionById(string id)
+    public static ICondition GetConditionById(string id)
     {
         if (conditions.ContainsKey(id))
         {
             Type type = conditions[id];
-            return (BasicCondition)Activator.CreateInstance(type);
+            return (ICondition)Activator.CreateInstance(type);
         }
 
         return null;
+    }
+
+    public static List<ICondition> GetConditionsByIds(string[] ids)
+    {
+        List<ICondition> conditions  = new List<ICondition>();
+        foreach (string id in ids)
+        {
+            ICondition condition = GetConditionById(id);
+            if (condition != null)
+            {
+                conditions.Add(condition);
+            }
+        }
+
+        return conditions;
     }
 }

@@ -11,8 +11,8 @@ public abstract class InventoryItem : Item
 
     public override void UpdateUI()
     {
-        TmpCount.text = count.ToString();
-        TmpDescription.text = description;
+        TmpCount.text = _count.ToString();
+        TmpDescription.text = _description;
 
         base.UpdateUI();
     }
@@ -26,7 +26,7 @@ public abstract class InventoryItem : Item
     public void Substract(int number = 1)
     {
         InventoryCacheTable inventoryItemsTable = Cache.LoadByType<InventoryCacheTable>();
-        CacheItem cacheItem = inventoryItemsTable.GetById(id);
+        CacheItem cacheItem = inventoryItemsTable.GetById(_id);
         InventoryCacheItem inventoryItem = new InventoryCacheItem(cacheItem.Fields);
         inventoryItem.SetCount(inventoryItem.GetCount() - 1);
         if (inventoryItem.GetCount() < 1)
@@ -40,13 +40,13 @@ public abstract class InventoryItem : Item
 
         Cache.Save(inventoryItemsTable);
 
-        UpdateCount(count - number);
+        UpdateCount(_count - number);
     }
 
     public void InitCoreId()
     {
         InventoryCacheTable inventory = Cache.LoadByType<InventoryCacheTable>();
-        InventoryCacheItem inventoryItem = new InventoryCacheItem(inventory.GetById(id).Fields);
+        InventoryCacheItem inventoryItem = new InventoryCacheItem(inventory.GetById(_id).Fields);
         coreId = inventoryItem.GetCoreId();
     }
 }

@@ -6,57 +6,58 @@ using UnityEngine;
 [System.Serializable]
 public class Scenario
 {
-    [SerializeField] public List<Vector2Int> landableCells;
-    public List<Vector2Int> LandableCells { get { return landableCells; } }
+    [SerializeField] public List<Vector2Int> _landableCells;
+    public List<Vector2Int> LandableCells { get { return _landableCells; } }
+
+    [SerializeField] public int _landingMaxStaff;
+    public int LandingMaxStaff { get { return _landingMaxStaff; } }
 
     [SerializeField] public Map map;
     public Map Map { get { return map; } }
 
+    [SerializeField] public UnitOnBattle[] _units;
+    [SerializeField] public BuildOnBattle[] _builds;
 
-    [SerializeField] public Sprite terrain;
-    public Sprite Terrain { get { return terrain; } }
+    public UnitOnBattle[] Units { get { return _units; } }
+    public BuildOnBattle[] Builds { get { return _builds; } }
 
-
-    [SerializeField] public Dictionary<string, Entity> objects;
-    public Dictionary<string, Entity> Objects { get { return objects; } }
-
-
-    [SerializeField] public List<IStage> stages;
-    public List<IStage> Stages { get { return stages; } }
+    [SerializeField] public List<IStage> _stages;
+    public List<IStage> Stages { get { return _stages; } }
 
 
-    [SerializeField] public IStage currentStage;
-    public IStage CurrentStage { get { return currentStage; } }
+    [SerializeField] public IStage _currentStage;
+    public IStage CurrentStage { get { return _currentStage; } }
 
-    [SerializeField] public int currentStageIndex = 0;
-    public int CurrentStageIndex { get { return currentStageIndex; } }
+    [SerializeField] public int _currentStageIndex = 0;
+    public int CurrentStageIndex { get { return _currentStageIndex; } }
 
-    public Scenario(Map scenarioMap, Sprite scenarioTerrain, Dictionary<string, Entity> scenarioObjects, List<IStage> scenarioStages, List<Vector2Int> scenarioLandableCells)
+    public bool _isLanded = false;
+
+    public void Init(Map scenarioMap, UnitOnBattle[] units, BuildOnBattle[] builds, List<Vector2Int> scenarioLandableCells, int landingMaxStaff, List<IStage> scenarioStages, int currentStage, bool isLanded)
     {
         map = scenarioMap;
-        terrain = scenarioTerrain;
-        objects = scenarioObjects;
-        stages = scenarioStages;
-        landableCells = scenarioLandableCells;
-
-        foreach (var stage in stages)
-        {
-            stage.Init(this);
-        }
+        _units = units;
+        _builds = builds;
+        _landableCells = scenarioLandableCells;
+        _landingMaxStaff = landingMaxStaff;
+        _stages = scenarioStages;
+        _currentStageIndex = currentStage;
+        _currentStage = _stages[_currentStageIndex];
+        _isLanded = isLanded;
     }
 
     public void ToNextStage()
     {
         CurrentStage.OnFinish();
 
-        currentStageIndex++;
-        if (currentStageIndex + 1 > stages.Count)
+        _currentStageIndex++;
+        if (_currentStageIndex + 1 > _stages.Count)
         {
             EventMaster.current.WinFight();
             return;
         }
 
-        currentStage = Stages[currentStageIndex];
+        _currentStage = Stages[_currentStageIndex];
 
         CurrentStage.OnStart();
     }
@@ -68,9 +69,17 @@ public class Scenario
 
     public void Begin()
     {
-        currentStage = Stages[CurrentStageIndex];
+        if (!_isLanded)
+        {
+            EventMaster.current.Landing(LandableCells, LandingMaxStaff);
+            return;
+        }
+        else
+        {
+            _currentStage = Stages[CurrentStageIndex];
 
-        currentStage.OnStart();
+            CurrentStage.OnStart();
+        }
     }
 
     public void OnNextTurn()
@@ -82,7 +91,7 @@ public class Scenario
             return;
         }
 
-        if (currentStage.IsPassed()) 
+        if (CurrentStage.IsPassed()) 
         {
             CurrentStage.OnPass();
             ToNextStage();

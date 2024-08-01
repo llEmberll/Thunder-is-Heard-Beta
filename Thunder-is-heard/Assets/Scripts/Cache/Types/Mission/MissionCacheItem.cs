@@ -8,10 +8,6 @@ public class MissionCacheItem : CacheItem
 {
     public MissionCacheItem(Dictionary<string, object> objFields) : base(objFields)
     {
-        if (!objFields.ContainsKey("iconPath"))
-        {
-            SetIconPath("");
-        }
 
         if (!objFields.ContainsKey("scenarioId"))
         {
@@ -32,16 +28,11 @@ public class MissionCacheItem : CacheItem
         {
             SetGives(new ResourcesData());
         }
-    }
 
-    public string GetIconPath()
-    {
-        return (string)GetField("iconPath");
-    }
-
-    public void SetIconPath(string value)
-    {
-        SetField("iconPath", value);
+        if (!objFields.ContainsKey("poseOnMap"))
+        {
+            SetPoseOnMap(new Bector2Int(new UnityEngine.Vector2Int(0, 0)));
+        }
     }
 
     public string GetScenarioId()
@@ -94,6 +85,22 @@ public class MissionCacheItem : CacheItem
     public void SetPassed(bool value)
     {
         SetField("passed", value);
+    }
+
+    public Bector2Int GetPoseOnMap()
+    {
+        object value = GetField("poseOnMap");
+        if (value == null)
+        {
+            return null;
+        }
+
+        return JsonConvert.DeserializeObject<Bector2Int>(value.ToString());
+    }
+
+    public void SetPoseOnMap(Bector2Int value)
+    {
+        SetField("poseOnMap", value);
     }
 
     public override CacheItem Clone()

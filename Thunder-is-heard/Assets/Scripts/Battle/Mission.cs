@@ -15,7 +15,7 @@ public class Mission : Item
 
         TmpName = transform.Find("Text").GetComponent<TMP_Text>();
 
-        TmpName.text = objName;
+        TmpName.text = _objName;
     }
 
     public override void Interact()
@@ -26,7 +26,7 @@ public class Mission : Item
     public void Load()
     {
         MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
-        CacheItem cacheItemMission = missionTable.GetById(id);
+        CacheItem cacheItemMission = missionTable.GetById(_id);
         MissionCacheItem missionData = new MissionCacheItem(cacheItemMission.Fields);
 
         ScenarioCacheTable scenarioTable = Cache.LoadByType<ScenarioCacheTable>();
@@ -35,8 +35,7 @@ public class Mission : Item
 
         BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
         BattleCacheItem battleData = new BattleCacheItem(new Dictionary<string, object>());
-        battleData.SetMissionId(id);
-        battleData.SetMap(scenarioData.GetMap());
+        battleData.SetMissionId(_id);
         battleData.SetUnits(scenarioData.GetUnits());
         battleData.SetBuilds(scenarioData.GetBuilds());
         battleTable.AddOne(battleData);

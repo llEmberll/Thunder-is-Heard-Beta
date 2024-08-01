@@ -1,5 +1,6 @@
-using UnityEngine;
 
+
+using System.Drawing;
 
 public class HomeState: State
 {
@@ -79,5 +80,15 @@ public class HomeState: State
     public override bool IsCellMustBeVisible(Cell cell)
     {
         return false;
+    }
+
+    public override void OnCreatePreviewObject(ObjectPreview preview)
+    {
+        preview.CreateObjectOnBase();
+    }
+
+    public override void OnReplacePreviewObject(ObjectPreview preview)
+    {
+        preview.ReplaceObjectOnBattle();
     }
 }

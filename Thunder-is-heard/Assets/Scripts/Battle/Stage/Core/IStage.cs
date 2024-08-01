@@ -5,16 +5,19 @@ using UnityEngine;
 public interface IStage
 {
     public Scenario Scenario { get; }
-    public Dictionary<Vector2Int, Entity> Objects { get; }
+    public UnitOnBattle[] Units { get; }
+    public BuildOnBattle[] Builds { get; }
     public List<IScenarioEvent> Events { get; }
 
     public List<ICondition> ConditionsForPass { get; }
     public List<ICondition> ConditionsForFail { get; }
 
-    public void Init(Scenario stageScenario);
+    public void Init(Scenario stageScenario, List<ICondition> conditionsForPass, List<ICondition> conditionsForFail, UnitOnBattle[] units, BuildOnBattle[] builds);
     public void SetScenario(Scenario value);
-    public void SetConditionsForPass();
-    public void SetConditionsForFail();
+    public void SetConditionsForPass(List<ICondition> conditions);
+    public void SetConditionsForFail(List<ICondition> conditions);
+    public void SetUnits(UnitOnBattle[] units);
+    public void SetBuilds(BuildOnBattle[] builds);
     public void SetCustomProperties();
 
 

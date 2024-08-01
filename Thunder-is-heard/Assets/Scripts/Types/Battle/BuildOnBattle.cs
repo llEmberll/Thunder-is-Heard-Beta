@@ -1,9 +1,11 @@
+using System;
 
 
 [System.Serializable]
 public class BuildOnBattle
 {
     public string coreId;
+    public string idOnBattle;
     public Bector2Int[] position;
     public int rotation;
     public int health;
@@ -16,7 +18,8 @@ public class BuildOnBattle
         int buildRotation, 
         int buildHealth, 
         string buildSide, 
-        string buildWorkStatus
+        string buildWorkStatus,
+        string buildIdOnBattle = null
         )
     {
         coreId = coreBuildId;
@@ -25,6 +28,12 @@ public class BuildOnBattle
         health = buildHealth;
         side = buildSide;
         workStatus = buildWorkStatus;
+
+        if (buildIdOnBattle == null)
+        {
+            buildIdOnBattle = Guid.NewGuid().ToString();
+        }
+        idOnBattle = buildIdOnBattle;
     }
 
 }

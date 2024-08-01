@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UnitsOnBase : ObjectsOnBase
 {
+    public Dictionary<string, Unit> items;
+
     public override void OnBuildModeEnable()
     {
     }
@@ -11,6 +13,13 @@ public class UnitsOnBase : ObjectsOnBase
     public override void FillContent()
     {
         base.FillContent();
+
+        FillUnits();
+    }
+
+    public void FillUnits()
+    {
+        items = new Dictionary<string, Unit>();
 
         PlayerUnitCacheTable playerUnitsTable = Cache.LoadByType<PlayerUnitCacheTable>();
         foreach (var pair in playerUnitsTable.Items)
@@ -40,7 +49,7 @@ public class UnitsOnBase : ObjectsOnBase
 
 
         GameObject unitObj = ObjectProcessor.CreateUnitObject(position[0].ToVector2Int(), name, this.transform);
-        GameObject unitModel = CreateUnitModel(modelPath, rotation, unitObj.transform);
+        GameObject unitModel = ObjectProcessor.CreateUnitModel(modelPath, rotation, unitObj.transform);
 
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());
 
@@ -53,26 +62,12 @@ public class UnitsOnBase : ObjectsOnBase
             size.ToVector2Int(), 
             Bector2Int.MassiveToVector2Int(position), 
             health, 
+            health,
             damage, 
             distance, 
             mobility, 
             Sides.federation
             );
-    }
-
-    public static GameObject CreateUnitModel(string modelPath, int rotation, Transform parent)
-    {
-        GameObject unitModelPrefab = Resources.Load<GameObject>(modelPath);
-
-        Debug.Log("create build, rotation: " + rotation);
-
-        GameObject unitModel = Instantiate(
-            unitModelPrefab, unitModelPrefab.transform.position + parent.transform.position,
-            Quaternion.Euler(new Vector3(0, rotation, 0)),
-            parent
-            );
-        unitModel.name = "Model";
-        return unitModel;
     }
 
     public override Entity FindObjectById(string id)

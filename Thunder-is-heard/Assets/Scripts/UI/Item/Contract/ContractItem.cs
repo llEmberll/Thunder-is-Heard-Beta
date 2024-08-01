@@ -35,12 +35,13 @@ public class ContractItem : Item
         Sprite contractIcon = null
         )
     {
-        id = contractId; objName = contractName; icon = contractIcon; itemImage.sprite = icon;
+        _id = contractId; _objName = contractName; 
+        _icon = contractIcon; _itemImage.sprite = _icon;
         _contractType = contractType; _sourceObjectId = sourceObjectId;
 
         costData = contractCost;
         givesData = contractGives;
-        description = contractDescription;
+        _description = contractDescription;
         _duration = contractDuration;
 
         UpdateUI();
@@ -53,7 +54,7 @@ public class ContractItem : Item
 
     public override void UpdateUI()
     {
-        TmpDescription.text = description;
+        TmpDescription.text = _description;
 
         ResourcesProcessor.UpdateResources(cost, costData);
         ResourcesProcessor.UpdateResources(gives, givesData);
@@ -86,7 +87,7 @@ public class ContractItem : Item
             _sourceObjectId,
             startTime,
             endTime,
-            new ProcessSource(Type, id)
+            new ProcessSource(Type, _id)
             );
         resourcesProcessor.SubstractResources(costData);
         resourcesProcessor.Save();

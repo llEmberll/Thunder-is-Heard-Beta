@@ -4,21 +4,49 @@ using UnityEngine;
 
 public class Campany : ItemList
 {
-    public List<Mission> source;
+    public List<MissionItem> items;
     public GameObject missionPrefab;
-    
+    public Transform _missionsParent;
+    public MissionDetalization _missionDetalization;
+
+    public override void Start()
+    {
+        missionPrefab = Resources.Load<GameObject>(Config.resources["UIMissionItemPrefab"]);
+        base.Start();
+    }
+
     public override void FillContent()
     {
-        foreach (var m in source)
+        items = new List<MissionItem>();
+
+        MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
+
+        //TODO фильтровать по доступности миссии
+        foreach (var m in missionTable.Items)
         {
             GameObject missionObject = GameObject.Instantiate(missionPrefab);
-            missionObject.transform.SetParent(this.transform, false);
+            missionObject.transform.SetParent(_missionsParent, false);
 
-            Mission mission = missionObject.GetComponent<Mission>();
-            
-            mission = m;
+            MissionItem mission = missionObject.GetComponent<MissionItem>();
+
+            MissionCacheItem missionData = new MissionCacheItem(m.Value.Fields);
+            mission.Init(
+                _missionDetalization,
+                missionData.GetExternalId(),
+                missionData.GetName(), 
+                missionData.GetExternalId(), 
+                missionData.GetPassed(),
+                missionData.GetPoseOnMap().ToVector2Int(), 
+                missionData.GetGives(), 
+                missionData.GetDescription()                
+                );
+
+            items.Add(mission);
         }
-        
+    }
+
+    public override void OnClickOutside()
+    {
         
     }
 }

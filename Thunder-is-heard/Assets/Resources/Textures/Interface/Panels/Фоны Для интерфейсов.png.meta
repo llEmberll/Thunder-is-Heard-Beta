@@ -164,10 +164,10 @@ TextureImporter:
       name: "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_2"
       rect:
         serializedVersion: 2
-        x: 5126
-        y: 8596
-        width: 844
-        height: 509
+        x: 5102
+        y: 8569
+        width: 897
+        height: 562
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -269,10 +269,10 @@ TextureImporter:
       name: "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_7"
       rect:
         serializedVersion: 2
-        x: 4936
-        y: 7675
-        width: 2070
-        height: 458
+        x: 4919
+        y: 7653
+        width: 2112
+        height: 496
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -287,7 +287,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_8"
+      name: ItemCard
       rect:
         serializedVersion: 2
         x: 4284
@@ -811,6 +811,69 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: LandableUnitCardUp
+      rect:
+        serializedVersion: 2
+        x: 4277
+        y: 7476
+        width: 430
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acb1c2abe013b8b468d55cfc4c6c8a7e
+      internalID: 218411094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LandableUnitCardCenter
+      rect:
+        serializedVersion: 2
+        x: 4277
+        y: 6975
+        width: 430
+        height: 501
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdb05f2bb2fbcbc448aceb2ba3c45d82
+      internalID: -190359959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: LandableUnitDown
+      rect:
+        serializedVersion: 2
+        x: 4277
+        y: 6917
+        width: 430
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9f09396840708d45b79efd7d419b2b4
+      internalID: -1471494801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -822,6 +885,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      ItemCard: -1975096148
+      LandableUnitCardCenter: -190359959
+      LandableUnitCardUp: 218411094
+      LandableUnitDown: -1471494801
       "\u0418\u043D\u0432\u0435\u043D\u0442\u0430\u0440\u044C": 1405040719
       "\u041A\u043E\u043D\u0442\u0440\u0430\u043A\u0442\u044B": -652191122
       "\u041C\u0430\u0433\u0430\u0437\u0438\u043D": -835247809
@@ -853,7 +920,6 @@ TextureImporter:
       "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_32": -416810837
       "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_6": 225462739
       "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_7": -1547428641
-      "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_8": -1975096148
       "\u0424\u043E\u043D\u044B \u0414\u043B\u044F \u0438\u043D\u0442\u0435\u0440\u0444\u0435\u0439\u0441\u043E\u0432_9": -804945861
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

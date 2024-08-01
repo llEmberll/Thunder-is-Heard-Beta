@@ -961,14 +961,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1dd27a309d452c4fabc3200e80f128d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
-  itemImage: {fileID: 1903387980374628900}
+  _icon: {fileID: 0}
+  _itemImage: {fileID: 1903387980374628900}
   TmpName: {fileID: 3285853606128306467}
   TmpDescription: {fileID: 2718758011025365764}
-  description: 
-  count: 0
-  id: 
-  objName: 
+  _description: 
+  _count: 0
+  _id: 
+  _objName: 
   coreId: 
   TmpCount: {fileID: 663022644728535422}
   gives:

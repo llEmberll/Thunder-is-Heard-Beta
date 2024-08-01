@@ -1,1 +1,33 @@
-﻿{}
+﻿{
+  "name": "Mission",
+  "items": {
+    "589dc04e-153d-46b7-bb57-db641aaae115": {
+      "fields": {
+        "externalId": "589dc04e-153d-46b7-bb57-db641aaae115",
+        "description": "Description",
+        "scenarioId": "",
+        "rewards": [],
+        "passed": false,
+        "gives": {
+          "rub": 650,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 100,
+          "maxExp": 0
+        },
+        "poseOnMap": {
+          "x": -425,
+          "y": -237
+        },
+        "name": "First step"
+      }
+    }
+  }
+}

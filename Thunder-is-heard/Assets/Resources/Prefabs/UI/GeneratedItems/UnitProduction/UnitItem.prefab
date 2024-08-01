@@ -1536,14 +1536,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51151615566208e46be505bb228978ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
-  itemImage: {fileID: 9130132270917659888}
+  _icon: {fileID: 0}
+  _itemImage: {fileID: 9130132270917659888}
   TmpName: {fileID: 3285853606128306467}
   TmpDescription: {fileID: 858349764803094757}
-  description: 
-  count: 0
-  id: 
-  objName: 
+  _description: 
+  _count: 0
+  _id: 
+  _objName: 
   _unitProductionType: 
   _sourceObjectId: 
   costData:

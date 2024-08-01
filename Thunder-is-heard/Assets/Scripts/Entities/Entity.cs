@@ -26,7 +26,7 @@ public abstract class Entity : Interactable
 
     public string side;
 
-    public int health, damage, distance, mobility;
+    public int maxHealth, currentHealth, damage, distance, mobility;
 
 
     public virtual void Awake()
@@ -49,9 +49,10 @@ public abstract class Entity : Interactable
         name = value;
     }
 
-    public void SetAttributes(int healthValue, int damageValue, int distanceValue, int mobilityValue)
+    public void SetAttributes(int maxHealthValue, int currentHealthValue, int damageValue, int distanceValue, int mobilityValue)
     {
-        health = healthValue;
+        maxHealth = maxHealthValue;
+        currentHealth = currentHealthValue;
         damage = damageValue;
         distance = distanceValue;
         mobility = mobilityValue;

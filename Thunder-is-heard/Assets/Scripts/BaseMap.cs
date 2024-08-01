@@ -1,30 +1,37 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class BaseMap : Map
 {
     public override void Awake()
     {
-        base.Awake();
-        InitTerrain();
+        Init(new Vector2Int(15, 15), Config.terrainsPath["Base"]);
     }
 
     public void Start()
     {
     }
 
-    public void InitTerrain()
+    public void CreateMissionForTest()
     {
-        Transform terrainParent = transform.Find("Terrain");
-        Transform terrainObj = Instantiate(Resources.Load<Terrain>(Config.terrainsPath["Base"]).transform, parent: terrainParent);
+        MissionCacheTable table = Cache.LoadByType<MissionCacheTable>();
 
-        terrainParent.transform.position -= new Vector3(5, 0, 5);
+        MissionCacheItem missionItem = new MissionCacheItem(new Dictionary<string, object>());
 
-        terrain = terrainObj.GetComponent<Terrain>();
-        TerrainData terrainData = terrain.terrainData;
-        terrainData.size = new Vector3(5 * 2 + size.x, terrainData.size.y, 5 * 2 + size.y);
-        terrain.terrainData = terrainData;
+        string missionId = "589dc04e-153d-46b7-bb57-db641aaae115";
+        string name = "First step";
+        string description = "Description";
+        Bector2Int poseOnMap = new Bector2Int(new Vector2Int(-425, -237));
+        ResourcesData gives = new ResourcesData(rubCount: 650, expCount: 100);
+
+        missionItem.SetName(name);
+        missionItem.SetDescription(description);
+        missionItem.SetExternalId(missionId);
+        missionItem.SetPoseOnMap(poseOnMap);
+        missionItem.SetGives(gives);
+
+        table.AddOne(missionItem);
+        Cache.Save(table);
     }
 
     public void CreateBattleForTest()
@@ -43,8 +50,8 @@ public class BaseMap : Map
 
         UnitOnBattle[] units = new UnitOnBattle[]
         {
-            new UnitOnBattle("124", new Bector2Int(new Vector2Int(0, 0)), 0, 1, Sides.empire),
-            new UnitOnBattle("125", new Bector2Int(new Vector2Int(0, 1)), 0, 1, Sides.federation, new SkillOnBattle("224", 1, false))
+            new UnitOnBattle("124", new Bector2Int(new Vector2Int(0, 0)), 0, 1, Sides.empire, "987"),
+            new UnitOnBattle("125", new Bector2Int(new Vector2Int(0, 1)), 0, 1, Sides.federation, "986" ,new SkillOnBattle("224", 1, false))
         };
 
         Bector2Int[] positionForBuild1 = new Bector2Int[] {new Bector2Int(new Vector2Int(0, 0))};
@@ -52,12 +59,11 @@ public class BaseMap : Map
 
         BuildOnBattle[] builds = new BuildOnBattle[]
         {
-            new BuildOnBattle("124", positionForBuild1, 0, 1, Sides.empire, WorkStatuses.idle),
-            new BuildOnBattle("125", positionForBuild2, 0, 1, Sides.federation, WorkStatuses.idle)
+            new BuildOnBattle("124", positionForBuild1, 0, 1, Sides.empire, WorkStatuses.idle, "876"),
+            new BuildOnBattle("125", positionForBuild2, 0, 1, Sides.federation, WorkStatuses.idle, "875")
         };
 
         battleItem.SetMissionId(missionId);
-        battleItem.SetMap(map);
         battleItem.SetUnits(units);
         battleItem.SetBuilds(builds);
         battleItem.SetTurn(turn);

@@ -13,9 +13,9 @@ public class ScenarioCacheItem : CacheItem
             SetTerrainPath("");
         }
 
-        if (!objFields.ContainsKey("map"))
+        if (!objFields.ContainsKey("mapSize"))
         {
-            SetMap(new CellData[] { });
+            SetMapSize(new Bector2Int(new UnityEngine.Vector2Int(15, 15)));
         }
 
         if (!objFields.ContainsKey("units"))
@@ -49,20 +49,15 @@ public class ScenarioCacheItem : CacheItem
         SetField("terrainPath", value);
     }
 
-    public CellData[] GetMap()
+    public Bector2Int GetMapSize()
     {
-        object value = GetField("map");
-        if (value == null)
-        {
-            return new CellData[] {};
-        }
-
-        return JsonConvert.DeserializeObject<CellData[]>(value.ToString());
+        object value = GetField("mapSize");
+        return JsonConvert.DeserializeObject<Bector2Int>(value.ToString());
     }
 
-    public void SetMap(CellData[] value)
+    public void SetMapSize(Bector2Int value)
     {
-        SetField("map", value);
+        SetField("mapSize", value);
     }
 
     public UnitOnBattle[] GetUnits()

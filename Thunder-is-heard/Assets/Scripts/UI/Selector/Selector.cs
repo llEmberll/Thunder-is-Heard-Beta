@@ -203,13 +203,13 @@ public class Selector : MonoBehaviour
 
     public void ConfigureHealthSlider(Entity obj)
     {
-        healthSlider.maxValue = obj.health;
-        healthSlider.value = obj.health;
+        healthSlider.maxValue = obj.maxHealth;
+        healthSlider.value = obj.maxHealth;
     }
 
     public void ConfigureHealth(Entity obj)
     {
-        healthCount.text = obj.health.ToString();
+        healthCount.text = obj.maxHealth.ToString();
     }
 
     public void ConfigureDamage(Entity obj)

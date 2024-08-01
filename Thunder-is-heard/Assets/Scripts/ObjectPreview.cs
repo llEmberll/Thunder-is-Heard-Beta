@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class ObjectPreview: MonoBehaviour
@@ -26,6 +27,9 @@ public class ObjectPreview: MonoBehaviour
     public Map map;
     public ObjectProcessor objectProcessor;
 
+    public State _baseState;
+    public string _battleId = null;
+
 
     public void Awake()
     {
@@ -40,6 +44,8 @@ public class ObjectPreview: MonoBehaviour
         EventMaster.current.PreviewRotated += Rotate;
 
         EventMaster.current.OnCreatePreview(this);
+
+        _baseState = StateConfig.statesByScene[SceneManager.GetActiveScene().name];
     }
 
     public static ObjectPreview Create()
@@ -64,6 +70,11 @@ public class ObjectPreview: MonoBehaviour
         InitModel();
 
         objectsPool = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]).GetComponent<ObjectsOnBase>();
+
+        if (_baseState.stateName == "Fight")
+        {
+            _battleId = GameObject.FindWithTag(Tags.fightProcessor).GetComponent<FightProcessor>()._battleId;
+        }
     }
 
     public void InitModel()
@@ -236,6 +247,26 @@ public class ObjectPreview: MonoBehaviour
     }
 
 
+    public void CreateObjectOnBase()
+    {
+        objectProcessor.CreateObjectOnBase(id, type, model, name, size, occypation);
+    }
+
+    public void ReplaceObjectOnBase()
+    {
+        objectProcessor.ReplaceObjectOnBase(buildedObjectOnScene, occypation, rotation);
+    }
+
+    public void CreateObjectOnBattle()
+    {
+        objectProcessor.CreateObjectOnBattle(_battleId, id, type, model, name, size, occypation);
+    }
+
+    public void ReplaceObjectOnBattle()
+    {
+        objectProcessor.ReplaceObjectOnBattle(buildedObjectOnScene, occypation, rotation);
+    }
+
     public void Expose()
     {
         if (!exposableStatus)
@@ -246,7 +277,8 @@ public class ObjectPreview: MonoBehaviour
         if (buildedObjectOnScene == null)
         {
             model = prepareModelToExposing();
-            objectProcessor.CreateObjectOnBase(id, type, model, name, size, occypation);
+
+            _baseState.OnCreatePreviewObject(this);
             AfterExpose();
         }
 
@@ -254,7 +286,8 @@ public class ObjectPreview: MonoBehaviour
         {
             model = prepareModelToExposing();
             buildedObjectOnScene.GetComponent<Entity>().SetModel(model);
-            objectProcessor.ReplaceObjectOnBase(buildedObjectOnScene, occypation, rotation);
+            
+            _baseState.OnReplacePreviewObject(this);
             AfterReplace();
         }
     }

@@ -46,12 +46,12 @@ public class UnitProductionItem: Item
         Sprite productionIcon = null
         )
     {
-        id = productionId; objName = productionName; icon = productionIcon; itemImage.sprite = icon;
+        _id = productionId; _objName = productionName; _icon = productionIcon; _itemImage.sprite = _icon;
 
         _unitProductionType = productionType; _sourceObjectId = sourceObjectId;
         _unitId = unitId;
         costData = productionCost;
-        description = productionDescription;
+        _description = productionDescription;
         health = unitHealth; damage = unitDamage; distance = unitDistance; mobility = unitMobility; _duration = productionDuration;
 
         UpdateUI();
@@ -94,7 +94,7 @@ public class UnitProductionItem: Item
             _sourceObjectId,
             startTime,
             endTime,
-            new ProcessSource(Type, id)
+            new ProcessSource(Type, _id)
             );
         resourcesProcessor.SubstractResources(costData);
         resourcesProcessor.Save();

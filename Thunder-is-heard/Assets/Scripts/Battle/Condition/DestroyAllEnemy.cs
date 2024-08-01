@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class DestroyAllEnemy : BasicCondition
 {
+    public UnitsOnFight unitsOnFight = GameObject.FindGameObjectWithTag(Tags.unitsOnScene).GetComponent<UnitsOnFight>();
+
     public override bool IsComply()
     {
-        foreach (var item in Scenario.Objects)
+        foreach (var item in unitsOnFight.items)
         {
-            if (item.Value.tag == Tags.empire)
+            if (item.Value.side == Tags.empire)
             {
                 return false;
             }

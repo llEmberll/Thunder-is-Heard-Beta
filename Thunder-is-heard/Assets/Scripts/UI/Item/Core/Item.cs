@@ -4,22 +4,22 @@ using UnityEngine.UI;
 
 public abstract class Item : UIElement
 {
-    public Sprite icon;
-    public Image itemImage;
+    public Sprite _icon;
+    public Image _itemImage;
 
     public TMP_Text TmpName, TmpDescription;
 
-    public string description;
-    public int count;
-    public string id;
-    public string objName = "";
+    public string _description;
+    public int _count;
+    public string _id;
+    public string _objName = "";
 
     public abstract string Type { get; }
 
     public virtual void Init(string itemId, string itemName, Sprite itemIcon = null)
     {
-        id = itemId; objName = itemName; icon = itemIcon;
-        itemImage.sprite = icon;
+        _id = itemId; _objName = itemName; _icon = itemIcon;
+        _itemImage.sprite = _icon;
 
         UpdateUI();
     }
@@ -33,7 +33,7 @@ public abstract class Item : UIElement
 
     public virtual void UpdateUI()
     {
-        TmpName.text = objName;
+        TmpName.text = _objName;
     }
 
     public virtual void UpdateCount(int newCount)
@@ -44,11 +44,11 @@ public abstract class Item : UIElement
             return;
         }
 
-        count = newCount;
+        _count = newCount;
     }
 
     public void Increment(int number = 1)
     {
-        UpdateCount(count + number);
+        UpdateCount(_count + number);
     }
 }

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class BuildsOnBase : ObjectsOnBase
 {
+    public Dictionary<string, Build> items;
+
     public Transform productsNotificationsBucket;
 
     public override void Start()
@@ -31,6 +33,8 @@ public class BuildsOnBase : ObjectsOnBase
 
     public void FillBuilds()
     {
+        items = new Dictionary<string, Build>();
+
         PlayerBuildCacheTable playerBuildsTable = Cache.LoadByType<PlayerBuildCacheTable>();
         foreach (var pair in playerBuildsTable.Items)
         {
@@ -104,7 +108,7 @@ public class BuildsOnBase : ObjectsOnBase
         string workStatus = playerBuildData.GetWorkStatus();
 
         GameObject buildObj = ObjectProcessor.CreateBuildObject(position[0].ToVector2Int(), name, this.transform);
-        GameObject buildModel = CreateBuildModel(modelPath, rotation, buildObj.transform);
+        GameObject buildModel = ObjectProcessor.CreateBuildModel(modelPath, rotation, buildObj.transform);
 
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());
         SetModelOffsetByRotation(buildModel.transform, size, rotation);
@@ -118,6 +122,7 @@ public class BuildsOnBase : ObjectsOnBase
             size.ToVector2Int(), 
             Bector2Int.MassiveToVector2Int(position), 
             health, 
+            health,
             damage, 
             distance, 
             Sides.federation, 
@@ -125,21 +130,6 @@ public class BuildsOnBase : ObjectsOnBase
             interactionComponentType,
             workStatus
             );
-    }
-
-    public static GameObject CreateBuildModel(string modelPath, int rotation, Transform parent)
-    {
-        GameObject buildModelPrefab = Resources.Load<GameObject>(modelPath);
-
-        Debug.Log("create build, rotation: " + rotation);
-
-        GameObject buildModel = Instantiate(
-            buildModelPrefab, buildModelPrefab.transform.position + parent.transform.position,
-            Quaternion.Euler(new Vector3(0, rotation, 0)),
-            parent
-            );
-        buildModel.name = "Model";
-        return buildModel;
     }
 
     public void SetModelOffsetByRotation(Transform model, Bector2Int size, int rotation)

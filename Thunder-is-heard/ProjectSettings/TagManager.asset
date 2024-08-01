@@ -35,6 +35,8 @@ TagManager:
   - Contracts
   - UnitProductions
   - ProductsNotifications
+  - MissionDetalization
+  - LandableUnits
   layers:
   - Default
   - TransparentFX

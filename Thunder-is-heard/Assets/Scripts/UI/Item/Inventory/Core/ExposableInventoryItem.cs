@@ -14,12 +14,12 @@ public abstract class ExposableInventoryItem : InventoryItem
 
     public virtual void Init(string objectId, string objectName, ResourcesData objectGives, int objectHealth, int objectDamage, int objectDistance, int objectCount, string objectDescription = "", Sprite objectIcon = null)
     {
-        id = objectId; objName = objectName; icon = objectIcon; itemImage.sprite = icon;
+        _id = objectId; _objName = objectName; _icon = objectIcon; _itemImage.sprite = _icon;
         InitCoreId();
 
         gives = objectGives;
-        description = objectDescription;
-        health = objectHealth; damage = objectDamage; distance = objectDistance; count = objectCount;
+        _description = objectDescription;
+        health = objectHealth; damage = objectDamage; distance = objectDistance; _count = objectCount;
 
         UpdateUI();
     }
@@ -70,7 +70,7 @@ public abstract class ExposableInventoryItem : InventoryItem
         Transform model = Instantiate(modelPrefab).transform;
 
         ObjectPreview preview = ObjectPreview.Create();
-        preview.Init(objName, Type, coreId, size, model);
+        preview.Init(_objName, Type, coreId, size, model);
     }
 
     public virtual Bector2Int GetSize(CacheItem item)
@@ -110,7 +110,7 @@ public abstract class ExposableInventoryItem : InventoryItem
     {
         if (objId == coreId && objType == Type)
         {
-            if (count < 2)
+            if (_count < 2)
             {
                 Finish();
             }

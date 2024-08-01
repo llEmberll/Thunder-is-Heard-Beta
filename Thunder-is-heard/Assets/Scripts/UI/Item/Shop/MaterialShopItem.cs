@@ -12,12 +12,12 @@ public class MaterialShopItem: ShopItem
 
     public void Init(string objectId, string objectName, ResourcesData objectCost, int objectCount, string objectDescription = "", Sprite objectIcon = null)
     {
-        id = objectId; objName = objectName; icon = objectIcon; itemImage.sprite = icon;
+        _id = objectId; _objName = objectName; _icon = objectIcon; _itemImage.sprite = _icon;
         InitCoreId();
 
         costData = objectCost;
-        description = objectDescription;
-        count = objectCount;
+        _description = objectDescription;
+        _count = objectCount;
 
         UpdateUI();
     }

@@ -115,4 +115,12 @@ public class BuildingState : State
     {
         return !cell.occupied;
     }
+
+    public override void OnCreatePreviewObject(ObjectPreview preview)
+    {
+    }
+
+    public override void OnReplacePreviewObject(ObjectPreview preview)
+    {
+    }
 }

@@ -1,7 +1,8 @@
+using Org.BouncyCastle.Asn1.Mozilla;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
 
 public class ObjectProcessor : MonoBehaviour
@@ -119,10 +120,241 @@ public class ObjectProcessor : MonoBehaviour
         EventMaster.current.OnChangeBaseObjects();
     }
 
-    public void CreateObjectOnBase(string coreId, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation)
+    public void CreateObjectOnBattle(string battleId, string coreId, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation, int? currentHealth = null, string side = null)
+    {
+        if (battleId == null) return;
+        if (side == null) side = Sides.federation;
+
+        Entity entity = null;
+
+        if (type.Contains("Build"))
+        {
+            BuildCacheTable coreBuildDatas = Cache.LoadByType<BuildCacheTable>();
+            CacheItem coreItemData = coreBuildDatas.GetById(coreId);
+            BuildCacheItem coreBuildData = new BuildCacheItem(coreItemData.Fields);
+            int health = coreBuildData.GetHealth();
+            if (currentHealth == null) currentHealth = health;
+            int damage = coreBuildData.GetDamage();
+            int distance = coreBuildData.GetDistance();
+            string interactionComponentName = coreBuildData.GetInteractionComponentName();
+            string interactionComponentType = coreBuildData.GetInteractionComponentType();
+
+            BuildOnBattle build = AddNewBuildOnBattleToCache(
+                battleId, 
+                coreId, 
+                Bector2Int.GetVector2IntListAsBector(occypation), 
+                (int)model.rotation.eulerAngles.y, 
+                currentHealth.Value, 
+                side
+                );
+
+            entity = CreateObject(coreId, build.idOnBattle, type, model, objName, size, occypation);
+
+            AddAndPrepareBuildComponent(
+                entity.gameObject,
+                model,
+                coreId,
+                build.idOnBattle,
+                objName,
+                size,
+                occypation.ToArray(),
+                health,
+                currentHealth.Value,
+                damage,
+                distance,
+                side,
+                interactionComponentName,
+                interactionComponentType,
+                WorkStatuses.idle
+                );
+        }
+
+        else if (type.Contains("Unit"))
+        {
+            UnitCacheTable coreUnitDatas = Cache.LoadByType<UnitCacheTable>();
+            CacheItem coreItemData = coreUnitDatas.GetById(coreId);
+            UnitCacheItem coreUnitData = new UnitCacheItem(coreItemData.Fields);
+            int health = coreUnitData.GetHealth();
+            if (currentHealth == null) currentHealth = health;
+            int damage = coreUnitData.GetDamage();
+            int distance = coreUnitData.GetDistance();
+            int mobility = coreUnitData.GetMobility();
+
+            UnitOnBattle unit = AddNewUnitOnBattleToCache(
+                battleId, 
+                coreId, 
+                new Bector2Int(occypation.First()), 
+                (int)model.rotation.eulerAngles.y, 
+                currentHealth.Value, 
+                side
+                );
+
+            entity = CreateObject(coreId, unit.idOnBattle, type, model, objName, size, occypation);
+
+            AddAndPrepareUnitComponent(
+                entity.gameObject,
+                model,
+                coreId,
+                unit.idOnBattle,
+                objName,
+                size,
+                occypation.ToArray(),
+                health,
+                currentHealth.Value,
+                damage,
+                distance,
+                mobility,
+                side
+                );
+
+            EventMaster.current.OnChangeBattleObjects();
+        }
+    }
+
+    public void CreateObjectOnBase(string coreId, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation, string side = null)
+    {
+        if (side == null) side = Sides.federation;
+
+        Entity entity = null;
+        if (type.Contains("Build"))
+        {
+            BuildCacheTable coreBuildDatas = Cache.LoadByType<BuildCacheTable>();
+            CacheItem coreItemData = coreBuildDatas.GetById(coreId);
+            BuildCacheItem coreBuildData = new BuildCacheItem(coreItemData.Fields);
+            int health = coreBuildData.GetHealth();
+            int currentHealth = health;
+            int damage = coreBuildData.GetDamage();
+            int distance = coreBuildData.GetDistance();
+            string interactionComponentName = coreBuildData.GetInteractionComponentName();
+            string interactionComponentType = coreBuildData.GetInteractionComponentType();
+
+            PlayerBuildCacheItem playerBuildCacheItem = AddNewBuildOnBaseToCache(
+            coreId,
+            objName,
+            Bector2Int.GetVector2IntListAsBector(occypation),
+            Entity.GetDeterminedRotationByModel(model),
+            WorkStatuses.idle
+            );
+
+            entity = CreateObject(coreId, playerBuildCacheItem.GetExternalId(), type, model, objName, size, occypation);
+
+            AddAndPrepareBuildComponent(
+                entity.gameObject,
+                model,
+                coreId,
+                playerBuildCacheItem.GetExternalId(),
+                objName,
+                size,
+                occypation.ToArray(),
+                health,
+                currentHealth,
+                damage,
+                distance,
+                side,
+                interactionComponentName,
+                interactionComponentType,
+                WorkStatuses.idle
+                );
+        }
+
+        else if (type.Contains("Unit"))
+        {
+            UnitCacheTable coreUnitDatas = Cache.LoadByType<UnitCacheTable>();
+            CacheItem coreItemData = coreUnitDatas.GetById(coreId);
+            UnitCacheItem coreUnitData = new UnitCacheItem(coreItemData.Fields);
+            int health = coreUnitData.GetHealth();
+            int currentHealth = health;
+            int damage = coreUnitData.GetDamage();
+            int distance = coreUnitData.GetDistance();
+            int mobility = coreUnitData.GetMobility();
+
+            PlayerUnitCacheItem playerUnitCacheItem = AddNewUnitOnBaseToCache(
+            coreId,
+            objName,
+            Bector2Int.GetVector2IntListAsBector(occypation),
+            Entity.GetDeterminedRotationByModel(model)
+            );
+
+            entity = CreateObject(coreId, playerUnitCacheItem.GetExternalId(), type, model, objName, size, occypation);
+
+            AddAndPrepareUnitComponent(
+                entity.gameObject, 
+                model, 
+                coreId, 
+                playerUnitCacheItem.GetExternalId(), 
+                objName, 
+                size,
+                occypation.ToArray(), 
+                health, 
+                currentHealth,
+                damage, 
+                distance, 
+                mobility, 
+                side
+                );
+        }
+
+        else
+        {
+            throw new System.Exception("Неожиданный тип объекта: " + type);
+        }
+
+        EventMaster.current.OnChangeBaseObjects();
+
+    }
+
+    public Entity CreateObject(string coreId, string externalId, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation)
     {
         Vector2Int rootPoint = occypation.First();
-        ObjectsOnBase objectsPool = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]).GetComponent<ObjectsOnBase>();
+
+
+        Transform objectsPool = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]).transform;
+
+
+        Transform entity = null;
+        if (type.Contains("Build"))
+        {
+            entity = CreateBuildObject(rootPoint, objName, objectsPool).transform;
+        }
+
+        else if (type.Contains("Unit"))
+        {
+            entity = CreateUnitObject(rootPoint, objName, objectsPool).transform;
+        }
+
+        else
+        {
+            throw new System.Exception("Неожиданный тип объекта: " + type);
+        }
+
+
+        model.SetParent(entity);
+        map.Occypy(occypation);
+        EventMaster.current.ExposeObject(
+            coreId,
+            type,
+            Bector2Int.GetVector2IntListAsBector(occypation),
+            entity.GetComponent<Entity>().rotation
+            );
+
+        return entity.GetComponent<Entity>();
+    }
+
+    public void InitObjectOnBattle(
+        string coreId, 
+        string idOnBattle, 
+        string type, 
+        Transform model, 
+        string objName, 
+        Vector2Int size, 
+        List<Vector2Int> occypation,
+        int currentHealth, 
+        string workStatus,
+        string side
+        )
+    {
+        Vector2Int rootPoint = occypation.First();
+        ObjectsOnFight objectsPool = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]).GetComponent<ObjectsOnFight>();
 
         Transform entity = null;
         if (type.Contains("Build"))
@@ -138,29 +370,22 @@ public class ObjectProcessor : MonoBehaviour
 
             entity = CreateBuildObject(rootPoint, objName, objectsPool.transform).transform;
 
-            PlayerBuildCacheItem playerBuildCacheItem = AddNewBuildOnBaseToCache(
-                coreId, 
-                objName, 
-                Bector2Int.GetVector2IntListAsBector(occypation), 
-                Entity.GetDeterminedRotationByModel(model),
-                WorkStatuses.idle
-                );
-
             AddAndPrepareBuildComponent(
-                entity.gameObject, 
-                model, 
-                coreId, 
-                playerBuildCacheItem.GetExternalId(), 
-                objName, 
-                size, 
-                occypation.ToArray(), 
-                health, 
-                damage, 
-                distance, 
-                Sides.federation, 
+                entity.gameObject,
+                model,
+                coreId,
+                idOnBattle,
+                objName,
+                size,
+                occypation.ToArray(),
+                health,
+                currentHealth,
+                damage,
+                distance,
+                side,
                 interactionComponentName,
                 interactionComponentType,
-                WorkStatuses.idle
+                workStatus
                 );
         }
 
@@ -176,26 +401,20 @@ public class ObjectProcessor : MonoBehaviour
 
             entity = CreateUnitObject(rootPoint, objName, objectsPool.transform).transform;
 
-            PlayerUnitCacheItem playerUnitCacheItem = AddNewUnitOnBaseToCache(
-                coreId, 
-                objName, 
-                Bector2Int.GetVector2IntListAsBector(occypation), 
-                Entity.GetDeterminedRotationByModel(model)
-                );
-
             AddAndPrepareUnitComponent(
-                entity.gameObject, 
-                model, 
-                coreId, 
-                playerUnitCacheItem.GetExternalId(), 
-                objName, 
+                entity.gameObject,
+                model,
+                coreId,
+                idOnBattle,
+                objName,
                 size,
-                occypation.ToArray(), 
-                health, 
-                damage, 
-                distance, 
-                mobility, 
-                Sides.federation
+                occypation.ToArray(),
+                health,
+                currentHealth,
+                damage,
+                distance,
+                mobility,
+                side
                 );
         }
 
@@ -208,13 +427,11 @@ public class ObjectProcessor : MonoBehaviour
 
         map.Occypy(occypation);
         EventMaster.current.ExposeObject(
-            coreId, 
+            coreId,
             type,
-            Bector2Int.GetVector2IntListAsBector(occypation), 
+            Bector2Int.GetVector2IntListAsBector(occypation),
             entity.GetComponent<Entity>().rotation
             );
-
-        EventMaster.current.OnChangeBaseObjects();
     }
 
     public static GameObject CreateBuildObject(Vector2Int position, string name, Transform parent)
@@ -243,6 +460,36 @@ public class ObjectProcessor : MonoBehaviour
         return obj;
     }
 
+    public static GameObject CreateBuildModel(string modelPath, int rotation, Transform parent)
+    {
+        GameObject buildModelPrefab = Resources.Load<GameObject>(modelPath);
+
+        Debug.Log("create build, rotation: " + rotation);
+
+        GameObject buildModel = Instantiate(
+            buildModelPrefab, buildModelPrefab.transform.position + parent.transform.position,
+            Quaternion.Euler(new Vector3(0, rotation, 0)),
+            parent
+            );
+        buildModel.name = "Model";
+        return buildModel;
+    }
+
+    public static GameObject CreateUnitModel(string modelPath, int rotation, Transform parent)
+    {
+        GameObject unitModelPrefab = Resources.Load<GameObject>(modelPath);
+
+        Debug.Log("create build, rotation: " + rotation);
+
+        GameObject unitModel = Instantiate(
+            unitModelPrefab, unitModelPrefab.transform.position + parent.transform.position,
+            Quaternion.Euler(new Vector3(0, rotation, 0)),
+            parent
+            );
+        unitModel.name = "Model";
+        return unitModel;
+    }
+
     public static GameObject CreateProductsNotificationObject(Vector2Int position, string name, Transform parent)
     {
         var productsNotificationPrefab = Resources.Load<GameObject>(Config.resources["UIProductsNotificationPrefab"]);
@@ -254,6 +501,11 @@ public class ObjectProcessor : MonoBehaviour
             );
         obj.name = name;
         return obj;
+    }
+
+    public void ReplaceObjectOnBattle(
+    {
+
     }
 
     public void ReplaceObjectOnBase(GameObject obj, List<Vector2Int> newPosition, int newRotation)
@@ -287,6 +539,7 @@ public class ObjectProcessor : MonoBehaviour
         Vector2Int size, 
         Vector2Int[] occypation,
         int health, 
+        int currentHealth,
         int damage, 
         int distance, 
         string side, 
@@ -300,7 +553,7 @@ public class ObjectProcessor : MonoBehaviour
         component.SetOriginalSize(size);
         component.SetModel(model);
         component.SetOccypation(new List<Vector2Int>(occypation));
-        component.SetAttributes(health, damage, distance, 0);
+        component.SetAttributes(health, currentHealth, damage, distance, 0);
         component.SetSide(side);
         component.coreId = coreId;
         component.childId = childId;
@@ -324,6 +577,7 @@ public class ObjectProcessor : MonoBehaviour
         Vector2Int size, 
         Vector2Int[] occypation,
         int health, 
+        int currentHealth,
         int damage,
         int distance,
         int mobility, 
@@ -335,7 +589,7 @@ public class ObjectProcessor : MonoBehaviour
         component.SetOriginalSize(size);
         component.SetModel(model);
         component.SetOccypation(new List<Vector2Int>(occypation));
-        component.SetAttributes(health, damage, distance, mobility);
+        component.SetAttributes(health, currentHealth, damage, distance, mobility);
         component.SetSide(side);
 
         component.coreId = coreId;
@@ -384,6 +638,87 @@ public class ObjectProcessor : MonoBehaviour
         Cache.Save(exposedUnits);
 
         return exposedUnitData;
+    }
+
+    public static BuildOnBattle AddNewBuildOnBattleToCache(
+        string battleId,
+        string buildId, 
+        Bector2Int[] occypation, 
+        int rotation,
+        int health,
+        string side = null, 
+        string workStatus = null
+        )
+    {
+        if (side == null) side = Sides.federation;
+        if (workStatus == null) workStatus = WorkStatuses.idle;
+
+        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
+        CacheItem cacheItem = battleTable.GetById(battleId);
+        BattleCacheItem battleData = new BattleCacheItem(cacheItem.Fields);
+
+        BuildOnBattle[] battleBuilds = battleData.GetBuilds();
+        BuildOnBattle[] updatedBattleBuilds = new BuildOnBattle[battleBuilds.Length + 1];
+
+        for (int i = 0; i < battleBuilds.Length; i++)
+        {
+            updatedBattleBuilds[i] = battleBuilds[i];
+        }
+
+        BuildOnBattle newBuild = new BuildOnBattle(
+            buildId,
+            occypation,
+            rotation,
+            health,
+            side,
+            workStatus
+            );
+        updatedBattleBuilds[battleBuilds.Length] = newBuild;
+
+        battleData.SetBuilds(updatedBattleBuilds);
+
+        battleTable.Items[battleData.GetExternalId()] = battleData;
+        Cache.Save(battleTable);
+        return newBuild;
+    }
+
+    public static UnitOnBattle AddNewUnitOnBattleToCache(
+        string battleId,
+        string unitId,
+        Bector2Int occypation,
+        int rotation,
+        int health,
+        string side = null
+        )
+    {
+        if (side == null) side = Sides.federation;
+
+        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
+        CacheItem cacheItem = battleTable.GetById(battleId);
+        BattleCacheItem battleData = new BattleCacheItem(cacheItem.Fields);
+
+        UnitOnBattle[] battleUnits = battleData.GetUnits();
+        UnitOnBattle[] updatedBattleUnits = new UnitOnBattle[battleUnits.Length + 1];
+
+        for (int i = 0; i < battleUnits.Length; i++)
+        {
+            updatedBattleUnits[i] = battleUnits[i];
+        }
+
+        UnitOnBattle newUnit = new UnitOnBattle(
+            unitId,
+            occypation,
+            rotation,
+            health,
+            side
+            );
+        updatedBattleUnits[battleUnits.Length] = newUnit;
+
+        battleData.SetUnits(updatedBattleUnits);
+
+        battleTable.Items[battleData.GetExternalId()] = battleData;
+        Cache.Save(battleTable);
+        return newUnit;
     }
 
     public static void OnBuyMaterial(string materialId)

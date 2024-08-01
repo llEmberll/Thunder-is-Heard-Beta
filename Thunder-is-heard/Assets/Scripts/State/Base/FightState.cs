@@ -79,4 +79,14 @@ public class FightState: State
     {
         return false;
     }
+
+    public override void OnCreatePreviewObject(ObjectPreview preview)
+    {
+        ./Описат логику сохранения высадки юнита
+    }
+
+    public override void OnReplacePreviewObject(ObjectPreview preview)
+    {
+        ./Описат логику перемещения высаженного юнита
+    }
 }

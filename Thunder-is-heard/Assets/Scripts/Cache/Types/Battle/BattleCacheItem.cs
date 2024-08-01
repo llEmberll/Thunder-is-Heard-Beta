@@ -18,9 +18,9 @@ public class BattleCacheItem : CacheItem
             SetStageIndex(0);
         }
 
-        if (!objFields.ContainsKey("map"))
+        if (!objFields.ContainsKey("isLanded"))
         {
-            SetMap(new CellData[] { });
+            SetIsLanded(false);
         }
 
         if (!objFields.ContainsKey("units"))
@@ -59,20 +59,14 @@ public class BattleCacheItem : CacheItem
         SetField("stageIndex", value);
     }
 
-    public CellData[] GetMap()
+    public bool GetIsLanded()
     {
-        object value = GetField("map");
-        if (value == null)
-        {
-            return new CellData[] {};
-        }
-
-        return JsonConvert.DeserializeObject<CellData[]>(value.ToString());
+        return (bool)GetField("isLanded");
     }
 
-    public void SetMap(CellData[] value)
+    public void SetIsLanded(bool value)
     {
-        SetField("map", value);
+        SetField("isLanded", value);
     }
 
     public UnitOnBattle[] GetUnits()

@@ -5,41 +5,65 @@ using UnityEngine;
 [System.Serializable]
 public class BasicStage: IStage
 {
-    [SerializeField] public Scenario scenario;
-    [SerializeField] public Dictionary<Vector2Int, Entity> objects;
+    [SerializeField] public Scenario _scenario;
+    [SerializeField] public UnitOnBattle[] _units;
+    [SerializeField] public BuildOnBattle[] _builds;
     [SerializeField] public List<IScenarioEvent> events;
-    [SerializeField] public List<ICondition> conditionsForPass;
-    [SerializeField] public List<ICondition> conditionsForFail;
-    public Dictionary<Vector2Int, Entity> Objects { get { return objects; } }
+    [SerializeField] public List<ICondition> _conditionsForPass;
+    [SerializeField] public List<ICondition> _conditionsForFail;
+
+    public UnitOnBattle[] Units { get { return _units; } }
+    public BuildOnBattle[] Builds { get { return _builds; } }
+
     public List<IScenarioEvent> Events { get { return events; } }
 
-    public List<ICondition> ConditionsForPass { get { return conditionsForPass; } }
+    public List<ICondition> ConditionsForPass { get { return _conditionsForPass; } }
 
-    public List<ICondition> ConditionsForFail { get { return conditionsForFail; } }
+    public List<ICondition> ConditionsForFail { get { return _conditionsForFail; } }
 
-    public Scenario Scenario { get { return scenario; } }
+    public Scenario Scenario { get { return _scenario; } }
 
-    public virtual void Init(Scenario stageScenario)
+    public virtual void Init(Scenario stageScenario, List<ICondition> conditionsForPass, List<ICondition> conditionsForFail, UnitOnBattle[] units, BuildOnBattle[] builds)
     {
         SetScenario(stageScenario);
-        SetConditionsForPass();
-        SetConditionsForFail();
+        SetConditionsForPass(conditionsForPass);
+        SetConditionsForFail(conditionsForFail);
+        SetUnits(units);
+        SetBuilds(builds);
         SetCustomProperties();
     }
 
     public void SetScenario(Scenario value)
     {
-        scenario = value;
+        _scenario = value;
     }
 
-    public virtual void SetConditionsForPass()
+    public virtual void SetConditionsForPass(List<ICondition> conditions)
     {
-
+        _conditionsForPass = conditions;
+        foreach (ICondition condition in _conditionsForPass)
+        {
+            condition.Init(_scenario);
+        }
     }
 
-    public virtual void SetConditionsForFail()
+    public virtual void SetConditionsForFail(List<ICondition> conditions)
     {
+        _conditionsForFail = conditions;
+        foreach (ICondition condition in _conditionsForFail)
+        {
+            condition.Init(_scenario);
+        }
+    }
 
+    public virtual void SetUnits(UnitOnBattle[] units)
+    {
+        _units = units;
+    }
+
+    public virtual void SetBuilds(BuildOnBattle[] builds)
+    {
+        _builds = builds;
     }
 
     public virtual void SetCustomProperties()
