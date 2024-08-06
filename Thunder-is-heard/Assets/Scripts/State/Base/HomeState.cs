@@ -89,6 +89,6 @@ public class HomeState: State
 
     public override void OnReplacePreviewObject(ObjectPreview preview)
     {
-        preview.ReplaceObjectOnBattle();
+        preview.ReplaceObjectOnBase();
     }
 }

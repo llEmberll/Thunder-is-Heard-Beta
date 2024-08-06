@@ -1,4 +1,3 @@
-using Org.BouncyCastle.Asn1.Mozilla;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +13,20 @@ public class ObjectProcessor : MonoBehaviour
         map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
 
         EventMaster.current.ObjectOnBaseWorkStatusChanged += ChangeObjectOnBaseWorkStatus;
+    }
+
+    public static void PutSelectedObjectOnBattleToInventory(string battleId)
+    {
+        ObjectPreview preview = FindObjectOfType<ObjectPreview>();
+        if (IsSomeObjectSelected(preview))
+        {
+            Debug.Log("selected object putted to inv");
+
+            AddGameObjectToInventory(preview.buildedObjectOnScene);
+            RemoveObjectFromBattle(battleId, preview.buildedObjectOnScene);
+            preview.buildedObjectOnScene = null;
+            preview.Cancel();
+        }
     }
 
     public static void PutSelectedObjectOnBaseToInventory()
@@ -93,6 +106,50 @@ public class ObjectProcessor : MonoBehaviour
         AddToInventory(newItem);
     }
 
+    public static void RemoveObjectFromBattle(string battleId, GameObject obj)
+    {
+        Entity entity = obj.GetComponent<Entity>();
+
+        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
+        CacheItem cacheItem = battleTable.GetById(battleId);
+        BattleCacheItem battleData = new BattleCacheItem(cacheItem.Fields);
+
+        if (entity.Type.Contains("Build"))
+        {
+            BuildOnBattle[] builds = battleData.GetBuilds();
+            int indexToRemove = Array.FindIndex(builds, build => build.idOnBattle == entity.ChildId);
+            if (indexToRemove == -1)
+            {
+                return;
+            }
+
+            builds = builds.Where((val, idx) => idx != indexToRemove).ToArray();
+            battleData.SetBuilds(builds);
+        }
+        else if (entity.Type.Contains("Unit"))
+        {
+            UnitOnBattle[] units = battleData.GetUnits();
+            int indexToRemove = Array.FindIndex(units, unit => unit.idOnBattle == entity.ChildId);
+            if (indexToRemove == -1)
+            {
+                return;
+            }
+
+            units = units.Where((val, idx) => idx != indexToRemove).ToArray();
+            battleData.SetUnits(units);
+        }
+        else
+        {
+            return;
+        }
+
+        Cache.Save(battleTable);
+        Destroy(obj);
+
+        EventMaster.current.OnRemoveBattleObject(entity.coreId, entity.Type);
+        EventMaster.current.OnChangeBattleObjects();
+    }
+
     public static  void RemoveObjectFromBase(GameObject obj)
     {
         CacheItem objectData = Cache.GetBaseObjectData(obj);
@@ -125,7 +182,7 @@ public class ObjectProcessor : MonoBehaviour
         if (battleId == null) return;
         if (side == null) side = Sides.federation;
 
-        Entity entity = null;
+        GameObject entity = null;
 
         if (type.Contains("Build"))
         {
@@ -148,10 +205,10 @@ public class ObjectProcessor : MonoBehaviour
                 side
                 );
 
-            entity = CreateObject(coreId, build.idOnBattle, type, model, objName, size, occypation);
+            entity = CreateObject(coreId, type, model, objName, size, occypation);
 
             AddAndPrepareBuildComponent(
-                entity.gameObject,
+                entity,
                 model,
                 coreId,
                 build.idOnBattle,
@@ -189,10 +246,10 @@ public class ObjectProcessor : MonoBehaviour
                 side
                 );
 
-            entity = CreateObject(coreId, unit.idOnBattle, type, model, objName, size, occypation);
+            entity = CreateObject(coreId, type, model, objName, size, occypation);
 
             AddAndPrepareUnitComponent(
-                entity.gameObject,
+                entity,
                 model,
                 coreId,
                 unit.idOnBattle,
@@ -207,6 +264,12 @@ public class ObjectProcessor : MonoBehaviour
                 side
                 );
 
+            EventMaster.current.ExposeObject(
+            coreId,
+            type,
+            Bector2Int.GetVector2IntListAsBector(occypation),
+            entity.GetComponent<Entity>().rotation
+            );
             EventMaster.current.OnChangeBattleObjects();
         }
     }
@@ -215,7 +278,7 @@ public class ObjectProcessor : MonoBehaviour
     {
         if (side == null) side = Sides.federation;
 
-        Entity entity = null;
+        GameObject entity = null;
         if (type.Contains("Build"))
         {
             BuildCacheTable coreBuildDatas = Cache.LoadByType<BuildCacheTable>();
@@ -236,10 +299,10 @@ public class ObjectProcessor : MonoBehaviour
             WorkStatuses.idle
             );
 
-            entity = CreateObject(coreId, playerBuildCacheItem.GetExternalId(), type, model, objName, size, occypation);
+            entity = CreateObject(coreId, type, model, objName, size, occypation);
 
             AddAndPrepareBuildComponent(
-                entity.gameObject,
+                entity,
                 model,
                 coreId,
                 playerBuildCacheItem.GetExternalId(),
@@ -275,10 +338,10 @@ public class ObjectProcessor : MonoBehaviour
             Entity.GetDeterminedRotationByModel(model)
             );
 
-            entity = CreateObject(coreId, playerUnitCacheItem.GetExternalId(), type, model, objName, size, occypation);
+            entity = CreateObject(coreId, type, model, objName, size, occypation);
 
             AddAndPrepareUnitComponent(
-                entity.gameObject, 
+                entity, 
                 model, 
                 coreId, 
                 playerUnitCacheItem.GetExternalId(), 
@@ -299,27 +362,30 @@ public class ObjectProcessor : MonoBehaviour
             throw new System.Exception("Неожиданный тип объекта: " + type);
         }
 
+        EventMaster.current.ExposeObject(
+            coreId,
+            type,
+            Bector2Int.GetVector2IntListAsBector(occypation),
+            entity.GetComponent<Entity>().rotation
+            );
         EventMaster.current.OnChangeBaseObjects();
 
     }
 
-    public Entity CreateObject(string coreId, string externalId, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation)
+    public GameObject CreateObject(string coreId, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation)
     {
         Vector2Int rootPoint = occypation.First();
-
-
         Transform objectsPool = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]).transform;
 
-
-        Transform entity = null;
+        GameObject entity = null;
         if (type.Contains("Build"))
         {
-            entity = CreateBuildObject(rootPoint, objName, objectsPool).transform;
+            entity = CreateBuildObject(rootPoint, objName, objectsPool);
         }
 
         else if (type.Contains("Unit"))
         {
-            entity = CreateUnitObject(rootPoint, objName, objectsPool).transform;
+            entity = CreateUnitObject(rootPoint, objName, objectsPool);
         }
 
         else
@@ -327,17 +393,9 @@ public class ObjectProcessor : MonoBehaviour
             throw new System.Exception("Неожиданный тип объекта: " + type);
         }
 
-
-        model.SetParent(entity);
+        model.SetParent(entity.transform);
         map.Occypy(occypation);
-        EventMaster.current.ExposeObject(
-            coreId,
-            type,
-            Bector2Int.GetVector2IntListAsBector(occypation),
-            entity.GetComponent<Entity>().rotation
-            );
-
-        return entity.GetComponent<Entity>();
+        return entity;
     }
 
     public void InitObjectOnBattle(
@@ -356,7 +414,7 @@ public class ObjectProcessor : MonoBehaviour
         Vector2Int rootPoint = occypation.First();
         ObjectsOnFight objectsPool = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]).GetComponent<ObjectsOnFight>();
 
-        Transform entity = null;
+        GameObject entity = null;
         if (type.Contains("Build"))
         {
             BuildCacheTable coreBuildDatas = Cache.LoadByType<BuildCacheTable>();
@@ -368,10 +426,10 @@ public class ObjectProcessor : MonoBehaviour
             string interactionComponentName = coreBuildData.GetInteractionComponentName();
             string interactionComponentType = coreBuildData.GetInteractionComponentType();
 
-            entity = CreateBuildObject(rootPoint, objName, objectsPool.transform).transform;
+            entity = CreateBuildObject(rootPoint, objName, objectsPool.transform);
 
             AddAndPrepareBuildComponent(
-                entity.gameObject,
+                entity,
                 model,
                 coreId,
                 idOnBattle,
@@ -399,10 +457,10 @@ public class ObjectProcessor : MonoBehaviour
             int distance = coreUnitData.GetDistance();
             int mobility = coreUnitData.GetMobility();
 
-            entity = CreateUnitObject(rootPoint, objName, objectsPool.transform).transform;
+            entity = CreateUnitObject(rootPoint, objName, objectsPool.transform);
 
             AddAndPrepareUnitComponent(
-                entity.gameObject,
+                entity,
                 model,
                 coreId,
                 idOnBattle,
@@ -423,7 +481,7 @@ public class ObjectProcessor : MonoBehaviour
             throw new System.Exception("Неожиданный тип объекта: " + type);
         }
 
-        model.SetParent(entity);
+        model.SetParent(entity.transform);
 
         map.Occypy(occypation);
         EventMaster.current.ExposeObject(
@@ -503,9 +561,53 @@ public class ObjectProcessor : MonoBehaviour
         return obj;
     }
 
-    public void ReplaceObjectOnBattle(
+    public void ReplaceObjectOnBattle(string battleId, GameObject obj, List<Vector2Int> newPosition, int newRotation)
     {
+        Entity entity = obj.GetComponent<Entity>();
+        obj.transform.position = new Vector3(newPosition.First().x, 0, newPosition.First().y);
+        entity.model.SetParent(entity.transform);
 
+        map.Free(entity.occypiedPoses);
+        entity.SetOccypation(newPosition);
+        map.Occypy(newPosition);
+
+        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
+        CacheItem cacheItem = battleTable.GetById(battleId);
+        BattleCacheItem battleData = new BattleCacheItem(cacheItem.Fields);
+
+        if (entity.Type.Contains("Build"))
+        {
+            BuildOnBattle[] builds = battleData.GetBuilds();
+            int indexToChange = Array.FindIndex(builds, build => build.idOnBattle == entity.ChildId);
+            if (indexToChange == -1)
+            {
+                return;
+            }
+
+            builds[indexToChange].position = Bector2Int.GetVector2IntListAsBector(newPosition);
+            builds[indexToChange].rotation = newRotation;
+            battleData.SetBuilds(builds);
+        }
+        else if (entity.Type.Contains("Unit"))
+        {
+            UnitOnBattle[] units = battleData.GetUnits();
+            int indexToChange = Array.FindIndex(units, unit => unit.idOnBattle == entity.ChildId);
+            if (indexToChange == -1)
+            {
+                return;
+            }
+
+            units[indexToChange].position = new Bector2Int(newPosition.First());
+            units[indexToChange].rotation = newRotation;
+            battleData.SetUnits(units);
+        }
+        else
+        {
+            return;
+        }
+
+        Cache.Save(battleTable);
+        EventMaster.current.OnReplaceBattleObject(entity);
     }
 
     public void ReplaceObjectOnBase(GameObject obj, List<Vector2Int> newPosition, int newRotation)

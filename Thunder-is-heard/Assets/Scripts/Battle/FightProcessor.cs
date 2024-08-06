@@ -11,9 +11,14 @@ public class FightProcessor : MonoBehaviour
     public Scenario _scenario;
     public Scenario Scenario { get { return _scenario; } }
 
-    public void Init(string battleId)
+    public void Start()
     {
-        InitBattleData(battleId);
+        Init();
+    }
+
+    public void Init()
+    {
+        InitBattleData(FightSceneLoader.parameters._battleId);
 
         ConstructScenario();
 
@@ -81,6 +86,11 @@ public class FightProcessor : MonoBehaviour
     public void ReloadBattleData(string battleId)
     {
         InitBattleData(battleId);
+    }
+
+    public string GetBattleId()
+    {
+        return _battleId;
     }
 
     public void Landing(List<Vector2Int> landableCells, int landingMaxStaff)

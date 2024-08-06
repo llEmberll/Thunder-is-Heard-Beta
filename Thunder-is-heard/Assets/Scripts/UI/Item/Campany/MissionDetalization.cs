@@ -2,7 +2,6 @@ using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 
 
 public class MissionDetalization: UIElement
@@ -62,32 +61,6 @@ public class MissionDetalization: UIElement
             return;
         }
 
-        //TODO проверки, можно ли запустить миссию(нет ли активного сражения и т.п.)
-
-        MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
-        CacheItem cacheItemMission = missionTable.GetById(_id);
-        MissionCacheItem missionData = new MissionCacheItem(cacheItemMission.Fields);
-
-        ScenarioCacheTable scenarioTable = Cache.LoadByType<ScenarioCacheTable>();
-        CacheItem cacheItemScenario = scenarioTable.GetById(missionData.GetScenarioId());
-        ScenarioCacheItem scenarioData = new ScenarioCacheItem(cacheItemScenario.Fields);
-
-        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
-        BattleCacheItem battleData = new BattleCacheItem(new Dictionary<string, object>());
-        battleData.SetMissionId(_id);
-        battleData.SetUnits(scenarioData.GetUnits());
-        battleData.SetBuilds(scenarioData.GetBuilds());
-        battleTable.AddOne(battleData);
-        Cache.Save(battleTable);
-
-
-        GameObject prefab = Resources.Load<GameObject>(Config.resources["fightProcessorPrefab"]);
-        GameObject fightProcessorObj = Instantiate(prefab, gameObject.transform.position, Quaternion.identity);
-        FightProcessor fightProcessorComponent = fightProcessorObj.GetComponent<FightProcessor>();
-        fightProcessorComponent.Init(battleData.GetExternalId());
-
-        DontDestroyOnLoad(fightProcessorObj);
-
-        SceneManager.LoadScene("Fight");
+        Mission.Load(_id);
     }
 }

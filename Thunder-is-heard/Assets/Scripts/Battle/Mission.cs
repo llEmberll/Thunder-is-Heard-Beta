@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class Mission : Item
@@ -20,13 +19,13 @@ public class Mission : Item
 
     public override void Interact()
     {
-        Load();
+        Load(_id);
     }
 
-    public void Load()
+    public static void Load(string missionId)
     {
         MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
-        CacheItem cacheItemMission = missionTable.GetById(_id);
+        CacheItem cacheItemMission = missionTable.GetById(missionId);
         MissionCacheItem missionData = new MissionCacheItem(cacheItemMission.Fields);
 
         ScenarioCacheTable scenarioTable = Cache.LoadByType<ScenarioCacheTable>();
@@ -35,20 +34,12 @@ public class Mission : Item
 
         BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
         BattleCacheItem battleData = new BattleCacheItem(new Dictionary<string, object>());
-        battleData.SetMissionId(_id);
+        battleData.SetMissionId(missionId);
         battleData.SetUnits(scenarioData.GetUnits());
         battleData.SetBuilds(scenarioData.GetBuilds());
         battleTable.AddOne(battleData);
         Cache.Save(battleTable);
 
-
-        GameObject prefab = Resources.Load<GameObject>(Config.resources["fightProcessorPrefab"]);
-        GameObject fightProcessorObj = Instantiate(prefab, gameObject.transform.position, Quaternion.identity);
-        FightProcessor fightProcessorComponent = fightProcessorObj.GetComponent<FightProcessor>();
-        fightProcessorComponent.Init(battleData.GetExternalId());
-
-        DontDestroyOnLoad(fightProcessorObj);
-        
-        SceneManager.LoadScene("Fight");
+        SceneLoader.LoadFight(new FightSceneParameters(battleData.GetExternalId()));
     }
 }

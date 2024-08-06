@@ -1,7 +1,8 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
+using UnityEngine;
 
 [System.Serializable]
 public class BattleCacheItem : CacheItem
@@ -51,7 +52,16 @@ public class BattleCacheItem : CacheItem
 
     public int GetStageIndex()
     {
-        return (int)GetField("stageIndex");
+        object value = GetField("stageIndex");
+
+        UnityEngine.Debug.Log("value = " + value);
+
+        if (value == null)
+        {
+            return 0;
+        }
+
+        return Convert.ToInt32(value);
     }
 
     public void SetStageIndex(int value)

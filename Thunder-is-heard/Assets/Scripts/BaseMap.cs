@@ -10,6 +10,35 @@ public class BaseMap : Map
 
     public void Start()
     {
+        
+    }
+
+    public void CreateScenarioForTest()
+    {
+        ScenarioCacheTable table = Cache.LoadByType<ScenarioCacheTable>();
+
+        ScenarioCacheItem scenarioItem = new ScenarioCacheItem(new Dictionary<string, object>());
+
+        scenarioItem.SetExternalId("7d1660fb-10ad-4a55-9810-2c411120070f");
+        scenarioItem.SetName("Scenario1 for tests");
+        scenarioItem.SetTerrainPath(Config.terrainsPath["Base"]);
+        scenarioItem.SetMapSize(new Bector2Int(new Vector2Int(6, 6)));
+
+        LandingData landingData = new LandingData(
+            new Bector2Int[]
+            {
+                new Bector2Int(new Vector2Int(0, 0)),
+                new Bector2Int(new Vector2Int(0, 1)),
+                new Bector2Int(new Vector2Int(1, 0)),
+                new Bector2Int(new Vector2Int(1, 1))
+            },
+            6
+            );
+
+        scenarioItem.SetLanding(landingData);
+
+        table.AddOne(scenarioItem);
+        Cache.Save(table);
     }
 
     public void CreateMissionForTest()

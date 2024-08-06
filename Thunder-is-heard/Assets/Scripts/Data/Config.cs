@@ -107,7 +107,7 @@ public static class Config
 
     public static Dictionary<string, string> terrainsPath = new Dictionary<string, string>
     {
-        {"Base", "Prefabs/Terrain/Base/Terrain" },
+        { "Base", "Prefabs/Terrain/Base/Terrain" },
         { "Common", "Prefabs/Terrain/" }
     };
 }

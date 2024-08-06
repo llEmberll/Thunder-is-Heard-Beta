@@ -82,11 +82,11 @@ public class FightState: State
 
     public override void OnCreatePreviewObject(ObjectPreview preview)
     {
-        ./Описат логику сохранения высадки юнита
+        preview.CreateObjectOnBattle();
     }
 
     public override void OnReplacePreviewObject(ObjectPreview preview)
     {
-        ./Описат логику перемещения высаженного юнита
+        preview.ReplaceObjectOnBattle();
     }
 }

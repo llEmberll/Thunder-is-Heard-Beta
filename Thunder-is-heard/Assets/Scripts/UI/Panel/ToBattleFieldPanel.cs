@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ToBattleFieldPanel : Panel
 {
@@ -14,6 +13,11 @@ public class ToBattleFieldPanel : Panel
 
         EventMaster.current.ToggledToBuildMode += Hide;
         EventMaster.current.ToggledOffBuildMode += Show;
+
+        if (battleId == null)
+        {
+            Hide();
+        }
     }
 
     public void UpdateBattleInfo()
@@ -42,13 +46,6 @@ public class ToBattleFieldPanel : Panel
 
     public void Load()
     {
-        GameObject prefab = Resources.Load<GameObject>(Config.resources["fightProcessorPrefab"]);
-        GameObject fightProcessorObj = Instantiate(prefab, gameObject.transform.position, Quaternion.identity);
-        FightProcessor fightProcessorComponent = fightProcessorObj.GetComponent<FightProcessor>();
-        fightProcessorComponent.Init(battleId);
-
-        DontDestroyOnLoad(fightProcessorObj);
-
-        SceneManager.LoadScene("Fight");
+        SceneLoader.LoadFight(new FightSceneParameters(battleId));
     }
 }

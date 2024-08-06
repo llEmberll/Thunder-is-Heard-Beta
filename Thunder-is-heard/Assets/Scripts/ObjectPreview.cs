@@ -44,8 +44,6 @@ public class ObjectPreview: MonoBehaviour
         EventMaster.current.PreviewRotated += Rotate;
 
         EventMaster.current.OnCreatePreview(this);
-
-        _baseState = StateConfig.statesByScene[SceneManager.GetActiveScene().name];
     }
 
     public static ObjectPreview Create()
@@ -71,9 +69,10 @@ public class ObjectPreview: MonoBehaviour
 
         objectsPool = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]).GetComponent<ObjectsOnBase>();
 
+        _baseState = StateConfig.statesByScene[SceneManager.GetActiveScene().name];
         if (_baseState.stateName == "Fight")
         {
-            _battleId = GameObject.FindWithTag(Tags.fightProcessor).GetComponent<FightProcessor>()._battleId;
+            _battleId = GameObject.FindWithTag(Tags.fightProcessor).GetComponent<FightProcessor>().GetBattleId();
         }
     }
 
@@ -264,7 +263,7 @@ public class ObjectPreview: MonoBehaviour
 
     public void ReplaceObjectOnBattle()
     {
-        objectProcessor.ReplaceObjectOnBattle(buildedObjectOnScene, occypation, rotation);
+        objectProcessor.ReplaceObjectOnBattle(_battleId, buildedObjectOnScene, occypation, rotation);
     }
 
     public void Expose()

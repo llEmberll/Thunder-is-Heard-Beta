@@ -123,10 +123,22 @@ public class EventMaster: MonoBehaviour
         BaseObjectRemoved?.Invoke(id, type);
     }
 
+    public event Action<string, string> BattleObjectRemoved;
+    public void OnRemoveBattleObject(string id, string type)
+    {
+        BattleObjectRemoved?.Invoke(id, type);
+    }
+
     public event Action<Entity> BaseObjectReplaced;
     public void OnReplaceBaseObject(Entity obj)
     {
         BaseObjectReplaced?.Invoke(obj);
+    }
+
+    public event Action<Entity> BattleObjectReplaced;
+    public void OnReplaceBattleObject(Entity obj)
+    {
+        BattleObjectReplaced?.Invoke(obj);
     }
 
     public event Action<Entity> EnteredOnObject;

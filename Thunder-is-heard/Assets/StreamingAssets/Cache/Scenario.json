@@ -1,0 +1,41 @@
+﻿{
+  "name": "Scenario",
+  "items": {
+    "7d1660fb-10ad-4a55-9810-2c411120070f": {
+      "fields": {
+        "externalId": "7d1660fb-10ad-4a55-9810-2c411120070f",
+        "description": "",
+        "terrainPath": "Prefabs/Terrain/Base/Terrain",
+        "mapSize": {
+          "x": 6,
+          "y": 6
+        },
+        "units": [],
+        "builds": [],
+        "landing": {
+          "zone": [
+            {
+              "x": 0,
+              "y": 0
+            },
+            {
+              "x": 0,
+              "y": 1
+            },
+            {
+              "x": 1,
+              "y": 0
+            },
+            {
+              "x": 1,
+              "y": 1
+            }
+          ],
+          "maxStaff": 6
+        },
+        "stages": [],
+        "name": "Scenario1 for tests"
+      }
+    }
+  }
+}
