@@ -47,12 +47,12 @@ public class BuildingState : State
 
     public override void OnBuildClick(Build build)
     {
-        if (preview == null)
+        if (preview == null && build.side == Sides.federation)
         {
             Transform model = build.model;
 
             ObjectPreview preview = ObjectPreview.Create();
-            preview.Init(build.name, "PlayerBuild", build.CoreId, build.currentSize, model);
+            preview.Init(build.name, "Build", build.CoreId, build.currentSize, model);
         }
     }
 
@@ -69,12 +69,12 @@ public class BuildingState : State
     public override void OnUnitClick(Unit unit)
     {
         {
-            if (preview == null)
+            if (preview == null && unit.side == Sides.federation)
             {
                 Transform model = unit.model;
 
                 ObjectPreview preview = ObjectPreview.Create();
-                preview.Init(unit.name, "PlayerBuild", unit.CoreId, unit.currentSize, model);
+                preview.Init(unit.name, "Unit", unit.CoreId, unit.currentSize, model);
             }
         }
     }
@@ -122,5 +122,15 @@ public class BuildingState : State
 
     public override void OnReplacePreviewObject(ObjectPreview preview)
     {
+    }
+
+    public override int GetMaxStaff()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override int GetStaff()
+    {
+        throw new System.NotImplementedException();
     }
 }

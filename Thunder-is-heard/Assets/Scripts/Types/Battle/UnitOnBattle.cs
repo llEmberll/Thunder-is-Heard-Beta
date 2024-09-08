@@ -10,7 +10,7 @@ public class UnitOnBattle
     public int rotation;
     public int health;
     public string side;
-    public SkillOnBattle skillData;
+    public SkillOnBattle[] skillsData;
 
     public UnitOnBattle(
         string coreUnitId, 
@@ -19,7 +19,7 @@ public class UnitOnBattle
         int unitHealth, 
         string unitSide, 
         string unitIdOnBattle = null,
-        SkillOnBattle unitSkillData = null
+        SkillOnBattle[] unitSkillsData = null
         )
     {
         coreId = coreUnitId;
@@ -27,7 +27,7 @@ public class UnitOnBattle
         rotation = unitRotation;
         health = unitHealth;
         side = unitSide;
-        skillData = unitSkillData;
+        skillsData = unitSkillsData;
 
         if (unitIdOnBattle == null)
         {

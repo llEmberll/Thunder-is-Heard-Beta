@@ -42,7 +42,7 @@ public class Cache
         return JsonConvert.DeserializeObject<CacheTable>(File.ReadAllText(filePath));
     }
 
-    public static CacheItem GetBaseObjectData(GameObject obj)
+    public static CacheItem GetBasePlayerObjectData(GameObject obj)
     {
         Entity entity = obj.GetComponent<Entity>();
         if (entity == null)
@@ -52,10 +52,10 @@ public class Cache
         }
 
         CacheTable table = Cache.LoadByName("Player" + entity.Type);
-        return table.GetByCoreId(entity.CoreId);
+        return table.GetById(entity.ChildId);
     }
 
-    public static CacheItem GetBaseObjectCoreData(GameObject obj)
+    public static CacheItem GetObjectCoreData(GameObject obj)
     {
         Entity entity = obj.GetComponent<Entity>();
         if ( entity == null )

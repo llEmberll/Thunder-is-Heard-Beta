@@ -140,11 +140,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_23"
+      name: DoubleMobility
       rect:
         serializedVersion: 2
         x: 302
-        y: 1273
+        y: 1270
         width: 512
         height: 512
       alignment: 0
@@ -161,10 +161,10 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_0"
+      name: DoubleHealth
       rect:
         serializedVersion: 2
-        x: 841
+        x: 835
         y: 1274
         width: 512
         height: 512
@@ -182,7 +182,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_1"
+      name: DoubleDamage
       rect:
         serializedVersion: 2
         x: 1379
@@ -203,11 +203,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_2"
+      name: HalfOfInfantryDamage
       rect:
         serializedVersion: 2
-        x: 1914
-        y: 1281
+        x: 1908
+        y: 1284
         width: 512
         height: 512
       alignment: 0
@@ -224,7 +224,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_3"
+      name: DoubleDistance
       rect:
         serializedVersion: 2
         x: 2453
@@ -245,11 +245,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_4"
+      name: DoubleDamageToInfantry
       rect:
         serializedVersion: 2
         x: 2990
-        y: 1286
+        y: 1292
         width: 512
         height: 512
       alignment: 0
@@ -287,7 +287,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_6"
+      name: AttackInMotion
       rect:
         serializedVersion: 2
         x: 840
@@ -371,7 +371,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_11"
+      name: ThrowingGrenade
       rect:
         serializedVersion: 2
         x: 2992
@@ -392,7 +392,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_12"
+      name: DoubleDamageToVehicle
       rect:
         serializedVersion: 2
         x: 305
@@ -438,7 +438,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1377
-        y: 251
+        y: 254
         width: 512
         height: 512
       alignment: 9
@@ -458,7 +458,7 @@ TextureImporter:
       name: Distance
       rect:
         serializedVersion: 2
-        x: 1915
+        x: 1909
         y: 248
         width: 512
         height: 512
@@ -528,29 +528,29 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      AttackInMotion: -1926577291
       Damage: -151990711
       Distance: 623335279
+      DoubleDamage: -156062805
+      DoubleDamageToInfantry: -1837949461
+      DoubleDamageToVehicle: 1479271150
+      DoubleDistance: 1361781830
+      DoubleHealth: 2013788530
+      DoubleMobility: 1307198997
+      HalfOfInfantryDamage: -1567918406
       Health: -266341983
       Mobility: -632086182
-      "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_0": 2013788530
-      "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_1": -156062805
-      "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_11": 1791787653
-      "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_12": 1479271150
+      ThrowingGrenade: 1791787653
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_13": 1636646018
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_14": -222219879
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_16": -232231400
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_17": 340309759
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_18": 45506489
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_19": -1579623356
-      "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_2": -1567918406
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_20": -21057486
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_21": -74919213
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_22": -1288029305
-      "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_23": 1307198997
-      "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_3": 1361781830
-      "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_4": -1837949461
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_5": -1090396057
-      "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_6": -1926577291
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_7": 931601606
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

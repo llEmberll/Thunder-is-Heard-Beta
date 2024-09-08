@@ -5,34 +5,75 @@ using UnityEngine;
 
 public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
 {
-    public Dictionary<string, Unit> items;
+    [SerializeField] public Dictionary<string, Unit> items = new Dictionary<string, Unit>();
 
-    public FightProcessor fightProcessor;
+    public string _battleId;
 
+
+    public override void Awake()
+    {
+        
+    }
 
     public override void Start()
     {
-        fightProcessor = GameObject.FindGameObjectWithTag(Tags.fightProcessor).GetComponent<FightProcessor>();
-        map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
+        this.content = this.transform;
+
+        _battleId = FightSceneLoader.parameters._battleId;
         base.Start();
     }
 
 
-    public override void OnBuildModeEnable()
+    public override void EnableListeners()
     {
+        EventMaster.current.BattleObjectRemoved += OnBattleObjectRemoved;
+        EventMaster.current.ObjectExposed += OnBattleObjectExposed;
+    }
+
+    public override void DisableListeners()
+    {
+        EventMaster.current.BattleObjectRemoved -= OnBattleObjectRemoved;
+        EventMaster.current.ObjectExposed -= OnBattleObjectExposed;
+    }
+
+    public void OnBattleObjectRemoved(Entity obj)
+    {
+        if (!IsProperType(obj.Type)) return;
+        if (!items.ContainsKey(obj.ChildId)) return;
+        Destroy(items[obj.ChildId]);
+        items.Remove(obj.ChildId);
+    }
+
+    public void OnBattleObjectExposed(Entity obj)
+    {
+        if (!IsProperType(obj.Type)) return;
+        if (items.ContainsKey(obj.ChildId)) return;
+        items.Add(obj.ChildId, obj.gameObject.GetComponent<Unit>());
+    }
+
+    public override bool IsProperType(string type)
+    {
+        return type.Contains("Unit");
+    }
+
+    public void UpdateObjects()
+    {
+        FillContent();
     }
 
     public override void FillContent()
     {
-        base.FillContent();
         FillUnits();
     }
 
     public void FillUnits()
     {
+        ClearItems();
         items = new Dictionary<string, Unit>();
 
-        UnitOnBattle[] units = fightProcessor._battleData.GetUnits();
+        CacheItem battleCacheItem = Cache.LoadByType<BattleCacheTable>().GetById(_battleId);
+        BattleCacheItem battleData = new BattleCacheItem(battleCacheItem.Fields);
+        UnitOnBattle[] units = battleData.GetUnits();
         foreach (UnitOnBattle unit in units)
         {
             MappingUnit(unit);
@@ -62,8 +103,8 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
 
 
         GameObject unitObj = ObjectProcessor.CreateUnitObject(position[0].ToVector2Int(), name, this.transform);
-        GameObject unitModel = ObjectProcessor.CreateUnitModel(modelPath, rotation, unitObj.transform);
-
+        GameObject unitModel = ObjectProcessor.CreateModel(modelPath, rotation, unitObj.transform);
+        
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());
 
         ObjectProcessor.AddAndPrepareUnitComponent(
@@ -81,9 +122,11 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
             mobility,
             side
             );
+
+        items.Add(childId, unitObj.GetComponent<Unit>());
     }
 
-    public override Entity FindObjectById(string id)
+    public override Entity FindObjectByCoreId(string id)
     {
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -94,5 +137,33 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
             }
         }
         return null;
+    }
+
+    public override Entity FindObjectByChildId(string id)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Unit childEntity = transform.GetChild(i).GetComponent<Unit>();
+            if (childEntity != null && childEntity.ChildId == id)
+            {
+                return childEntity;
+            }
+        }
+        return null;
+    }
+
+    public List<Unit> GetUnitsBySide(string side)
+    {
+        List<Unit> units = new List<Unit>();
+
+        foreach (var keyValuePair in items)
+        {
+            if (keyValuePair.Value.side == side)
+            {
+                units.Add(keyValuePair.Value);
+            }
+        }
+
+        return units;
     }
 }

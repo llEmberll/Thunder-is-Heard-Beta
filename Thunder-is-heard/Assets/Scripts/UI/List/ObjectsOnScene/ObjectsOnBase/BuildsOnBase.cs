@@ -1,31 +1,71 @@
-using Org.BouncyCastle.Asn1.Mozilla;
-using Org.BouncyCastle.Crypto;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class BuildsOnBase : ObjectsOnBase
 {
-    public Dictionary<string, Build> items;
+    [SerializeField] public Dictionary<string, Build> items = new Dictionary<string, Build>();
 
     public Transform productsNotificationsBucket;
 
-    public override void Start()
+    public override void Awake()
     {
-        productsNotificationsBucket = GameObject.FindGameObjectWithTag(Tags.productsNotifications).transform;
-        base.Start();
-
-        EventMaster.current.ProductsNotificationCreated += PutOnProductsNotification;
+        
     }
 
-    public override void OnBuildModeEnable()
+    public override void Start()
     {
+        this.content = this.transform;
+
+        productsNotificationsBucket = GameObject.FindGameObjectWithTag(Tags.productsNotifications).transform;
+        base.Start();
+    }
+
+    public override void EnableListeners()
+    {
+        EventMaster.current.ProductsNotificationCreated += PutOnProductsNotification;
+        EventMaster.current.BaseObjectRemoved += OnBaseObjectRemoved;
+        EventMaster.current.ObjectExposed += OnBaseObjectExposed;
+    }
+
+    public override void DisableListeners()
+    {
+        EventMaster.current.ProductsNotificationCreated -= PutOnProductsNotification;
+        EventMaster.current.BaseObjectRemoved -= OnBaseObjectRemoved;
+        EventMaster.current.ObjectExposed -= OnBaseObjectExposed;
+    }
+
+    public void OnBaseObjectRemoved(Entity obj)
+    {
+        if (!IsProperType(obj.Type)) return;
+        if (!items.ContainsKey(obj.ChildId)) return;
+        Destroy(items[obj.ChildId]);
+        items.Remove(obj.ChildId);
+    }
+
+    public void OnBaseObjectExposed(Entity obj)
+    {
+        if (!IsProperType(obj.Type)) return;
+        if (items.ContainsKey(obj.ChildId)) return;
+
+        if (obj == null) return;
+        items.Add(obj.ChildId, obj.gameObject.GetComponent<Build>());
+    }
+
+    public override bool IsProperType(string type)
+    {
+        return type.Contains("Build");
+    }
+
+    public void UpdateObjects()
+    {
+        Debug.Log("Update build objects");
+
+        FillContent();
     }
 
     public override void FillContent()
     {
-        base.FillContent();
-
         FillBuilds();
 
         FillProductsNotifcations();
@@ -33,6 +73,7 @@ public class BuildsOnBase : ObjectsOnBase
 
     public void FillBuilds()
     {
+        ClearItems();
         items = new Dictionary<string, Build>();
 
         PlayerBuildCacheTable playerBuildsTable = Cache.LoadByType<PlayerBuildCacheTable>();
@@ -108,7 +149,7 @@ public class BuildsOnBase : ObjectsOnBase
         string workStatus = playerBuildData.GetWorkStatus();
 
         GameObject buildObj = ObjectProcessor.CreateBuildObject(position[0].ToVector2Int(), name, this.transform);
-        GameObject buildModel = ObjectProcessor.CreateBuildModel(modelPath, rotation, buildObj.transform);
+        GameObject buildModel = ObjectProcessor.CreateModel(modelPath, rotation, buildObj.transform);
 
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());
         SetModelOffsetByRotation(buildModel.transform, size, rotation);
@@ -130,6 +171,8 @@ public class BuildsOnBase : ObjectsOnBase
             interactionComponentType,
             workStatus
             );
+
+        items.Add(childId, buildObj.GetComponent<Build>());
     }
 
     public void SetModelOffsetByRotation(Transform model, Bector2Int size, int rotation)
@@ -152,12 +195,25 @@ public class BuildsOnBase : ObjectsOnBase
         return new Vector2Int(x, y);
     }
 
-    public override Entity FindObjectById(string id)
+    public override Entity FindObjectByCoreId(string id)
     {
         for (int i = 0; i < transform.childCount; i++)
         {
             Build childEntity = transform.GetChild(i).GetComponent<Build>();
             if (childEntity != null && childEntity.CoreId == id)
+            {
+                return childEntity;
+            }
+        }
+        return null;
+    }
+
+    public override Entity FindObjectByChildId(string id)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Build childEntity = transform.GetChild(i).GetComponent<Build>();
+            if (childEntity != null && childEntity.ChildId == id)
             {
                 return childEntity;
             }

@@ -91,6 +91,15 @@ public class Selector : MonoBehaviour
                 ConfigureProductsInfo(build);
             }
         }
+
+        else if (obj is Unit)
+        {
+            Unit unit = (Unit)obj;
+            if (unit._skills != null)
+            {
+                ConfigureSkillsInfo(unit);
+            }
+        }
     }
 
     public void OnExitObject(Entity obj)
@@ -262,6 +271,11 @@ public class Selector : MonoBehaviour
                 ConfigureProductionForUnitProduction(processSource.id);
                 break;
         }
+    }
+
+    public void ConfigureSkillsInfo(Unit unit)
+    {
+        // реализовать
     }
 
     public void ConfigureProductsInfoCanvasPosition(Build build)

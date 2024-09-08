@@ -6,7 +6,6 @@ using UnityEngine;
 public class Inventory : ItemList
 {
     public List<InventoryItem> items;
-    public Transform content;
 
     public override void Start()
     {
@@ -32,6 +31,7 @@ public class Inventory : ItemList
     public override void FillContent()
     {
         ClearItems();
+        items = new List<InventoryItem>();
 
         InventoryCacheTable inventoryTable = Cache.LoadByType<InventoryCacheTable>();
         foreach (var keyValuePair in inventoryTable.Items)
@@ -150,20 +150,5 @@ public class Inventory : ItemList
     public void InitContent()
     {
         content = GameObject.FindGameObjectWithTag(Tags.inventoryItems).transform;
-    }
-
-    public void ClearItems()
-    {
-        GameObject[] children = content.gameObject.GetComponentsInChildren<Transform>(true)
-            .Where(obj => obj != content)
-            .Select(obj => obj.gameObject)
-            .ToArray();
-
-        foreach (GameObject child in children)
-        {
-            Destroy(child);
-        }
-
-        items = new List<InventoryItem>();
     }
 }

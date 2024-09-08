@@ -6,7 +6,6 @@ public class Campany : ItemList
 {
     public List<MissionItem> items;
     public GameObject missionPrefab;
-    public Transform _missionsParent;
     public MissionDetalization _missionDetalization;
 
     public override void Start()
@@ -25,7 +24,7 @@ public class Campany : ItemList
         foreach (var m in missionTable.Items)
         {
             GameObject missionObject = GameObject.Instantiate(missionPrefab);
-            missionObject.transform.SetParent(_missionsParent, false);
+            missionObject.transform.SetParent(content, false);
 
             MissionItem mission = missionObject.GetComponent<MissionItem>();
 

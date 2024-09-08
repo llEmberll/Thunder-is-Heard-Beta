@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 
 [System.Serializable]
@@ -33,6 +34,10 @@ public class Scenario
 
     public bool _isLanded = false;
 
+
+    public ObjectProcessor _objectProcessor;
+
+
     public void Init(Map scenarioMap, UnitOnBattle[] units, BuildOnBattle[] builds, List<Vector2Int> scenarioLandableCells, int landingMaxStaff, List<IStage> scenarioStages, int currentStage, bool isLanded)
     {
         map = scenarioMap;
@@ -42,8 +47,23 @@ public class Scenario
         _landingMaxStaff = landingMaxStaff;
         _stages = scenarioStages;
         _currentStageIndex = currentStage;
-        _currentStage = _stages[_currentStageIndex];
+        if (_stages.Count == 0)
+        {
+            _currentStage = null;
+        }
+        else
+        {
+            _currentStage = _stages[_currentStageIndex];
+        }
+        
         _isLanded = isLanded;
+
+        InitObjectProcessor();
+    }
+
+    public void InitObjectProcessor()
+    {
+        _objectProcessor = GameObject.FindGameObjectWithTag(Tags.objectProcessor).GetComponent<ObjectProcessor>();
     }
 
     public void ToNextStage()
@@ -59,6 +79,8 @@ public class Scenario
 
         _currentStage = Stages[_currentStageIndex];
 
+        //Сохранить battleData
+
         CurrentStage.OnStart();
     }
 
@@ -69,13 +91,22 @@ public class Scenario
 
     public void Begin()
     {
+        Debug.Log("Scenario: in begin");
+
         if (!_isLanded)
         {
+            Debug.Log("Scenario: not isLanded");
+
+            Debug.Log("Scenario: event landing!");
+
             EventMaster.current.Landing(LandableCells, LandingMaxStaff);
             return;
         }
         else
         {
+
+            Debug.Log("Scenario: isLanded true!");
+
             _currentStage = Stages[CurrentStageIndex];
 
             CurrentStage.OnStart();
@@ -99,6 +130,8 @@ public class Scenario
         }
 
         ContinueStage();
+
+
     }
 
 

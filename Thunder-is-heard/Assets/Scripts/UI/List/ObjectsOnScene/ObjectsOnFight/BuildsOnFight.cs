@@ -5,33 +5,73 @@ using UnityEngine;
 
 public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
 {
-    public Dictionary<string, Build> items;
+    [SerializeField] public Dictionary<string, Build> items = new Dictionary<string, Build>();
 
-    public FightProcessor fightProcessor;
+    public string _battleId;
+
+    public override void Awake()
+    {
+        
+    }
 
     public override void Start()
     {
-        fightProcessor = GameObject.FindGameObjectWithTag(Tags.fightProcessor).GetComponent<FightProcessor>();
-        map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
+        this.content = this.transform;
+
+        _battleId = FightSceneLoader.parameters._battleId;
         base.Start();
     }
 
-    public override void OnBuildModeEnable()
+    public override void EnableListeners()
     {
+        EventMaster.current.BattleObjectRemoved += OnBattleObjectRemoved;
+        EventMaster.current.ObjectExposed += OnBattleObjectExposed;
+    }
+
+    public override void DisableListeners()
+    {
+        EventMaster.current.BattleObjectRemoved -= OnBattleObjectRemoved;
+        EventMaster.current.ObjectExposed -= OnBattleObjectExposed;
+    }
+
+    public void OnBattleObjectRemoved(Entity obj)
+    {
+        if (!IsProperType(obj.Type)) return;
+        if (!items.ContainsKey(obj.ChildId)) return;
+        Destroy(items[obj.ChildId]);
+        items.Remove(obj.ChildId);
+    }
+
+    public void OnBattleObjectExposed(Entity obj)
+    {
+        if (!IsProperType(obj.Type)) return;
+        if (items.ContainsKey(obj.ChildId)) return;
+        items.Add(obj.ChildId, obj.gameObject.GetComponent<Build>());
+    }
+
+    public override bool IsProperType(string type)
+    {
+        return type.Contains("Build");
+    }
+
+    public void UpdateObjects()
+    {
+        FillContent();
     }
 
     public override void FillContent()
     {
-        base.FillContent();
-
         FillBuilds();
     }
 
     public void FillBuilds()
     {
+        ClearItems();
         items = new Dictionary<string, Build>();
 
-        BuildOnBattle[] builds = fightProcessor._battleData.GetBuilds();
+        CacheItem battleCacheItem = Cache.LoadByType<BattleCacheTable>().GetById(_battleId);
+        BattleCacheItem battleData = new BattleCacheItem(battleCacheItem.Fields);
+        BuildOnBattle[] builds = battleData.GetBuilds();
         foreach (BuildOnBattle build in builds)
         {
             MappingBuild(build);
@@ -62,7 +102,7 @@ public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
         string workStatus = battleBuildData.workStatus;
 
         GameObject buildObj = ObjectProcessor.CreateBuildObject(position[0].ToVector2Int(), name, this.transform);
-        GameObject buildModel = ObjectProcessor.CreateBuildModel(modelPath, rotation, buildObj.transform);
+        GameObject buildModel = ObjectProcessor.CreateModel(modelPath, rotation, buildObj.transform);
 
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());
         SetModelOffsetByRotation(buildModel.transform, size, rotation);
@@ -84,6 +124,8 @@ public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
             interactionComponentType,
             workStatus
             );
+
+        items.Add(childId, buildObj.GetComponent<Build>());
     }
 
     public void SetModelOffsetByRotation(Transform model, Bector2Int size, int rotation)
@@ -106,12 +148,25 @@ public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
         return new Vector2Int(x, y);
     }
 
-    public override Entity FindObjectById(string id)
+    public override Entity FindObjectByCoreId(string id)
     {
         for (int i = 0; i < transform.childCount; i++)
         {
             Build childEntity = transform.GetChild(i).GetComponent<Build>();
             if (childEntity != null && childEntity.CoreId == id)
+            {
+                return childEntity;
+            }
+        }
+        return null;
+    }
+
+    public override Entity FindObjectByChildId(string id)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Build childEntity = transform.GetChild(i).GetComponent<Build>();
+            if (childEntity != null && childEntity.ChildId == id)
             {
                 return childEntity;
             }

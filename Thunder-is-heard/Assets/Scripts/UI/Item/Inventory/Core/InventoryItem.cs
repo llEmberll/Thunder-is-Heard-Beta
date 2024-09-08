@@ -7,6 +7,23 @@ public abstract class InventoryItem : Item
 
     public TMP_Text TmpCount;
 
+    public override void EnableListeners()
+    {
+        EventMaster.current.InventoryItemAdded += OnInventoryItemAdded;
+    }
+
+    public override void DisableListeners()
+    {
+        EventMaster.current.InventoryItemAdded -= OnInventoryItemAdded;
+    }
+
+    public virtual void OnInventoryItemAdded(InventoryCacheItem item)
+    {
+        if (this.Type.Contains(item.GetType()) && item.GetCoreId() == this.coreId) {
+            Increment();
+        }
+    }
+
     public abstract override void Interact();
 
     public override void UpdateUI()

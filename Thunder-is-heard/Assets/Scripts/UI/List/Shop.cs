@@ -6,7 +6,6 @@ using UnityEngine;
 public class Shop : ItemList
 {
     public List<ShopItem> items;
-    public Transform content;
 
     public override void Start()
     {
@@ -32,6 +31,7 @@ public class Shop : ItemList
     public override void FillContent()
     {
         ClearItems();
+        items = new List<ShopItem>();
 
         //Согласно рангу, проверить лимиты купленных объектов и сделать нужное количество
 
@@ -159,20 +159,5 @@ public class Shop : ItemList
     public void InitContent()
     {
         content = GameObject.FindGameObjectWithTag(Tags.shopItems).transform;
-    }
-
-    public void ClearItems()
-    {
-        GameObject[] children = content.gameObject.GetComponentsInChildren<Transform>(true)
-            .Where(obj => obj != content)
-            .Select(obj => obj.gameObject)
-            .ToArray();
-
-        foreach (GameObject child in children)
-        {
-            Destroy(child);
-        }
-
-        items = new List<ShopItem>();
     }
 }

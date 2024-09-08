@@ -50,4 +50,7 @@ public abstract class State
 
     public abstract void OnCreatePreviewObject(ObjectPreview preview);
     public abstract void OnReplacePreviewObject(ObjectPreview preview);
+
+    public abstract int GetMaxStaff();
+    public abstract int GetStaff();
 }

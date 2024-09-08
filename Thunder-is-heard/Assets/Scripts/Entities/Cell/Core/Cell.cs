@@ -42,14 +42,14 @@ public class Cell : Interactable
         
         EventMaster.current.StateChanged += OnChangeState;
 
-        renderSwitch(stateMachine.currentState.IsCellMustBeVisible(this));
+        RenderSwitch(stateMachine.currentState.IsCellMustBeVisible(this));
     }
 
 
     public override void OnChangeState(State newState)
     {
         stateMachine.ChangeState(newState);
-        renderSwitch(stateMachine.currentState.IsCellMustBeVisible(this));
+        RenderSwitch(stateMachine.currentState.IsCellMustBeVisible(this));
     }
     
     
@@ -70,7 +70,7 @@ public class Cell : Interactable
         _meshRenderer.material = mat;
     }
     
-    public void renderSwitch(bool render)
+    public void RenderSwitch(bool render)
     {
         _meshRenderer.enabled = render;
         visible = _meshRenderer.enabled;

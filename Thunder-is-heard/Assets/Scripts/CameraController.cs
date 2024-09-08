@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
         focusOffset = cameraHeight * 0.7f;
         
         mainCamera = Camera.main;
-        map = GameObject.FindGameObjectWithTag("Map").GetComponent<Map>();
+        map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
         FocusOnPoint(map.centralCell.position);
         FindMovementThreshold();
 

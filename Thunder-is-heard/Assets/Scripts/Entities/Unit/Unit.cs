@@ -5,12 +5,20 @@ using UnityEngine.EventSystems;
 
 public class Unit : Entity, IMovable, IDamageable, IAttack, ITransfer
 {
+    public Skill[] _skills = null;
+
     public override string Type {
 	get
         {
             return "Unit";
         }
 	}
+
+
+    public void SetSkills(Skill[] skills)
+    {
+        _skills = skills;
+    }
     
     public void Move()
     {
@@ -44,16 +52,28 @@ public class Unit : Entity, IMovable, IDamageable, IAttack, ITransfer
 
     public override void OnFocus()
     {
+        base.OnFocus();
         stateMachine.currentState.OnUnitMouseEnter(this);
     }
 
     public override void OnDefocus()
     {
+        base.OnDefocus();
         stateMachine.currentState.OnUnitMouseExit(this);
     }
 
     public override void OnClick()
     {
+        base.OnClick();
         stateMachine.currentState.OnUnitClick(this);
+    }
+
+    public static int GetStaffByUnit(Unit unit)
+    {
+        UnitCacheTable coreUnitTable = Cache.LoadByType<UnitCacheTable>();
+        CacheItem cacheItem = coreUnitTable.GetById(unit.CoreId);
+        UnitCacheItem unitCacheItem = new UnitCacheItem(cacheItem.Fields);
+        ResourcesData gives = unitCacheItem.GetGives();
+        return gives.staff;
     }
 }

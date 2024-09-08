@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class UnitProductions : ItemList
 {
     public List<UnitProductionItem> items;
-    public Transform content;
 
     public string _unitProductionType;
     public string _sourceObjectId;
@@ -30,6 +28,8 @@ public class UnitProductions : ItemList
     public override void FillContent()
     {
         ClearItems();
+        items = new List<UnitProductionItem>();
+
         UnitProductionCacheTable unitProductionTable = Cache.LoadByType<UnitProductionCacheTable>();
         foreach (var keyValuePair in unitProductionTable.Items)
         {
@@ -87,20 +87,5 @@ public class UnitProductions : ItemList
             icon
             );
         return unitProductionComponent;
-    }
-
-    public void ClearItems()
-    {
-        GameObject[] children = content.gameObject.GetComponentsInChildren<Transform>(true)
-            .Where(obj => obj != content)
-            .Select(obj => obj.gameObject)
-            .ToArray();
-
-        foreach (GameObject child in children)
-        {
-            Destroy(child);
-        }
-
-        items = new List<UnitProductionItem>();
     }
 }

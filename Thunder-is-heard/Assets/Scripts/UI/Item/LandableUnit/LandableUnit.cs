@@ -18,9 +18,9 @@ public class LandableUnit: ExposableInventoryItem
     public TMP_Text TmpStaff;
 
 
-    public void Init(string objectId, string objectName, int objectStaff, int objectHealth, int objectDamage, int objectDistance, int objectMobility, int objectCount, Sprite objectIcon = null)
+    public void Init(string inventoryItemId, string objectName, int objectStaff, int objectHealth, int objectDamage, int objectDistance, int objectMobility, int objectCount, Sprite objectIcon = null)
     {
-        _id = objectId; _objName = objectName; _icon = objectIcon; _itemImage.sprite = _icon;
+        _id = inventoryItemId; _objName = objectName; _icon = objectIcon; _itemImage.sprite = _icon;
         InitCoreId();
 
         staff = objectStaff;

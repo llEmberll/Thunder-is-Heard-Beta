@@ -1,6 +1,6 @@
 
 
-using System.Drawing;
+using UnityEngine;
 
 public class HomeState: State
 {
@@ -90,5 +90,17 @@ public class HomeState: State
     public override void OnReplacePreviewObject(ObjectPreview preview)
     {
         preview.ReplaceObjectOnBase();
+    }
+
+    public override int GetMaxStaff()
+    {
+        ResourcesProcessor resourcesProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
+        return resourcesProcessor.resources.maxStaff;
+    }
+
+    public override int GetStaff()
+    {
+        ResourcesProcessor resourcesProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
+        return resourcesProcessor.resources.staff;
     }
 }

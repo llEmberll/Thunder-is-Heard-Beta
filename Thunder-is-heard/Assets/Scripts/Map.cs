@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Map : MonoBehaviour
@@ -112,12 +113,69 @@ public class Map : MonoBehaviour
         return finded;
     }
 
+    public Dictionary<Vector2Int, Cell> GetDisplayedCells()
+    {
+        Dictionary<Vector2Int, Cell> displayedCells = new Dictionary<Vector2Int, Cell>();
+
+        foreach (var pare in Cells)
+        {
+            if (pare.Value.visible)
+            {
+                displayedCells.Add(pare.Key, pare.Value);
+            }
+        }
+
+        return displayedCells;
+    }
+
+    public List<Cell> GetRange(Vector2Int center, int radius, bool ignoreOccypy, Dictionary<Vector2Int, Cell> cellsSet = null)
+    {
+        if (cellsSet == null)
+        {
+            cellsSet = Cells;
+        }
+
+        HashSet<Cell> resultCells = new HashSet<Cell>();
+
+        // Проходим по клеткам в прямоугольнике
+        for (int x = center.x - radius; x <= center.x + radius; x++)
+        {
+            for (int y = center.y - radius; y <= center.y + radius; y++)
+            {
+                // Получаем координаты клетки
+                Vector2Int cellPos = new Vector2Int(x, y);
+                if (cellsSet.ContainsKey(cellPos))
+                {
+                    Cell currentCell = cellsSet[cellPos];
+
+                    // Проверяем, пуста ли клетка или игнорируем занятость
+                    if (!currentCell.occupied || ignoreOccypy)
+                    {
+                        // Добавляем клетку в HashSet
+                        resultCells.Add(currentCell);
+                    }
+                }
+            }
+        }
+
+        // Удаляем центральную клетку из HashSet, если она попала в результат
+        if (resultCells.Contains(cellsSet[center]))
+        {
+            resultCells.Remove(cellsSet[center]);
+        }
+
+        // Возвращаем список найденных клеток в виде массива
+        return resultCells.ToList();
+    }
+
+
     public void Occypy(List<Vector2Int> position)
     {
         Dictionary<Vector2Int, Cell> cells = FindCellsByPosition(position);
         foreach (var item in cells)
         {
             item.Value.Occupy();
+            item.Value.RenderSwitch(false);
         }
     }
 
@@ -162,7 +220,7 @@ public class Map : MonoBehaviour
     {
         foreach (var keyValuePair in Cells)
         {
-            keyValuePair.Value.renderSwitch(true);
+            keyValuePair.Value.RenderSwitch(true);
         }
     }
 
@@ -170,7 +228,7 @@ public class Map : MonoBehaviour
     {
         foreach (var keyValuePair in Cells)
         {
-            keyValuePair.Value.renderSwitch(true);
+            keyValuePair.Value.RenderSwitch(true);
         }
     }
 
@@ -180,7 +238,7 @@ public class Map : MonoBehaviour
         {
             if (Cells.ContainsKey(position))
             {
-                Cells[position].renderSwitch(true);
+                Cells[position].RenderSwitch(true);
             }
         }
     }
@@ -191,7 +249,7 @@ public class Map : MonoBehaviour
         {
             if (Cells.ContainsKey(position))
             {
-                Cells[position].renderSwitch(false);
+                Cells[position].RenderSwitch(false);
             }
         }
     }
@@ -202,7 +260,7 @@ public class Map : MonoBehaviour
         {
             if (!keyValuePair.Value.occupied)
             {
-                keyValuePair.Value.renderSwitch(true);
+                keyValuePair.Value.RenderSwitch(true);
             }
         }
     }
@@ -213,8 +271,98 @@ public class Map : MonoBehaviour
         {
             if (keyValuePair.Value.occupied)
             {
-                keyValuePair.Value.renderSwitch(false);
+                keyValuePair.Value.RenderSwitch(false);
             }
         }
+    }
+
+    public void SetActive(List<Vector2Int> cellsPosition)
+    {
+        foreach (Vector2Int position in cellsPosition)
+        {
+            if (Cells.ContainsKey(position))
+            {
+                Cells[position].gameObject.SetActive(true);
+            }
+        }
+    }
+
+    public void SetInactive(List<Vector2Int> cellsPosition)
+    {
+        foreach (Vector2Int position in cellsPosition)
+        {
+            if (Cells.ContainsKey(position))
+            {
+                Cells[position].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void SetActiveAll()
+    {
+        foreach (var keyValuePair in Cells)
+        {
+            keyValuePair.Value.gameObject.SetActive(true);
+        }
+    }
+
+    public void SetInactiveAll()
+    {
+        foreach (var keyValuePair in Cells)
+        {
+            keyValuePair.Value.gameObject.SetActive(false);
+        }
+    }
+
+    public List<Cell> BuildRoute(Cell startPoint, Cell endPoint, int maxLenght)
+    {
+        Dictionary<Vector2Int, Cell> possibleCells = GetDisplayedCells();
+
+        List<Cell> shortestPath = new List<Cell>();
+        HashSet<Cell> visited = new HashSet<Cell>();
+        List<Cell> currentPath = new List<Cell>();
+
+        FindPath(startPoint, endPoint, maxLenght, visited, currentPath, shortestPath, possibleCells);
+        return shortestPath;
+    }
+
+    private void FindPath(Cell currentCell, Cell endPoint, int maxLenght, HashSet<Cell> visited,
+                          List<Cell> currentPath, List<Cell> shortestPath, Dictionary<Vector2Int, Cell> possibleCells)
+    {
+        if (currentPath.Count == maxLenght)
+        {
+            return; // Длина уже достигнута, выходим из метода
+        }
+
+        currentPath.Add(currentCell);
+        visited.Add(currentCell);
+
+        // Проверка на достижение конечной точки
+        if (currentCell.Equals(endPoint))
+        {
+            if (shortestPath.Count == 0 || currentPath.Count < shortestPath.Count)
+            {
+                shortestPath.Clear();
+                shortestPath.AddRange(currentPath);
+            }
+        }
+        else
+        {
+            // Получаем доступные клетки
+            List<Cell> neighborCells = GetRange(currentCell.position, 1, false, possibleCells);
+
+            foreach (var neighbor in neighborCells)
+            {
+                if (!visited.Contains(neighbor))
+                {
+                    // Рекурсивный вызов для соседних клеток
+                    FindPath(neighbor, endPoint, maxLenght, visited, currentPath, shortestPath, possibleCells);
+                }
+            }
+        }
+
+        // Убираем текущую клетку из пути и полученных клеток
+        visited.Remove(currentCell);
+        currentPath.RemoveAt(currentPath.Count - 1);
     }
 }

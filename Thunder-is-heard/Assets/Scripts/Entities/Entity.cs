@@ -63,6 +63,21 @@ public abstract class Entity : Interactable
         side = value;
     }
 
+    public override void OnFocus()
+    {
+        
+    }
+
+    public override void OnDefocus()
+    {
+
+    }
+
+    public override void OnClick()
+    {
+
+    }
+
     public override void OnChangeState(State newState)
     {
         stateMachine.ChangeState(newState);

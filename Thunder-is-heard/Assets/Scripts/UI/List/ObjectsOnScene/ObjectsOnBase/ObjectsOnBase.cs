@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public abstract class ObjectsOnBase : ItemList, IObjectsOnScene
@@ -10,7 +11,9 @@ public abstract class ObjectsOnBase : ItemList, IObjectsOnScene
         base.Start();
     }
 
-    public abstract Entity FindObjectById(string id);
+    public abstract Entity FindObjectByCoreId(string id);
+    public abstract Entity FindObjectByChildId(string id);
+    public abstract bool IsProperType(string type);
 
     public override void OnClickOutside()
     {

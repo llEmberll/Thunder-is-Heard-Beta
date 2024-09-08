@@ -66,8 +66,7 @@ public abstract class ExposableInventoryItem : InventoryItem
 
         string modelPath = (string)needleItemData.GetField("modelPath") + "/" + Tags.federation;
         Vector2Int size = GetSize(needleItemData).ToVector2Int();
-        GameObject modelPrefab = Resources.Load<GameObject>(modelPath);
-        Transform model = Instantiate(modelPrefab).transform;
+        Transform model = ObjectProcessor.CreateModel(modelPath, 0).transform;
 
         ObjectPreview preview = ObjectPreview.Create();
         preview.Init(_objName, Type, coreId, size, model);
@@ -106,9 +105,9 @@ public abstract class ExposableInventoryItem : InventoryItem
     {
     }
 
-    public void OnObjectExposed(string objId, string objType, Bector2Int[] occypation, int rotation)
+    public void OnObjectExposed(Entity obj)
     {
-        if (objId == coreId && objType == Type)
+        if (obj.CoreId == coreId && obj.Type.Contains(Type))
         {
             if (_count < 2)
             {

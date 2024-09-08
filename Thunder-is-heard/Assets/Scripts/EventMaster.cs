@@ -17,8 +17,13 @@ public class EventMaster: MonoBehaviour
     {
         SceneChanged?.Invoke(newScene);
     }
-    
-    
+
+    public event Action ToggledToBaseMode;
+    public void OnBaseMode()
+    {
+        ToggledToBaseMode?.Invoke();
+    }
+
     public event Action ToggledToBuildMode;
     public void OnBuildMode()
     {
@@ -57,6 +62,18 @@ public class EventMaster: MonoBehaviour
         FightIsStarted?.Invoke();
     }
 
+    public event Action<string> NextTurn;
+    public void OnNextTurn(string side)
+    {
+        NextTurn?.Invoke(side);
+    }
+
+    public event Action<TurnData> TurnExecuted;
+    public void OnExecuteTurn(TurnData turnData)
+    {
+        TurnExecuted?.Invoke(turnData);
+    }
+
     public event Action FightLost;
     public void LoseFigth()
     {
@@ -69,10 +86,10 @@ public class EventMaster: MonoBehaviour
         FightWon?.Invoke();
     }
 
-    public event Action<string, string, Bector2Int[], int> ObjectExposed;
-    public void ExposeObject(string objId, string objType, Bector2Int[] occypaton, int rotation)
+    public event Action<Entity> ObjectExposed;
+    public void ExposeObject(Entity obj)
     {
-        ObjectExposed?.Invoke(objId, objType, occypaton, rotation);
+        ObjectExposed?.Invoke(obj);
     }
 
     public event Action<ObjectPreview> PreviewCreated;
@@ -85,6 +102,12 @@ public class EventMaster: MonoBehaviour
     public void OnDeletePreview()
     {
         PreviewDeleted?.Invoke();
+    }
+
+    public event Action<InventoryCacheItem> InventoryItemAdded;
+    public void OnAddInventoryItem(InventoryCacheItem item)
+    {
+        InventoryItemAdded?.Invoke(item);
     }
 
     public event Action InventoryChanged;
@@ -117,16 +140,16 @@ public class EventMaster: MonoBehaviour
         ResourcesChanged?.Invoke(newResources);
     }
 
-    public event Action<string, string> BaseObjectRemoved;
-    public void OnRemoveBaseObject(string id, string type)
+    public event Action<Entity> BaseObjectRemoved;
+    public void OnRemoveBaseObject(Entity obj)
     {
-        BaseObjectRemoved?.Invoke(id, type);
+        BaseObjectRemoved?.Invoke(obj);
     }
 
-    public event Action<string, string> BattleObjectRemoved;
-    public void OnRemoveBattleObject(string id, string type)
+    public event Action<Entity> BattleObjectRemoved;
+    public void OnRemoveBattleObject(Entity obj)
     {
-        BattleObjectRemoved?.Invoke(id, type);
+        BattleObjectRemoved?.Invoke(obj);
     }
 
     public event Action<Entity> BaseObjectReplaced;
@@ -151,6 +174,30 @@ public class EventMaster: MonoBehaviour
     public void OnObjectExit(Entity obj)
     {
         ExitedOnObject?.Invoke(obj);
+    }
+
+    public event Action<Entity> ClickedOnObject;
+    public void OnObjectClick(Entity obj)
+    {
+        ClickedOnObject?.Invoke(obj);
+    }
+
+    public event Action<Cell> EnteredOnCell;
+    public void OnCellEnter(Cell cell)
+    {
+        EnteredOnCell?.Invoke(cell);
+    }
+
+    public event Action<Cell> ExitedOnCell;
+    public void OnCellExit(Cell cell)
+    {
+        ExitedOnCell?.Invoke(cell);
+    }
+
+    public event Action<Cell> ClickedOnCell;
+    public void OnCellClick(Cell cell)
+    {
+        ClickedOnCell?.Invoke(cell);
     }
 
     public event Action<ProcessOnBaseCacheItem> ProcessOnBaseFinished;
@@ -207,9 +254,5 @@ public class EventMaster: MonoBehaviour
         LandableUnitDefocused?.Invoke(unit);
     }
 
-    public event Action<string> BattleChanged;
-    public void OnChangeBattle(string battleId)
-    {
-        BattleChanged?.Invoke(battleId);
-    }
+    
 }

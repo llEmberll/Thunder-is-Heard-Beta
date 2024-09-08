@@ -23,6 +23,9 @@ public class BasicStage: IStage
 
     public Scenario Scenario { get { return _scenario; } }
 
+
+    public ObjectProcessor _objectProcessor;
+
     public virtual void Init(Scenario stageScenario, List<ICondition> conditionsForPass, List<ICondition> conditionsForFail, UnitOnBattle[] units, BuildOnBattle[] builds)
     {
         SetScenario(stageScenario);
@@ -31,6 +34,11 @@ public class BasicStage: IStage
         SetUnits(units);
         SetBuilds(builds);
         SetCustomProperties();
+    }
+
+    public void InitObjectProcessor()
+    {
+        _objectProcessor = GameObject.FindGameObjectWithTag(Tags.objectProcessor).GetComponent<ObjectProcessor>();
     }
 
     public void SetScenario(Scenario value)
@@ -66,6 +74,11 @@ public class BasicStage: IStage
         _builds = builds;
     }
 
+    public void CreateObjects()
+    {
+        _objectProcessor.CreateObjectsOnBattle(_units, _builds);
+    }
+
     public virtual void SetCustomProperties()
     {
 
@@ -73,6 +86,7 @@ public class BasicStage: IStage
 
     public void OnStart()
     {
+        CreateObjects();
     }
 
     public void OnProcess()

@@ -1,95 +1,50 @@
 ﻿{
-  "name": "PlayerUnit",
   "items": {
-    "7564f949-cceb-4b33-9a7b-f160809c3a2d": {
+    "c1e921ea-3934-49e6-86ba-eb5bb9768934": {
       "fields": {
-        "externalId": "7564f949-cceb-4b33-9a7b-f160809c3a2d",
+        "externalId": "c1e921ea-3934-49e6-86ba-eb5bb9768934",
         "description": "",
-        "rotation": 0,
-        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-        "name": "Assaulters",
-        "position": [
-          {
-            "x": 4,
-            "y": 2
-          }
-        ]
-      }
-    },
-    "4bd45c9b-7f02-4f43-a375-017b5f40f6a0": {
-      "fields": {
-        "externalId": "4bd45c9b-7f02-4f43-a375-017b5f40f6a0",
-        "description": "",
-        "rotation": 180,
+        "rotation": 270,
         "coreId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
         "name": "Vortex",
         "position": [
           {
-            "x": 7,
+            "x": 12,
             "y": 1
           }
         ]
       }
     },
-    "f1b1bfc3-e669-4229-86f0-b99dfc1352f5": {
+    "64428332-ccfa-4eff-99ef-24295f5c03dd": {
       "fields": {
-        "externalId": "f1b1bfc3-e669-4229-86f0-b99dfc1352f5",
-        "description": "",
-        "rotation": 0,
-        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-        "name": "Assaulters",
-        "position": [
-          {
-            "x": 2,
-            "y": 4
-          }
-        ]
-      }
-    },
-    "d2ddd06b-3064-4da5-83da-00fbd08da61c": {
-      "fields": {
-        "externalId": "d2ddd06b-3064-4da5-83da-00fbd08da61c",
-        "description": "",
-        "rotation": 0,
-        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-        "name": "Assaulters",
-        "position": [
-          {
-            "x": 2,
-            "y": 4
-          }
-        ]
-      }
-    },
-    "119f32b1-3d93-4447-b6ed-025863bfb5f9": {
-      "fields": {
-        "externalId": "119f32b1-3d93-4447-b6ed-025863bfb5f9",
+        "externalId": "64428332-ccfa-4eff-99ef-24295f5c03dd",
         "description": "",
         "rotation": 270,
         "coreId": "035655f8-a347-4057-87cc-83385fa20660",
         "name": "Osoka",
         "position": [
           {
-            "x": 2,
-            "y": 3
+            "x": 11,
+            "y": 2
           }
         ]
       }
     },
-    "3fab6e1a-0fcd-49c4-8599-d0a4e798fdc9": {
+    "182f03c4-0acc-464f-bd35-64f63c4d166d": {
       "fields": {
-        "externalId": "3fab6e1a-0fcd-49c4-8599-d0a4e798fdc9",
+        "externalId": "182f03c4-0acc-464f-bd35-64f63c4d166d",
         "description": "",
-        "rotation": 270,
-        "coreId": "035655f8-a347-4057-87cc-83385fa20660",
-        "name": "Osoka",
+        "rotation": 0,
+        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "name": "Assaulters",
         "position": [
           {
-            "x": 2,
-            "y": 3
+            "x": 3,
+            "y": 4
           }
         ]
       }
     }
-  }
+  },
+  "name": "PlayerUnit"
 }

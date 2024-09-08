@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8593287593471980594}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5772684, y: -0.45800585, z: 1.9310818}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,9 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fea16c3cef5f6d4389f2bc853423f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mission: {fileID: 0}
-  scenario:
-    landableCells: []
+  _battleId: 
+  _scenario:
+    _landableCells: []
+    _landingMaxStaff: 0
     map: {fileID: 0}
-    terrain: {fileID: 0}
-    currentStageIndex: 0
+    _units: []
+    _builds: []
+    _currentStageIndex: 0
+    _isLanded: 0

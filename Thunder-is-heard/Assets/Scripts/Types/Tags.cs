@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
 
 public static class Tags
 {
@@ -34,5 +32,6 @@ public static class Tags
     public static string costList = "Cost";
 
     public static string resourcesProcessor = "ResourcesProcessor";
+    public static string objectProcessor = "ObjectProcessor";
     public static string fightProcessor = "FightProcessor";
 }

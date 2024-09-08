@@ -1,8 +1,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using UnityEngine;
 
 [System.Serializable]
 public class BattleCacheItem : CacheItem
@@ -37,6 +35,11 @@ public class BattleCacheItem : CacheItem
         if (!objFields.ContainsKey("turn"))
         {
             SetTurn(Sides.federation);
+        }
+
+        if (!objFields.ContainsKey("turnIndex"))
+        {
+            SetTurnIndex(0);
         }
     }
 
@@ -119,6 +122,23 @@ public class BattleCacheItem : CacheItem
     public void SetTurn(string value)
     {
         SetField("turn", value);
+    }
+
+    public int GetTurnIndex()
+    {
+        object value = GetField("turnIndex");
+
+        if (value == null)
+        {
+            return 0;
+        }
+
+        return Convert.ToInt32(value);
+    }
+
+    public void SetTurnIndex(int value)
+    {
+        SetField("turnIndex", value);
     }
 
     public override CacheItem Clone()

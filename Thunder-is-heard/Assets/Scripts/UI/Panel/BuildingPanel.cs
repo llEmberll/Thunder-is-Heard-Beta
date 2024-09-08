@@ -6,9 +6,9 @@ public class BuildingPanel : Panel
 {
     public void Start()
     {
-        this.gameObject.SetActive(false);
-
         EventMaster.current.ToggledToBuildMode += Show;
         EventMaster.current.ToggledOffBuildMode += Hide;
+
+        Hide();
     }
 }

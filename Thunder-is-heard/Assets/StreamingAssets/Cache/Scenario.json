@@ -10,8 +10,60 @@
           "x": 6,
           "y": 6
         },
-        "units": [],
-        "builds": [],
+        "units": [
+          {
+            "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+            "idOnBattle": "eb12361a-3e81-4402-8b83-0a29e048d7fb",
+            "position": {
+              "x": 0,
+              "y": 1
+            },
+            "rotation": 0,
+            "health": 3,
+            "side": "Federation",
+            "skillData": null
+          },
+          {
+            "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+            "idOnBattle": "03a65484-e0c4-4bec-a8eb-277c22a53ef4",
+            "position": {
+              "x": 2,
+              "y": 2
+            },
+            "rotation": 180,
+            "health": 3,
+            "side": "Empire",
+            "skillData": null
+          }
+        ],
+        "builds": [
+          {
+            "coreId": "64a4568c-bfaf-408e-9537-8e489ccaca56",
+            "idOnBattle": "8f338821-eaf1-4670-8633-fe57ca21ecd0",
+            "position": [
+              {
+                "x": 3,
+                "y": 3
+              },
+              {
+                "x": 3,
+                "y": 4
+              },
+              {
+                "x": 4,
+                "y": 3
+              },
+              {
+                "x": 4,
+                "y": 4
+              }
+            ],
+            "rotation": 0,
+            "health": 3,
+            "side": "Empire",
+            "workStatus": "Idle"
+          }
+        ],
         "landing": {
           "zone": [
             {

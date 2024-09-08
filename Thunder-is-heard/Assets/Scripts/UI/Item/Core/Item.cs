@@ -16,6 +16,12 @@ public abstract class Item : UIElement
 
     public abstract string Type { get; }
 
+
+    public virtual void Awake()
+    {
+        InitListeners();
+    }
+
     public virtual void Init(string itemId, string itemName, Sprite itemIcon = null)
     {
         _id = itemId; _objName = itemName; _icon = itemIcon;
@@ -24,9 +30,19 @@ public abstract class Item : UIElement
         UpdateUI();
     }
 
-
-    public virtual void Awake()
+    public virtual void InitListeners()
     {
+        EnableListeners();
+    }
+
+    public virtual void EnableListeners()
+    {
+
+    }
+
+    public virtual void DisableListeners()
+    {
+
     }
 
     public abstract void Interact();

@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -72,7 +73,7 @@ public class ObjectPreview: MonoBehaviour
         _baseState = StateConfig.statesByScene[SceneManager.GetActiveScene().name];
         if (_baseState.stateName == "Fight")
         {
-            _battleId = GameObject.FindWithTag(Tags.fightProcessor).GetComponent<FightProcessor>().GetBattleId();
+            _battleId = FightSceneLoader.parameters._battleId;
         }
     }
 
@@ -231,10 +232,35 @@ public class ObjectPreview: MonoBehaviour
         if (buildedObjectOnScene != null)
         {
             positionForCheckOnFree = occypation.Except(buildedObjectOnScene.GetComponent<Entity>().occypiedPoses).ToList();
+            exposableStatus = map.isPositionFree(positionForCheckOnFree);
         }
-        exposableStatus = map.isPositionFree(positionForCheckOnFree);
+        else
+        {
+            exposableStatus = map.isPositionFree(positionForCheckOnFree) && !IsExceedingMaxStaff();
+        }
+
+        
         Material newMaterial = exposableStatus ? materialAvailable : materialUnvailable;
         SetMaterialRecursive(model.gameObject, newMaterial);
+    }
+
+    public bool IsExceedingMaxStaff()
+    {
+        string objectsTableName = type.Replace("Player", "");
+        CacheTable objectsTable = Cache.LoadByName(objectsTableName);
+        CacheItem cacheItem = objectsTable.GetById(id);
+        if (cacheItem == null)
+        {
+            Debug.Log("В таблице " + objectsTable.Name + " не найдено объекта с id = " + id);
+
+            return true;
+        }
+
+        object resourcesDataAsObject = cacheItem.GetField("gives");
+        ResourcesData resourcesData = JsonConvert.DeserializeObject<ResourcesData>(resourcesDataAsObject.ToString());
+
+        int staff = resourcesData.staff;
+        return (_baseState.GetStaff() + staff) > _baseState.GetMaxStaff();
     }
     
     public void Move(Vector2Int newRoot)

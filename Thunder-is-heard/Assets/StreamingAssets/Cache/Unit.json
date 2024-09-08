@@ -44,7 +44,8 @@
         },
         "iconPath": "",
         "name": "Assaulters",
-        "modelPath": "Prefabs/Entity/Units/Assaulters"
+        "modelPath": "Prefabs/Entity/Units/Assaulters",
+        "skills": []
       }
     },
     "035655f8-a347-4057-87cc-83385fa20660": {
@@ -90,7 +91,8 @@
         },
         "iconPath": "",
         "name": "Osoka",
-        "modelPath": "Prefabs/Entity/Units/Osoka"
+        "modelPath": "Prefabs/Entity/Units/Osoka",
+        "skills": []
       }
     },
     "a480c091-6b22-43f2-b26d-bbd3d2c2905b": {
@@ -136,7 +138,8 @@
         },
         "iconPath": "",
         "name": "Vortex",
-        "modelPath": "Prefabs/Entity/Units/Vortex"
+        "modelPath": "Prefabs/Entity/Units/Vortex",
+        "skills": []
       }
     }
   }

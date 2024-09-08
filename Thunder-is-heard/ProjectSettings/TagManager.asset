@@ -37,6 +37,8 @@ TagManager:
   - ProductsNotifications
   - MissionDetalization
   - LandableUnits
+  - TurnController
+  - SkillController
   layers:
   - Default
   - TransparentFX

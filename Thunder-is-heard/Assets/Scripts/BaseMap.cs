@@ -80,7 +80,7 @@ public class BaseMap : Map
         UnitOnBattle[] units = new UnitOnBattle[]
         {
             new UnitOnBattle("124", new Bector2Int(new Vector2Int(0, 0)), 0, 1, Sides.empire, "987"),
-            new UnitOnBattle("125", new Bector2Int(new Vector2Int(0, 1)), 0, 1, Sides.federation, "986" ,new SkillOnBattle("224", 1, false))
+            new UnitOnBattle("125", new Bector2Int(new Vector2Int(0, 1)), 0, 1, Sides.federation, "986" , new SkillOnBattle[] { new SkillOnBattle("224", 1, false) } )
         };
 
         Bector2Int[] positionForBuild1 = new Bector2Int[] {new Bector2Int(new Vector2Int(0, 0))};

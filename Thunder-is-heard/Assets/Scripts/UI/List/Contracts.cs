@@ -6,7 +6,6 @@ using UnityEngine;
 public class Contracts : ItemList
 {
     public List<ContractItem> items;
-    public Transform content;
 
     public string _contractType;
     public string _sourceObjectId;
@@ -31,7 +30,9 @@ public class Contracts : ItemList
     public override void FillContent()
     {
         ClearItems();
-         ContractCacheTable contractTable = Cache.LoadByType<ContractCacheTable>();
+        items = new List<ContractItem>();
+
+        ContractCacheTable contractTable = Cache.LoadByType<ContractCacheTable>();
         foreach (var keyValuePair in contractTable.Items)
         {
             ContractCacheItem contractData = new ContractCacheItem(keyValuePair.Value.Fields);
@@ -76,20 +77,5 @@ public class Contracts : ItemList
             icon
             );
         return contractComponent;
-    }
-
-    public void ClearItems()
-    {
-        GameObject[] children = content.gameObject.GetComponentsInChildren<Transform>(true)
-            .Where(obj => obj != content)
-            .Select(obj => obj.gameObject)
-            .ToArray();
-
-        foreach (GameObject child in children)
-        {
-            Destroy(child);
-        }
-
-        items = new List<ContractItem>();
     }
 }

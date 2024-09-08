@@ -1,4 +1,5 @@
 
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,14 +7,21 @@ using UnityEngine.EventSystems;
 public class ItemList : UIElement, IFillable
 {
     public bool focusOn = false;
+    public Transform content;
+
+
+    public virtual void Awake()
+    {
+
+    }
 
     public virtual void Start()
     {
-        OnBuildModeEnable();
+        InitListeners();
         FillContent();
     }
 
-    public void Update()
+    public virtual void Update()
     {
         if (IsClickedOutside())
         {
@@ -61,9 +69,32 @@ public class ItemList : UIElement, IFillable
         return itemObject;
     }
 
-    public virtual void OnBuildModeEnable()
+    public virtual void ClearItems()
+    {
+        GameObject[] children = content.gameObject.GetComponentsInChildren<Transform>(true)
+            .Where(obj => obj != content)
+            .Select(obj => obj.gameObject)
+            .ToArray();
+
+        foreach (GameObject child in children)
+        {
+            Destroy(child);
+        }
+    }
+
+    public virtual void InitListeners()
+    {
+        EnableListeners();
+    }
+
+    public virtual void EnableListeners()
     {
         EventMaster.current.ToggledToBuildMode += Hide;
+    }
+
+    public virtual void DisableListeners()
+    {
+        EventMaster.current.ToggledToBuildMode -= Hide;
     }
 
     public override void OnPointerEnter(PointerEventData data)

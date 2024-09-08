@@ -8,14 +8,19 @@ public class ObjectProcessor : MonoBehaviour
 {
     public Map map;
 
-    public void Start()
+
+    public void Awake()
     {
         map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
-
         EventMaster.current.ObjectOnBaseWorkStatusChanged += ChangeObjectOnBaseWorkStatus;
     }
 
-    public static void PutSelectedObjectOnBattleToInventory(string battleId)
+    public void Start()
+    {
+     
+    }
+
+    public static void PutSelectedObjectOnBattleToInventory()
     {
         ObjectPreview preview = FindObjectOfType<ObjectPreview>();
         if (IsSomeObjectSelected(preview))
@@ -23,7 +28,7 @@ public class ObjectProcessor : MonoBehaviour
             Debug.Log("selected object putted to inv");
 
             AddGameObjectToInventory(preview.buildedObjectOnScene);
-            RemoveObjectFromBattle(battleId, preview.buildedObjectOnScene);
+            RemoveObjectFromBattle(FightSceneLoader.parameters._battleId, preview.buildedObjectOnScene);
             preview.buildedObjectOnScene = null;
             preview.Cancel();
         }
@@ -68,12 +73,13 @@ public class ObjectProcessor : MonoBehaviour
         inventory.Add(itemsForAdd);
         Cache.Save(inventory);
 
+        EventMaster.current.OnAddInventoryItem(newItem);
         EventMaster.current.OnChangeInventory();
     }
 
     public static void AddGameObjectToInventory(GameObject obj)
     {
-        CacheItem coreObjectData = Cache.GetBaseObjectCoreData(obj);
+        CacheItem coreObjectData = Cache.GetObjectCoreData(obj);
         if (coreObjectData == null)
         {
             Debug.Log("No coreObjectData => INVALID INPUT");
@@ -146,13 +152,13 @@ public class ObjectProcessor : MonoBehaviour
         Cache.Save(battleTable);
         Destroy(obj);
 
-        EventMaster.current.OnRemoveBattleObject(entity.coreId, entity.Type);
+        EventMaster.current.OnRemoveBattleObject(entity);
         EventMaster.current.OnChangeBattleObjects();
     }
 
     public static  void RemoveObjectFromBase(GameObject obj)
     {
-        CacheItem objectData = Cache.GetBaseObjectData(obj);
+        CacheItem objectData = Cache.GetBasePlayerObjectData(obj);
         if (objectData == null)
         {
             Debug.Log("No BaseObjectData => INVALID INPUT");
@@ -173,8 +179,62 @@ public class ObjectProcessor : MonoBehaviour
             DeleteProductsNotificationByItemId(notificationByObject.GetExternalId());
         }
 
-        EventMaster.current.OnRemoveBaseObject(entity.coreId, entity.Type);
+        EventMaster.current.OnRemoveBaseObject(entity);
         EventMaster.current.OnChangeBaseObjects();
+    }
+
+    public void CreateObjectsOnBattle(UnitOnBattle[] unitDatas, BuildOnBattle[] buildDatas)
+    {
+        CreateUnitsOnBattle(unitDatas);
+        CreateBuildsOnBattle(buildDatas);
+    }
+
+    public void CreateUnitsOnBattle(UnitOnBattle[] units)
+    {
+        foreach (UnitOnBattle unit in units)
+        {
+            CacheItem currentCacheItem = Cache.LoadByType<UnitCacheTable>().GetById(unit.coreId);
+            if (currentCacheItem == null) continue;
+            UnitCacheItem currentCoreUnitData = new UnitCacheItem(currentCacheItem.Fields);
+
+            Transform model = CreateModel(currentCoreUnitData.GetModelPath() + "/" + unit.side, unit.rotation).transform;
+
+            CreateObjectOnBattle(
+                battleId: FightSceneLoader.parameters._battleId,
+                coreId: unit.coreId,
+                type: "Unit",
+                model: model,
+                objName: currentCoreUnitData.GetName(),
+                size: currentCoreUnitData.GetSize().ToVector2Int(),
+                occypation: new List<Vector2Int>() { unit.position.ToVector2Int() },
+                unit.health,
+                unit.side
+                );
+        }
+    }
+
+    public void CreateBuildsOnBattle(BuildOnBattle[] builds)
+    {
+        foreach (BuildOnBattle build in builds)
+        {
+            CacheItem currentCacheItem = Cache.LoadByType<BuildCacheTable>().GetById(build.coreId);
+            if (currentCacheItem == null) continue;
+            BuildCacheItem currentCoreBuildData = new BuildCacheItem(currentCacheItem.Fields);
+
+            Transform model = CreateModel(currentCoreBuildData.GetModelPath() + build.side, build.rotation).transform;
+
+            CreateObjectOnBattle(
+                battleId: FightSceneLoader.parameters._battleId,
+                coreId: build.coreId,
+                type: "Build",
+                model: model,
+                objName: currentCoreBuildData.GetName(),
+                size: currentCoreBuildData.GetSize().ToVector2Int(),
+                occypation: Bector2Int.MassiveToVector2Int(build.position).ToList(),
+                build.health,
+                build.side
+                );
+        }
     }
 
     public void CreateObjectOnBattle(string battleId, string coreId, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation, int? currentHealth = null, string side = null)
@@ -264,12 +324,7 @@ public class ObjectProcessor : MonoBehaviour
                 side
                 );
 
-            EventMaster.current.ExposeObject(
-            coreId,
-            type,
-            Bector2Int.GetVector2IntListAsBector(occypation),
-            entity.GetComponent<Entity>().rotation
-            );
+            EventMaster.current.ExposeObject(entity.GetComponent<Entity>());
             EventMaster.current.OnChangeBattleObjects();
         }
     }
@@ -362,12 +417,7 @@ public class ObjectProcessor : MonoBehaviour
             throw new System.Exception("Неожиданный тип объекта: " + type);
         }
 
-        EventMaster.current.ExposeObject(
-            coreId,
-            type,
-            Bector2Int.GetVector2IntListAsBector(occypation),
-            entity.GetComponent<Entity>().rotation
-            );
+        EventMaster.current.ExposeObject(entity.GetComponent<Entity>());
         EventMaster.current.OnChangeBaseObjects();
 
     }
@@ -398,100 +448,6 @@ public class ObjectProcessor : MonoBehaviour
         return entity;
     }
 
-    public void InitObjectOnBattle(
-        string coreId, 
-        string idOnBattle, 
-        string type, 
-        Transform model, 
-        string objName, 
-        Vector2Int size, 
-        List<Vector2Int> occypation,
-        int currentHealth, 
-        string workStatus,
-        string side
-        )
-    {
-        Vector2Int rootPoint = occypation.First();
-        ObjectsOnFight objectsPool = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]).GetComponent<ObjectsOnFight>();
-
-        GameObject entity = null;
-        if (type.Contains("Build"))
-        {
-            BuildCacheTable coreBuildDatas = Cache.LoadByType<BuildCacheTable>();
-            CacheItem coreItemData = coreBuildDatas.GetById(coreId);
-            BuildCacheItem coreBuildData = new BuildCacheItem(coreItemData.Fields);
-            int health = coreBuildData.GetHealth();
-            int damage = coreBuildData.GetDamage();
-            int distance = coreBuildData.GetDistance();
-            string interactionComponentName = coreBuildData.GetInteractionComponentName();
-            string interactionComponentType = coreBuildData.GetInteractionComponentType();
-
-            entity = CreateBuildObject(rootPoint, objName, objectsPool.transform);
-
-            AddAndPrepareBuildComponent(
-                entity,
-                model,
-                coreId,
-                idOnBattle,
-                objName,
-                size,
-                occypation.ToArray(),
-                health,
-                currentHealth,
-                damage,
-                distance,
-                side,
-                interactionComponentName,
-                interactionComponentType,
-                workStatus
-                );
-        }
-
-        else if (type.Contains("Unit"))
-        {
-            UnitCacheTable coreUnitDatas = Cache.LoadByType<UnitCacheTable>();
-            CacheItem coreItemData = coreUnitDatas.GetById(coreId);
-            UnitCacheItem coreUnitData = new UnitCacheItem(coreItemData.Fields);
-            int health = coreUnitData.GetHealth();
-            int damage = coreUnitData.GetDamage();
-            int distance = coreUnitData.GetDistance();
-            int mobility = coreUnitData.GetMobility();
-
-            entity = CreateUnitObject(rootPoint, objName, objectsPool.transform);
-
-            AddAndPrepareUnitComponent(
-                entity,
-                model,
-                coreId,
-                idOnBattle,
-                objName,
-                size,
-                occypation.ToArray(),
-                health,
-                currentHealth,
-                damage,
-                distance,
-                mobility,
-                side
-                );
-        }
-
-        else
-        {
-            throw new System.Exception("Неожиданный тип объекта: " + type);
-        }
-
-        model.SetParent(entity.transform);
-
-        map.Occypy(occypation);
-        EventMaster.current.ExposeObject(
-            coreId,
-            type,
-            Bector2Int.GetVector2IntListAsBector(occypation),
-            entity.GetComponent<Entity>().rotation
-            );
-    }
-
     public static GameObject CreateBuildObject(Vector2Int position, string name, Transform parent)
     {
         var buildPrefab = Resources.Load<GameObject>(Config.resources["emptyPrefab"]);
@@ -518,34 +474,24 @@ public class ObjectProcessor : MonoBehaviour
         return obj;
     }
 
-    public static GameObject CreateBuildModel(string modelPath, int rotation, Transform parent)
+    public static GameObject CreateModel(string modelPath, int rotation, Transform parent = null)
     {
-        GameObject buildModelPrefab = Resources.Load<GameObject>(modelPath);
+        GameObject modelPrefab = Resources.Load<GameObject>(modelPath);
 
-        Debug.Log("create build, rotation: " + rotation);
+        Vector3 position = modelPrefab.transform.position;
+        if (parent != null)
+        {
+            position += parent.transform.position;
+        }
 
-        GameObject buildModel = Instantiate(
-            buildModelPrefab, buildModelPrefab.transform.position + parent.transform.position,
+        GameObject model = Instantiate(
+            modelPrefab, position,
             Quaternion.Euler(new Vector3(0, rotation, 0)),
             parent
             );
-        buildModel.name = "Model";
-        return buildModel;
-    }
 
-    public static GameObject CreateUnitModel(string modelPath, int rotation, Transform parent)
-    {
-        GameObject unitModelPrefab = Resources.Load<GameObject>(modelPath);
-
-        Debug.Log("create build, rotation: " + rotation);
-
-        GameObject unitModel = Instantiate(
-            unitModelPrefab, unitModelPrefab.transform.position + parent.transform.position,
-            Quaternion.Euler(new Vector3(0, rotation, 0)),
-            parent
-            );
-        unitModel.name = "Model";
-        return unitModel;
+        model.name = "Model";
+        return model;
     }
 
     public static GameObject CreateProductsNotificationObject(Vector2Int position, string name, Transform parent)
@@ -621,7 +567,7 @@ public class ObjectProcessor : MonoBehaviour
         entity.SetOccypation(newPosition);
         map.Occypy(newPosition);
 
-        CacheItem baseObjectData = Cache.GetBaseObjectData(obj);
+        CacheItem baseObjectData = Cache.GetBasePlayerObjectData(obj);
 
         CacheTable baseObjectsTable = Cache.LoadByName("Player" + entity.Type);
         baseObjectData.SetField("position", Bector2Int.GetVector2IntListAsBector(newPosition));

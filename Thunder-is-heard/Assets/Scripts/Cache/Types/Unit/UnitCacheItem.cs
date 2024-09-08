@@ -53,6 +53,11 @@ public class UnitCacheItem : CacheItem
         {
             SetIconPath("");
         }
+
+        if (!objFields.ContainsKey("skills"))
+        {
+            SetSkills(new string[] { });
+        }
     }
 
     public string? GetModelPath()
@@ -177,6 +182,22 @@ public class UnitCacheItem : CacheItem
     public void SetMobility(int value)
     {
         SetField("mobility", value);
+    }
+
+    public string[] GetSkills()
+    {
+        object value = GetField("skills");
+        if (value == null)
+        {
+            return new string[] { };
+        }
+
+        return JsonConvert.DeserializeObject<string[]>(value.ToString());
+    }
+
+    public void SetSkills(string[] value)
+    {
+        SetField("skills", value);
     }
 
     public override CacheItem Clone()

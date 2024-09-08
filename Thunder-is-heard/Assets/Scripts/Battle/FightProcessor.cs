@@ -11,7 +11,11 @@ public class FightProcessor : MonoBehaviour
     public Scenario _scenario;
     public Scenario Scenario { get { return _scenario; } }
 
-    public void Start()
+
+    public ObjectProcessor _objectProcessor;
+
+
+    public void Awake()
     {
         Init();
     }
@@ -24,7 +28,37 @@ public class FightProcessor : MonoBehaviour
 
         EnableListeners();
 
+        InitObjectProcessor();
+    }
+
+    public void EnableListeners()
+    {
+        EventMaster.current.FightLost += Defeat;
+        EventMaster.current.FightWon += Victory;
+        EventMaster.current.FightIsStarted += StartFight;
+        EventMaster.current.BattleObjectsChanged += ReloadBattleData;
+
+        EventMaster.current.TurnExecuted += ExecuteTurn;
+    }
+
+    public void DisableListeners()
+    {
+        EventMaster.current.FightLost -= Defeat;
+        EventMaster.current.FightWon -= Victory;
+        EventMaster.current.FightIsStarted -= StartFight;
+        EventMaster.current.BattleObjectsChanged -= ReloadBattleData;
+
+        EventMaster.current.TurnExecuted -= ExecuteTurn;
+    }
+
+    public void Start()
+    {
         ContinueFight();
+    }
+
+    public void InitObjectProcessor()
+    {
+        _objectProcessor = GameObject.FindGameObjectWithTag(Tags.objectProcessor).GetComponent<ObjectProcessor>();
     }
 
     public void InitBattleData(string battleId)
@@ -33,6 +67,24 @@ public class FightProcessor : MonoBehaviour
         BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
         CacheItem cacheItem = battleTable.GetById(battleId);
         _battleData = new BattleCacheItem(cacheItem.Fields);
+    }
+
+    public void ChangeSideTurn()
+    {
+        Dictionary<string, string> newTurnByCurrentTurn = new Dictionary<string, string>()
+        {
+            {Sides.federation, Sides.empire },
+            {Sides.empire, Sides.neutral },
+            {Sides.neutral, Sides.federation },
+        };
+
+        string newTurn = newTurnByCurrentTurn[_battleData.GetTurn()];
+        _battleData.SetTurn(newTurn);
+    }
+
+    public void IncrementTurnIndex()
+    {
+        _battleData.SetTurnIndex(_battleData.GetTurnIndex() + 1);
     }
 
     public void ConstructScenario()
@@ -66,26 +118,12 @@ public class FightProcessor : MonoBehaviour
         map.Init(mapSize, terrainPath);
 
         Scenario.Init(map, scenarioUnits, scenarioBuilds, landingCells, landingMaxStaff, stages, stageIndex, isLanded);
+        
     }
 
-    public void EnableListeners()
+    public void ReloadBattleData()
     {
-        EventMaster.current.FightLost += Defeat;
-        EventMaster.current.FightWon += Victory;
-        EventMaster.current.FightIsStarted += StartFight;
-        EventMaster.current.StartLanding += Landing;
-        EventMaster.current.BattleChanged += ReloadBattleData;
-    }
-
-    public void DisableListeners()
-    {
-        EventMaster.current.FightLost -= Defeat;
-        EventMaster.current.FightWon -= Victory;
-    }
-
-    public void ReloadBattleData(string battleId)
-    {
-        InitBattleData(battleId);
+        InitBattleData(_battleId);
     }
 
     public string GetBattleId()
@@ -93,23 +131,16 @@ public class FightProcessor : MonoBehaviour
         return _battleId;
     }
 
-    public void Landing(List<Vector2Int> landableCells, int landingMaxStaff)
-    {
-        Scenario.Map.Display(landableCells);
-        //TODO open landing panel
-        //TODO switch state for building
-    }
-
     public void ContinueFight()
     {
+        Debug.Log("FightProcessor: continue fight");
+
         Scenario.Begin();
     }
 
     public void StartFight()
     {
-        Scenario.Map.HideAll();
-        //TODO hide landing panel
-        //TODO return to fight state
+        EventMaster.current.OnBaseMode();
 
         Scenario._isLanded = true;
         Scenario.Begin();
@@ -117,7 +148,33 @@ public class FightProcessor : MonoBehaviour
 
     public void NextTurn()
     {
+        UpdateEffects();
+
+        ChangeSideTurn();
+        IncrementTurnIndex();
+
+        EventMaster.current.OnNextTurn(_battleData.GetTurn());
         Scenario.OnNextTurn();
+    }
+
+    public void ExecuteTurn(TurnData turnData)
+    {
+        //Логика реализации выбранного хода с обработкой скил-контроллера
+        //Обновить _battleData
+
+        NextTurn();
+    }
+
+    public void ExecuteSkill()
+    {
+        //Логика использования скила
+        //Обновить _battleData
+    }
+
+    public void UpdateEffects()
+    {
+        // Обновить все эффекты на юнитах(например от скиллов) согласно кд и условиям прекращения или продолжения эффекта.
+        // Наложить заново эффект от пассивных скиллов если условия соблюдаются
     }
 
     public void Defeat()

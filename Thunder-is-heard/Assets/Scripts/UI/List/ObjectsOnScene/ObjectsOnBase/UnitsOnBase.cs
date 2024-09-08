@@ -4,21 +4,67 @@ using UnityEngine;
 
 public class UnitsOnBase : ObjectsOnBase
 {
-    public Dictionary<string, Unit> items;
+    [SerializeField] public Dictionary<string, Unit> items = new Dictionary<string, Unit>();
 
-    public override void OnBuildModeEnable()
+
+    public override void Awake()
     {
+        
+    }
+
+    public override void Start()
+    {
+        this.content = this.transform;
+        base.Start();
+    }
+
+    public override void EnableListeners()
+    {
+        EventMaster.current.BaseObjectRemoved += OnBaseObjectRemoved;
+        EventMaster.current.ObjectExposed += OnBaseObjectExposed;
+    }
+
+    public override void DisableListeners()
+    {
+        EventMaster.current.BaseObjectRemoved -= OnBaseObjectRemoved;
+        EventMaster.current.ObjectExposed -= OnBaseObjectExposed;
+    }
+
+    public void OnBaseObjectRemoved(Entity obj)
+    {
+        if (!IsProperType(obj.Type)) return;
+        if (!items.ContainsKey(obj.ChildId)) return;
+        Destroy(items[obj.ChildId]);
+        items.Remove(obj.ChildId);
+    }
+
+    public void OnBaseObjectExposed(Entity obj)
+    {
+        if (!IsProperType(obj.Type)) return;
+        if (items.ContainsKey(obj.ChildId)) return;
+        items.Add(obj.ChildId, obj.gameObject.GetComponent<Unit>());
+    }
+
+    public override bool IsProperType(string type)
+    {
+        return type.Contains("Unit");
+    }
+
+    public void UpdateObjects()
+    {
+        Debug.Log("Update unit objects");
+
+        FillContent();
     }
 
     public override void FillContent()
     {
-        base.FillContent();
-
         FillUnits();
     }
 
     public void FillUnits()
     {
+        ClearItems();
         items = new Dictionary<string, Unit>();
 
         PlayerUnitCacheTable playerUnitsTable = Cache.LoadByType<PlayerUnitCacheTable>();
@@ -49,7 +95,7 @@ public class UnitsOnBase : ObjectsOnBase
 
 
         GameObject unitObj = ObjectProcessor.CreateUnitObject(position[0].ToVector2Int(), name, this.transform);
-        GameObject unitModel = ObjectProcessor.CreateUnitModel(modelPath, rotation, unitObj.transform);
+        GameObject unitModel = ObjectProcessor.CreateModel(modelPath, rotation, unitObj.transform);
 
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());
 
@@ -68,14 +114,29 @@ public class UnitsOnBase : ObjectsOnBase
             mobility, 
             Sides.federation
             );
+
+        items.Add(childId, unitObj.GetComponent<Unit>());
     }
 
-    public override Entity FindObjectById(string id)
+    public override Entity FindObjectByCoreId(string id)
     {
         for (int i = 0; i < transform.childCount; i++)
         {
             Unit childEntity = transform.GetChild(i).GetComponent<Unit>();
             if (childEntity != null && childEntity.CoreId == id)
+            {
+                return childEntity;
+            }
+        }
+        return null;
+    }
+
+    public override Entity FindObjectByChildId(string id)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Unit childEntity = transform.GetChild(i).GetComponent<Unit>();
+            if (childEntity != null && childEntity.ChildId == id)
             {
                 return childEntity;
             }
