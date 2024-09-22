@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 
@@ -12,6 +11,12 @@ public class Bector2Int
     {
         x = vector.x; 
         y = vector.y;
+    }
+
+    public Bector2Int(int xValue, int yValue)
+    {
+        x = xValue;
+        y = yValue;
     }
 
     public Vector2Int ToVector2Int()

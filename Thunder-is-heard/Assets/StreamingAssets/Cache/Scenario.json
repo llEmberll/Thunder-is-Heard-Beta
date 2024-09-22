@@ -19,9 +19,14 @@
               "y": 1
             },
             "rotation": 0,
+            "maxHealth": 3,
             "health": 3,
+            "damage": 1,
+            "distance": 2,
+            "mobility": 2,
             "side": "Federation",
-            "skillData": null
+            "skillsData": null,
+            "effectsData":  null
           },
           {
             "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
@@ -31,9 +36,14 @@
               "y": 2
             },
             "rotation": 180,
+            "maxHealth": 3,
             "health": 3,
+            "damage": 1,
+            "distance": 2,
+            "mobility": 2,
             "side": "Empire",
-            "skillData": null
+            "skillsData": null,
+            "effectsData": null
           }
         ],
         "builds": [
@@ -59,7 +69,10 @@
               }
             ],
             "rotation": 0,
-            "health": 3,
+            "maxHealth": 6,
+            "health":  3,
+            "damage": 0,
+            "distance": 0,
             "side": "Empire",
             "workStatus": "Idle"
           }

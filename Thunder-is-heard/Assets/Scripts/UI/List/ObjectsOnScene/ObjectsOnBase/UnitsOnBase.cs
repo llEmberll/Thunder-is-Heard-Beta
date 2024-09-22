@@ -86,13 +86,15 @@ public class UnitsOnBase : ObjectsOnBase
         int damage = coreUnitData.GetDamage();
         int distance = coreUnitData.GetDistance();
         int mobility = coreUnitData.GetMobility();
+        string unitType = coreUnitData.GetUnitType();
+        string doctrine = coreUnitData.GetDoctrine();
+        float movementSpeed = coreUnitData.GetMovementSpeed();
 
         string name = playerUnitData.GetName();
         Bector2Int[] position = playerUnitData.GetPosition();
         int rotation = playerUnitData.GetRotation();
         string coreId = playerUnitData.GetCoreId();
         string childId = playerUnitData.GetExternalId();
-
 
         GameObject unitObj = ObjectProcessor.CreateUnitObject(position[0].ToVector2Int(), name, this.transform);
         GameObject unitModel = ObjectProcessor.CreateModel(modelPath, rotation, unitObj.transform);
@@ -112,7 +114,10 @@ public class UnitsOnBase : ObjectsOnBase
             damage, 
             distance, 
             mobility, 
-            Sides.federation
+            Sides.federation,
+            unitType,
+            doctrine,
+            movementSpeed
             );
 
         items.Add(childId, unitObj.GetComponent<Unit>());

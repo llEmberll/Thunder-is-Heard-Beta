@@ -12,7 +12,6 @@ TagManager:
   - BuildingPanel
   - Preview
   - Model
-  - FightProcessor
   - LandingPanel
   - ObjectsOnScene
   - BuildsOnScene
@@ -39,6 +38,9 @@ TagManager:
   - LandableUnits
   - TurnController
   - SkillController
+  - FightDirector
+  - BattleEngine
+  - AI
   layers:
   - Default
   - TransparentFX

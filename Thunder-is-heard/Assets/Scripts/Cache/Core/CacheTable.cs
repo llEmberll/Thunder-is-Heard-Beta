@@ -77,6 +77,14 @@ public class CacheTable : ICacheTable
         return null;
     }
 
+    public virtual void ChangeById(string id, CacheItem item)
+    {
+        if (items.ContainsKey(id))
+        {
+            items[id] = item;
+        }
+    }
+
     public virtual CacheItem GetByCoreId(string id)
     {
         foreach (var item in items)

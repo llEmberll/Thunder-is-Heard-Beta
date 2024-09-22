@@ -78,14 +78,13 @@ public class Scenario
         }
 
         _currentStage = Stages[_currentStageIndex];
-
-        //Сохранить battleData
-
         CurrentStage.OnStart();
     }
 
     public void ContinueStage()
     {
+        //Сохранить battleData
+
         CurrentStage.OnProcess();
     }
 
@@ -130,8 +129,6 @@ public class Scenario
         }
 
         ContinueStage();
-
-
     }
 
 

@@ -1,6 +1,6 @@
 
 
-public class DoubleDamageToInfantry : SkillModifier
+public class DoubleDamageToInfantry : AttackModifier
 {
     public string name = "DoubleDamageToInfantry";
 
@@ -11,15 +11,14 @@ public class DoubleDamageToInfantry : SkillModifier
         string name,
         bool isActive,
         string targetType,
+        string targetUnitType,
+        string targetUnitDoctrine,
         int cooldown,
         int currentCooldown,
         Effect effect,
-        ModifierType type,
         ICondition[] conditions
-        ) : base(name, isActive, targetType, cooldown, currentCooldown, effect)
+        ) : base(name, isActive, targetType, targetUnitType, targetUnitDoctrine, cooldown, currentCooldown, effect, conditions) 
     {
-        _type = type;
-        _conditions = conditions;
     }
     
 
@@ -31,5 +30,10 @@ public class DoubleDamageToInfantry : SkillModifier
     public override void Use()
     {
         
+    }
+
+    public override bool IsAllConditionsForWorkingComply(TurnData turnData)
+    {
+        return IsTargetCompy(turnData._target);
     }
 }

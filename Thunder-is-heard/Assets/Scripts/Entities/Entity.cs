@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Entity : Interactable
+public abstract class Entity : Interactable, IDamageable
 {
     public string coreId;
     public string childId;
@@ -61,6 +61,21 @@ public abstract class Entity : Interactable
     public void SetSide(string value)
     {
         side = value;
+    }
+
+    public virtual void GetDamage(int damage)
+    {
+        Debug.Log("Unit damaged!");
+
+        if (damage >= currentHealth)
+        {
+            currentHealth = 0;
+            Die();
+        }
+        else
+        {
+            currentHealth -= damage;
+        }
     }
 
     public override void OnFocus()
@@ -168,7 +183,12 @@ public abstract class Entity : Interactable
         return new Vector2Int(centerX, centerY);
     }
 
-    public void OnDestroy()
+    public virtual void Die()
+    {
+        OnDestroy();
+    }
+
+    public virtual void OnDestroy()
     {
         Debug.Log("On destroy");
 

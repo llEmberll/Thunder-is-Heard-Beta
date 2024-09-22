@@ -6,17 +6,26 @@ public class BuildOnBattle
 {
     public string coreId;
     public string idOnBattle;
+
     public Bector2Int[] position;
     public int rotation;
+
+    public int maxHealth;
     public int health;
+    public int damage;
+    public int distance;
+
     public string side;
     public string workStatus;
 
     public BuildOnBattle(
-        string coreBuildId, 
+        string coreBuildId,
         Bector2Int[] buildPosition,
-        int buildRotation, 
-        int buildHealth, 
+        int buildRotation,
+        int buildMaxHealth,
+        int buildHealth,
+        int buildDamage,
+        int buildDistance,
         string buildSide, 
         string buildWorkStatus,
         string buildIdOnBattle = null
@@ -25,7 +34,10 @@ public class BuildOnBattle
         coreId = coreBuildId;
         position = buildPosition;
         rotation = buildRotation;
+        maxHealth = buildMaxHealth;
         health = buildHealth;
+        damage = buildDamage;
+        distance = buildDistance;
         side = buildSide;
         workStatus = buildWorkStatus;
 
@@ -36,4 +48,21 @@ public class BuildOnBattle
         idOnBattle = buildIdOnBattle;
     }
 
+
+
+    public BuildOnBattle Clone()
+    {
+        return new BuildOnBattle(
+            coreId,
+            position,
+            rotation,
+            maxHealth,
+            health,
+            damage,
+            distance,
+            side,
+            workStatus,
+            idOnBattle
+        );
+    }
 }

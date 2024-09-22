@@ -87,10 +87,10 @@ public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
         BuildCacheItem coreBuildData = new BuildCacheItem(buildAsCacheItem.Fields);
         string modelPath = coreBuildData.GetModelPath() + "/" + side;
         Bector2Int size = coreBuildData.GetSize();
-        int maxHealth = coreBuildData.GetHealth();
+        int maxHealth = battleBuildData.maxHealth;
         int currentHealth = battleBuildData.health;
-        int damage = coreBuildData.GetDamage();
-        int distance = coreBuildData.GetDistance();
+        int damage = battleBuildData.damage;
+        int distance = battleBuildData.distance;
         string interactionComponentName = coreBuildData.GetInteractionComponentName();
         string interactionComponentType = coreBuildData.GetInteractionComponentType();
 

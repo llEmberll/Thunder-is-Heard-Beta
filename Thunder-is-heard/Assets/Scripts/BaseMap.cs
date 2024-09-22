@@ -79,8 +79,30 @@ public class BaseMap : Map
 
         UnitOnBattle[] units = new UnitOnBattle[]
         {
-            new UnitOnBattle("124", new Bector2Int(new Vector2Int(0, 0)), 0, 1, Sides.empire, "987"),
-            new UnitOnBattle("125", new Bector2Int(new Vector2Int(0, 1)), 0, 1, Sides.federation, "986" , new SkillOnBattle[] { new SkillOnBattle("224", 1, false) } )
+            new UnitOnBattle(
+                coreUnitId: "124", 
+                unitPosition: new Bector2Int(new Vector2Int(0, 0)), 
+                unitRotation: 0, 
+                unitMaxHealth:3, 
+                unitHealth: 3, 
+                unitDamage: 1, 
+                unitDistance: 2, 
+                unitMobility: 2, 
+                unitSide: Sides.empire, 
+                unitIdOnBattle: "987"
+                ),
+            new UnitOnBattle(
+                coreUnitId: "125",
+                unitPosition: new Bector2Int(new Vector2Int(0, 1)),
+                unitRotation: 0,
+                unitMaxHealth:3,
+                unitHealth: 2,
+                unitDamage: 1,
+                unitDistance: 2,
+                unitMobility: 2,
+                unitSide: Sides.federation, "986" , 
+                unitSkillsData: new SkillOnBattle[] { new SkillOnBattle("224", 1, false) } 
+                )
         };
 
         Bector2Int[] positionForBuild1 = new Bector2Int[] {new Bector2Int(new Vector2Int(0, 0))};
@@ -88,8 +110,30 @@ public class BaseMap : Map
 
         BuildOnBattle[] builds = new BuildOnBattle[]
         {
-            new BuildOnBattle("124", positionForBuild1, 0, 1, Sides.empire, WorkStatuses.idle, "876"),
-            new BuildOnBattle("125", positionForBuild2, 0, 1, Sides.federation, WorkStatuses.idle, "875")
+            new BuildOnBattle(
+                coreBuildId: "124", 
+                buildPosition: positionForBuild1, 
+                buildRotation: 0, 
+                buildMaxHealth: 3,
+                buildHealth: 2,
+                buildDamage: 0, 
+                buildDistance: 0,
+                buildSide: Sides.empire, 
+                buildWorkStatus: WorkStatuses.idle, 
+                buildIdOnBattle: "876"
+                ),
+            new BuildOnBattle(
+                coreBuildId: "125",
+                buildPosition: positionForBuild2,
+                buildRotation: 0,
+                buildMaxHealth: 4,
+                buildHealth: 4,
+                buildDamage: 0,
+                buildDistance: 0,
+                buildSide: Sides.federation,
+                buildWorkStatus: WorkStatuses.idle,
+                buildIdOnBattle: "875"
+                ),
         };
 
         battleItem.SetMissionId(missionId);

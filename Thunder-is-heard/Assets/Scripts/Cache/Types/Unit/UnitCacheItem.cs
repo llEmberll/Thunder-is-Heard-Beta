@@ -1,3 +1,4 @@
+using Google.Protobuf.WellKnownTypes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,21 @@ public class UnitCacheItem : CacheItem
         if (!objFields.ContainsKey("skills"))
         {
             SetSkills(new string[] { });
+        }
+
+        if (!objFields.ContainsKey("unitType"))
+        {
+            SetUnitType(UnitTypes.infantry);
+        }
+
+        if (!objFields.ContainsKey("doctrine"))
+        {
+            SetUnitType(Doctrines.land);
+        }
+
+        if (!objFields.ContainsKey("movementSpeed"))
+        {
+            SetMovementSpeed(1.0f);
         }
     }
 
@@ -198,6 +214,37 @@ public class UnitCacheItem : CacheItem
     public void SetSkills(string[] value)
     {
         SetField("skills", value);
+    }
+
+    public string GetUnitType()
+    {
+        return (string)GetField("unitType");
+    }
+
+    public void SetUnitType(string value)
+    {
+        SetField("unitType", value);
+    }
+
+    public string GetDoctrine()
+    {
+        return (string)GetField("doctrine");
+    }
+
+    public void SetDoctrine(string value)
+    {
+        SetField("doctrine", value);
+    }
+
+    public float GetMovementSpeed()
+    {
+        object value = GetField("movementSpeed");
+        return (value != null) ? Convert.ToSingle(value) : 1.0f;
+    }
+
+    public void SetMovementSpeed(float value)
+    {
+        SetField("movementSpeed", value);
     }
 
     public override CacheItem Clone()

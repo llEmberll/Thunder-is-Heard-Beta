@@ -1,19 +1,21 @@
-using Org.BouncyCastle.Asn1.Mozilla;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 
 [System.Serializable]
 public class CellData
 {
-    public string type;
-    public Bector2Int position;
+    public string _type;
+    public Bector2Int _position;
+    public bool _isOccypy;
 
-    public CellData(string cellType, Bector2Int cellPosition)
+    public CellData(string cellType, Bector2Int cellPosition, bool isOccypy = false)
     {
-        type = cellType;
-        position = cellPosition;
+        _type = cellType;
+        _position = cellPosition;
+        this._isOccypy = isOccypy;
     }
 
+    public CellData Clone()
+    {
+        return new CellData(_type, _position, _isOccypy);
+    }
 }

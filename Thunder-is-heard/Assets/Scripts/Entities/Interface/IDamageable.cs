@@ -2,8 +2,5 @@
 
 public interface IDamageable
 {
-    public void GetDamage()
-    {
-        
-    }
+    public abstract void GetDamage(int damage);
 }

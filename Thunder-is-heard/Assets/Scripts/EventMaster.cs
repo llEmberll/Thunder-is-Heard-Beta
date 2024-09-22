@@ -254,5 +254,15 @@ public class EventMaster: MonoBehaviour
         LandableUnitDefocused?.Invoke(unit);
     }
 
-    
+    public event Action<Unit> UnitMoveStarted;
+    public void OnStartUnitMove(Unit unit)
+    {
+        UnitMoveStarted?.Invoke(unit);
+    }
+
+    public event Action<Unit> UnitMoveFinished;
+    public void OnFinishUnitMove(Unit unit)
+    {
+        UnitMoveFinished?.Invoke(unit);
+    }
 }

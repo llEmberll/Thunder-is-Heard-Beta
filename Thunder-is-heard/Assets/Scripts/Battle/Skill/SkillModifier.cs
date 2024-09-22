@@ -1,11 +1,7 @@
 
 
-public abstract class SkillModifier : Skill
+public abstract class AttackModifier : Skill
 {
-    public ModifierType _type;
-    public ModifierType Type { get { return _type; } }
-
-
     public abstract int Multiplier { get; }
 
 
@@ -13,23 +9,33 @@ public abstract class SkillModifier : Skill
     public ICondition[] Conditions { get { return _conditions; } }
 
 
-    public SkillModifier(
+    public AttackModifier(
         string name, 
         bool isActive, 
         string targetType, 
+        string targetUnitType,
+        string targetUnitDoctrine,
         int cooldown, 
         int currentCooldown, 
         Effect effect,
-        int multiplier,
-        ModifierType type, 
         ICondition[] conditions
-        ) : base(name, isActive, targetType, cooldown, currentCooldown, effect)
+        ) : base(name, isActive, targetType, targetUnitType, targetUnitDoctrine, cooldown, currentCooldown, effect)
     {
-        _type = type;
         _conditions = conditions;
     }
 
-    public SkillModifier(string name, bool isActive, string targetType, int cooldown, int currentCooldown, Effect effect) : base(name, isActive, targetType, cooldown, currentCooldown, effect)
+    public virtual bool IsAllConditionsForWorkingComply(TurnData turnData)
     {
+        if (IsTargetCompy(turnData._target)) return false;
+
+        foreach (var condition in _conditions)
+        {
+            if (!condition.IsComply())
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

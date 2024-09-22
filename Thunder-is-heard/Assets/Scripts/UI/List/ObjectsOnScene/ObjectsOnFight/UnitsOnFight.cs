@@ -89,11 +89,14 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
         UnitCacheItem coreUnitData = new UnitCacheItem(unitAsCacheItem.Fields);
         string modelPath = coreUnitData.GetModelPath() + "/" + side;
         Bector2Int size = coreUnitData.GetSize();
-        int maxHealth = coreUnitData.GetHealth();
+        int maxHealth = battleUnitData.maxHealth;
         int currentHealth = battleUnitData.health;
-        int damage = coreUnitData.GetDamage();
-        int distance = coreUnitData.GetDistance();
-        int mobility = coreUnitData.GetMobility();
+        int damage = battleUnitData.damage;
+        int distance = battleUnitData.distance;
+        int mobility = battleUnitData.mobility;
+        string unitType = coreUnitData.GetUnitType();
+        string doctrine = coreUnitData.GetDoctrine();
+        float movementSpeed = coreUnitData.GetMovementSpeed();
 
         string name = coreUnitData.GetName();
         Bector2Int[] position = new Bector2Int[1] { battleUnitData.position };
@@ -120,7 +123,10 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
             damage,
             distance,
             mobility,
-            side
+            side,
+            unitType,
+            doctrine,
+            movementSpeed
             );
 
         items.Add(childId, unitObj.GetComponent<Unit>());
@@ -161,6 +167,21 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
             if (keyValuePair.Value.side == side)
             {
                 units.Add(keyValuePair.Value);
+            }
+        }
+
+        return units;
+    }
+
+    public List<Unit> GetUnitsByBattleUnitsData(UnitOnBattle[] unitsData)
+    {
+        List<Unit> units = new List<Unit>();
+
+        foreach (var unitData in unitsData)
+        {
+            if (items.ContainsKey(unitData.idOnBattle))
+            {
+                units.Add(items[unitData.idOnBattle]);
             }
         }
 

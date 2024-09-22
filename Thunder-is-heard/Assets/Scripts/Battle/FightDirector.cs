@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class FightProcessor : MonoBehaviour
+public class FightDirector : MonoBehaviour
 {
     public string _battleId;
     public BattleCacheItem _battleData;
@@ -13,6 +13,10 @@ public class FightProcessor : MonoBehaviour
 
 
     public ObjectProcessor _objectProcessor;
+
+    public BattleEngine _battleEngine;
+
+    public UnitsOnFight _unitsOnFightManager;
 
 
     public void Awake()
@@ -29,6 +33,8 @@ public class FightProcessor : MonoBehaviour
         EnableListeners();
 
         InitObjectProcessor();
+        InitBattleEngine();
+        InitUnitsOnFightManager();
     }
 
     public void EnableListeners()
@@ -61,6 +67,16 @@ public class FightProcessor : MonoBehaviour
         _objectProcessor = GameObject.FindGameObjectWithTag(Tags.objectProcessor).GetComponent<ObjectProcessor>();
     }
 
+    public void InitBattleEngine()
+    {
+        _battleEngine = GameObject.FindGameObjectWithTag(Tags.battleEngine).GetComponent<BattleEngine>();
+    }
+
+    public void InitUnitsOnFightManager()
+    {
+        _unitsOnFightManager = GameObject.FindGameObjectWithTag(Tags.unitsOnScene).GetComponent<UnitsOnFight>();
+    }
+
     public void InitBattleData(string battleId)
     {
         _battleId = battleId;
@@ -69,16 +85,16 @@ public class FightProcessor : MonoBehaviour
         _battleData = new BattleCacheItem(cacheItem.Fields);
     }
 
+    public void SaveBattleData()
+    {
+        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
+        battleTable.ChangeById(_battleId, _battleData);
+        Cache.Save(battleTable);
+    }
+
     public void ChangeSideTurn()
     {
-        Dictionary<string, string> newTurnByCurrentTurn = new Dictionary<string, string>()
-        {
-            {Sides.federation, Sides.empire },
-            {Sides.empire, Sides.neutral },
-            {Sides.neutral, Sides.federation },
-        };
-
-        string newTurn = newTurnByCurrentTurn[_battleData.GetTurn()];
+        string newTurn = SideTurnsQueue.nextSideTurnByCurrentSide[_battleData.GetTurn()];
         _battleData.SetTurn(newTurn);
     }
 
@@ -159,11 +175,77 @@ public class FightProcessor : MonoBehaviour
 
     public void ExecuteTurn(TurnData turnData)
     {
-        //Логика реализации выбранного хода с обработкой скил-контроллера
+        if (turnData != null)
+        {
+            if (IsTurnContainsMovement(turnData)) 
+            {
+                ChangeUnitOccypation(turnData._activeUnit, turnData._route.Last());
+                turnData._activeUnit.Move(turnData._route);
+
+                // Подождать прибытия юнита
+            }
+
+            if (IsTurnContainsTarget(turnData))
+            {
+                UnitOnBattle[] attackersData = _battleEngine.currentBattleSituation.attackersByObjectId[turnData._target.ChildId].ToArray();
+                if (attackersData != null && attackersData.Length > 0)
+                {
+                    List<Unit> attackers = _unitsOnFightManager.GetUnitsByBattleUnitsData(attackersData);
+                    int damage = _battleEngine.CalculateDamageToTarget(attackersData, turnData._target); // Нужно как-то вызвать GetDamage у цели при этом и учесть модификаторы от скилов + эффекты
+                    foreach (Unit attacker in attackers)
+                    {
+                        attacker.Attack(turnData._target);
+                    }
+
+                    turnData._target.GetDamage(damage);
+
+                    // Подождать конца атаки и ранения цели
+                }
+            }
+        }
         //Обновить _battleData
 
         NextTurn();
     }
+
+    public void ChangeUnitOccypation(Unit unit, Cell newOccypation)
+    {
+        Cell unitCurrentCell = _scenario.map.Cells[unit.center];
+        unitCurrentCell.Free();
+
+        unit.center = newOccypation.position;
+        newOccypation.Occupy();
+
+        UpdateUnitPositionInCache(unit);
+    }
+
+    public void UpdateUnitPositionInCache(Unit unit)
+    {
+        UnitOnBattle[] unitsInCache = _battleData.GetUnits();
+
+        foreach (UnitOnBattle unitInCache in unitsInCache)
+        {
+            if (unitInCache.idOnBattle == unit.ChildId)
+            {
+                unitInCache.position = new Bector2Int(unit.center);
+                unitInCache.rotation = unit.rotation;
+                break;
+            }
+        }
+
+        _battleData.SetUnits(unitsInCache);
+    }
+
+    public bool IsTurnContainsMovement(TurnData turnData)
+    {
+        return turnData._activeUnit != null && turnData._route != null && turnData._route.Count() > 0;
+    }
+
+    public bool IsTurnContainsTarget(TurnData turnData)
+    {
+        return turnData._target != null;
+    }
+
 
     public void ExecuteSkill()
     {
