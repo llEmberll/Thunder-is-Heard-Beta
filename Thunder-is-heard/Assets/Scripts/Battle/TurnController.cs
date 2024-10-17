@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -11,6 +12,7 @@ public class TurnController : MonoBehaviour
 
     public Map _map;
 
+    public BattleEngine _battleEngine;
 
     public void EnableStartListeners()
     {
@@ -36,12 +38,12 @@ public class TurnController : MonoBehaviour
 
     public void EnableObjectClickListener()
     {
-        EventMaster.current.EnteredOnObject += OnObjectClick;
+        EventMaster.current.ClickedOnObject += OnObjectClick;
     }
 
     public void DisableObjectClickListener()
     {
-        EventMaster.current.EnteredOnObject -= OnObjectClick;
+        EventMaster.current.ClickedOnObject -= OnObjectClick;
     }
 
 
@@ -65,9 +67,15 @@ public class TurnController : MonoBehaviour
         _map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
     }
 
+    public void InitBattleEngine()
+    {
+        _battleEngine = GameObject.FindGameObjectWithTag(Tags.battleEngine).GetComponent<BattleEngine>();
+    }
+
     public void Start()
     {
         InitMap();
+        InitBattleEngine();
 
         EnableStartListeners();
         ClearTurnData();
@@ -77,6 +85,7 @@ public class TurnController : MonoBehaviour
     {
         DisableStartListeners();
         EnableNextTurnListener();
+        OnNextTurn(_battleEngine.currentBattleSituation._sideTurn);
     }
 
     public void OnNextTurn(string side)
@@ -96,6 +105,8 @@ public class TurnController : MonoBehaviour
 
     public void OnObjectClick(Entity obj)
     {
+        Debug.Log("Turn controller: OBJECT CLICK");
+
         if (obj.side == Sides.neutral)
         {
             return;
@@ -106,7 +117,7 @@ public class TurnController : MonoBehaviour
             OnEnemyObjectClick(obj);
         }
 
-        if (obj.side != Sides.federation) 
+        if (obj.side == Sides.federation) 
         { 
             OnFriendlyObjectClick(obj);
         }
@@ -114,7 +125,10 @@ public class TurnController : MonoBehaviour
 
     public void OnEnemyObjectClick(Entity obj)
     {
-        //Если возможно атаковать - атаковать, иначе return
+        if (!_battleEngine.IsPossibleToAttackTarget(obj)) return;
+
+        SetTarget(obj);
+        Execute();
     }
 
     public void OnFriendlyObjectClick(Entity obj)
@@ -123,20 +137,27 @@ public class TurnController : MonoBehaviour
 
         if (obj is Unit unit)
         {
-            if (_turnData._activeUnit != null && unit.ChildId == _turnData._activeUnit.ChildId)
+            if (_turnData != null && _turnData._activeUnit != null)
             {
-                ClearActiveUnit();
+                if (_turnData._activeUnit.ChildId != unit.ChildId)
+                {
+                    SetActiveUnit(unit);
+                    return;
+                }
             }
 
-            else
-            {
-                SetActiveUnit(unit);
-            }
+            ClearActiveUnit();
         }
     }
 
     public void OnCellClick(Cell cell)
     {
+        Debug.Log("Turn controller: CELL CLICK");
+
+        if (_turnData == null || _turnData._route == null)
+        {
+            return;
+        }
         if (_turnData._route.Contains(cell))
         {
             Execute();
@@ -145,6 +166,15 @@ public class TurnController : MonoBehaviour
 
     public void OnCellEnter(Cell cell)
     {
+        if (_turnData == null || _turnData._activeUnit == null || _turnData._route == null)
+        {
+            Debug.Log("route or active unit null -> exit");
+
+            return;
+        }
+
+        Debug.Log("route or active unit not NULL!");
+
         if (_turnData._route.Contains(cell))
         {
             // Если клетка присоединена к маршруту, обрезаем маршрут
@@ -170,12 +200,27 @@ public class TurnController : MonoBehaviour
 
     }
 
+    public void SendRouteChangeEvent()
+    {
+        if (_turnData._route == null)
+        {
+            EventMaster.current.OnChangeRoute(null, null);
+            return;
+        }
+
+        List<Bector2Int> routeAsBector2Int = new List<Bector2Int>();
+        foreach (var routeCell in _turnData._route) routeAsBector2Int.Add(new Bector2Int(routeCell.position));
+
+        EventMaster.current.OnChangeRoute(routeAsBector2Int, new Bector2Int(_turnData._activeUnit.center));
+    }
+
     private void CutRouteToCell(Cell cell)
     {
         int index = _turnData._route.IndexOf(cell);
         if (index >= 0)
         {
             _turnData._route = _turnData._route.Take(index + 1).ToList();
+            SendRouteChangeEvent();
         }
     }
 
@@ -183,28 +228,40 @@ public class TurnController : MonoBehaviour
     {
         Cell activeUnitCell = _map.Cells[_turnData._activeUnit.occypiedPoses.First()];
         _turnData._route = _map.BuildRoute(activeUnitCell, cell, _turnData._activeUnit.mobility);
+        SendRouteChangeEvent();
     }
 
     public void ExtendRouteToCell(Cell cell, int maxExtendLenght)
     {
         List<Cell> routeContinuation = _map.BuildRoute(_turnData._route.Last(), cell, maxExtendLenght);
         _turnData._route.AddRange(routeContinuation);
+        SendRouteChangeEvent();
     }
 
     public void ClearTurnData()
     {
         _turnData = new TurnData();
+        EventMaster.current.OnActiveUnitChanged(_turnData._activeUnit);
+        SendRouteChangeEvent();
     }
 
     public void SetActiveUnit(Unit unit)
     {
         _turnData._activeUnit = unit;
+        _turnData._route = new List<Cell>();
         EnableBuildRouteListeners();
+        EventMaster.current.OnActiveUnitChanged(_turnData._activeUnit);
     }
+
     public void ClearActiveUnit()
     {
-        _turnData._activeUnit = null;
-        DisableBuildRouteListeners();
+        if (_turnData != null)
+        {
+            _turnData._activeUnit = null;
+            ClearRoute();
+            DisableBuildRouteListeners();
+            EventMaster.current.OnActiveUnitChanged(_turnData._activeUnit);
+        }
     }
 
     public void SetTarget(Entity target)
@@ -219,6 +276,7 @@ public class TurnController : MonoBehaviour
     public void ClearRoute()
     {
         _turnData._route = null;
+        SendRouteChangeEvent();
     }
 
     public void Execute()

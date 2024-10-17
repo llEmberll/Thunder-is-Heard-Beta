@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -14,6 +15,7 @@ public class BattleEngine : MonoBehaviour
     {
         InitMap();
         InitBattleSituation();
+        EnableListeners();
     }
 
     public void InitMap()
@@ -29,6 +31,16 @@ public class BattleEngine : MonoBehaviour
 
         currentBattleSituation = new BattleSituation();
         currentBattleSituation.InitByBattleDataAndMap(battleData, _map);
+    }
+
+    public void EnableListeners()
+    {
+        EventMaster.current.ObjectExposed += OnExposeObject;
+    }
+
+    public void DisableListeners()
+    {
+        EventMaster.current.ObjectExposed -= OnExposeObject;
     }
 
     public int CalculateDamageToTarget(UnitOnBattle[] attackersData, Entity target)
@@ -56,6 +68,7 @@ public class BattleEngine : MonoBehaviour
         return totalDamage;
     }
 
+    // Возможно стоит расширить интерфейс до BattleSituation чтобы изменять эффекты
     public static int CalculateDamageToUnit(UnitOnBattle[] attackersData, UnitOnBattle unit)
     {
         int totalDamage = 0;
@@ -75,8 +88,8 @@ public class BattleEngine : MonoBehaviour
 
     public static int GetDistanceBetweenPoints(Bector2Int point1, Bector2Int point2)
     {
-        int distanceX = Mathf.Abs(point1.x - point2.x);
-        int distanceY = Mathf.Abs(point1.y - point2.y);
+        int distanceX = Mathf.Abs(point1._x - point2._x);
+        int distanceY = Mathf.Abs(point1._y - point2._y);
         return Mathf.Max(distanceX, distanceY);
     }
 
@@ -84,12 +97,12 @@ public class BattleEngine : MonoBehaviour
     {
         // Находим минимальное расстояние по каждой оси
         int minDistanceX = Mathf.Min(
-            Mathf.Abs(point.x - rectangle._startPosition.x),
-            Mathf.Abs(point.x - (rectangle._startPosition.x + rectangle._size.x))
+            Mathf.Abs(point._x - rectangle._startPosition._x),
+            Mathf.Abs(point._x - (rectangle._startPosition._x + rectangle._size._x))
         );
         int minDistanceY = Mathf.Min(
-            Mathf.Abs(point.y - rectangle._startPosition.y),
-            Mathf.Abs(point.y - (rectangle._startPosition.y + rectangle._size.y))
+            Mathf.Abs(point._y - rectangle._startPosition._y),
+            Mathf.Abs(point._y - (rectangle._startPosition._y + rectangle._size._y))
         );
 
         // Возвращаем минимальное из минимальных расстояний
@@ -148,5 +161,55 @@ public class BattleEngine : MonoBehaviour
             return builds[id];
         }
         return null;
+    }
+
+    public bool IsPossibleToAttackTarget(Entity entity)
+    {
+        return currentBattleSituation.attackersByObjectId.ContainsKey(entity.ChildId);
+    }
+
+    public List<Cell> GetReachableCellsByUnit(Unit unit)
+    {
+        List<Bector2Int> possiblePositions = currentBattleSituation.GetReachablePositionsByUnit(unit.ChildId);
+        return _map.FindCellsByPosition(possiblePositions).Values.ToList();
+    }
+
+    public Dictionary<string, UnitOnBattle> GetAllUnitsInBattle()
+    {
+        return currentBattleSituation.GetAllUnits();
+    }
+
+    public Dictionary<string, BuildOnBattle> GetAllBuildsInBattle()
+    {
+        return currentBattleSituation.GetAllBuilds();
+    }
+
+    public MapOnBattle GetMapOnBattle()
+    {
+        return currentBattleSituation._map;
+    }
+
+    public void OnExposeObject(Entity obj)
+    {
+        if (obj is Unit unit)
+        {
+            OnExposeUnit(unit);
+        }
+        if (obj is Build build)
+        {
+            OnExposeBuild(build);
+        }
+    }
+
+    public void OnExposeUnit(Unit unit)
+    {
+        UnitOnBattle unitOnBattle = new UnitOnBattle(unit);
+        currentBattleSituation.AddUnit(unitOnBattle);
+    }
+
+    public void OnExposeBuild(Build build)
+    {
+        BuildOnBattle buildOnBattle = new BuildOnBattle(build);
+        currentBattleSituation.AddBuild(buildOnBattle);
     }
 }

@@ -113,6 +113,22 @@ public class Map : MonoBehaviour
         return finded;
     }
 
+    public Dictionary<Bector2Int, Cell> FindCellsByPosition(List<Bector2Int> positions)
+    {
+        Dictionary<Bector2Int, Cell> finded = new Dictionary<Bector2Int, Cell>();
+
+        foreach (Bector2Int position in positions)
+        {
+            Vector2Int currentPosition = position.ToVector2Int();
+            if (Cells.ContainsKey(currentPosition))
+            {
+                finded.Add(position, cells[currentPosition]);
+            }
+        }
+
+        return finded;
+    }
+
     public Dictionary<Vector2Int, Cell> GetDisplayedCells()
     {
         Dictionary<Vector2Int, Cell> displayedCells = new Dictionary<Vector2Int, Cell>();
@@ -151,7 +167,6 @@ public class Map : MonoBehaviour
                     // ѕровер€ем, пуста ли клетка или игнорируем зан€тость
                     if (!currentCell.occupied || ignoreOccypy)
                     {
-                        // ƒобавл€ем клетку в HashSet
                         resultCells.Add(currentCell);
                     }
                 }
@@ -164,7 +179,6 @@ public class Map : MonoBehaviour
             resultCells.Remove(cellsSet[center]);
         }
 
-        // ¬озвращаем список найденных клеток в виде массива
         return resultCells.ToList();
     }
 
@@ -228,7 +242,7 @@ public class Map : MonoBehaviour
     {
         foreach (var keyValuePair in Cells)
         {
-            keyValuePair.Value.RenderSwitch(true);
+            keyValuePair.Value.RenderSwitch(false);
         }
     }
 

@@ -23,7 +23,7 @@
       "fields": {
         "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
         "type": "Unit",
-        "count": 4,
+        "count": 82,
         "externalId": "4029afc4-bde8-4f40-bf45-513ba328b07e",
         "description": ""
       }
@@ -59,7 +59,7 @@
       "fields": {
         "coreId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
         "type": "Unit",
-        "count": 1,
+        "count": 5,
         "externalId": "d4102c9c-e3ba-4303-ba55-f0daa18fcbd4",
         "description": ""
       }
@@ -68,7 +68,7 @@
       "fields": {
         "coreId": "035655f8-a347-4057-87cc-83385fa20660",
         "type": "Unit",
-        "count": 1,
+        "count": 8,
         "externalId": "9785687b-9864-410d-929a-b54b14c6a17b",
         "description": ""
       }

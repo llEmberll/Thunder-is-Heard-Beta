@@ -196,8 +196,9 @@ public class ObjectProcessor : MonoBehaviour
             CacheItem currentCacheItem = Cache.LoadByType<UnitCacheTable>().GetById(unit.coreId);
             if (currentCacheItem == null) continue;
             UnitCacheItem currentCoreUnitData = new UnitCacheItem(currentCacheItem.Fields);
-
             Transform model = CreateModel(currentCoreUnitData.GetModelPath() + "/" + unit.side, unit.rotation).transform;
+            Vector3 unitObjPosition = new Vector3(unit.position._x, model.transform.position.y, unit.position._y);
+            model.transform.position += unitObjPosition;
 
             CreateObjectOnBattle(
                 battleId: FightSceneLoader.parameters._battleId,
@@ -221,7 +222,9 @@ public class ObjectProcessor : MonoBehaviour
             if (currentCacheItem == null) continue;
             BuildCacheItem currentCoreBuildData = new BuildCacheItem(currentCacheItem.Fields);
 
-            Transform model = CreateModel(currentCoreBuildData.GetModelPath() + build.side, build.rotation).transform;
+            Transform model = CreateModel(currentCoreBuildData.GetModelPath() + "/" + build.side, build.rotation).transform;
+            Vector3 buildObjPosition = new Vector3(build.position.First()._x, model.transform.position.y, build.position.First()._y);
+            model.transform.position += buildObjPosition;
 
             CreateObjectOnBattle(
                 battleId: FightSceneLoader.parameters._battleId,
@@ -254,8 +257,8 @@ public class ObjectProcessor : MonoBehaviour
             if (currentHealth == null) currentHealth = maxHealth;
             int damage = coreBuildData.GetDamage();
             int distance = coreBuildData.GetDistance();
-            string interactionComponentName = coreBuildData.GetInteractionComponentName();
-            string interactionComponentType = coreBuildData.GetInteractionComponentType();
+            string interactionComponentName = "Inaction";
+            string interactionComponentType = "";
 
             BuildOnBattle build = AddNewBuildOnBattleToCache(
                 battleId, 
@@ -463,7 +466,9 @@ public class ObjectProcessor : MonoBehaviour
             throw new System.Exception("Неожиданный тип объекта: " + type);
         }
 
+        //model.transform.position += entity.transform.position;
         model.SetParent(entity.transform);
+
         map.Occypy(occypation);
         return entity;
     }

@@ -101,6 +101,7 @@ public class Landing : ItemList
     public void OnObjectLanded(Entity entity)
     {
         if (!IsProperType(entity.Type)) return;
+        if (entity.side != Sides.federation) return;
         ChangeLandedStaff(_landedStaff + Unit.GetStaffByUnit(entity.gameObject.GetComponent<Unit>()));
         UpdateStaffText();
     }
@@ -149,6 +150,8 @@ public class Landing : ItemList
         _map.SetInactiveAll();
         _map.SetActive(landableZone);
         _map.Display(landableZone);
+
+        Debug.Log("Cells displayed!");
 
         Show();
     }

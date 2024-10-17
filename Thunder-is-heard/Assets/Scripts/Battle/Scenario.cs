@@ -78,6 +78,8 @@ public class Scenario
         }
 
         _currentStage = Stages[_currentStageIndex];
+
+        EventMaster.current.OnStageIndexChange(_currentStageIndex);
         CurrentStage.OnStart();
     }
 

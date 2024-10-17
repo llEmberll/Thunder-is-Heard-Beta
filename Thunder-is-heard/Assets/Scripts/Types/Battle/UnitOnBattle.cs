@@ -21,6 +21,8 @@ public class UnitOnBattle
     public SkillOnBattle[] skillsData;
     public Effect[] effectsData;
 
+    public UnitOnBattle() { }
+
     public UnitOnBattle(
         string coreUnitId, 
         Bector2Int unitPosition,
@@ -48,6 +50,29 @@ public class UnitOnBattle
         skillsData = unitSkillsData;
         effectsData = unitEffects;
 
+        if (unitIdOnBattle == null)
+        {
+            unitIdOnBattle = Guid.NewGuid().ToString();
+        }
+        idOnBattle = unitIdOnBattle;
+    }
+
+    public UnitOnBattle(Unit unit)
+    {
+        coreId = unit.CoreId;
+        position = new Bector2Int(unit.center);
+        rotation = unit.rotation;
+        maxHealth = unit.maxHealth;
+        health = unit.currentHealth;
+        damage = unit.damage;
+        distance = unit.distance;
+        mobility = unit.mobility;
+        side = unit.side;
+
+        //skillsData = реализовать;
+        //effectsData = реализовать;
+
+        string unitIdOnBattle = unit.ChildId;
         if (unitIdOnBattle == null)
         {
             unitIdOnBattle = Guid.NewGuid().ToString();

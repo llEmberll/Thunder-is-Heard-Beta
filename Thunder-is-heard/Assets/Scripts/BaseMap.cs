@@ -10,7 +10,7 @@ public class BaseMap : Map
 
     public void Start()
     {
-        
+
     }
 
     public void CreateScenarioForTest()
@@ -22,7 +22,7 @@ public class BaseMap : Map
         scenarioItem.SetExternalId("7d1660fb-10ad-4a55-9810-2c411120070f");
         scenarioItem.SetName("Scenario1 for tests");
         scenarioItem.SetTerrainPath(Config.terrainsPath["Base"]);
-        scenarioItem.SetMapSize(new Bector2Int(new Vector2Int(6, 6)));
+        scenarioItem.SetMapSize(new Bector2Int(new Vector2Int(8, 8)));
 
         LandingData landingData = new LandingData(
             new Bector2Int[]
@@ -36,6 +36,109 @@ public class BaseMap : Map
             );
 
         scenarioItem.SetLanding(landingData);
+
+        UnitOnBattle[] scenarioUnits = new UnitOnBattle[]
+        {
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    new Bector2Int(2, 2),
+                    0,
+                    3,
+                    2,
+                    1,
+                    2,
+                    2,
+                    Sides.empire,
+                    unitIdOnBattle: "03a65484-e0c4-4bec-a8eb-277c22a53ef4"
+                    )
+        };
+
+        scenarioItem.SetUnits(scenarioUnits);
+
+        BuildOnBattle[] scenarioBuilds = new BuildOnBattle[]
+        {
+            new BuildOnBattle(
+                    coreBuildId: "64a4568c-bfaf-408e-9537-8e489ccaca56",
+                    new Bector2Int[]
+                    {
+                        new Bector2Int(3, 3),
+                        new Bector2Int(3, 4),
+                        new Bector2Int(4, 3),
+                        new Bector2Int(4, 4)
+                    },
+                    180,
+                    6,
+                    6,
+                    0,
+                    0,
+                    Sides.empire,
+                    WorkStatuses.idle,
+                    buildIdOnBattle: "8f338821-eaf1-4670-8633-fe57ca21ecd0"
+                )
+        };
+
+        scenarioItem.SetBuilds(scenarioBuilds);
+
+
+        UnitOnBattle[] stage1Units = new UnitOnBattle[]
+        {
+            new UnitOnBattle(
+                    coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
+                    new Bector2Int(4, 5),
+                    90,
+                    6,
+                    6,
+                    3,
+                    3,
+                    4,
+                    Sides.empire,
+                    unitIdOnBattle: "725f70fd-417e-4ca7-9b6f-ff5b19c8e4e6"
+                    )
+        };
+
+        BuildOnBattle[] stage1Builds = new BuildOnBattle[]
+        {
+            new BuildOnBattle(
+                    coreBuildId: "64a4568c-bfaf-408e-9537-8e489ccaca56",
+                    new Bector2Int[]
+                    {
+                        new Bector2Int(5, 5),
+                        new Bector2Int(5, 6),
+                        new Bector2Int(6, 5),
+                        new Bector2Int(6, 6)
+                    },
+                    180,
+                    6,
+                    6,
+                    0,
+                    0,
+                    Sides.empire,
+                    WorkStatuses.idle,
+                    buildIdOnBattle: "68881a80-41e1-41da-8784-bbe4b4bbe3dc"
+                )
+        };
+
+        string[] stage1ConditionsForVictory = new string[]
+        {
+            "DestroyAllEnemy"
+        };
+
+        string[] stage1ConditionsForDefeat = new string[]
+        {
+            "DestroyAllAllies"
+        };
+
+        StageData[] stages = new StageData[]
+        {
+            new StageData(
+                stage1Units, 
+                stage1Builds, 
+                stage1ConditionsForDefeat, 
+                stage1ConditionsForVictory
+                )
+        };
+
+        scenarioItem.SetStages( stages );
 
         table.AddOne(scenarioItem);
         Cache.Save(table);

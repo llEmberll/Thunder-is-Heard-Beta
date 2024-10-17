@@ -45,6 +45,7 @@ public class FightDirector : MonoBehaviour
         EventMaster.current.BattleObjectsChanged += ReloadBattleData;
 
         EventMaster.current.TurnExecuted += ExecuteTurn;
+        EventMaster.current.StageIndexChanged += ChangeStageIndex;
     }
 
     public void DisableListeners()
@@ -55,6 +56,7 @@ public class FightDirector : MonoBehaviour
         EventMaster.current.BattleObjectsChanged -= ReloadBattleData;
 
         EventMaster.current.TurnExecuted -= ExecuteTurn;
+        EventMaster.current.StageIndexChanged -= ChangeStageIndex;
     }
 
     public void Start()
@@ -92,15 +94,35 @@ public class FightDirector : MonoBehaviour
         Cache.Save(battleTable);
     }
 
+    public void SyncBattleDataToCurrentBattleSituation()
+    {
+        Dictionary<string, UnitOnBattle> allUnitsOnBattle = _battleEngine.GetAllUnitsInBattle();
+        Dictionary<string, BuildOnBattle> allBuildsOnBattle = _battleEngine.GetAllBuildsInBattle();
+
+        UnitOnBattle[] newUnitsForBattleData = allUnitsOnBattle.Values.ToArray();
+        BuildOnBattle[] newBuildsForBattleData = allBuildsOnBattle.Values.ToArray();
+        _battleData.SetUnits(newUnitsForBattleData);
+        _battleData.SetBuilds(newBuildsForBattleData);
+        SaveBattleData();
+    }
+
     public void ChangeSideTurn()
     {
         string newTurn = SideTurnsQueue.nextSideTurnByCurrentSide[_battleData.GetTurn()];
         _battleData.SetTurn(newTurn);
+        SaveBattleData();
     }
 
     public void IncrementTurnIndex()
     {
         _battleData.SetTurnIndex(_battleData.GetTurnIndex() + 1);
+        SaveBattleData();
+    }
+
+    public void ChangeStageIndex(int index)
+    {
+        _battleData.SetStageIndex(index);
+        SaveBattleData();
     }
 
     public void ConstructScenario()
@@ -157,6 +179,9 @@ public class FightDirector : MonoBehaviour
     public void StartFight()
     {
         EventMaster.current.OnBaseMode();
+        _scenario.map.HideAll();
+
+        Debug.Log("Hide out all cells!");
 
         Scenario._isLanded = true;
         Scenario.Begin();
@@ -171,6 +196,8 @@ public class FightDirector : MonoBehaviour
 
         EventMaster.current.OnNextTurn(_battleData.GetTurn());
         Scenario.OnNextTurn();
+        
+        SyncBattleDataToCurrentBattleSituation();
     }
 
     public void ExecuteTurn(TurnData turnData)
@@ -183,6 +210,7 @@ public class FightDirector : MonoBehaviour
                 turnData._activeUnit.Move(turnData._route);
 
                 // Подождать прибытия юнита
+                //Время ожидания в секундах = скорость юнита * длина маршрута * 0.5
             }
 
             if (IsTurnContainsTarget(turnData))
@@ -197,13 +225,11 @@ public class FightDirector : MonoBehaviour
                         attacker.Attack(turnData._target);
                     }
 
+                    // Подождать конца атаки и ранения цели = 1 с
                     turnData._target.GetDamage(damage);
-
-                    // Подождать конца атаки и ранения цели
                 }
             }
         }
-        //Обновить _battleData
 
         NextTurn();
     }

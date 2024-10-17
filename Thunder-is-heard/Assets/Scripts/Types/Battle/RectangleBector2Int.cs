@@ -23,10 +23,10 @@ public class RectangleBector2Int
 
             for (int i = 0; i < positions.Length; i++)
             {
-                minX = Mathf.Min(minX, positions[i].x);
-                minY = Mathf.Min(minY, positions[i].y);
-                maxX = Mathf.Max(maxX, positions[i].x);
-                maxY = Mathf.Max(maxY, positions[i].y);
+                minX = Mathf.Min(minX, positions[i]._x);
+                minY = Mathf.Min(minY, positions[i]._y);
+                maxX = Mathf.Max(maxX, positions[i]._x);
+                maxY = Mathf.Max(maxY, positions[i]._y);
             }   
 
             _startPosition = new Bector2Int(minX, minY);

@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -72,8 +71,6 @@ public class Selector : MonoBehaviour
 
     public void OnEnterObject(Entity obj)
     {
-        Debug.Log("on enter obj");
-
         ConfigureName(obj);
         ConfigureInfoPanel(obj);
         ConfigureRadius(obj);

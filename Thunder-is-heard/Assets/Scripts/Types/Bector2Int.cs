@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,23 +6,29 @@ using UnityEngine;
 [System.Serializable]
 public class Bector2Int
 {
-    public int x, y;
+    [JsonProperty("x")]
+    public int _x;
+
+    [JsonProperty("y")]
+    public int _y;
+
+    public Bector2Int() { }
+
+    public Bector2Int(int x, int y)
+    {
+        _x = x;
+        _y = y;
+    }
 
     public Bector2Int(Vector2Int vector)
     {
-        x = vector.x; 
-        y = vector.y;
-    }
-
-    public Bector2Int(int xValue, int yValue)
-    {
-        x = xValue;
-        y = yValue;
+        _x = vector.x; 
+        _y = vector.y;
     }
 
     public Vector2Int ToVector2Int()
     {
-        return new Vector2Int(x, y);
+        return new Vector2Int(_x, _y);
     }
 
     public static Vector2Int[] MassiveToVector2Int(Bector2Int[] massive)

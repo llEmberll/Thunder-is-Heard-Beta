@@ -26,6 +26,7 @@ public class BasicStage: IStage
 
     public ObjectProcessor _objectProcessor;
 
+
     public virtual void Init(Scenario stageScenario, List<ICondition> conditionsForPass, List<ICondition> conditionsForFail, UnitOnBattle[] units, BuildOnBattle[] builds)
     {
         SetScenario(stageScenario);
@@ -34,6 +35,8 @@ public class BasicStage: IStage
         SetUnits(units);
         SetBuilds(builds);
         SetCustomProperties();
+
+        InitObjectProcessor();
     }
 
     public void InitObjectProcessor()

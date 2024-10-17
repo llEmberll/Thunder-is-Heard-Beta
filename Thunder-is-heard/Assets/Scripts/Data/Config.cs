@@ -61,6 +61,9 @@ public static class Config
         { "attackableSelector", "Textures/Interface/Selections/AttackableSelector" },
         { "attackRadius", "Textures/Interface/Selections/AttackRadius" },
 
+        { "routeImage", "Textures/Interface/Selections/RouteImage" },
+        { "overRouteImage", "Textures/Interface/Selections/OverRouteImage" },
+
         { "productsCollectionBackgroundIconIdle", "Textures/Interface/Icons/ProductsCollection/ProductsCollectionBackgroundIdle" },
         { "productsCollectionBackgroundIconAllow", "Textures/Interface/Icons/ProductsCollection/ProductsCollectionBackgroundAllow" },
         { "productsCollectionBackgroundIconForbidden", "Textures/Interface/Icons/ProductsCollection/ProductsCollectionBackgroundForbidden" },

@@ -265,4 +265,24 @@ public class EventMaster: MonoBehaviour
     {
         UnitMoveFinished?.Invoke(unit);
     }
+
+    public event Action<List<Bector2Int>, Bector2Int> RouteChanged;
+    public void OnChangeRoute(List<Bector2Int> route, Bector2Int unitPosition)
+    {
+        RouteChanged?.Invoke(route, unitPosition);
+    }
+
+    public event Action<Unit> ActiveUnitChanged;
+    public void OnActiveUnitChanged(Unit unit)
+    {
+        ActiveUnitChanged?.Invoke(unit);
+    }
+
+
+    public event Action<int> StageIndexChanged;
+    public void OnStageIndexChange(int index)
+    {
+        StageIndexChanged?.Invoke(index);
+    }
+
 }

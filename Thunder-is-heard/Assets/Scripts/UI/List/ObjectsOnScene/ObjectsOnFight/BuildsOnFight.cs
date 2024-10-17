@@ -78,7 +78,7 @@ public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
         }
     }
 
-    private void MappingBuild(BuildOnBattle battleBuildData)
+    public void MappingBuild(BuildOnBattle battleBuildData)
     {
         string side = battleBuildData.side;
 
@@ -91,8 +91,8 @@ public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
         int currentHealth = battleBuildData.health;
         int damage = battleBuildData.damage;
         int distance = battleBuildData.distance;
-        string interactionComponentName = coreBuildData.GetInteractionComponentName();
-        string interactionComponentType = coreBuildData.GetInteractionComponentType();
+        string interactionComponentName = "Inaction";
+        string interactionComponentType = "";
 
         string name = coreBuildData.GetName();
         Bector2Int[] position = battleBuildData.position;
@@ -132,8 +132,8 @@ public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
     {
         if (rotation == 0 || rotation == 360 || rotation == 180) return;
 
-        Bector2Int swappedSizeB = new Bector2Int(GetSwappedSize(size.x, size.y));
-        float sizeDiff = ((float)swappedSizeB.x - (float)swappedSizeB.y) / 2;
+        Bector2Int swappedSizeB = new Bector2Int(GetSwappedSize(size._x, size._y));
+        float sizeDiff = ((float)swappedSizeB._x - (float)swappedSizeB._y) / 2;
 
         Vector3 offset = new Vector3(sizeDiff, 0, -1 * sizeDiff);
         model.position += offset;

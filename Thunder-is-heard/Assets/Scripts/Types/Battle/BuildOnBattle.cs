@@ -18,6 +18,8 @@ public class BuildOnBattle
     public string side;
     public string workStatus;
 
+    public BuildOnBattle() { }
+
     public BuildOnBattle(
         string coreBuildId,
         Bector2Int[] buildPosition,
@@ -48,6 +50,25 @@ public class BuildOnBattle
         idOnBattle = buildIdOnBattle;
     }
 
+    public BuildOnBattle(Build build)
+    {
+        coreId = build.CoreId;
+        position = Bector2Int.GetVector2IntListAsBector(build.occypiedPoses);
+        rotation = build.rotation;
+        maxHealth = build.maxHealth;
+        health = build.currentHealth;
+        damage = build.damage;
+        distance = build.distance;
+        side = build.side;
+        workStatus = build.workStatus;
+
+        string buildIdOnBattle = build.ChildId;
+        if (buildIdOnBattle == null)
+        {
+            buildIdOnBattle = Guid.NewGuid().ToString();
+        }
+        idOnBattle = buildIdOnBattle;
+    }
 
 
     public BuildOnBattle Clone()

@@ -179,8 +179,8 @@ public class BuildsOnBase : ObjectsOnBase
     {
         if (rotation == 0 || rotation == 360 || rotation == 180) return;
 
-        Bector2Int swappedSizeB = new Bector2Int(GetSwappedSize(size.x, size.y));
-        float sizeDiff = ((float)swappedSizeB.x - (float)swappedSizeB.y) / 2;
+        Bector2Int swappedSizeB = new Bector2Int(GetSwappedSize(size._x, size._y));
+        float sizeDiff = ((float)swappedSizeB._x - (float)swappedSizeB._y) / 2;
 
         Vector3 offset = new Vector3(sizeDiff, 0, -1 * sizeDiff);
         model.position += offset;

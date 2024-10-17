@@ -80,7 +80,7 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
         }
     }
 
-    private void MappingUnit(UnitOnBattle battleUnitData)
+    public void MappingUnit(UnitOnBattle battleUnitData)
     {
         string side = battleUnitData.side;
 

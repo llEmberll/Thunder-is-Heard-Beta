@@ -41,6 +41,8 @@ TagManager:
   - FightDirector
   - BattleEngine
   - AI
+  - Route
+  - UIController
   layers:
   - Default
   - TransparentFX
