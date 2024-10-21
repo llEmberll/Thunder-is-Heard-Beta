@@ -15,6 +15,7 @@ public class UIController : MonoBehaviour
     public GameObject _routeImage;
 
     public Dictionary<Bector2Int, List<GameObject>> route = null;
+
     public List<Cell> reachableCells = null;
 
     public BattleEngine _battleEngine;
@@ -23,6 +24,7 @@ public class UIController : MonoBehaviour
     {
         InitPrefabs();
         InitBattleEngine();
+        EnableListeners();
     }
 
     public void InitBattleEngine()
@@ -86,7 +88,17 @@ public class UIController : MonoBehaviour
         foreach (var positionForRoute in newPositionsForRoute)
         {
             List<GameObject> currentRouteObjs = CreateRouteObjsForPosition(positionForRoute, previousHandledPosition, false);
-            route.Add(positionForRoute, currentRouteObjs);
+            if (route.ContainsKey(positionForRoute))
+            {
+                List<GameObject> objectsByPosition = route[positionForRoute];
+                objectsByPosition.AddRange(currentRouteObjs);
+                route[positionForRoute] = objectsByPosition;
+            }
+            else
+            {
+                route.Add(positionForRoute, currentRouteObjs);
+            }
+            
             previousHandledPosition = positionForRoute;
         }
 
@@ -96,14 +108,15 @@ public class UIController : MonoBehaviour
 
     public List<GameObject> CreateRouteObjsForPosition(Bector2Int position, Bector2Int previousRoutePosition, bool isOver)
     {
-        Vector3 positionForMainRouteObj = new Vector3(position._x, _routeImage.transform.position.y, position._x);
+        Vector3 positionForMainRouteObj = new Vector3(position._x, _routeImage.transform.position.y, position._y);
         GameObject routeObjPrefab = isOver == true ? _overRouteImage : _routeImage;
-        var routeMainObj = Instantiate(routeObjPrefab, positionForMainRouteObj, Quaternion.identity, parent: routeParent);
+        var routeMainObj = Instantiate(routeObjPrefab, positionForMainRouteObj, Quaternion.Euler(new Vector3(90f, 0f, 0f)), parent: routeParent);
 
-        Vector2Int segmentOffset = (previousRoutePosition.ToVector2Int() - position.ToVector2Int()) / 3;
-        Vector3 offsetForSegmentRouteObjs = new Vector3(segmentOffset.x, positionForMainRouteObj.y, segmentOffset.x);
-        var routeSecondSegmentObj = Instantiate(_routeImage, positionForMainRouteObj + offsetForSegmentRouteObjs, Quaternion.identity, parent: routeParent);
-        var routeFirstSegmentObj = Instantiate(_routeImage, positionForMainRouteObj + (offsetForSegmentRouteObjs * 2), Quaternion.identity, parent: routeParent);
+        float segmentOffsetByX = (float)(previousRoutePosition._x - position._x) / 3;
+        float segmentOffsetByZ = (float)(previousRoutePosition._y - position._y) / 3;
+        Vector3 offsetForSegmentRouteObjs = new Vector3(segmentOffsetByX, 0, segmentOffsetByZ);
+        var routeSecondSegmentObj = Instantiate(_routeImage, positionForMainRouteObj + offsetForSegmentRouteObjs, Quaternion.Euler(new Vector3(90f, 0f, 0f)), parent: routeParent);
+        var routeFirstSegmentObj = Instantiate(_routeImage, positionForMainRouteObj + (offsetForSegmentRouteObjs * 2), Quaternion.Euler(new Vector3(90f, 0f, 0f)), parent: routeParent);
 
         return new List<GameObject>
         {

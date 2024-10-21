@@ -11,8 +11,10 @@ public class TurnController : MonoBehaviour
     public TurnData _turnData;
 
     public Map _map;
+    
 
     public BattleEngine _battleEngine;
+    public MapOnBattle _mapProcessor;
 
     public void EnableStartListeners()
     {
@@ -52,6 +54,7 @@ public class TurnController : MonoBehaviour
         EventMaster.current.ClickedOnCell += OnCellClick;
         EventMaster.current.EnteredOnCell += OnCellEnter;
         EventMaster.current.ExitedOnCell += OnCellExit;
+        EventMaster.current.EnteredOnObject += OnObjectEnter;
     }
 
     public void DisableBuildRouteListeners()
@@ -59,6 +62,7 @@ public class TurnController : MonoBehaviour
         EventMaster.current.ClickedOnCell -= OnCellClick;
         EventMaster.current.EnteredOnCell -= OnCellEnter;
         EventMaster.current.ExitedOnCell -= OnCellExit;
+        EventMaster.current.EnteredOnObject -= OnObjectEnter;
     }
 
 
@@ -72,10 +76,16 @@ public class TurnController : MonoBehaviour
         _battleEngine = GameObject.FindGameObjectWithTag(Tags.battleEngine).GetComponent<BattleEngine>();
     }
 
+    public void InitMapProcessor()
+    {
+        _mapProcessor = _battleEngine.currentBattleSituation._map;
+    }
+
     public void Start()
     {
         InitMap();
         InitBattleEngine();
+        InitMapProcessor();
 
         EnableStartListeners();
         ClearTurnData();
@@ -100,6 +110,17 @@ public class TurnController : MonoBehaviour
         {
             DisableObjectClickListener();
             DisableBuildRouteListeners();
+        }
+    }
+
+    public void OnObjectEnter(Entity obj)
+    {
+        if (obj is Unit unit)
+        {
+            if (_turnData._activeUnit != null && _turnData._activeUnit.ChildId == unit.ChildId)
+            {
+                ClearRoute();
+            }
         }
     }
 
@@ -137,22 +158,26 @@ public class TurnController : MonoBehaviour
 
         if (obj is Unit unit)
         {
-            if (_turnData != null && _turnData._activeUnit != null)
-            {
-                if (_turnData._activeUnit.ChildId != unit.ChildId)
-                {
-                    SetActiveUnit(unit);
-                    return;
-                }
-            }
-
-            ClearActiveUnit();
+            OnFriendlyUnitClick(unit);
         }
+    }
+
+    public void OnFriendlyUnitClick(Unit unit)
+    {
+        if (_turnData._activeUnit == null || _turnData._activeUnit.ChildId == unit.ChildId)
+        {
+            SetActiveUnit(unit);
+            return;
+        }
+
+        ClearActiveUnit();
     }
 
     public void OnCellClick(Cell cell)
     {
         Debug.Log("Turn controller: CELL CLICK");
+
+        if (!cell.visible) return;
 
         if (_turnData == null || _turnData._route == null)
         {
@@ -166,25 +191,24 @@ public class TurnController : MonoBehaviour
 
     public void OnCellEnter(Cell cell)
     {
-        if (_turnData == null || _turnData._activeUnit == null || _turnData._route == null)
+        if (!cell.visible) return;
+        if (_turnData._activeUnit == null)
         {
-            Debug.Log("route or active unit null -> exit");
-
             return;
         }
 
-        Debug.Log("route or active unit not NULL!");
-
         if (_turnData._route.Contains(cell))
         {
+            if (_turnData._route.Last() == cell) return;
+
             // Если клетка присоединена к маршруту, обрезаем маршрут
             CutRouteToCell(cell);
         }
         else
         {
-            if (_turnData._activeUnit.mobility > _turnData._route.Count - 1)
+            if (_turnData._activeUnit.mobility > _turnData._route.Count)
             {
-                int maxExtendLenght = _turnData._activeUnit.mobility - (_turnData._route.Count - 1);
+                int maxExtendLenght = _turnData._activeUnit.mobility - _turnData._route.Count;
                 ExtendRouteToCell(cell, maxExtendLenght);
             }
             else
@@ -226,17 +250,23 @@ public class TurnController : MonoBehaviour
 
     private void RebuildRouteToCell(Cell cell)
     {
-        Cell activeUnitCell = _map.Cells[_turnData._activeUnit.occypiedPoses.First()];
-        _turnData._route = _map.BuildRoute(activeUnitCell, cell, _turnData._activeUnit.mobility);
+        Bector2Int startPosition = new Bector2Int(_turnData._activeUnit.center);
+        Bector2Int endPosition = new Bector2Int(cell.position);
+        List<Bector2Int> routeAsBector2List = _mapProcessor.BuildRoute(startPosition, endPosition, _turnData._activeUnit.mobility);
+        _turnData._route = _battleEngine.GetCellsByBector2IntPositions(routeAsBector2List);
         SendRouteChangeEvent();
     }
 
-    public void ExtendRouteToCell(Cell cell, int maxExtendLenght)
+    public void ExtendRouteToCell(Cell cell, int maxExtendLength)
     {
-        List<Cell> routeContinuation = _map.BuildRoute(_turnData._route.Last(), cell, maxExtendLenght);
-        _turnData._route.AddRange(routeContinuation);
+        Bector2Int start = _turnData._route.Count > 0 ? new Bector2Int(_turnData._route.Last().position) : new Bector2Int(_turnData._activeUnit.center);
+        Bector2Int end = new Bector2Int(cell.position);
+        List<Bector2Int> routeAsBector2List = _mapProcessor.BuildRoute(start, end, maxExtendLength);
+        _turnData._route.AddRange(_battleEngine.GetCellsByBector2IntPositions(routeAsBector2List));
+        
         SendRouteChangeEvent();
     }
+
 
     public void ClearTurnData()
     {
@@ -255,13 +285,10 @@ public class TurnController : MonoBehaviour
 
     public void ClearActiveUnit()
     {
-        if (_turnData != null)
-        {
-            _turnData._activeUnit = null;
-            ClearRoute();
-            DisableBuildRouteListeners();
-            EventMaster.current.OnActiveUnitChanged(_turnData._activeUnit);
-        }
+        _turnData._activeUnit = null;
+        ClearRoute();
+        DisableBuildRouteListeners();
+        EventMaster.current.OnActiveUnitChanged(_turnData._activeUnit);
     }
 
     public void SetTarget(Entity target)
@@ -275,7 +302,7 @@ public class TurnController : MonoBehaviour
 
     public void ClearRoute()
     {
-        _turnData._route = null;
+        _turnData._route = new List<Cell>();
         SendRouteChangeEvent();
     }
 

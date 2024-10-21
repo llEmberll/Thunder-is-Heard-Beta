@@ -31,6 +31,11 @@ public class Bector2Int
         return new Vector2Int(_x, _y);
     }
 
+    public Vector2Int ToVector2()
+    {
+        return new Vector2Int(_x, _y);
+    }
+
     public static Vector2Int[] MassiveToVector2Int(Bector2Int[] massive)
     {
         Vector2Int[] positions = new Vector2Int[massive.Length];
@@ -51,5 +56,27 @@ public class Bector2Int
         }
 
         return positions;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+        {
+            return false;
+        }
+
+        Bector2Int other = (Bector2Int)obj;
+        return _x == other._x && _y == other._y;
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 23 + _x.GetHashCode();
+            hash = hash * 23 + _y.GetHashCode();
+            return hash;
+        }
     }
 }

@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class BattleSituation
 {
-    public Dictionary<string, UnitOnBattle> federationUnits;
-    public Dictionary<string, UnitOnBattle> empireUnits;
-    public Dictionary<string, UnitOnBattle> neutralUnits;
+    public Dictionary<string, UnitOnBattle> federationUnits = new Dictionary<string, UnitOnBattle>();
+    public Dictionary<string, UnitOnBattle> empireUnits = new Dictionary<string, UnitOnBattle>();
+    public Dictionary<string, UnitOnBattle> neutralUnits = new Dictionary<string, UnitOnBattle>();
 
-    public Dictionary<string, BuildOnBattle> federationBuilds;
-    public Dictionary<string, BuildOnBattle> empireBuilds;
-    public Dictionary<string, BuildOnBattle> neutralBuilds;
+    public Dictionary<string, BuildOnBattle> federationBuilds = new Dictionary<string, BuildOnBattle>();
+    public Dictionary<string, BuildOnBattle> empireBuilds = new Dictionary<string, BuildOnBattle>();
+    public Dictionary<string, BuildOnBattle> neutralBuilds = new Dictionary<string, BuildOnBattle>();
 
-    public Dictionary<string, List<UnitOnBattle>> attackersByObjectId;
+    public Dictionary<string, List<UnitOnBattle>> attackersByObjectId = new Dictionary<string, List<UnitOnBattle>>();
 
     public string _sideTurn;
 
@@ -61,9 +61,7 @@ public class BattleSituation
 
         foreach (var unit in units)
         {
-            if (unit.side == Sides.federation) federationUnits.Add(unit.idOnBattle, unit);
-            if (unit.side == Sides.empire) empireUnits.Add(unit.idOnBattle, unit);
-            if (unit.side == Sides.neutral) neutralUnits.Add(unit.idOnBattle, unit);
+            AddUnit(unit);
         }
     }
 
@@ -75,9 +73,7 @@ public class BattleSituation
 
         foreach (var build in builds)
         {
-            if (build.side == Sides.federation) federationBuilds.Add(build.idOnBattle, build);
-            if (build.side == Sides.empire) empireBuilds.Add(build.idOnBattle, build);
-            if (build.side == Sides.neutral) neutralBuilds.Add(build.idOnBattle, build);
+            AddBuild(build);
         }
     }
 
@@ -85,6 +81,8 @@ public class BattleSituation
     {
         Dictionary<string, UnitOnBattle> unitsBySide = GetUnitsCollectionBySide(unitData.side);
         unitsBySide.Add(unitData.idOnBattle, unitData);
+        _map.Cells[unitData.position]._isOccypy = true;
+
         UpdateTargetsForAttacker(unitData);
         UpdateAttackersForUnitTarget(unitData);
         // Сделать перерасчет оценки позиции, когда она будет реализована
@@ -92,8 +90,13 @@ public class BattleSituation
 
     public void AddBuild(BuildOnBattle buildData) // Добавить здание в сражение
     {
-        Dictionary<string, BuildOnBattle> buildsBySide = GetBuildsCollectionById(buildData.side);
+        Dictionary<string, BuildOnBattle> buildsBySide = GetBuildsCollectionBySide(buildData.side);
         buildsBySide.Add(buildData.idOnBattle, buildData);
+        foreach (var position in buildData.position)
+        {
+            _map.Cells[position]._isOccypy = true;
+        }
+
         UpdateAttackersForBuildTarget(buildData);
     }
 
@@ -103,14 +106,20 @@ public class BattleSituation
         ClearAttacker(unitData);
         ClearUnitAsTarget(unitData);
         unitsBySide.Remove(unitData.idOnBattle);
+        _map.Cells[unitData.position]._isOccypy = false;
+
         // Сделать перерасчет оценки позиции, когда она будет реализована
     }
 
     public void RemoveBuild(BuildOnBattle buildData) // Удалить здание из сражения
     {
-        Dictionary<string, BuildOnBattle> buildsBySide = GetBuildsCollectionById(buildData.side);
+        Dictionary<string, BuildOnBattle> buildsBySide = GetBuildsCollectionBySide(buildData.side);
         ClearBuildAsTarget(buildData);
         buildsBySide.Remove(buildData.idOnBattle);
+        foreach (var position in buildData.position)
+        {
+            _map.Cells[position]._isOccypy = false;
+        }
     }
 
     public void UnitChangePosition(string unitId, Bector2Int newPosition)

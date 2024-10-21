@@ -37,7 +37,7 @@
         "health": 3,
         "damage": 1,
         "distance": 2,
-        "mobility": 2,
+        "mobility": 4,
         "size": {
           "x": 1,
           "y": 1

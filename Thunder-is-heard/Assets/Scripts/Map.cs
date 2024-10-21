@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Map : MonoBehaviour
 {
@@ -129,6 +130,10 @@ public class Map : MonoBehaviour
         return finded;
     }
 
+    public static bool IsNeighnorCells(Cell cell1, Cell cell2)
+    {
+        return Mathf.Max(Mathf.Abs(cell1.position.x - cell2.position.y), Mathf.Abs(cell1.position.y - cell2.position.y)) == 1;
+    }
     public Dictionary<Vector2Int, Cell> GetDisplayedCells()
     {
         Dictionary<Vector2Int, Cell> displayedCells = new Dictionary<Vector2Int, Cell>();
@@ -174,9 +179,9 @@ public class Map : MonoBehaviour
         }
 
         // Удаляем центральную клетку из HashSet, если она попала в результат
-        if (resultCells.Contains(cellsSet[center]))
+        if (resultCells.Contains(Cells[center]))
         {
-            resultCells.Remove(cellsSet[center]);
+            resultCells.Remove(Cells[center]);
         }
 
         return resultCells.ToList();

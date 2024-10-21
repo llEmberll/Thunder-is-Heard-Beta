@@ -92,6 +92,7 @@ public class EventMaster: MonoBehaviour
         ObjectExposed?.Invoke(obj);
     }
 
+
     public event Action<ObjectPreview> PreviewCreated;
     public void OnCreatePreview(ObjectPreview preview)
     {

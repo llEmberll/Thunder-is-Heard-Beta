@@ -11,11 +11,17 @@ public class BattleEngine : MonoBehaviour
     public BattleSituation currentBattleSituation;
 
 
+
+    public void Awake()
+    {
+        
+    }
+
     public void Start()
     {
+        EnableListeners();
         InitMap();
         InitBattleSituation();
-        EnableListeners();
     }
 
     public void InitMap()
@@ -109,6 +115,12 @@ public class BattleEngine : MonoBehaviour
         return Mathf.Min(minDistanceX, minDistanceY);
     }
 
+    public List<Cell> GetCellsByBector2IntPositions(List<Bector2Int> positions)
+    {
+        List<Vector2Int> routeAsVector2List = Bector2Int.MassiveToVector2Int(positions.ToArray()).ToList();
+        return _map.FindCellsByPosition(routeAsVector2List).Values.ToList();
+    }
+
     public UnitOnBattle FindUnitByIdAndSide(string id, string side)
     {
         Dictionary<string, UnitOnBattle> units;
@@ -191,6 +203,8 @@ public class BattleEngine : MonoBehaviour
 
     public void OnExposeObject(Entity obj)
     {
+        Debug.Log("OnExposeObject in battleEngine");
+
         if (obj is Unit unit)
         {
             OnExposeUnit(unit);
