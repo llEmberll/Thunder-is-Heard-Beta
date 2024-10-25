@@ -152,8 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acbb9adf7d254a341ba53156401aa7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _side: 
+  _sides: []
   _battleEngine: {fileID: 0}
+  _map: {fileID: 0}
 --- !u!224 &3821933
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8865,8 +8866,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 983476472}
+        m_TargetAssemblyTypeName: TurnController, Assembly-CSharp
         m_MethodName: Pass
         m_Mode: 1
         m_Arguments:

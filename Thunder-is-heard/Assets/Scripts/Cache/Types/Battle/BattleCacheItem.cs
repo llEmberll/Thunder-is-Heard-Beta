@@ -57,8 +57,6 @@ public class BattleCacheItem : CacheItem
     {
         object value = GetField("stageIndex");
 
-        UnityEngine.Debug.Log("value = " + value);
-
         if (value == null)
         {
             return 0;

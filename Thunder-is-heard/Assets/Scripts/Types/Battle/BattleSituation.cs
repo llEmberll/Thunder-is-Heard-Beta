@@ -126,7 +126,11 @@ public class BattleSituation
     {
         Dictionary<string, UnitOnBattle> unitsCollection = GetUnitsCollectionById(unitId);
         UnitOnBattle unit = unitsCollection[unitId];
+
+        _map.Cells[unit.position]._isOccypy = false;
         unit.position = newPosition;
+        _map.Cells[unit.position]._isOccypy = true;
+
         unitsCollection[unitId] = unit;
         UpdateAttackersForUnitTarget(unit);
         UpdateTargetsForAttacker(unit);
@@ -267,7 +271,10 @@ public class BattleSituation
         if (attackersByObjectId.ContainsKey(objectId))
         {
             List<UnitOnBattle> newAttackers = attackersByObjectId[objectId];
-            newAttackers.Add(attacker);
+            if (!newAttackers.Contains(attacker))
+            {
+                newAttackers.Add(attacker);
+            }
         }
         else
         {
@@ -278,6 +285,8 @@ public class BattleSituation
 
     public void ClearAttacker(UnitOnBattle attacker)
     {
+        var keysToClear = new List<string>();
+
         foreach (var item in attackersByObjectId)
         {
             if (item.Value.Contains(attacker))
@@ -285,9 +294,14 @@ public class BattleSituation
                 item.Value.Remove(attacker);
                 if (item.Value.Count < 1)
                 {
-                    attackersByObjectId.Remove(item.Key);
+                    keysToClear.Add(item.Key);
                 }
             }
+        }
+
+        foreach (var key in keysToClear)
+        {
+            attackersByObjectId.Remove(key);
         }
     }
 
@@ -309,7 +323,7 @@ public class BattleSituation
 
         foreach (UnitOnBattle possibleUnitTarget in unitsForSearchData.Values)
         {
-            if (BattleEngine.GetDistanceBetweenPoints(attacker.position, possibleUnitTarget.position) >= attacker.distance)
+            if (BattleEngine.GetDistanceBetweenPoints(attacker.position, possibleUnitTarget.position) <= attacker.distance)
             {
                 AddAttackerByObjectId(possibleUnitTarget.idOnBattle, attacker);
             }
@@ -317,7 +331,7 @@ public class BattleSituation
 
         foreach (BuildOnBattle possibleBuildTarget in buildsForSearchData.Values)
         {
-            if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attacker.position, new RectangleBector2Int(possibleBuildTarget.position)) >= attacker.distance)
+            if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attacker.position, new RectangleBector2Int(possibleBuildTarget.position)) <= attacker.distance)
             {
                 AddAttackerByObjectId(possibleBuildTarget.idOnBattle, attacker);
             }

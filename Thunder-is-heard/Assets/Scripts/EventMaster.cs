@@ -286,4 +286,17 @@ public class EventMaster: MonoBehaviour
         StageIndexChanged?.Invoke(index);
     }
 
+    public event Action<Entity> DestroyedObject;
+    public void OnObjectDestroy(Entity obj)
+    {
+        DestroyedObject?.Invoke(obj);
+    }
+
+    public event Action<Entity> DamagedObject;
+    public void OnObjectDamaged(Entity obj)
+    {
+        DamagedObject?.Invoke(obj);
+    }
+
+
 }

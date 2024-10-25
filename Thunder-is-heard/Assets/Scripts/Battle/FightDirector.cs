@@ -18,6 +18,8 @@ public class FightDirector : MonoBehaviour
 
     public UnitsOnFight _unitsOnFightManager;
 
+    public TurnController _turnController;
+
 
     public void Awake()
     {
@@ -35,6 +37,7 @@ public class FightDirector : MonoBehaviour
         InitObjectProcessor();
         InitBattleEngine();
         InitUnitsOnFightManager();
+        InitTurnController();
     }
 
     public void EnableListeners()
@@ -79,6 +82,11 @@ public class FightDirector : MonoBehaviour
         _unitsOnFightManager = GameObject.FindGameObjectWithTag(Tags.unitsOnScene).GetComponent<UnitsOnFight>();
     }
 
+    public void InitTurnController()
+    {
+        _turnController = GameObject.FindGameObjectWithTag(Tags.turnController).GetComponent<TurnController>();
+    }
+
     public void InitBattleData(string battleId)
     {
         _battleId = battleId;
@@ -92,6 +100,7 @@ public class FightDirector : MonoBehaviour
         BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
         battleTable.ChangeById(_battleId, _battleData);
         Cache.Save(battleTable);
+        InitBattleData(_battleId);
     }
 
     public void SyncBattleDataToCurrentBattleSituation()
@@ -181,23 +190,35 @@ public class FightDirector : MonoBehaviour
         EventMaster.current.OnBaseMode();
         _scenario.map.HideAll();
 
-        Debug.Log("Hide out all cells!");
-
         Scenario._isLanded = true;
         Scenario.Begin();
+
+        _turnController.OnNextTurn(_battleData.GetTurn());
     }
 
     public void NextTurn()
     {
+        Debug.Log("Следующий ход");
+
         UpdateEffects();
+        Debug.Log("Эффекты  обновлены");
 
         ChangeSideTurn();
+
         IncrementTurnIndex();
 
-        EventMaster.current.OnNextTurn(_battleData.GetTurn());
+        Debug.Log("Данные по очередерности обновлены");
+
         Scenario.OnNextTurn();
-        
+
+        Debug.Log("Сценарий обновлен");
+
         SyncBattleDataToCurrentBattleSituation();
+
+        Debug.Log("Битва синхронизирована");
+
+        EventMaster.current.OnNextTurn(_battleData.GetTurn());
+        _turnController.OnNextTurn(_battleData.GetTurn());
     }
 
     public void ExecuteTurn(TurnData turnData)
@@ -206,7 +227,14 @@ public class FightDirector : MonoBehaviour
         {
             if (IsTurnContainsMovement(turnData)) 
             {
+                Debug.Log("Ход с передвижением");
+
+                _battleEngine.OnReplaceUnit(turnData._activeUnit, new Bector2Int(turnData._route.Last().position));
+
                 ChangeUnitOccypation(turnData._activeUnit, turnData._route.Last());
+
+                Debug.Log(turnData._activeUnit.name + "движется к позиции " + turnData._route.Last().position);
+
                 turnData._activeUnit.Move(turnData._route);
 
                 // Подождать прибытия юнита
@@ -215,17 +243,31 @@ public class FightDirector : MonoBehaviour
 
             if (IsTurnContainsTarget(turnData))
             {
+                Debug.Log("Ход с атакой по " + turnData._target.name);
+
                 UnitOnBattle[] attackersData = _battleEngine.currentBattleSituation.attackersByObjectId[turnData._target.ChildId].ToArray();
+
+                
+
                 if (attackersData != null && attackersData.Length > 0)
                 {
+
+                    Debug.Log(attackersData.Count() + "атакующих");
+
                     List<Unit> attackers = _unitsOnFightManager.GetUnitsByBattleUnitsData(attackersData);
-                    int damage = _battleEngine.CalculateDamageToTarget(attackersData, turnData._target); // Нужно как-то вызвать GetDamage у цели при этом и учесть модификаторы от скилов + эффекты
+                    int damage = _battleEngine.CalculateDamageToTarget(attackersData, turnData._target); // Нужно учесть модификаторы от скилов + эффекты
+
+                    Debug.Log("Урон " + damage);
+
                     foreach (Unit attacker in attackers)
                     {
                         attacker.Attack(turnData._target);
                     }
 
                     // Подождать конца атаки и ранения цели = 1 с
+                    Debug.Log("Цель сейчас получит");
+                    _battleEngine.OnAttackTarget(turnData._target, damage);
+
                     turnData._target.GetDamage(damage);
                 }
             }
@@ -260,6 +302,7 @@ public class FightDirector : MonoBehaviour
         }
 
         _battleData.SetUnits(unitsInCache);
+        SaveBattleData();
     }
 
     public bool IsTurnContainsMovement(TurnData turnData)

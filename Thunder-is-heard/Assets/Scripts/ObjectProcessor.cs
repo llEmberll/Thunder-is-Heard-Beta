@@ -340,10 +340,10 @@ public class ObjectProcessor : MonoBehaviour
                 doctrine,
                 movementSpeed
                 );
-
-            EventMaster.current.ExposeObject(entity.GetComponent<Entity>());
-            EventMaster.current.OnChangeBattleObjects();
         }
+
+        EventMaster.current.ExposeObject(entity.GetComponent<Entity>());
+        EventMaster.current.OnChangeBattleObjects();
     }
 
     public void CreateObjectOnBase(string coreId, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation, string side = null)

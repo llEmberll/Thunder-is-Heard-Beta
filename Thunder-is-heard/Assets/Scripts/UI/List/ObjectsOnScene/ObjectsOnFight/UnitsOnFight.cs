@@ -28,19 +28,21 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
     {
         EventMaster.current.BattleObjectRemoved += OnBattleObjectRemoved;
         EventMaster.current.ObjectExposed += OnBattleObjectExposed;
+        EventMaster.current.DestroyedObject += OnBattleObjectRemoved;
     }
 
     public override void DisableListeners()
     {
         EventMaster.current.BattleObjectRemoved -= OnBattleObjectRemoved;
         EventMaster.current.ObjectExposed -= OnBattleObjectExposed;
+        EventMaster.current.DestroyedObject -= OnBattleObjectRemoved;
     }
 
     public void OnBattleObjectRemoved(Entity obj)
     {
         if (!IsProperType(obj.Type)) return;
         if (!items.ContainsKey(obj.ChildId)) return;
-        Destroy(items[obj.ChildId]);
+        Destroy(items[obj.ChildId].gameObject);
         items.Remove(obj.ChildId);
     }
 

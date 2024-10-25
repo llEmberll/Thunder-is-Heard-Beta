@@ -68,11 +68,14 @@ public class Scenario
 
     public void ToNextStage()
     {
+        Debug.Log("Завершение предыдущего этапа");
         CurrentStage.OnFinish();
 
         _currentStageIndex++;
         if (_currentStageIndex + 1 > _stages.Count)
         {
+            Debug.Log("ПОБЕДА");
+
             EventMaster.current.WinFight();
             return;
         }
@@ -80,6 +83,8 @@ public class Scenario
         _currentStage = Stages[_currentStageIndex];
 
         EventMaster.current.OnStageIndexChange(_currentStageIndex);
+
+        Debug.Log("Начало нового этапа");
         CurrentStage.OnStart();
     }
 
@@ -118,6 +123,8 @@ public class Scenario
     {
         if (CurrentStage.IsFailed())
         {
+            Debug.Log("ПОРАЖЕНИЕ");
+
             CurrentStage.OnFail();
             EventMaster.current.LoseFigth();
             return;
@@ -125,6 +132,8 @@ public class Scenario
 
         if (CurrentStage.IsPassed()) 
         {
+            Debug.Log("СЛЕДУЮЩИЙ ЭТАП");
+
             CurrentStage.OnPass();
             ToNextStage();
             return;

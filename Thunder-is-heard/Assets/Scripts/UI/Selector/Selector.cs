@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class Selector : MonoBehaviour
 {
+    public Entity _selectedObject = null;
     public Build selectedBuild = null;
 
     public GameObject selector;
@@ -43,6 +44,9 @@ public class Selector : MonoBehaviour
 
         EventMaster.current.EnteredOnObject += OnEnterObject;
         EventMaster.current.ExitedOnObject += OnExitObject;
+        EventMaster.current.DamagedObject += OnDamageObject;
+        EventMaster.current.DestroyedObject += OnDestroyObject;
+
     }
 
     public void InitSelectorSprites()
@@ -71,6 +75,7 @@ public class Selector : MonoBehaviour
 
     public void OnEnterObject(Entity obj)
     {
+        _selectedObject = obj;
         ConfigureName(obj);
         ConfigureInfoPanel(obj);
         ConfigureRadius(obj);
@@ -104,8 +109,25 @@ public class Selector : MonoBehaviour
         TurnOff();
     }
 
+    public void OnDamageObject(Entity obj)
+    {
+        if (_selectedObject == null) return;
+        if (_selectedObject.ChildId != obj.ChildId) return;
+
+        OnEnterObject(obj);
+    }
+
+    public void OnDestroyObject(Entity obj)
+    {
+        if (_selectedObject == null) return;
+        if (_selectedObject.ChildId != obj.ChildId) return;
+
+        TurnOff();
+    }
+
     public void TurnOff()
     {
+        _selectedObject = null;
         objectInfoCanvas.enabled = attackRadiusCanvas.enabled =  productsInfoCanvas.enabled = false;
         selector.SetActive(false);
         isSelectedObjectProducts = false;
@@ -191,7 +213,7 @@ public class Selector : MonoBehaviour
         }
 
         ConfigureRadiusPosition(obj);
-        int rangeSize = (obj.distance - 1) * 1600 + attackRadiusSizePerCell;
+        int rangeSize = obj.distance * 1600 + attackRadiusSizePerCell;
 
         attackRadiusCanvas.enabled = true;
         attackRadiusCanvas.GetComponent<RectTransform>().sizeDelta = new Vector2(rangeSize, rangeSize);
@@ -210,7 +232,7 @@ public class Selector : MonoBehaviour
     public void ConfigureHealthSlider(Entity obj)
     {
         healthSlider.maxValue = obj.maxHealth;
-        healthSlider.value = obj.maxHealth;
+        healthSlider.value = obj.currentHealth;
     }
 
     public void ConfigureHealth(Entity obj)

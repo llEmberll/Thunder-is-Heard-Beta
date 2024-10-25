@@ -40,9 +40,9 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
         if (_onMove == true)
         {
             Vector2Int pointPosition = _point.position;
-            if (Vector2Int.Distance(pointPosition, center) > 0)
+            if (Vector2.Distance(pointPosition, new Vector2(transform.position.x, transform.position.z)) > 0)
             {
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(pointPosition.x, transform.position.y, pointPosition.y), _movementSpeed * Time.fixedDeltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(pointPosition.x, transform.position.y, pointPosition.y), (_movementSpeed * 2) * Time.fixedDeltaTime);
             }
             else
             {
@@ -57,7 +57,6 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
         if (nextPoint == null)
         {
             _onMove = false;
-
             EventMaster.current.OnFinishUnitMove(this);
             return;
         }
@@ -67,7 +66,10 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
 
     private Cell GetNextPoint()
     {
-        if (_route.Last().position == _point.position) return null;
+        if (_route.Last().position == _point.position)
+        {
+            return null; 
+        }
 
         int nextPointIndex = _route.IndexOf(_point) + 1;
         return _route[nextPointIndex];
@@ -79,7 +81,6 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
         RotateToTarget(_point.position);
 
         EventMaster.current.OnStartUnitMove(this);
-
         _onMove = true;
     }
 
@@ -87,14 +88,10 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
     {
         _route = route;
         MoveToPoint(route[0]);
-
-        Debug.Log("Unit moves!");
     }
     
     public void Attack(Entity target)
     {
-        Debug.Log("Unit attacks!");
-
         RotateToTarget(target.center);
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AI : MonoBehaviour
 {
-    public string _side;
+    public List<string> _sides;
 
     public TurnData _turnData;
 
@@ -13,14 +13,20 @@ public class AI : MonoBehaviour
 
     public void Start()
     {
-        SetSide(Sides.empire);
+        SetSide(new List<string>() { Sides.empire, Sides.neutral });
         InitBattleEngine();
         InitMap();
+        EnableListeners();
     }
 
-    public void SetSide(string value)
+    public void SetSide(List<string> value)
     {
-        _side = value;
+        _sides = value;
+    }
+
+    public List<string> GetSide()
+    {
+        return _sides;
     }
 
     public void InitBattleEngine()
@@ -45,11 +51,19 @@ public class AI : MonoBehaviour
 
     public void OnNextTurn(string side)
     {
-        if (side == _side)
+        Debug.Log("AI: On next turn");
+
+        if (_sides.Contains(side))
         {
-            // —генерировать ход
-            _turnData = new TurnData();
+            // —генерировать ход по стороне
+            ClearTurnData();
+
+            Debug.Log("AI: ходит за " + side);
             Execute();
+        }
+        else
+        {
+            Debug.Log("AI: side is federation");
         }
     }
 
@@ -60,6 +74,8 @@ public class AI : MonoBehaviour
 
     public void Execute()
     {
+        Debug.Log("AI: Execute");
+
         EventMaster.current.OnExecuteTurn(_turnData);
         ClearTurnData();
     }

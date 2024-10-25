@@ -75,6 +75,7 @@ public abstract class Entity : Interactable, IDamageable
         else
         {
             currentHealth -= damage;
+            EventMaster.current.OnObjectDamaged(this);
         }
     }
 
@@ -192,6 +193,7 @@ public abstract class Entity : Interactable, IDamageable
     {
         Debug.Log("On destroy");
 
+        EventMaster.current.OnObjectDestroy(this);
         map.Free(occypiedPoses);
     }
 }

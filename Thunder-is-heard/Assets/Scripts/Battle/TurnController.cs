@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class TurnController : MonoBehaviour
 {
+    public string[] _controlSides = new string[] { Sides.federation };
+    public bool isAllowedToControl = false;
     public TurnData _turnData;
 
     public Map _map;
@@ -26,19 +28,7 @@ public class TurnController : MonoBehaviour
         EventMaster.current.FightIsStarted -= OnStartFight;
     }
 
-
-    public void EnableNextTurnListener()
-    {
-        EventMaster.current.NextTurn += OnNextTurn;
-    }
-
-    public void DisableNextTurnListener()
-    {
-        EventMaster.current.NextTurn -= OnNextTurn;
-    }
-
-
-    public void EnableObjectClickListener()
+    public void EnableObjectClickListeners()
     {
         EventMaster.current.ClickedOnObject += OnObjectClick;
     }
@@ -94,29 +84,34 @@ public class TurnController : MonoBehaviour
     public void OnStartFight()
     {
         DisableStartListeners();
-        EnableNextTurnListener();
-        OnNextTurn(_battleEngine.currentBattleSituation._sideTurn);
+        EnableObjectClickListeners();
+        EnableBuildRouteListeners();
     }
 
     public void OnNextTurn(string side)
     {
+        Debug.Log("TurnController: side changes to " + side);
+
         ClearTurnData();
-        if (side == Sides.federation)
+        if (_controlSides.Contains(side))
         {
-            EnableObjectClickListener();
-            EnableBuildRouteListeners();
+            Debug.Log("Allowed to control");
+
+            isAllowedToControl = true;
         }
         else
         {
-            DisableObjectClickListener();
-            DisableBuildRouteListeners();
+            Debug.Log("Not allowed to control");
         }
     }
 
     public void OnObjectEnter(Entity obj)
     {
+        if (isAllowedToControl == false) return;
         if (obj is Unit unit)
         {
+            Debug.Log("TurnController: On unit enter");
+
             if (_turnData._activeUnit != null && _turnData._activeUnit.ChildId == unit.ChildId)
             {
                 ClearRoute();
@@ -126,6 +121,7 @@ public class TurnController : MonoBehaviour
 
     public void OnObjectClick(Entity obj)
     {
+        if (isAllowedToControl == false) return;
         Debug.Log("Turn controller: OBJECT CLICK");
 
         if (obj.side == Sides.neutral)
@@ -148,6 +144,7 @@ public class TurnController : MonoBehaviour
     {
         if (!_battleEngine.IsPossibleToAttackTarget(obj)) return;
 
+        ClearRoute();
         SetTarget(obj);
         Execute();
     }
@@ -164,7 +161,7 @@ public class TurnController : MonoBehaviour
 
     public void OnFriendlyUnitClick(Unit unit)
     {
-        if (_turnData._activeUnit == null || _turnData._activeUnit.ChildId == unit.ChildId)
+        if (_turnData._activeUnit == null || _turnData._activeUnit.ChildId != unit.ChildId)
         {
             SetActiveUnit(unit);
             return;
@@ -175,6 +172,7 @@ public class TurnController : MonoBehaviour
 
     public void OnCellClick(Cell cell)
     {
+        if (isAllowedToControl == false) return;
         Debug.Log("Turn controller: CELL CLICK");
 
         if (!cell.visible) return;
@@ -191,6 +189,7 @@ public class TurnController : MonoBehaviour
 
     public void OnCellEnter(Cell cell)
     {
+        if (isAllowedToControl == false) return;
         if (!cell.visible) return;
         if (_turnData._activeUnit == null)
         {
@@ -221,12 +220,12 @@ public class TurnController : MonoBehaviour
 
     public void OnCellExit(Cell cell)
     {
-
+        if (isAllowedToControl == false) return;
     }
 
     public void SendRouteChangeEvent()
     {
-        if (_turnData._route == null)
+        if (_turnData._route == null || _turnData._route.Count < 1)
         {
             EventMaster.current.OnChangeRoute(null, null);
             return;
@@ -306,8 +305,17 @@ public class TurnController : MonoBehaviour
         SendRouteChangeEvent();
     }
 
+    public void Pass()
+    {
+        ClearTurnData();
+        Execute();
+    }
+
     public void Execute()
     {
+        Debug.Log("TurnController: Execute");
+
+        isAllowedToControl = false;
         EventMaster.current.OnExecuteTurn(_turnData);
         ClearTurnData();
     }

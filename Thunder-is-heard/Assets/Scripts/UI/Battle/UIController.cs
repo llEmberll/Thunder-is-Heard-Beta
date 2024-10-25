@@ -128,11 +128,8 @@ public class UIController : MonoBehaviour
 
     public void OnActiveUnitChanged(Unit activeUnit)
     {
-        if (activeUnit == null)
-        {
-            ClearReachableCellsAndHide();
-        }
-        else
+        ClearReachableCellsAndHide();
+        if (activeUnit != null)
         {
             UpdateReachableCellsByUnitAndDisplay(activeUnit);
         }
@@ -140,6 +137,8 @@ public class UIController : MonoBehaviour
 
     public void ClearReachableCellsAndHide()
     {
+        if (reachableCells == null) return;
+
         foreach (var cell in reachableCells)
         {
             cell.RenderSwitch(false);

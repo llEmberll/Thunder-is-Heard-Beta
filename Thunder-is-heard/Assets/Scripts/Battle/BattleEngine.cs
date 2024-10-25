@@ -11,7 +11,6 @@ public class BattleEngine : MonoBehaviour
     public BattleSituation currentBattleSituation;
 
 
-
     public void Awake()
     {
         
@@ -19,9 +18,9 @@ public class BattleEngine : MonoBehaviour
 
     public void Start()
     {
-        EnableListeners();
         InitMap();
         InitBattleSituation();
+        EnableListeners();
     }
 
     public void InitMap()
@@ -177,6 +176,7 @@ public class BattleEngine : MonoBehaviour
 
     public bool IsPossibleToAttackTarget(Entity entity)
     {
+        Dictionary<string, List<UnitOnBattle>> attackersData = currentBattleSituation.attackersByObjectId;
         return currentBattleSituation.attackersByObjectId.ContainsKey(entity.ChildId);
     }
 
@@ -225,5 +225,24 @@ public class BattleEngine : MonoBehaviour
     {
         BuildOnBattle buildOnBattle = new BuildOnBattle(build);
         currentBattleSituation.AddBuild(buildOnBattle);
+    }
+
+    public void OnReplaceUnit(Unit unit, Bector2Int newPosition)
+    {
+        currentBattleSituation.UnitChangePosition(unit.ChildId, newPosition);
+    }
+
+    public void OnAttackTarget(Entity entity, int damage)
+    {
+        int newHealthValue = entity.currentHealth - damage;
+        if (entity is Unit) 
+        {
+            currentBattleSituation.UnitChangeHealth(entity.ChildId, newHealthValue);
+        }
+        if (entity is Build)
+        {
+            currentBattleSituation.BuildChangeHealth(entity.ChildId, newHealthValue);
+        }
+        
     }
 }

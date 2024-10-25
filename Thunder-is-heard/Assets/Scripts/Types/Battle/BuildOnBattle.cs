@@ -86,4 +86,26 @@ public class BuildOnBattle
             idOnBattle
         );
     }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+        {
+            return false;
+        }
+
+        BuildOnBattle other = (BuildOnBattle)obj;
+        return idOnBattle == other.idOnBattle && coreId == other.coreId;
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 23 + idOnBattle.GetHashCode();
+            hash = hash * 23 + coreId.GetHashCode();
+            return hash;
+        }
+    }
 }
