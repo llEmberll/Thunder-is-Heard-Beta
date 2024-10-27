@@ -26,14 +26,14 @@ public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
     {
         EventMaster.current.BattleObjectRemoved += OnBattleObjectRemoved;
         EventMaster.current.ObjectExposed += OnBattleObjectExposed;
-        EventMaster.current.DestroyedObject += OnBattleObjectExposed;
+        EventMaster.current.DestroyedObject += OnBattleObjectRemoved;
     }
 
     public override void DisableListeners()
     {
         EventMaster.current.BattleObjectRemoved -= OnBattleObjectRemoved;
         EventMaster.current.ObjectExposed -= OnBattleObjectExposed;
-        EventMaster.current.DestroyedObject -= OnBattleObjectExposed;
+        EventMaster.current.DestroyedObject -= OnBattleObjectRemoved;
     }
 
     public void OnBattleObjectRemoved(Entity obj)

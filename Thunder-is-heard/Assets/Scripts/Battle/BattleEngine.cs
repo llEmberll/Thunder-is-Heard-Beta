@@ -103,15 +103,16 @@ public class BattleEngine : MonoBehaviour
         // Ќаходим минимальное рассто€ние по каждой оси
         int minDistanceX = Mathf.Min(
             Mathf.Abs(point._x - rectangle._startPosition._x),
-            Mathf.Abs(point._x - (rectangle._startPosition._x + rectangle._size._x))
+            Mathf.Abs(point._x - (rectangle._startPosition._x + (rectangle._size._x - 1)))
         );
         int minDistanceY = Mathf.Min(
             Mathf.Abs(point._y - rectangle._startPosition._y),
-            Mathf.Abs(point._y - (rectangle._startPosition._y + rectangle._size._y))
+            Mathf.Abs(point._y - (rectangle._startPosition._y + (rectangle._size._y - 1)))
         );
 
-        // ¬озвращаем минимальное из минимальных рассто€ний
-        return Mathf.Min(minDistanceX, minDistanceY);
+        // ¬озвращаем максимальное из минимальных рассто€ний
+        int maxDistance = Mathf.Max(minDistanceX, minDistanceY);
+        return maxDistance;
     }
 
     public List<Cell> GetCellsByBector2IntPositions(List<Bector2Int> positions)

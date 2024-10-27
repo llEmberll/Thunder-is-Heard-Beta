@@ -50,7 +50,19 @@ public class UIController : MonoBehaviour
         _overRouteImage = Resources.Load<GameObject>(Config.resources["overRouteImage"]);
     }
 
-
+    public void AddToRoute(Bector2Int position, List<GameObject> objs)
+    {
+        if (route.ContainsKey(position))
+        {
+            List<GameObject> newValue = route[position];
+            newValue.AddRange(objs);
+            route[position] = newValue;
+        }
+        else
+        {
+            route.Add(position, objs);
+        }
+    }
 
     public void OnRouteChanged(List<Bector2Int> newPositionsForRoute, Bector2Int unitPosition)
     {
@@ -88,22 +100,12 @@ public class UIController : MonoBehaviour
         foreach (var positionForRoute in newPositionsForRoute)
         {
             List<GameObject> currentRouteObjs = CreateRouteObjsForPosition(positionForRoute, previousHandledPosition, false);
-            if (route.ContainsKey(positionForRoute))
-            {
-                List<GameObject> objectsByPosition = route[positionForRoute];
-                objectsByPosition.AddRange(currentRouteObjs);
-                route[positionForRoute] = objectsByPosition;
-            }
-            else
-            {
-                route.Add(positionForRoute, currentRouteObjs);
-            }
-            
+            AddToRoute(positionForRoute, currentRouteObjs);
             previousHandledPosition = positionForRoute;
         }
 
         List<GameObject> routeFinalPositionObjs = CreateRouteObjsForPosition(finalPosition, previousHandledPosition, true);
-        route.Add(finalPosition, routeFinalPositionObjs);
+        AddToRoute(finalPosition, routeFinalPositionObjs);
     }
 
     public List<GameObject> CreateRouteObjsForPosition(Bector2Int position, Bector2Int previousRoutePosition, bool isOver)

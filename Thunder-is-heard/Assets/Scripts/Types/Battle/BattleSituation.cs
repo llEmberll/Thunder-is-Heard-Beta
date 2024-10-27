@@ -305,6 +305,24 @@ public class BattleSituation
         }
     }
 
+    public void RemoveAttackerByObjectIdIfExist(string objectId, UnitOnBattle attacker)
+    {
+        if (!attackersByObjectId.ContainsKey(objectId)) return;
+
+        List<UnitOnBattle> newAttackersData = attackersByObjectId[objectId];
+        if (!newAttackersData.Contains(attacker)) return;
+        
+        newAttackersData.Remove(attacker);
+        if (newAttackersData.Count < 1)
+        {
+            attackersByObjectId.Remove(objectId);
+        }
+        else
+        {
+            attackersByObjectId[objectId] = newAttackersData;
+        }       
+    }
+
     public void ClearUnitAsTarget(UnitOnBattle unitData)
     {
         attackersByObjectId.Remove(unitData.idOnBattle);
@@ -327,6 +345,10 @@ public class BattleSituation
             {
                 AddAttackerByObjectId(possibleUnitTarget.idOnBattle, attacker);
             }
+            else
+            {
+                RemoveAttackerByObjectIdIfExist(possibleUnitTarget.idOnBattle, attacker);
+            }
         }
 
         foreach (BuildOnBattle possibleBuildTarget in buildsForSearchData.Values)
@@ -334,6 +356,10 @@ public class BattleSituation
             if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attacker.position, new RectangleBector2Int(possibleBuildTarget.position)) <= attacker.distance)
             {
                 AddAttackerByObjectId(possibleBuildTarget.idOnBattle, attacker);
+            }
+            else
+            {
+                RemoveAttackerByObjectIdIfExist(possibleBuildTarget.idOnBattle, attacker);
             }
         }
     }

@@ -65,7 +65,7 @@ public abstract class Entity : Interactable, IDamageable
 
     public virtual void GetDamage(int damage)
     {
-        Debug.Log("Unit damaged!");
+        Debug.Log("Obj damaged!");
 
         if (damage >= currentHealth)
         {
