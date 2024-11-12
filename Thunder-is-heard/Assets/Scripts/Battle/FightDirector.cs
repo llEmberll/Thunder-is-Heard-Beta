@@ -17,6 +17,7 @@ public class FightDirector : MonoBehaviour
     public BattleEngine _battleEngine;
 
     public UnitsOnFight _unitsOnFightManager;
+    public BuildsOnFight _buildsOnFightManager;
 
     public TurnController _turnController;
 
@@ -37,6 +38,7 @@ public class FightDirector : MonoBehaviour
         InitObjectProcessor();
         InitBattleEngine();
         InitUnitsOnFightManager();
+        InitBuildsOnFightManager();
         InitTurnController();
     }
 
@@ -82,6 +84,11 @@ public class FightDirector : MonoBehaviour
         _unitsOnFightManager = GameObject.FindGameObjectWithTag(Tags.unitsOnScene).GetComponent<UnitsOnFight>();
     }
 
+    public void InitBuildsOnFightManager()
+    {
+        _buildsOnFightManager = GameObject.FindGameObjectWithTag(Tags.buildsOnScene).GetComponent<BuildsOnFight>();
+    }
+
     public void InitTurnController()
     {
         _turnController = GameObject.FindGameObjectWithTag(Tags.turnController).GetComponent<TurnController>();
@@ -105,8 +112,8 @@ public class FightDirector : MonoBehaviour
 
     public void SyncBattleDataToCurrentBattleSituation()
     {
-        Dictionary<string, UnitOnBattle> allUnitsOnBattle = _battleEngine.GetAllUnitsInBattle();
-        Dictionary<string, BuildOnBattle> allBuildsOnBattle = _battleEngine.GetAllBuildsInBattle();
+        Dictionary<string, UnitOnBattle> allUnitsOnBattle = BattleEngine.GetAllUnitsInBattle(_battleEngine.currentBattleSituation);
+        Dictionary<string, BuildOnBattle> allBuildsOnBattle = BattleEngine.GetAllBuildsInBattle(_battleEngine.currentBattleSituation);
 
         UnitOnBattle[] newUnitsForBattleData = allUnitsOnBattle.Values.ToArray();
         BuildOnBattle[] newBuildsForBattleData = allBuildsOnBattle.Values.ToArray();
@@ -117,7 +124,7 @@ public class FightDirector : MonoBehaviour
 
     public void ChangeSideTurn()
     {
-        string newTurn = SideTurnsQueue.nextSideTurnByCurrentSide[_battleData.GetTurn()];
+        string newTurn = Sides.nextSideTurnByCurrentSide[_battleData.GetTurn()];
         _battleData.SetTurn(newTurn);
         SaveBattleData();
     }
@@ -229,13 +236,15 @@ public class FightDirector : MonoBehaviour
             {
                 Debug.Log("Ход с передвижением");
 
-                _battleEngine.OnReplaceUnit(turnData._activeUnit, new Bector2Int(turnData._route.Last().position));
+                Unit activeUnit = _unitsOnFightManager.FindObjectByChildId(turnData._activeUnitIdOnBattle) as Unit;
 
-                ChangeUnitOccypation(turnData._activeUnit, turnData._route.Last());
+                BattleEngine.OnReplaceUnit(_battleEngine.currentBattleSituation, activeUnit, turnData._route.Last());
 
-                Debug.Log(turnData._activeUnit.name + "движется к позиции " + turnData._route.Last().position);
+                ChangeUnitOccypation(activeUnit, _scenario.map.Cells[turnData._route.Last().ToVector2()]);
 
-                turnData._activeUnit.Move(turnData._route);
+                Debug.Log(activeUnit.name + "движется к позиции " + turnData._route.Last());
+
+                activeUnit.Move(_battleEngine.GetCellsByBector2IntPositions(turnData._route));
 
                 // Подождать прибытия юнита
                 //Время ожидания в секундах = скорость юнита * длина маршрута * 0.5
@@ -243,32 +252,35 @@ public class FightDirector : MonoBehaviour
 
             if (IsTurnContainsTarget(turnData))
             {
-                Debug.Log("Ход с атакой по " + turnData._target.name);
+                Entity target = _unitsOnFightManager.FindObjectByChildId(turnData._targetIdOnBattle);
+                if (target == null)
+                {
+                    target = _buildsOnFightManager.FindObjectByChildId(turnData._targetIdOnBattle);
+                }
 
-                UnitOnBattle[] attackersData = _battleEngine.currentBattleSituation.attackersByObjectId[turnData._target.ChildId].ToArray();
+                Debug.Log("Ход с атакой по " + target.name);
 
-                
-
+                UnitOnBattle[] attackersData = _battleEngine.currentBattleSituation.attackersByObjectId[target.ChildId].ToArray().OfType<UnitOnBattle>().ToArray();
                 if (attackersData != null && attackersData.Length > 0)
                 {
 
                     Debug.Log(attackersData.Count() + "атакующих");
 
                     List<Unit> attackers = _unitsOnFightManager.GetUnitsByBattleUnitsData(attackersData);
-                    int damage = _battleEngine.CalculateDamageToTarget(attackersData, turnData._target); // Нужно учесть модификаторы от скилов + эффекты
+                    int damage = BattleEngine.CalculateDamageToEntity(_battleEngine.currentBattleSituation, attackersData, target); // Нужно учесть модификаторы от скилов + эффекты
 
                     Debug.Log("Урон " + damage);
 
                     foreach (Unit attacker in attackers)
                     {
-                        attacker.Attack(turnData._target);
+                        attacker.Attack(target);
                     }
 
                     // Подождать конца атаки и ранения цели = 1 с
                     Debug.Log("Цель сейчас получит");
-                    _battleEngine.OnAttackTarget(turnData._target, damage);
+                    BattleEngine.OnAttackTarget(_battleEngine.currentBattleSituation, target, damage);
 
-                    turnData._target.GetDamage(damage);
+                    target.GetDamage(damage);
                 }
             }
         }
@@ -295,7 +307,7 @@ public class FightDirector : MonoBehaviour
         {
             if (unitInCache.idOnBattle == unit.ChildId)
             {
-                unitInCache.position = new Bector2Int(unit.center);
+                unitInCache.position = new Bector2Int[] { new Bector2Int(unit.center) };
                 unitInCache.rotation = unit.rotation;
                 break;
             }
@@ -307,12 +319,12 @@ public class FightDirector : MonoBehaviour
 
     public bool IsTurnContainsMovement(TurnData turnData)
     {
-        return turnData._activeUnit != null && turnData._route != null && turnData._route.Count() > 0;
+        return turnData._activeUnitIdOnBattle != null && turnData._route != null && turnData._route.Count() > 0;
     }
 
     public bool IsTurnContainsTarget(TurnData turnData)
     {
-        return turnData._target != null;
+        return turnData._targetIdOnBattle != null;
     }
 
 

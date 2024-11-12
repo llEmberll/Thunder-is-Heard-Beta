@@ -1,38 +1,49 @@
+using Newtonsoft.Json;
 using System;
 
 
 [System.Serializable]
-public class UnitOnBattle
+public class UnitOnBattle: ObjectOnBattle
 {
-    public string coreId;
-    public string idOnBattle;
-
-    public Bector2Int position;
-    public int rotation;
-
-    public int maxHealth;
-    public int health;
-    public int damage;
-    public int distance;
     public int mobility;
 
-    public string side;
+    [JsonIgnore]
+    public int Mobility {  get { return mobility; } }
+
+
+    public string type;
+
+    [JsonIgnore]
+    public string Type {  get { return type; } }
+
 
     public SkillOnBattle[] skillsData;
+
+    [JsonIgnore]
+    public SkillOnBattle[] SkillsData { get { return skillsData; } }
+
+
     public Effect[] effectsData;
+
+    [JsonIgnore]
+    public Effect[] EffectsData { get { return effectsData; } }
+
+
 
     public UnitOnBattle() { }
 
     public UnitOnBattle(
         string coreUnitId, 
-        Bector2Int unitPosition,
+        Bector2Int[] unitPosition,
         int unitRotation, 
         int unitMaxHealth,
         int unitHealth, 
         int unitDamage,
         int unitDistance,
         int unitMobility,
-        string unitSide, 
+        string unitType,
+        string unitDoctrine,
+        string unitSide,
         string unitIdOnBattle = null,
         SkillOnBattle[] unitSkillsData = null,
         Effect[] unitEffects = null
@@ -46,6 +57,8 @@ public class UnitOnBattle
         damage = unitDamage;
         distance = unitDistance;
         mobility = unitMobility;
+        type = unitType;
+        doctrine = unitDoctrine;
         side = unitSide;
         skillsData = unitSkillsData;
         effectsData = unitEffects;
@@ -60,13 +73,15 @@ public class UnitOnBattle
     public UnitOnBattle(Unit unit)
     {
         coreId = unit.CoreId;
-        position = new Bector2Int(unit.center);
+        position = new Bector2Int[] { new Bector2Int(unit.center) };
         rotation = unit.rotation;
         maxHealth = unit.maxHealth;
         health = unit.currentHealth;
         damage = unit.damage;
         distance = unit.distance;
         mobility = unit.mobility;
+        type = unit._unitType;
+        doctrine = unit._doctrine;
         side = unit.side;
 
         //skillsData = реализовать;
@@ -81,7 +96,7 @@ public class UnitOnBattle
     }
 
 
-    public UnitOnBattle Clone()
+    public override ObjectOnBattle Clone()
     {
         return new UnitOnBattle(
             coreId,
@@ -92,32 +107,12 @@ public class UnitOnBattle
             damage,
             distance,
             mobility,
+            type,
+            doctrine,
             side,
             idOnBattle,
             skillsData,
             effectsData
         );
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (obj == null || GetType() != obj.GetType())
-        {
-            return false;
-        }
-
-        UnitOnBattle other = (UnitOnBattle)obj;
-        return idOnBattle == other.idOnBattle && coreId == other.coreId;
-    }
-
-    public override int GetHashCode()
-    {
-        unchecked
-        {
-            int hash = 17;
-            hash = hash * 23 + idOnBattle.GetHashCode();
-            hash = hash * 23 + coreId.GetHashCode();
-            return hash;
-        }
     }
 }

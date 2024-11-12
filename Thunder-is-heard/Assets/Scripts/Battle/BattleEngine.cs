@@ -1,5 +1,8 @@
+using Microsoft.EntityFrameworkCore.Storage;
+using Org.BouncyCastle.Asn1.X509;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using UnityEngine;
 
@@ -48,21 +51,38 @@ public class BattleEngine : MonoBehaviour
         EventMaster.current.ObjectExposed -= OnExposeObject;
     }
 
-    public int CalculateDamageToTarget(UnitOnBattle[] attackersData, Entity target)
+    public static int CalculateDamageToEntity(BattleSituation battleSituation, ObjectOnBattle[] attackersData, Entity target)
     {
         if (target is Build)
         {
-            BuildOnBattle buildData = FindBuildByIdAndSide(target.childId, target.side);
-            return CalculateDamageToBuild(attackersData, buildData);
+            BuildOnBattle buildData = FindBuildByIdAndSide(battleSituation, target.childId, target.side);
+            return CalculateDamageToBuild(battleSituation, attackersData, buildData);
         }
         else
         {
-            UnitOnBattle unitData = FindUnitByIdAndSide(target.childId, target.side);
-            return CalculateDamageToUnit(attackersData, unitData);
+            UnitOnBattle unitData = FindUnitByIdAndSide(battleSituation, target.childId, target.side);
+            return CalculateDamageToUnit(battleSituation, attackersData, unitData);
         }
     }
 
-    public static int CalculateDamageToBuild(UnitOnBattle[] attackersData, BuildOnBattle build)
+    public static int CalculateDamageToTargetById(BattleSituation battleSituation, ObjectOnBattle[] attackersData, string targetId)
+    {
+        UnitOnBattle foundedUnit = battleSituation.GetUnitById(targetId);
+        if (foundedUnit != null)
+        {
+            return CalculateDamageToUnit(battleSituation, attackersData, foundedUnit);
+        }
+
+        BuildOnBattle foundedBuild = battleSituation.GetBuildById(targetId);
+        if (foundedBuild != null)
+        {
+            return CalculateDamageToBuild(battleSituation, attackersData, foundedBuild);
+        }
+
+        return 0;
+    }
+
+    public static int CalculateDamageToBuild(BattleSituation battleSituation, ObjectOnBattle[] attackersData, BuildOnBattle build)
     {
         int totalDamage = 0;
         foreach (var attacker in attackersData)
@@ -74,7 +94,7 @@ public class BattleEngine : MonoBehaviour
     }
 
     // Возможно стоит расширить интерфейс до BattleSituation чтобы изменять эффекты
-    public static int CalculateDamageToUnit(UnitOnBattle[] attackersData, UnitOnBattle unit)
+    public static int CalculateDamageToUnit(BattleSituation battleSituation, ObjectOnBattle[] attackersData, UnitOnBattle unit)
     {
         int totalDamage = 0;
         foreach (var attacker in attackersData)
@@ -121,20 +141,102 @@ public class BattleEngine : MonoBehaviour
         return _map.FindCellsByPosition(routeAsVector2List).Values.ToList();
     }
 
-    public UnitOnBattle FindUnitByIdAndSide(string id, string side)
+    
+    public static float GetObjectPower(BattleSituation battleSituation, string objectId)
     {
-        Dictionary<string, UnitOnBattle> units;
+        BuildOnBattle foundedBuild = battleSituation.GetBuildById(objectId);
+        if (foundedBuild != null)
+        {
+            return GetBuildPower(battleSituation, foundedBuild);
+        }
+
+        UnitOnBattle foundedUnit = battleSituation.GetUnitById(objectId);
+        if (foundedUnit != null)
+        {
+            return GetUnitPower(battleSituation, foundedUnit);
+        }
+
+        throw new System.Exception("Объект не найден: " + objectId);
+    }
+
+    // Прикрутить учет скилов
+    // У скилов реализовать интерфейс получения мощи, использующий реализацию для подсчета
+    public static float GetUnitPower(BattleSituation battleSituation, UnitOnBattle unit)
+    {
+        List<ObjectOnBattle> targets = battleSituation.GetTargetsByAttacker(unit);
+        int targetsCount = targets.Count();
+        float powerFromTargetsCount = targetsCount > 0 ? Mathf.Log10(targetsCount) : targetsCount;
+        int maxDamageOnTarget = CalculateGreatesDamageByAttackerAndTargets(battleSituation, unit, targets.ToArray());
+        int totalDamageFromAttackers = CalculateDamageToTargetById(
+            battleSituation,
+            battleSituation.GetAttackersByTarget(unit).ToArray(),
+            unit.IdOnBattle
+        );
+
+        float powerFromDistance = unit.Distance * 4;
+        float powerFromDamage = unit.Damage + maxDamageOnTarget + powerFromTargetsCount;
+        float powerFromHealth = Mathf.Clamp((unit.Health - totalDamageFromAttackers), 0, unit.Health);
+        float powerFromMobility = unit.Mobility / 2;
+        float powerFromSkills = 0; // Реализовать
+
+        float totalPower = powerFromDistance + powerFromDamage + powerFromHealth + powerFromMobility + powerFromSkills;
+        return totalPower;
+    }
+
+    public static float GetBuildPower(BattleSituation battleSituation, BuildOnBattle build)
+    {
+        if (build.Damage == 0 || build.Distance == 0)
+        {
+            return 0;
+        }
+
+        List<ObjectOnBattle> targets = battleSituation.GetTargetsByAttacker(build);
+        int targetsCount = targets.Count();
+        float powerFromTargetsCount = targetsCount > 0 ? Mathf.Log10(targetsCount) : targetsCount;
+        int maxDamageOnTarget = CalculateGreatesDamageByAttackerAndTargets(battleSituation, build, targets.ToArray());
+        int totalDamageFromAttackers = CalculateDamageToTargetById(
+            battleSituation,
+            battleSituation.GetAttackersByTarget(build).ToArray(),
+            build.IdOnBattle
+        );
+
+        float powerFromDistance = build.Distance * 4;
+        float powerFromDamage = build.Damage + maxDamageOnTarget + powerFromTargetsCount;
+        float powerFromHealth = Mathf.Clamp((build.Health - totalDamageFromAttackers), 0, build.Health);
+
+        float totalPower = (powerFromDistance + powerFromDamage + powerFromHealth) / 2;
+        return totalPower;
+    }
+
+    public static int CalculateGreatesDamageByAttackerAndTargets(BattleSituation battleSituation, ObjectOnBattle attacker, ObjectOnBattle[] targets)
+    {
+        int greatestDamage = 0;
+        foreach (ObjectOnBattle target in targets)
+        {
+            int currentDamage = CalculateDamageToTargetById(battleSituation, new ObjectOnBattle[] { attacker }, target.IdOnBattle);
+            if (currentDamage > greatestDamage)
+            {
+                greatestDamage = currentDamage;
+            }
+        }
+
+        return greatestDamage;
+    }
+
+    public static UnitOnBattle FindUnitByIdAndSide(BattleSituation battleSituation, string id, string side)
+    {
+        Dictionary<string, ObjectOnBattle> units;
         if (side == Sides.federation)
         {
-            units = currentBattleSituation.federationUnits;
+            units = battleSituation.federationUnits;
         }
         else if (side == Sides.empire)
         {
-            units = currentBattleSituation.empireUnits;
+            units = battleSituation.empireUnits;
         }
         else if (side == Sides.neutral)
         {
-            units = currentBattleSituation.neutralUnits;
+            units = battleSituation.neutralUnits;
         }
         else
         {
@@ -143,25 +245,25 @@ public class BattleEngine : MonoBehaviour
 
         if (units.ContainsKey(id))
         {
-            return units[id];
+            return units[id] as UnitOnBattle;
         }
         return null;
     }
 
-    public BuildOnBattle FindBuildByIdAndSide(string id, string side)
+    public static BuildOnBattle FindBuildByIdAndSide(BattleSituation battleSituation, string id, string side)
     {
-        Dictionary<string, BuildOnBattle> builds;
+        Dictionary<string, ObjectOnBattle> builds;
         if (side == Sides.federation)
         {
-            builds = currentBattleSituation.federationBuilds;
+            builds = battleSituation.federationBuilds;
         }
         else if (side == Sides.empire)
         {
-            builds = currentBattleSituation.empireBuilds;
+            builds = battleSituation.empireBuilds;
         }
         else if (side == Sides.neutral)
         {
-            builds = currentBattleSituation.neutralBuilds;
+            builds = battleSituation.neutralBuilds;
         }
         else
         {
@@ -170,36 +272,44 @@ public class BattleEngine : MonoBehaviour
 
         if (builds.ContainsKey(id))
         {
-            return builds[id];
+            return builds[id] as BuildOnBattle;
         }
         return null;
     }
 
-    public bool IsPossibleToAttackTarget(Entity entity)
+    public static bool IsPossibleToAttackTarget(BattleSituation battleSituation, Entity entity)
     {
-        Dictionary<string, List<UnitOnBattle>> attackersData = currentBattleSituation.attackersByObjectId;
-        return currentBattleSituation.attackersByObjectId.ContainsKey(entity.ChildId);
+        Dictionary<string, List<ObjectOnBattle>> attackersData = battleSituation.attackersByObjectId;
+        return battleSituation.attackersByObjectId.ContainsKey(entity.ChildId);
     }
 
-    public List<Cell> GetReachableCellsByUnit(Unit unit)
+    public List<Cell> GetReachableCellsByUnit(BattleSituation battleSituation, Unit unit)
     {
-        List<Bector2Int> possiblePositions = currentBattleSituation.GetReachablePositionsByUnit(unit.ChildId);
+        List<Bector2Int> possiblePositions = battleSituation.GetReachablePositionsByUnit(unit.ChildId);
         return _map.FindCellsByPosition(possiblePositions).Values.ToList();
     }
 
-    public Dictionary<string, UnitOnBattle> GetAllUnitsInBattle()
+    public static Dictionary<string, UnitOnBattle> GetAllUnitsInBattle(BattleSituation battleSituation)
     {
-        return currentBattleSituation.GetAllUnits();
+        var unitsOnBattle = battleSituation.GetAllUnits()
+            .Where(kvp => kvp.Value is UnitOnBattle)
+            .ToDictionary(kvp => kvp.Key, kvp => (UnitOnBattle)kvp.Value);
+
+        return unitsOnBattle;
     }
 
-    public Dictionary<string, BuildOnBattle> GetAllBuildsInBattle()
+    public static Dictionary<string, BuildOnBattle> GetAllBuildsInBattle(BattleSituation battleSituation)
     {
-        return currentBattleSituation.GetAllBuilds();
+        var buildsOnBattle = battleSituation.GetAllBuilds()
+           .Where(kvp => kvp.Value is BuildOnBattle)
+           .ToDictionary(kvp => kvp.Key, kvp => (BuildOnBattle)kvp.Value);
+
+        return buildsOnBattle;
     }
 
-    public MapOnBattle GetMapOnBattle()
+    public static MapOnBattle GetMapOnBattle(BattleSituation battleSituation)
     {
-        return currentBattleSituation._map;
+        return battleSituation._map;
     }
 
     public void OnExposeObject(Entity obj)
@@ -228,21 +338,21 @@ public class BattleEngine : MonoBehaviour
         currentBattleSituation.AddBuild(buildOnBattle);
     }
 
-    public void OnReplaceUnit(Unit unit, Bector2Int newPosition)
+    public static void OnReplaceUnit(BattleSituation battleSituation, Unit unit, Bector2Int newPosition)
     {
-        currentBattleSituation.UnitChangePosition(unit.ChildId, newPosition);
+        battleSituation.UnitChangePosition(unit.ChildId, newPosition);
     }
 
-    public void OnAttackTarget(Entity entity, int damage)
+    public static void OnAttackTarget(BattleSituation battleSituation, Entity entity, int damage)
     {
         int newHealthValue = entity.currentHealth - damage;
         if (entity is Unit) 
         {
-            currentBattleSituation.UnitChangeHealth(entity.ChildId, newHealthValue);
+            battleSituation.UnitChangeHealth(entity.ChildId, newHealthValue);
         }
         if (entity is Build)
         {
-            currentBattleSituation.BuildChangeHealth(entity.ChildId, newHealthValue);
+            battleSituation.BuildChangeHealth(entity.ChildId, newHealthValue);
         }
         
     }

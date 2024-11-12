@@ -21,7 +21,7 @@ public static class StageFactory
         UnitOnBattle[] units = data.units;
         BuildOnBattle[] builds = data.builds;
 
-        stage.Init(scenario, conditionsForPass, conditionsForFail, units, builds);
+        stage.Init(scenario, data.AISettings, conditionsForPass, conditionsForFail, units, builds);
         return stage;
     }
 

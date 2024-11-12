@@ -9,10 +9,14 @@ public interface IStage
     public BuildOnBattle[] Builds { get; }
     public List<IScenarioEvent> Events { get; }
 
+
+    public Dictionary<string, AISettings> AISettingsBySide { get; }
+
+
     public List<ICondition> ConditionsForPass { get; }
     public List<ICondition> ConditionsForFail { get; }
 
-    public void Init(Scenario stageScenario, List<ICondition> conditionsForPass, List<ICondition> conditionsForFail, UnitOnBattle[] units, BuildOnBattle[] builds);
+    public void Init(Scenario stageScenario, AISettings[] AISettings, List<ICondition> conditionsForPass, List<ICondition> conditionsForFail, UnitOnBattle[] units, BuildOnBattle[] builds);
     public void SetScenario(Scenario value);
     public void SetConditionsForPass(List<ICondition> conditions);
     public void SetConditionsForFail(List<ICondition> conditions);

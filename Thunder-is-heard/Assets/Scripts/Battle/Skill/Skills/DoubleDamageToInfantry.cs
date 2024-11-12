@@ -34,6 +34,9 @@ public class DoubleDamageToInfantry : AttackModifier
 
     public override bool IsAllConditionsForWorkingComply(TurnData turnData)
     {
-        return IsTargetCompy(turnData._target);
+        Entity target = unitsOnFight.FindObjectByChildId(turnData._targetIdOnBattle);
+        if (target == null) target = buildsOnFight.FindObjectByChildId(turnData._targetIdOnBattle);
+
+        return IsTargetCompy(target);
     }
 }

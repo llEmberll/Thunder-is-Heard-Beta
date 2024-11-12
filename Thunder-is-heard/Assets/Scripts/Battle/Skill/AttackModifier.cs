@@ -26,7 +26,10 @@ public abstract class AttackModifier : Skill
 
     public virtual bool IsAllConditionsForWorkingComply(TurnData turnData)
     {
-        if (IsTargetCompy(turnData._target)) return false;
+        Entity target = unitsOnFight.FindObjectByChildId(turnData._targetIdOnBattle);
+        if (target == null) target = buildsOnFight.FindObjectByChildId(turnData._targetIdOnBattle);
+
+        if (IsTargetCompy(target)) return false;
 
         foreach (var condition in _conditions)
         {

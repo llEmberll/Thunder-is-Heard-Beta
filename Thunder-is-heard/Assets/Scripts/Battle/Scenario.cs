@@ -83,6 +83,7 @@ public class Scenario
         _currentStage = Stages[_currentStageIndex];
 
         EventMaster.current.OnStageIndexChange(_currentStageIndex);
+        EventMaster.current.OnNextStage(_currentStage);
 
         Debug.Log("Начало нового этапа");
         CurrentStage.OnStart();
@@ -97,23 +98,15 @@ public class Scenario
 
     public void Begin()
     {
-        Debug.Log("Scenario: in begin");
-
         if (!_isLanded)
         {
-            Debug.Log("Scenario: not isLanded");
-
-            Debug.Log("Scenario: event landing!");
-
             EventMaster.current.Landing(LandableCells, LandingMaxStaff);
             return;
         }
         else
         {
-
-            Debug.Log("Scenario: isLanded true!");
-
             _currentStage = Stages[CurrentStageIndex];
+            EventMaster.current.OnStageBegin(_currentStage);
 
             CurrentStage.OnStart();
         }

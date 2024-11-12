@@ -110,7 +110,8 @@ public class Inventory : ItemList
         int mobility = unitData.GetMobility();
         int count = inventoryItemData.GetCount();
         string description = unitData.GetDescription();
-        Sprite icon = Resources.Load<Sprite>(unitData.GetIconPath());
+        Sprite[] iconSection = Resources.LoadAll<Sprite>(unitData.GetIconSection());
+        Sprite icon = SpriteUtils.FindSpriteByName(unitData.GetIconName(), iconSection);
 
         GameObject itemObject = CreateObject(Config.resources["UI" + "Unit" + "InventoryItemPrefab"], content);
         itemObject.name = name;

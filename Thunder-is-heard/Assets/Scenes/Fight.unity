@@ -2666,6 +2666,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 824728133ae70d54b9a6256e218e3684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _controlSides:
+  - Federation
+  isAllowedToControl: 0
   _map: {fileID: 0}
   _battleEngine: {fileID: 0}
 --- !u!4 &983476473
@@ -4221,6 +4224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01df61026e40d8646a746f588dac1833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selectedObject: {fileID: 0}
   selectedBuild: {fileID: 0}
   selector: {fileID: 84010247}
   friendlySelectorSprite: {fileID: 0}
@@ -9801,6 +9805,7 @@ MonoBehaviour:
   _objectProcessor: {fileID: 0}
   _battleEngine: {fileID: 0}
   _unitsOnFightManager: {fileID: 0}
+  _turnController: {fileID: 0}
 --- !u!114 &8649559263492743014
 MonoBehaviour:
   m_ObjectHideFlags: 0

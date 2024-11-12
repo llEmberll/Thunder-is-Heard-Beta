@@ -17,6 +17,11 @@ public class BasicStage: IStage
 
     public List<IScenarioEvent> Events { get { return events; } }
 
+
+    public Dictionary<string, AISettings> _AISettingsBySide;
+    public Dictionary<string, AISettings> AISettingsBySide { get { return _AISettingsBySide; } }
+
+
     public List<ICondition> ConditionsForPass { get { return _conditionsForPass; } }
 
     public List<ICondition> ConditionsForFail { get { return _conditionsForFail; } }
@@ -27,9 +32,10 @@ public class BasicStage: IStage
     public ObjectProcessor _objectProcessor;
 
 
-    public virtual void Init(Scenario stageScenario, List<ICondition> conditionsForPass, List<ICondition> conditionsForFail, UnitOnBattle[] units, BuildOnBattle[] builds)
+    public virtual void Init(Scenario stageScenario, AISettings[] AISettings, List<ICondition> conditionsForPass, List<ICondition> conditionsForFail, UnitOnBattle[] units, BuildOnBattle[] builds)
     {
         SetScenario(stageScenario);
+        SetAISettingsBySide(AISettings);
         SetConditionsForPass(conditionsForPass);
         SetConditionsForFail(conditionsForFail);
         SetUnits(units);
@@ -47,6 +53,15 @@ public class BasicStage: IStage
     public void SetScenario(Scenario value)
     {
         _scenario = value;
+    }
+
+    public void SetAISettingsBySide(AISettings[] value)
+    {
+        _AISettingsBySide = new Dictionary<string, AISettings>();
+        foreach (var settings  in value)
+        {
+            _AISettingsBySide.Add(settings.side, settings);
+        }
     }
 
     public virtual void SetConditionsForPass(List<ICondition> conditions)

@@ -13,6 +13,11 @@ public interface ISkill
     public abstract int CurrentCooldown { get; set; }
     public abstract Effect Effect { get; }
 
+
+    public abstract UnitsOnFight UnitsManager { get; }
+    public abstract BuildsOnFight BuildsManager { get; }
+
+
     public abstract bool CanUse();
     public abstract void Use();
 }

@@ -1,22 +1,14 @@
+using Newtonsoft.Json;
 using System;
 
 
 [System.Serializable]
-public class BuildOnBattle
+public class BuildOnBattle: ObjectOnBattle
 {
-    public string coreId;
-    public string idOnBattle;
-
-    public Bector2Int[] position;
-    public int rotation;
-
-    public int maxHealth;
-    public int health;
-    public int damage;
-    public int distance;
-
-    public string side;
     public string workStatus;
+
+    [JsonIgnore]
+    public string WorkStatus {  get { return workStatus; } }
 
     public BuildOnBattle() { }
 
@@ -28,6 +20,7 @@ public class BuildOnBattle
         int buildHealth,
         int buildDamage,
         int buildDistance,
+        string buildDoctrine,
         string buildSide, 
         string buildWorkStatus,
         string buildIdOnBattle = null
@@ -40,6 +33,7 @@ public class BuildOnBattle
         health = buildHealth;
         damage = buildDamage;
         distance = buildDistance;
+        doctrine = buildDoctrine;
         side = buildSide;
         workStatus = buildWorkStatus;
 
@@ -59,6 +53,7 @@ public class BuildOnBattle
         health = build.currentHealth;
         damage = build.damage;
         distance = build.distance;
+        doctrine = build._doctrine;
         side = build.side;
         workStatus = build.workStatus;
 
@@ -71,7 +66,7 @@ public class BuildOnBattle
     }
 
 
-    public BuildOnBattle Clone()
+    public override ObjectOnBattle Clone()
     {
         return new BuildOnBattle(
             coreId,
@@ -81,31 +76,10 @@ public class BuildOnBattle
             health,
             damage,
             distance,
+            doctrine,
             side,
             workStatus,
             idOnBattle
         );
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (obj == null || GetType() != obj.GetType())
-        {
-            return false;
-        }
-
-        BuildOnBattle other = (BuildOnBattle)obj;
-        return idOnBattle == other.idOnBattle && coreId == other.coreId;
-    }
-
-    public override int GetHashCode()
-    {
-        unchecked
-        {
-            int hash = 17;
-            hash = hash * 23 + idOnBattle.GetHashCode();
-            hash = hash * 23 + coreId.GetHashCode();
-            return hash;
-        }
     }
 }

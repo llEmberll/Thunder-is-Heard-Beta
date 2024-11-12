@@ -1,4 +1,4 @@
-
+using UnityEngine;
 
 public abstract class Skill : ISkill
 {
@@ -32,6 +32,13 @@ public abstract class Skill : ISkill
     public Effect Effect { get { return _effect; } }
 
 
+    public UnitsOnFight unitsOnFight;
+    public UnitsOnFight UnitsManager { get { return unitsOnFight; } }
+
+    public BuildsOnFight buildsOnFight;
+    public BuildsOnFight BuildsManager { get { return buildsOnFight; } }
+
+
     public Skill(string name, bool isActive, string targetType, string targetUnitType, string targetUnitDoctrine, int cooldown, int currentCooldown, Effect effect)
     {
         _name = name;
@@ -42,6 +49,14 @@ public abstract class Skill : ISkill
         _cooldown = cooldown;
         _currentCooldown = currentCooldown;
         _effect = effect;
+
+        Init();
+    }
+
+    public void Init()
+    {
+        unitsOnFight = GameObject.FindGameObjectWithTag(Tags.unitsOnScene).GetComponent<UnitsOnFight>();
+        buildsOnFight = GameObject.FindGameObjectWithTag(Tags.buildsOnScene).GetComponent<BuildsOnFight>();
     }
 
 

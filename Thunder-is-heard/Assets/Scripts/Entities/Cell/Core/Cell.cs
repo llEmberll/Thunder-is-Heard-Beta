@@ -90,4 +90,25 @@ public class Cell : Interactable
         Debug.Log("Clicked on Cell!");
         stateMachine.currentState.OnCellClick(this);
     }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+        {
+            return false;
+        }
+
+        Cell other = (Cell)obj;
+        return position == other.position;
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 23 + position.GetHashCode();
+            return hash;
+        }
+    }
 }

@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class BattleSituation
 {
-    public Dictionary<string, UnitOnBattle> federationUnits = new Dictionary<string, UnitOnBattle>();
-    public Dictionary<string, UnitOnBattle> empireUnits = new Dictionary<string, UnitOnBattle>();
-    public Dictionary<string, UnitOnBattle> neutralUnits = new Dictionary<string, UnitOnBattle>();
+    public Dictionary<string, ObjectOnBattle> federationUnits = new Dictionary<string, ObjectOnBattle>();
+    public Dictionary<string, ObjectOnBattle> empireUnits = new Dictionary<string, ObjectOnBattle>();
+    public Dictionary<string, ObjectOnBattle> neutralUnits = new Dictionary<string, ObjectOnBattle>();
 
-    public Dictionary<string, BuildOnBattle> federationBuilds = new Dictionary<string, BuildOnBattle>();
-    public Dictionary<string, BuildOnBattle> empireBuilds = new Dictionary<string, BuildOnBattle>();
-    public Dictionary<string, BuildOnBattle> neutralBuilds = new Dictionary<string, BuildOnBattle>();
+    public Dictionary<string, ObjectOnBattle> federationBuilds = new Dictionary<string, ObjectOnBattle>();
+    public Dictionary<string, ObjectOnBattle> empireBuilds = new Dictionary<string, ObjectOnBattle>();
+    public Dictionary<string, ObjectOnBattle> neutralBuilds = new Dictionary<string, ObjectOnBattle>();
 
-    public Dictionary<string, List<UnitOnBattle>> attackersByObjectId = new Dictionary<string, List<UnitOnBattle>>();
+    public Dictionary<string, List<ObjectOnBattle>> attackersByObjectId = new Dictionary<string, List<ObjectOnBattle>>();
 
     public string _sideTurn;
 
@@ -55,9 +56,9 @@ public class BattleSituation
 
     public void InitUnits(UnitOnBattle[] units)
     {
-        federationUnits = new Dictionary<string, UnitOnBattle>();
-        empireUnits = new Dictionary<string, UnitOnBattle>();
-        neutralUnits = new Dictionary<string, UnitOnBattle>();
+        federationUnits = new Dictionary<string, ObjectOnBattle>();
+        empireUnits = new Dictionary<string, ObjectOnBattle>();
+        neutralUnits = new Dictionary<string, ObjectOnBattle>();
 
         foreach (var unit in units)
         {
@@ -67,9 +68,9 @@ public class BattleSituation
 
     public void InitBuilds(BuildOnBattle[] builds)
     {
-        federationBuilds = new Dictionary<string, BuildOnBattle>();
-        empireBuilds = new Dictionary<string, BuildOnBattle>();
-        neutralBuilds = new Dictionary<string, BuildOnBattle>();
+        federationBuilds = new Dictionary<string, ObjectOnBattle>();
+        empireBuilds = new Dictionary<string, ObjectOnBattle>();
+        neutralBuilds = new Dictionary<string, ObjectOnBattle>();
 
         foreach (var build in builds)
         {
@@ -79,9 +80,9 @@ public class BattleSituation
 
     public void AddUnit(UnitOnBattle unitData) // Добавить юнита в сражение
     {
-        Dictionary<string, UnitOnBattle> unitsBySide = GetUnitsCollectionBySide(unitData.side);
+        Dictionary<string, ObjectOnBattle> unitsBySide = GetUnitsCollectionBySide(unitData.side);
         unitsBySide.Add(unitData.idOnBattle, unitData);
-        _map.Cells[unitData.position]._isOccypy = true;
+        _map.Cells[unitData.Position.First()]._isOccypy = true;
 
         UpdateTargetsForAttacker(unitData);
         UpdateAttackersForUnitTarget(unitData);
@@ -90,7 +91,7 @@ public class BattleSituation
 
     public void AddBuild(BuildOnBattle buildData) // Добавить здание в сражение
     {
-        Dictionary<string, BuildOnBattle> buildsBySide = GetBuildsCollectionBySide(buildData.side);
+        Dictionary<string, ObjectOnBattle> buildsBySide = GetBuildsCollectionBySide(buildData.side);
         buildsBySide.Add(buildData.idOnBattle, buildData);
         foreach (var position in buildData.position)
         {
@@ -102,18 +103,18 @@ public class BattleSituation
 
     public void RemoveUnit(UnitOnBattle unitData) // Удалить юнита из сражения
     {
-        Dictionary<string, UnitOnBattle> unitsBySide = GetUnitsCollectionBySide(unitData.side);
+        Dictionary<string, ObjectOnBattle> unitsBySide = GetUnitsCollectionBySide(unitData.side);
         ClearAttacker(unitData);
         ClearUnitAsTarget(unitData);
         unitsBySide.Remove(unitData.idOnBattle);
-        _map.Cells[unitData.position]._isOccypy = false;
+        _map.Cells[unitData.Position.First()]._isOccypy = false;
 
         // Сделать перерасчет оценки позиции, когда она будет реализована
     }
 
     public void RemoveBuild(BuildOnBattle buildData) // Удалить здание из сражения
     {
-        Dictionary<string, BuildOnBattle> buildsBySide = GetBuildsCollectionBySide(buildData.side);
+        Dictionary<string, ObjectOnBattle> buildsBySide = GetBuildsCollectionBySide(buildData.side);
         ClearBuildAsTarget(buildData);
         buildsBySide.Remove(buildData.idOnBattle);
         foreach (var position in buildData.position)
@@ -124,12 +125,12 @@ public class BattleSituation
 
     public void UnitChangePosition(string unitId, Bector2Int newPosition)
     {
-        Dictionary<string, UnitOnBattle> unitsCollection = GetUnitsCollectionById(unitId);
-        UnitOnBattle unit = unitsCollection[unitId];
+        Dictionary<string, ObjectOnBattle> unitsCollection = GetUnitsCollectionById(unitId);
+        UnitOnBattle unit = unitsCollection[unitId] as UnitOnBattle;
 
-        _map.Cells[unit.position]._isOccypy = false;
-        unit.position = newPosition;
-        _map.Cells[unit.position]._isOccypy = true;
+        _map.Cells[unit.Position.First()]._isOccypy = false;
+        unit.position = new Bector2Int[] { newPosition };
+        _map.Cells[unit.Position.First()]._isOccypy = true;
 
         unitsCollection[unitId] = unit;
         UpdateAttackersForUnitTarget(unit);
@@ -138,11 +139,11 @@ public class BattleSituation
 
     public void UnitChangeSide(string unitId, string newSide)
     {
-        Dictionary<string, UnitOnBattle> unitsCollectionByOldSide = GetUnitsCollectionById(unitId);
-        UnitOnBattle unit = unitsCollectionByOldSide[unitId];
+        Dictionary<string, ObjectOnBattle> unitsCollectionByOldSide = GetUnitsCollectionById(unitId);
+        UnitOnBattle unit = unitsCollectionByOldSide[unitId] as UnitOnBattle;
         unitsCollectionByOldSide.Remove(unitId);
 
-        Dictionary<string, UnitOnBattle> unitsByNewSide = GetUnitsCollectionBySide(newSide);
+        Dictionary<string, ObjectOnBattle> unitsByNewSide = GetUnitsCollectionBySide(newSide);
         unitsByNewSide.Add(unitId, unit);
         UpdateAttackers();
     }
@@ -150,9 +151,9 @@ public class BattleSituation
 
     public void UnitChangeHealth(string unitId, int newHealth)
     {
-        Dictionary<string, UnitOnBattle> unitsCollection = GetUnitsCollectionById(unitId);
-        UnitOnBattle unit = unitsCollection[unitId];
-        
+        Dictionary<string, ObjectOnBattle> unitsCollection = GetUnitsCollectionById(unitId);
+        UnitOnBattle unit = unitsCollection[unitId] as UnitOnBattle;
+
         if (newHealth < 1)
         {
             RemoveUnit(unit);
@@ -167,14 +168,14 @@ public class BattleSituation
 
     public void UnitChangeAttributes(UnitOnBattle newUnitData)
     {
-        Dictionary<string, UnitOnBattle> unitsForSearchData = GetUnitsCollectionById(newUnitData.idOnBattle);
-        UnitOnBattle oldUnitData = unitsForSearchData[newUnitData.idOnBattle];
+        Dictionary<string, ObjectOnBattle> unitsForSearchData = GetUnitsCollectionById(newUnitData.idOnBattle);
+        UnitOnBattle oldUnitData = unitsForSearchData[newUnitData.idOnBattle] as UnitOnBattle;
 
         // Сделать перерасчет оценки позиции, когда она будет реализована
 
         unitsForSearchData[newUnitData.idOnBattle] = newUnitData;
 
-        if (oldUnitData.distance != newUnitData.distance) 
+        if (oldUnitData.distance != newUnitData.distance)
         {
             ClearAttacker(newUnitData);
             UpdateTargetsForAttacker(newUnitData);
@@ -198,8 +199,8 @@ public class BattleSituation
 
     public void BuildChangePosition(string buildId, Bector2Int[] newPosition)
     {
-        Dictionary<string, BuildOnBattle> buildsCollection = GetBuildsCollectionById(buildId);
-        BuildOnBattle build = buildsCollection[buildId];
+        Dictionary<string, ObjectOnBattle> buildsCollection = GetBuildsCollectionById(buildId);
+        BuildOnBattle build = buildsCollection[buildId] as BuildOnBattle;
         build.position = newPosition;
         buildsCollection[buildId] = build;
         UpdateAttackersForBuildTarget(build);
@@ -207,11 +208,11 @@ public class BattleSituation
 
     public void BuildChangeSide(string buildId, string newSide)
     {
-        Dictionary<string, BuildOnBattle> buildsCollectionByOldSide = GetBuildsCollectionById(buildId);
-        BuildOnBattle build = buildsCollectionByOldSide[buildId];
+        Dictionary<string, ObjectOnBattle> buildsCollectionByOldSide = GetBuildsCollectionById(buildId);
+        BuildOnBattle build = buildsCollectionByOldSide[buildId] as BuildOnBattle;
         buildsCollectionByOldSide.Remove(buildId);
 
-        Dictionary<string, BuildOnBattle> buildsByNewSide = new Dictionary<string, BuildOnBattle>();
+        Dictionary<string, ObjectOnBattle> buildsByNewSide = new Dictionary<string, ObjectOnBattle>();
         if (newSide == Sides.federation) buildsByNewSide = federationBuilds;
         if (newSide == Sides.empire) buildsByNewSide = empireBuilds;
         if (newSide == Sides.neutral) buildsByNewSide = neutralBuilds;
@@ -222,8 +223,8 @@ public class BattleSituation
 
     public void BuildChangeHealth(string buildId, int newHealth)
     {
-        Dictionary<string, BuildOnBattle> buildsCollection = GetBuildsCollectionById(buildId);
-        BuildOnBattle build = buildsCollection[buildId];
+        Dictionary<string, ObjectOnBattle> buildsCollection = GetBuildsCollectionById(buildId);
+        BuildOnBattle build = buildsCollection[buildId] as BuildOnBattle;
 
         if (newHealth < 1)
         {
@@ -239,8 +240,8 @@ public class BattleSituation
 
     public void BuildChangeAttributes(BuildOnBattle newBuildData)
     {
-        Dictionary<string, BuildOnBattle> buildsForSearchData = GetBuildsCollectionById(newBuildData.idOnBattle);
-        BuildOnBattle oldBuildData = buildsForSearchData[newBuildData.idOnBattle];
+        Dictionary<string, ObjectOnBattle> buildsForSearchData = GetBuildsCollectionById(newBuildData.idOnBattle);
+        ObjectOnBattle oldBuildData = buildsForSearchData[newBuildData.idOnBattle];
 
         // Сделать перерасчет оценки позиции, когда она будет реализована
 
@@ -256,7 +257,7 @@ public class BattleSituation
 
     public void RechargeSkillsCooldown()
     {
-        Dictionary<string, UnitOnBattle> allUnits = empireUnits.Concat(federationUnits).Concat(neutralUnits).ToDictionary(x => x.Key, x => x.Value);
+        Dictionary<string, ObjectOnBattle> allUnits = empireUnits.Concat(federationUnits).Concat(neutralUnits).ToDictionary(x => x.Key, x => x.Value);
         foreach (UnitOnBattle unit in allUnits.Values)
         {
             foreach (SkillOnBattle skill in unit.skillsData)
@@ -266,11 +267,11 @@ public class BattleSituation
         }
     }
 
-    public void AddAttackerByObjectId(string objectId, UnitOnBattle attacker)
+    public void AddAttackerByObjectId(string objectId, ObjectOnBattle attacker)
     {
         if (attackersByObjectId.ContainsKey(objectId))
         {
-            List<UnitOnBattle> newAttackers = attackersByObjectId[objectId];
+            List<ObjectOnBattle> newAttackers = attackersByObjectId[objectId];
             if (!newAttackers.Contains(attacker))
             {
                 newAttackers.Add(attacker);
@@ -278,12 +279,12 @@ public class BattleSituation
         }
         else
         {
-            attackersByObjectId.Add(objectId, new List<UnitOnBattle>() { attacker });
+            attackersByObjectId.Add(objectId, new List<ObjectOnBattle>() { attacker });
         }
     }
 
 
-    public void ClearAttacker(UnitOnBattle attacker)
+    public void ClearAttacker(ObjectOnBattle attacker)
     {
         var keysToClear = new List<string>();
 
@@ -305,13 +306,13 @@ public class BattleSituation
         }
     }
 
-    public void RemoveAttackerByObjectIdIfExist(string objectId, UnitOnBattle attacker)
+    public void RemoveAttackerByObjectIdIfExist(string objectId, ObjectOnBattle attacker)
     {
         if (!attackersByObjectId.ContainsKey(objectId)) return;
 
-        List<UnitOnBattle> newAttackersData = attackersByObjectId[objectId];
+        List<ObjectOnBattle> newAttackersData = attackersByObjectId[objectId];
         if (!newAttackersData.Contains(attacker)) return;
-        
+
         newAttackersData.Remove(attacker);
         if (newAttackersData.Count < 1)
         {
@@ -320,7 +321,7 @@ public class BattleSituation
         else
         {
             attackersByObjectId[objectId] = newAttackersData;
-        }       
+        }
     }
 
     public void ClearUnitAsTarget(UnitOnBattle unitData)
@@ -333,15 +334,14 @@ public class BattleSituation
         attackersByObjectId.Remove(buildData.idOnBattle);
     }
 
-    public void UpdateTargetsForAttacker(UnitOnBattle attacker)
+    public void UpdateTargetsForAttacker(ObjectOnBattle attacker)
     {
-        //Dictionary<string, UnitOnBattle> possibleAttackers =  empireUnits.Concat(federationUnits).ToDictionary(x => x.Key, x => x.Value);
-        Dictionary<string, UnitOnBattle> unitsForSearchData = GetUnitTargetsBySide(attacker.side);
-        Dictionary<string, BuildOnBattle> buildsForSearchData = GetBuildTargetsBySide(attacker.side);
+        Dictionary<string, ObjectOnBattle> unitsForSearchData = GetUnitTargetsBySide(attacker.side);
+        Dictionary<string, ObjectOnBattle> buildsForSearchData = GetBuildTargetsBySide(attacker.side);
 
         foreach (UnitOnBattle possibleUnitTarget in unitsForSearchData.Values)
         {
-            if (BattleEngine.GetDistanceBetweenPoints(attacker.position, possibleUnitTarget.position) <= attacker.distance)
+            if (BattleEngine.GetDistanceBetweenPoints(attacker.Position.First(), possibleUnitTarget.Position.First()) <= attacker.distance)
             {
                 AddAttackerByObjectId(possibleUnitTarget.idOnBattle, attacker);
             }
@@ -353,7 +353,7 @@ public class BattleSituation
 
         foreach (BuildOnBattle possibleBuildTarget in buildsForSearchData.Values)
         {
-            if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attacker.position, new RectangleBector2Int(possibleBuildTarget.position)) <= attacker.distance)
+            if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attacker.Position.First(), new RectangleBector2Int(possibleBuildTarget.position)) <= attacker.distance)
             {
                 AddAttackerByObjectId(possibleBuildTarget.idOnBattle, attacker);
             }
@@ -367,10 +367,10 @@ public class BattleSituation
     public void UpdateAttackersForBuildTarget(BuildOnBattle build)
     {
         attackersByObjectId.Remove(build.idOnBattle);
-        Dictionary<string, UnitOnBattle> possibleAttackers = GetAttackersBySide(build.side);
-        foreach (UnitOnBattle possibleAttacker in  possibleAttackers.Values)
+        Dictionary<string, ObjectOnBattle> possibleAttackers = GetAttackersBySide(build.side);
+        foreach (ObjectOnBattle possibleAttacker in possibleAttackers.Values)
         {
-            int minDistanceForAttack = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(possibleAttacker.position, new RectangleBector2Int(build.position));
+            int minDistanceForAttack = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(possibleAttacker.Position.First(), new RectangleBector2Int(build.Position));
             if (minDistanceForAttack <= possibleAttacker.distance)
             {
                 AddAttackerByObjectId(build.idOnBattle, possibleAttacker);
@@ -381,10 +381,10 @@ public class BattleSituation
     public void UpdateAttackersForUnitTarget(UnitOnBattle unit)
     {
         attackersByObjectId.Remove(unit.idOnBattle);
-        Dictionary<string, UnitOnBattle> possibleAttackers = GetAttackersBySide(unit.side);
-        foreach (UnitOnBattle possibleAttacker in possibleAttackers.Values)
+        Dictionary<string, ObjectOnBattle> possibleAttackers = GetAttackersBySide(unit.side);
+        foreach (ObjectOnBattle possibleAttacker in possibleAttackers.Values)
         {
-            int minDistanceForAttack = BattleEngine.GetDistanceBetweenPoints(unit.position, possibleAttacker.position);
+            int minDistanceForAttack = BattleEngine.GetDistanceBetweenPoints(unit.Position.First(), possibleAttacker.Position.First());
             if (minDistanceForAttack <= possibleAttacker.distance)
             {
                 AddAttackerByObjectId(unit.idOnBattle, possibleAttacker);
@@ -394,7 +394,7 @@ public class BattleSituation
 
     public void UpdateAttackers() // Обновить атакующих для всех объектов
     {
-        attackersByObjectId = new Dictionary<string, List<UnitOnBattle>>();
+        attackersByObjectId = new Dictionary<string, List<ObjectOnBattle>>();
         UpdateAttackersForFederationObjects();
         UpdateAttackersForEmpireObjects();
         UpdateAttackersForNeutralObjects();
@@ -408,13 +408,13 @@ public class BattleSituation
 
     public void UpdateAttackersForFederationUnits()
     {
-        Dictionary<string, UnitOnBattle> possibleAttackers = empireUnits;
+        Dictionary<string, ObjectOnBattle> possibleAttackers = empireUnits;
 
         foreach (var victimItem in federationUnits)
         {
             foreach (var attackerItem in possibleAttackers)
             {
-                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPoints(victimItem.Value.position, attackerItem.Value.position);
+                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPoints(victimItem.Value.Position.First(), attackerItem.Value.Position.First());
                 if (minDistanceForAttack <= attackerItem.Value.distance) {
                     AddAttackerByObjectId(victimItem.Key, attackerItem.Value);
                 }
@@ -424,13 +424,13 @@ public class BattleSituation
 
     public void UpdateAttackersForFederationBuilds()
     {
-        Dictionary<string, UnitOnBattle> possibleAttackers = empireUnits;
+        Dictionary<string, ObjectOnBattle> possibleAttackers = empireUnits;
 
         foreach (var victimItem in federationBuilds)
         {
             foreach (var attackerItem in possibleAttackers)
             {
-                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerItem.Value.position, new RectangleBector2Int(victimItem.Value.position));
+                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerItem.Value.Position.First(), new RectangleBector2Int(victimItem.Value.Position));
                 if (minDistanceForAttack <= attackerItem.Value.distance)
                 {
                     AddAttackerByObjectId(victimItem.Key, attackerItem.Value);
@@ -447,13 +447,13 @@ public class BattleSituation
 
     public void UpdateAttackersForEmpireUnits()
     {
-        Dictionary<string, UnitOnBattle> possibleAttackers = federationUnits;
+        Dictionary<string, ObjectOnBattle> possibleAttackers = federationUnits;
 
         foreach (var victimItem in empireUnits)
         {
             foreach (var attackerItem in possibleAttackers)
             {
-                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPoints(victimItem.Value.position, attackerItem.Value.position);
+                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPoints(victimItem.Value.Position.First(), attackerItem.Value.Position.First());
                 if (minDistanceForAttack <= attackerItem.Value.distance)
                 {
                     AddAttackerByObjectId(victimItem.Key, attackerItem.Value);
@@ -464,13 +464,13 @@ public class BattleSituation
 
     public void UpdateAttackersForEmpireBuilds()
     {
-        Dictionary<string, UnitOnBattle> possibleAttackers = federationUnits;
+        Dictionary<string, ObjectOnBattle> possibleAttackers = federationUnits;
 
         foreach (var victimItem in empireBuilds)
         {
             foreach (var attackerItem in possibleAttackers)
             {
-                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerItem.Value.position, new RectangleBector2Int(victimItem.Value.position));
+                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerItem.Value.Position.First(), new RectangleBector2Int(victimItem.Value.Position));
                 if (minDistanceForAttack <= attackerItem.Value.distance)
                 {
                     AddAttackerByObjectId(victimItem.Key, attackerItem.Value);
@@ -487,14 +487,13 @@ public class BattleSituation
 
     public void UpdateAttackersForNeutralUnits()
     {
-        //Dictionary<string, UnitOnBattle> possibleAttackers =  empireUnits.Concat(federationUnits).ToDictionary(x => x.Key, x => x.Value);
-        Dictionary<string, UnitOnBattle> possibleAttackers = federationUnits;
+        Dictionary<string, ObjectOnBattle> possibleAttackers = federationUnits;
 
         foreach (var victimItem in neutralUnits)
         {
             foreach (var attackerItem in possibleAttackers)
             {
-                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPoints(victimItem.Value.position, attackerItem.Value.position);
+                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPoints(victimItem.Value.Position.First(), attackerItem.Value.Position.First());
                 if (minDistanceForAttack <= attackerItem.Value.distance)
                 {
                     AddAttackerByObjectId(victimItem.Key, attackerItem.Value);
@@ -505,14 +504,13 @@ public class BattleSituation
 
     public void UpdateAttackersForNeutralBuilds()
     {
-        //Dictionary<string, UnitOnBattle> possibleAttackers =  empireUnits.Concat(federationUnits).ToDictionary(x => x.Key, x => x.Value);
-        Dictionary<string, UnitOnBattle> possibleAttackers = federationUnits;
+        Dictionary<string, ObjectOnBattle> possibleAttackers = federationUnits;
 
         foreach (var victimItem in neutralBuilds)
         {
             foreach (var attackerItem in possibleAttackers)
             {
-                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerItem.Value.position, new RectangleBector2Int(victimItem.Value.position));
+                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerItem.Value.Position.First(), new RectangleBector2Int(victimItem.Value.Position));
                 if (minDistanceForAttack <= attackerItem.Value.distance)
                 {
                     AddAttackerByObjectId(victimItem.Key, attackerItem.Value);
@@ -521,6 +519,11 @@ public class BattleSituation
         }
     }
 
+
+    public Dictionary<string, ObjectOnBattle> GetTargetsBySide(string side)
+    {
+        return GetBuildTargetsBySide(side).Concat(GetUnitTargetsBySide(side)).ToDictionary(x => x.Key, x => x.Value);
+    }
 
     public BattleSituation Clone()
     {
@@ -538,44 +541,44 @@ public class BattleSituation
         clone.InitMap(clonedCells);
 
         // Клонируем словари юнитов
-        clone.federationUnits = new Dictionary<string, UnitOnBattle>();
+        clone.federationUnits = new Dictionary<string, ObjectOnBattle>();
         foreach (var pair in federationUnits)
         {
             clone.federationUnits.Add(pair.Key, pair.Value.Clone());
         }
-        clone.empireUnits = new Dictionary<string, UnitOnBattle>();
+        clone.empireUnits = new Dictionary<string, ObjectOnBattle>();
         foreach (var pair in empireUnits)
         {
             clone.empireUnits.Add(pair.Key, pair.Value.Clone());
         }
-        clone.neutralUnits = new Dictionary<string, UnitOnBattle>();
+        clone.neutralUnits = new Dictionary<string, ObjectOnBattle>();
         foreach (var pair in neutralUnits)
         {
             clone.neutralUnits.Add(pair.Key, pair.Value.Clone());
         }
 
         // Клонируем словари зданий
-        clone.federationBuilds = new Dictionary<string, BuildOnBattle>();
+        clone.federationBuilds = new Dictionary<string, ObjectOnBattle>();
         foreach (var pair in federationBuilds)
         {
             clone.federationBuilds.Add(pair.Key, pair.Value.Clone());
         }
-        clone.empireBuilds = new Dictionary<string, BuildOnBattle>();
+        clone.empireBuilds = new Dictionary<string, ObjectOnBattle>();
         foreach (var pair in empireBuilds)
         {
             clone.empireBuilds.Add(pair.Key, pair.Value.Clone());
         }
-        clone.neutralBuilds = new Dictionary<string, BuildOnBattle>();
+        clone.neutralBuilds = new Dictionary<string, ObjectOnBattle>();
         foreach (var pair in neutralBuilds)
         {
             clone.neutralBuilds.Add(pair.Key, pair.Value.Clone());
         }
 
         // Клонируем словарь attackersByObjectId
-        clone.attackersByObjectId = new Dictionary<string, List<UnitOnBattle>>();
+        clone.attackersByObjectId = new Dictionary<string, List<ObjectOnBattle>>();
         foreach (var pair in attackersByObjectId)
         {
-            clone.attackersByObjectId.Add(pair.Key, new List<UnitOnBattle>());
+            clone.attackersByObjectId.Add(pair.Key, new List<ObjectOnBattle>());
             foreach (var unit in pair.Value)
             {
                 clone.attackersByObjectId[pair.Key].Add(unit.Clone());
@@ -588,21 +591,67 @@ public class BattleSituation
         return clone;
     }
 
-    public List<BattleSituation> GetAllSequels()
+    public UnitOnBattle FindNearestUnitByPointAndSide(Bector2Int point, string side)
     {
-        List<BattleSituation> battleSituations = new List<BattleSituation>();
-        battleSituations.AddRange(GetAllMovementSequels());
-        battleSituations.AddRange(GetAllAttackingSequels());
-        battleSituations.Add(GetSequelWithPass());
-        return battleSituations;
+        ObjectOnBattle nearestUnit = null;
+        int nearestDistance = int.MaxValue;
+
+        Dictionary<string, ObjectOnBattle> unitsBySide = GetUnitsCollectionBySide(side);
+        foreach (var keyValuePair in unitsBySide)
+        {
+            ObjectOnBattle currentUnit = keyValuePair.Value;
+            List<Bector2Int> routeToCurrentUnit = _map.BuildRoute(point, currentUnit.Position.First(), int.MaxValue);
+            if (routeToCurrentUnit.Count < nearestDistance) 
+            { 
+                nearestUnit = currentUnit;
+                nearestDistance = routeToCurrentUnit.Count;
+            }
+        }
+
+        return nearestUnit as UnitOnBattle;
     }
 
-    public List<BattleSituation> GetAllAttackingSequels()
+    public MoveForAttackData GetDataForMoveToAttackNearestUnit(UnitOnBattle attacker, string attackerSide)
     {
-        List<BattleSituation> battleSituations = new List<BattleSituation>();
+        MoveForAttackData moveForAttackData = new MoveForAttackData();
+        moveForAttackData._activeUnit = attacker;
+        moveForAttackData._fullRoute = new List<Bector2Int>();
 
-        Dictionary<string, BuildOnBattle> possibleBuildTargets = new Dictionary<string, BuildOnBattle>();
-        Dictionary<string, UnitOnBattle> possibleUnitTargets = new Dictionary<string, UnitOnBattle>();
+        ObjectOnBattle nearestUnit = null;
+        int minPassedDistanceToAttack = int.MaxValue;
+
+        Dictionary<string, ObjectOnBattle> unitsBySide = GetUnitsCollectionBySide(Sides.enemySideBySide[attackerSide]);
+        foreach (var keyValuePair in unitsBySide)
+        {
+            ObjectOnBattle currentUnit = keyValuePair.Value;
+            List<Bector2Int> shortestRouteToAttackCurrentUnit = _map.BuildRouteForAttackTarget(attacker.Position.First(), currentUnit.Position.First(), attackRange: attacker.Distance, int.MaxValue);
+            if (shortestRouteToAttackCurrentUnit.Count < minPassedDistanceToAttack)
+            {
+                nearestUnit = currentUnit;
+                minPassedDistanceToAttack = shortestRouteToAttackCurrentUnit.Count;
+                moveForAttackData._fullRoute = shortestRouteToAttackCurrentUnit;
+            }
+        }
+
+        moveForAttackData._turnCountForReach = minPassedDistanceToAttack / attacker.Mobility;
+        return moveForAttackData;
+    }
+
+    public Dictionary<TurnData, BattleSituation> GetAllSequels()
+    {
+        Dictionary<TurnData, BattleSituation> battleSituationByTurn = new Dictionary<TurnData, BattleSituation>();
+        battleSituationByTurn = battleSituationByTurn.Concat(GetAllMovementSequels()).ToDictionary(x => x.Key, x => x.Value);
+        battleSituationByTurn = battleSituationByTurn.Concat(GetAllAttackingSequels()).ToDictionary(x => x.Key, x => x.Value);
+        battleSituationByTurn = battleSituationByTurn.Concat(GetSequelWithPass()).ToDictionary(x => x.Key, x => x.Value);
+        return battleSituationByTurn;
+    }
+
+    public Dictionary<TurnData, BattleSituation> GetAllAttackingSequels()
+    {
+        Dictionary<TurnData, BattleSituation> battleSituationByTurn = new Dictionary<TurnData, BattleSituation>();
+
+        Dictionary<string, ObjectOnBattle> possibleBuildTargets = new Dictionary<string, ObjectOnBattle>();
+        Dictionary<string, ObjectOnBattle> possibleUnitTargets = new Dictionary<string, ObjectOnBattle>();
         if (_sideTurn == Sides.federation)
         {
             possibleBuildTargets = empireBuilds;
@@ -621,29 +670,37 @@ public class BattleSituation
 
        foreach (BuildOnBattle buildTarget in possibleBuildTargets.Values) 
         {
-            int totalDamage = BattleEngine.CalculateDamageToBuild(attackersByObjectId[buildTarget.idOnBattle].ToArray(), buildTarget);
+            int totalDamage = BattleEngine.CalculateDamageToBuild(this, attackersByObjectId[buildTarget.idOnBattle].ToArray(), buildTarget);
             BattleSituation currentBattleSituation = this.Clone();
             currentBattleSituation.BuildChangeHealth(buildTarget.idOnBattle, buildTarget.health - totalDamage);
             currentBattleSituation.NextTurn();
-            battleSituations.Add(currentBattleSituation);
+
+            TurnData currentTurn = new TurnData();
+            currentTurn._targetIdOnBattle = buildTarget.idOnBattle;
+
+            battleSituationByTurn.Add(currentTurn, currentBattleSituation);
         }
 
         foreach (UnitOnBattle unitTarget in possibleUnitTargets.Values)
         {
-            int totalDamage = BattleEngine.CalculateDamageToUnit(attackersByObjectId[unitTarget.idOnBattle].ToArray(), unitTarget);
+            int totalDamage = BattleEngine.CalculateDamageToUnit(this, attackersByObjectId[unitTarget.idOnBattle].ToArray(), unitTarget);
             BattleSituation currentBattleSituation = this.Clone();
             currentBattleSituation.UnitChangeHealth(unitTarget.idOnBattle, unitTarget.health - totalDamage);
             currentBattleSituation.NextTurn();
-            battleSituations.Add(currentBattleSituation);
+
+            TurnData currentTurn = new TurnData();
+            currentTurn._targetIdOnBattle = unitTarget.idOnBattle;
+
+            battleSituationByTurn.Add(currentTurn, currentBattleSituation);
         }
-        return battleSituations;
+        return battleSituationByTurn;
     }
 
-    public List<BattleSituation> GetAllMovementSequels()
+    public Dictionary<TurnData, BattleSituation> GetAllMovementSequels()
     {
-        List<BattleSituation> battleSituations = new List<BattleSituation>();
+        Dictionary<TurnData, BattleSituation> battleSituationByTurn = new Dictionary<TurnData, BattleSituation>();
 
-        Dictionary<string, UnitOnBattle> possibleMovers = new Dictionary<string, UnitOnBattle>();
+        Dictionary<string, ObjectOnBattle> possibleMovers = new Dictionary<string, ObjectOnBattle>();
         if (_sideTurn == Sides.federation)
         {
             possibleMovers = federationUnits;
@@ -659,95 +716,168 @@ public class BattleSituation
 
         foreach (var item in possibleMovers)
         {
-            battleSituations.AddRange(GetMovementSequelsByUnit(item.Value));
+            battleSituationByTurn = battleSituationByTurn.Concat(GetMovementSequelsByUnit(item.Value as UnitOnBattle)).ToDictionary(x => x.Key, x => x.Value);
         }
 
-        return battleSituations;
+        return battleSituationByTurn;
     }
 
-    public List<BattleSituation> GetMovementSequelsByUnit(UnitOnBattle unit)
+    public Dictionary<TurnData, BattleSituation> GetMovementSequelsByUnit(UnitOnBattle unit)
     {
-        List<BattleSituation> battleSituations = new List<BattleSituation>();
+        Dictionary<TurnData, BattleSituation> battleSituationByTurn = new Dictionary<TurnData, BattleSituation>();
 
-        List<Bector2Int> possibleNewPositions = _map.GetReachablePositions(unit.position, unit.mobility);
+        List<Bector2Int> possibleNewPositions = _map.GetReachablePositions(unit.Position.First(), unit.mobility);
         foreach (Bector2Int position in possibleNewPositions)
         {
+            TurnData currentTurn = new TurnData();
+            currentTurn._activeUnitIdOnBattle = unit.idOnBattle;
+            currentTurn._route = _map.BuildRoute(unit.Position.First(), position, unit.mobility);
+
             BattleSituation currentBattleSituation = this.Clone();
             currentBattleSituation.UnitChangePosition(unit.idOnBattle, position);
             currentBattleSituation.NextTurn();
 
-            battleSituations.Add(currentBattleSituation);
+            battleSituationByTurn.Add(currentTurn, currentBattleSituation);
         }
 
-        return battleSituations;
+        return battleSituationByTurn;
     }
 
-    public BattleSituation GetSequelWithPass()
+    public Dictionary<TurnData, BattleSituation> GetSequelWithPass()
     {
+        TurnData turn = new TurnData();
+
         BattleSituation battleSituationWithPass = this.Clone();
         battleSituationWithPass.NextTurn();
-        return battleSituationWithPass;
+        return new Dictionary<TurnData, BattleSituation>() { { turn, battleSituationWithPass } };
+    }
+
+    public List<ObjectOnBattle> GetAttackersByTarget(ObjectOnBattle target)
+    {
+        List<ObjectOnBattle> attackers = new List<ObjectOnBattle>();
+
+        if (!attackersByObjectId.ContainsKey(target.IdOnBattle)) return attackers;
+
+        return attackersByObjectId[target.IdOnBattle];
+    }
+
+
+    public List<ObjectOnBattle> GetTargetsByAttacker(ObjectOnBattle attacker)
+    {
+        List<ObjectOnBattle> targets = new List<ObjectOnBattle>();
+
+        foreach(var keyValuePair in attackersByObjectId)
+        {
+            string currentTargetId = keyValuePair.Key;
+            List<ObjectOnBattle> currentAttackers = keyValuePair.Value;
+            if (currentAttackers.Contains(attacker))
+            {
+                // Найти цель-объект и добавить
+                targets.Add(GetObjectById(currentTargetId));
+            }
+        }
+
+        return targets;
+    } 
+
+    public bool IsObjectExist(string objectId)
+    {
+        List<string> allIds = new List<string>();
+
+        allIds.AddRange(federationUnits.Keys);
+        allIds.AddRange(empireUnits.Keys);
+        allIds.AddRange(neutralUnits.Keys);
+
+        allIds.AddRange(federationBuilds.Keys);
+        allIds.AddRange(empireBuilds.Keys);
+        allIds.AddRange(neutralBuilds.Keys);
+
+        return allIds.Contains(objectId);
+    }
+
+    public ObjectOnBattle GetObjectById(string id)
+    {
+        Dictionary<string, ObjectOnBattle> allObjects = federationUnits.Concat(empireUnits).Concat(neutralUnits).Concat(federationBuilds).Concat(empireBuilds).Concat(neutralBuilds).ToDictionary(x => x.Key, x => x.Value);
+
+        if (allObjects.ContainsKey(id)) return allObjects[id];
+        return null;
+    }
+
+    public UnitOnBattle GetUnitById(string id)
+    {
+        Dictionary<string, ObjectOnBattle> allUnits = federationUnits.Concat(empireUnits).Concat(neutralUnits).ToDictionary(x => x.Key, x => x.Value);
+
+        if (allUnits.ContainsKey(id)) return allUnits[id] as UnitOnBattle;
+        return null;
+    }
+
+    public BuildOnBattle GetBuildById(string id)
+    {
+        Dictionary<string, ObjectOnBattle> allBuilds = federationBuilds.Concat(empireBuilds).Concat(neutralBuilds).ToDictionary(x => x.Key, x => x.Value);
+
+        if (allBuilds.ContainsKey(id)) return allBuilds[id] as BuildOnBattle;
+        return null;
     }
 
     public string GetNextSideTurn(string currentSideTurn)
     {
-        return SideTurnsQueue.nextSideTurnByCurrentSide[currentSideTurn];
+        return Sides.nextSideTurnByCurrentSide[currentSideTurn];
     }
 
 
-    public Dictionary<string, UnitOnBattle> GetUnitsCollectionById(string id)
+    public Dictionary<string, ObjectOnBattle> GetUnitsCollectionById(string id)
     {
-        Dictionary<string, UnitOnBattle> allUnits = federationUnits.Concat(empireUnits).Concat(neutralUnits).ToDictionary(x => x.Key, x => x.Value);
-        UnitOnBattle unit = allUnits[id];
+        Dictionary<string, ObjectOnBattle> allUnits = federationUnits.Concat(empireUnits).Concat(neutralUnits).ToDictionary(x => x.Key, x => x.Value);
+        ObjectOnBattle unit = allUnits[id];
         return GetUnitsCollectionBySide(unit.side);
     }
 
-    public Dictionary<string, UnitOnBattle> GetUnitsCollectionBySide(string side)
+    public Dictionary<string, ObjectOnBattle> GetUnitsCollectionBySide(string side)
     {
-        Dictionary<string, UnitOnBattle> unitsBySide = new Dictionary<string, UnitOnBattle>();
+        Dictionary<string, ObjectOnBattle> unitsBySide = new Dictionary<string, ObjectOnBattle>();
         if (side == Sides.federation) unitsBySide = federationUnits;
         if (side == Sides.empire) unitsBySide = empireUnits;
         if (side == Sides.neutral) unitsBySide = neutralUnits;
         return unitsBySide;
     }
 
-    public Dictionary<string, BuildOnBattle> GetBuildsCollectionById(string id)
+    public Dictionary<string, ObjectOnBattle> GetBuildsCollectionById(string id)
     {
-        Dictionary<string, BuildOnBattle> allBuilds = federationBuilds.Concat(empireBuilds).Concat(neutralBuilds).ToDictionary(x => x.Key, x => x.Value);
-        BuildOnBattle build = allBuilds[id];
+        Dictionary<string, ObjectOnBattle> allBuilds = federationBuilds.Concat(empireBuilds).Concat(neutralBuilds).ToDictionary(x => x.Key, x => x.Value);
+        ObjectOnBattle build = allBuilds[id];
         return GetBuildsCollectionBySide(build.side);
     }
 
-    public Dictionary<string, BuildOnBattle> GetBuildsCollectionBySide(string side)
+    public Dictionary<string, ObjectOnBattle> GetBuildsCollectionBySide(string side)
     {
-        Dictionary<string, BuildOnBattle> buildsBySide = new Dictionary<string, BuildOnBattle>();
+        Dictionary<string, ObjectOnBattle> buildsBySide = new Dictionary<string, ObjectOnBattle>();
         if (side == Sides.federation) buildsBySide = federationBuilds;
         if (side == Sides.empire) buildsBySide = empireBuilds;
         if (side == Sides.neutral) buildsBySide = neutralBuilds;
         return buildsBySide;
     }
 
-    public Dictionary<string, UnitOnBattle> GetUnitTargetsBySide(string side)
+    public Dictionary<string, ObjectOnBattle> GetUnitTargetsBySide(string side)
     {
-        Dictionary<string, UnitOnBattle> possibleTargets = new Dictionary<string, UnitOnBattle>();
+        Dictionary<string, ObjectOnBattle> possibleTargets = new Dictionary<string, ObjectOnBattle>();
         if (side == Sides.federation) { possibleTargets = empireUnits.Concat(neutralUnits).ToDictionary(x => x.Key, x => x.Value); }
         if (side == Sides.empire) { possibleTargets = federationUnits; }
         if (side == Sides.neutral) { }
         return possibleTargets;
     }
 
-    public Dictionary<string, BuildOnBattle> GetBuildTargetsBySide(string side)
+    public Dictionary<string, ObjectOnBattle> GetBuildTargetsBySide(string side)
     {
-        Dictionary<string, BuildOnBattle> possibleTargets = new Dictionary<string, BuildOnBattle>();
+        Dictionary<string, ObjectOnBattle> possibleTargets = new Dictionary<string, ObjectOnBattle>();
         if (side == Sides.federation) { possibleTargets = empireBuilds.Concat(neutralBuilds).ToDictionary(x => x.Key, x => x.Value); }
         if (side == Sides.empire) { possibleTargets = federationBuilds; }
         if (side == Sides.neutral) { }
         return possibleTargets;
     }
 
-    public Dictionary<string, UnitOnBattle> GetAttackersBySide(string side)
+    public Dictionary<string, ObjectOnBattle> GetAttackersBySide(string side)
     {
-        Dictionary<string, UnitOnBattle> possibleAttackers = new Dictionary<string, UnitOnBattle>();
+        Dictionary<string, ObjectOnBattle> possibleAttackers = new Dictionary<string, ObjectOnBattle>();
         if (side == Sides.federation) { possibleAttackers = empireUnits; }
         if (side == Sides.empire) { possibleAttackers = federationUnits; }
         if (side == Sides.neutral) { possibleAttackers = federationUnits; }
@@ -756,16 +886,16 @@ public class BattleSituation
 
     public List<Bector2Int> GetReachablePositionsByUnit(string unitId)
     {
-        UnitOnBattle unit = GetUnitsCollectionById(unitId)[unitId];
-        return _map.GetReachablePositions(unit.position, unit.mobility);
+        UnitOnBattle unit = GetUnitsCollectionById(unitId)[unitId] as UnitOnBattle;
+        return _map.GetReachablePositions(unit.Position.First(), unit.mobility);
     }
 
-    public Dictionary<string, UnitOnBattle> GetAllUnits()
+    public Dictionary<string, ObjectOnBattle> GetAllUnits()
     {
         return federationUnits.Concat(empireUnits).Concat(neutralUnits).ToDictionary(x => x.Key, x => x.Value);
     }
 
-    public Dictionary<string, BuildOnBattle> GetAllBuilds()
+    public Dictionary<string, ObjectOnBattle> GetAllBuilds()
     {
         return federationBuilds.Concat(empireBuilds).Concat(neutralBuilds).ToDictionary(x => x.Key, x => x.Value);
     }

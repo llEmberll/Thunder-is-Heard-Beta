@@ -50,9 +50,14 @@ public class UnitCacheItem : CacheItem
             SetSize(new Bector2Int(new UnityEngine.Vector2Int(1, 1)));
         }
 
-        if (!objFields.ContainsKey("iconPath"))
+        if (!objFields.ContainsKey("iconSection"))
         {
-            SetIconPath("");
+            SetIconSection("");
+        }
+
+        if (!objFields.ContainsKey("iconName"))
+        {
+            SetIconName("");
         }
 
         if (!objFields.ContainsKey("skills"))
@@ -67,7 +72,7 @@ public class UnitCacheItem : CacheItem
 
         if (!objFields.ContainsKey("doctrine"))
         {
-            SetUnitType(Doctrines.land);
+            SetDoctrine(Doctrines.land);
         }
 
         if (!objFields.ContainsKey("movementSpeed"))
@@ -86,14 +91,24 @@ public class UnitCacheItem : CacheItem
         SetField("modelPath", value);
     }
 
-    public string? GetIconPath()
+    public string? GetIconSection()
     {
-        return (string?)GetField("iconPath");
+        return (string?)GetField("iconSection");
     }
 
-    public void SetIconPath(string value)
+    public void SetIconSection(string value)
     {
-        SetField("iconPath", value);
+        SetField("iconSection", value);
+    }
+
+    public string? GetIconName()
+    {
+        return (string?)GetField("iconName");
+    }
+
+    public void SetIconName(string value)
+    {
+        SetField("iconName", value);
     }
 
 

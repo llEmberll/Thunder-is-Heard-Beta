@@ -42,13 +42,14 @@
           "x": 1,
           "y": 1
         },
-        "iconPath": "",
+        "iconSection": "",
+        "iconName": "",
         "name": "Assaulters",
         "modelPath": "Prefabs/Entity/Units/Assaulters",
         "skills": [],
         "unitType": "infantry",
         "doctrine": "land",
-        "movementSpeed":  1
+        "movementSpeed": 1
       }
     },
     "035655f8-a347-4057-87cc-83385fa20660": {
@@ -92,7 +93,8 @@
           "x": 1,
           "y": 1
         },
-        "iconPath": "",
+        "iconSection": "",
+        "iconName": "",
         "name": "Osoka",
         "modelPath": "Prefabs/Entity/Units/Osoka",
         "skills": [],
@@ -142,7 +144,8 @@
           "x": 1,
           "y": 1
         },
-        "iconPath": "",
+        "iconSection": "",
+        "iconName": "",
         "name": "Vortex",
         "modelPath": "Prefabs/Entity/Units/Vortex",
         "skills": [],

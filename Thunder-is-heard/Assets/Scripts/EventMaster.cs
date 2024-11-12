@@ -68,6 +68,18 @@ public class EventMaster: MonoBehaviour
         NextTurn?.Invoke(side);
     }
 
+    public event Action<IStage> NextStage;
+    public void OnNextStage(IStage stage)
+    {
+        NextStage?.Invoke(stage);
+    }
+
+    public event Action<IStage> BeginStage;
+    public void OnStageBegin(IStage stage)
+    {
+        BeginStage?.Invoke(stage);
+    }
+
     public event Action<TurnData> TurnExecuted;
     public void OnExecuteTurn(TurnData turnData)
     {

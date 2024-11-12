@@ -93,6 +93,7 @@ public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
         int currentHealth = battleBuildData.health;
         int damage = battleBuildData.damage;
         int distance = battleBuildData.distance;
+        string doctrine = coreBuildData.GetDoctrine();
         string interactionComponentName = "Inaction";
         string interactionComponentType = "";
 
@@ -121,6 +122,7 @@ public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
             currentHealth,
             damage,
             distance,
+            doctrine,
             side,
             interactionComponentName,
             interactionComponentType,

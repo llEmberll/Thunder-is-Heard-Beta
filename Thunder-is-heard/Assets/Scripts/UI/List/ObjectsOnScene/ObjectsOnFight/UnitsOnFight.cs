@@ -101,7 +101,7 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
         float movementSpeed = coreUnitData.GetMovementSpeed();
 
         string name = coreUnitData.GetName();
-        Bector2Int[] position = new Bector2Int[1] { battleUnitData.position };
+        Bector2Int[] position = new Bector2Int[1] { battleUnitData.position.First() };
         int rotation = battleUnitData.rotation;
         string coreId = battleUnitData.coreId;
         string childId = battleUnitData.idOnBattle;

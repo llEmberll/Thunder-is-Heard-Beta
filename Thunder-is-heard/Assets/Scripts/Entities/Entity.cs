@@ -14,6 +14,8 @@ public abstract class Entity : Interactable, IDamageable
     public int rotation;
     public Vector2Int center;
 
+    public string _doctrine;
+
     public abstract override string Type { get; }
     public string CoreId { get { return coreId; } }
     public string ChildId { get { return childId; } }
@@ -56,6 +58,11 @@ public abstract class Entity : Interactable, IDamageable
         damage = damageValue;
         distance = distanceValue;
         mobility = mobilityValue;
+    }
+
+    public void SetDoctrine(string value)
+    {
+        _doctrine = value;
     }
 
     public void SetSide(string value)
@@ -195,5 +202,27 @@ public abstract class Entity : Interactable, IDamageable
 
         EventMaster.current.OnObjectDestroy(this);
         map.Free(occypiedPoses);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+        {
+            return false;
+        }
+
+        Entity other = (Entity)obj;
+        return CoreId == other.CoreId && ChildId == other.ChildId;
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 23 + CoreId.GetHashCode();
+            hash = hash * 23 + ChildId.GetHashCode();
+            return hash;
+        }
     }
 }

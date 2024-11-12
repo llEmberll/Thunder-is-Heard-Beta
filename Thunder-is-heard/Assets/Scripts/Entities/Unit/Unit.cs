@@ -8,7 +8,6 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
 {
     public Skill[] _skills = null;
 
-    public string _doctrine;
     public string _unitType;
 
     public bool _onMove = false;
@@ -119,11 +118,6 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
     public void SetUnitType(string value)
     {
         _unitType = value;
-    }
-
-    public void SetDoctrine(string value)
-    {
-        _doctrine = value;
     }
 
     public override void OnFocus()

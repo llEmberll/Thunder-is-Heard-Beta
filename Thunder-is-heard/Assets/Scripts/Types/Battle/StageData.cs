@@ -7,12 +7,16 @@ public class StageData
 
     public UnitOnBattle[] units;
     public BuildOnBattle[] builds;
+
+    public AISettings[] AISettings;
+
     public string[] conditionsForDefeat;
     public string[] conditionsForVictory;
 
     public StageData(
         UnitOnBattle[] stageUnits,
         BuildOnBattle[] stageBuilds,
+        AISettings[] StageAISettings,
         string[] stageConditionsForDefeat, 
         string[] stageConditionsForVictory,
         string stageId = "BasicStage"
@@ -21,6 +25,7 @@ public class StageData
         id = stageId;
         units = stageUnits;
         builds = stageBuilds;
+        AISettings = StageAISettings;
         conditionsForDefeat = stageConditionsForDefeat;
         conditionsForVictory = stageConditionsForVictory;
     }

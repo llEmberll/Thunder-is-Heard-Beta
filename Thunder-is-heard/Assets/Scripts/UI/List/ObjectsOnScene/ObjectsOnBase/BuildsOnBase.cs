@@ -138,6 +138,7 @@ public class BuildsOnBase : ObjectsOnBase
         int health = coreBuildData.GetHealth();
         int damage = coreBuildData.GetDamage();
         int distance = coreBuildData.GetDistance();
+        string doctrine = coreBuildData.GetDoctrine();
         string interactionComponentName = coreBuildData.GetInteractionComponentName();
         string interactionComponentType = coreBuildData.GetInteractionComponentType();
 
@@ -166,6 +167,7 @@ public class BuildsOnBase : ObjectsOnBase
             health,
             damage, 
             distance, 
+            doctrine,
             Sides.federation, 
             interactionComponentName, 
             interactionComponentType,

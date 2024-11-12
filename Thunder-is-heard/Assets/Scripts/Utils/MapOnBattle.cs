@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,8 @@ public class MapOnBattle
         return realMovePositions.Keys.ToList();
     }
 
+    //Найти ближайшую точку из массива
+    //rangeCenter - центральная точка массива
     public Bector2Int FindNearestPositionToOtherPositionFromRange(Bector2Int[] positionsRange, Bector2Int rangeCenter, Bector2Int targetPosition)
     {
         Bector2Int nearestPosition = positionsRange[0];
@@ -90,6 +93,31 @@ public class MapOnBattle
         }
 
         return FindShortestPath(start, end);
+    }
+
+    public List<Bector2Int> BuildRouteForAttackTarget(Bector2Int start, Bector2Int targetPosition, int attackRange, int maxRouteLength)
+    {
+        if (attackRange < 1) return null;
+        if (BattleEngine.GetDistanceBetweenPoints(start, targetPosition) <= attackRange) return new List<Bector2Int>();
+
+        //Все позиции, с которых возможна атака цели
+        Dictionary<Bector2Int, EvaluateCellData> positionsForAttack = GetValidPositionsMapByRange(attackRange, targetPosition);
+
+        //Ближайшая позиция для атаки
+        Bector2Int nearestPositionForAttack = FindNearestPositionToOtherPositionFromRange(positionsForAttack.Keys.ToArray(), targetPosition, start);
+        Bector2Int positionForBuildRoute = nearestPositionForAttack;
+
+        //Позиции, до которых сейчас возможно добраться
+        Dictionary<Bector2Int, EvaluateCellData> possibleOverRoutePositions = GetValidPositionsMapByRange(maxRouteLength, start);
+
+        //Если до ближайшей позиции для атаки невозможно сейчас добраться
+        if (!possibleOverRoutePositions.ContainsKey(nearestPositionForAttack))
+        {
+            //Тогда добираться максимально близко до ближайшей позиции атаки
+            positionForBuildRoute = FindNearestPositionToOtherPositionFromRange(possibleOverRoutePositions.Keys.ToArray(), start, nearestPositionForAttack);
+        }
+
+        return FindShortestPath(start, positionForBuildRoute);
     }
 
     // Метод для поиска кратчайшего пути
@@ -203,6 +231,8 @@ public class MapOnBattle
     {
         Dictionary<Bector2Int, EvaluateCellData> validPositionsMap = new Dictionary<Bector2Int, EvaluateCellData>();
 
+        int rootOfCellsCount = (int)Math.Sqrt(Cells.Count);
+        if (range >= rootOfCellsCount) range = rootOfCellsCount;
         for (int x = -range; x <= range; x++)
         {
             for (int z = -range; z <= range; z++)

@@ -41,13 +41,15 @@ public class BaseMap : Map
         {
             new UnitOnBattle(
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    new Bector2Int(2, 2),
+                    new Bector2Int[] { new Bector2Int(2, 2) },
                     0,
                     3,
                     2,
                     1,
                     2,
                     2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
                     Sides.empire,
                     unitIdOnBattle: "03a65484-e0c4-4bec-a8eb-277c22a53ef4"
                     )
@@ -71,6 +73,7 @@ public class BaseMap : Map
                     6,
                     0,
                     0,
+                    Doctrines.land,
                     Sides.empire,
                     WorkStatuses.idle,
                     buildIdOnBattle: "8f338821-eaf1-4670-8633-fe57ca21ecd0"
@@ -84,13 +87,15 @@ public class BaseMap : Map
         {
             new UnitOnBattle(
                     coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
-                    new Bector2Int(4, 5),
+                    new Bector2Int[] { new Bector2Int(4, 5) },
                     90,
                     6,
                     6,
                     3,
                     3,
                     4,
+                    UnitTypes.vehicle,
+                    Doctrines.land,
                     Sides.empire,
                     unitIdOnBattle: "725f70fd-417e-4ca7-9b6f-ff5b19c8e4e6"
                     )
@@ -112,6 +117,7 @@ public class BaseMap : Map
                     6,
                     0,
                     0,
+                    Doctrines.land,
                     Sides.empire,
                     WorkStatuses.idle,
                     buildIdOnBattle: "68881a80-41e1-41da-8784-bbe4b4bbe3dc"
@@ -128,11 +134,27 @@ public class BaseMap : Map
             "DestroyAllAllies"
         };
 
+        AISettings AISettingsForEmpireSide = new AISettings(
+            "Attacking",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSide = new AISettings(
+            "Waiting",
+            Sides.neutral,
+            null,
+            null
+            );
+
         StageData[] stages = new StageData[]
         {
             new StageData(
                 stage1Units, 
                 stage1Builds, 
+
+                new AISettings[] { AISettingsForEmpireSide, AISettingsForNeutralSide },
+
                 stage1ConditionsForDefeat, 
                 stage1ConditionsForVictory
                 )
@@ -184,25 +206,29 @@ public class BaseMap : Map
         {
             new UnitOnBattle(
                 coreUnitId: "124", 
-                unitPosition: new Bector2Int(new Vector2Int(0, 0)), 
+                unitPosition: new Bector2Int[] { new Bector2Int(new Vector2Int(0, 0)) }, 
                 unitRotation: 0, 
                 unitMaxHealth:3, 
                 unitHealth: 3, 
                 unitDamage: 1, 
                 unitDistance: 2, 
-                unitMobility: 2, 
+                unitMobility: 2,
+                UnitTypes.infantry,
+                Doctrines.land,
                 unitSide: Sides.empire, 
                 unitIdOnBattle: "987"
                 ),
             new UnitOnBattle(
                 coreUnitId: "125",
-                unitPosition: new Bector2Int(new Vector2Int(0, 1)),
+                unitPosition: new Bector2Int[] { new Bector2Int(new Vector2Int(0, 1)) },
                 unitRotation: 0,
                 unitMaxHealth:3,
                 unitHealth: 2,
                 unitDamage: 1,
                 unitDistance: 2,
                 unitMobility: 2,
+                UnitTypes.infantry,
+                Doctrines.land,
                 unitSide: Sides.federation, "986" , 
                 unitSkillsData: new SkillOnBattle[] { new SkillOnBattle("224", 1, false) } 
                 )
@@ -221,6 +247,7 @@ public class BaseMap : Map
                 buildHealth: 2,
                 buildDamage: 0, 
                 buildDistance: 0,
+                buildDoctrine: Doctrines.land,
                 buildSide: Sides.empire, 
                 buildWorkStatus: WorkStatuses.idle, 
                 buildIdOnBattle: "876"
@@ -233,6 +260,7 @@ public class BaseMap : Map
                 buildHealth: 4,
                 buildDamage: 0,
                 buildDistance: 0,
+                buildDoctrine: Doctrines.land,
                 buildSide: Sides.federation,
                 buildWorkStatus: WorkStatuses.idle,
                 buildIdOnBattle: "875"

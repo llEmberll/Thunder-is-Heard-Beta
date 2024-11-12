@@ -151,7 +151,7 @@ public class UIController : MonoBehaviour
 
     public void UpdateReachableCellsByUnitAndDisplay(Unit unit)
     {
-        reachableCells = _battleEngine.GetReachableCellsByUnit(unit);
+        reachableCells = _battleEngine.GetReachableCellsByUnit(_battleEngine.currentBattleSituation, unit);
         foreach (var cell in reachableCells)
         {
             cell.RenderSwitch(true);
