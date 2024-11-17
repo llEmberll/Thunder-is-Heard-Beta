@@ -9,13 +9,15 @@ public class WaitingAI : AbstractAI
 
     public override TurnData GetTurn()
     {
+        if (_battleEngine.currentBattleSituation.GetUnitsCollectionBySide(_battleEngine.currentBattleSituation._sideTurn).Count < 1) {  return new TurnData(); }
+
         Dictionary<TurnData, BattleSituation> attackMoves = _battleEngine.currentBattleSituation.GetAllAttackingSequels();
         if (attackMoves.Count > 0)
         {
             return GetBestAttack(_battleEngine.currentBattleSituation, attackMoves);
         }
 
-        Dictionary<string, ObjectOnBattle> objectsUnderAttack = _battleEngine.currentBattleSituation.GetTargetsBySide(_battleEngine.currentBattleSituation._sideTurn);
+        Dictionary<string, ObjectOnBattle> objectsUnderAttack = _battleEngine.currentBattleSituation.GetTargetsUnderAttackBySide(_battleEngine.currentBattleSituation._sideTurn);
         Dictionary<TurnData, BattleSituation> movementMoves = _battleEngine.currentBattleSituation.GetAllMovementSequels();
         if (objectsUnderAttack.Count < 1 || movementMoves.Count < 1)
         {
@@ -81,21 +83,22 @@ public class WaitingAI : AbstractAI
         foreach (var keyValuePair in movements)
         {
             TurnData currentMove = keyValuePair.Key;
-            BattleSituation currentBattleSituation = keyValuePair.Value;
+            BattleSituation currentBattleSituationWhenNextSideTurn = keyValuePair.Value.Clone();
+            currentBattleSituationWhenNextSideTurn.SkipToSideTurn(battleSituation._sideTurn);
 
-            Dictionary<TurnData, BattleSituation> attackMovesInCurrentBattleSituation = currentBattleSituation.GetAllAttackingSequels();
+            Dictionary<TurnData, BattleSituation> attackMovesInCurrentBattleSituation = currentBattleSituationWhenNextSideTurn.GetAllAttackingSequels();
             if (attackMovesInCurrentBattleSituation.Count > 0)
             {
-                TurnData bestAttackInCurrentBattleSituation = GetBestAttack(currentBattleSituation, attackMovesInCurrentBattleSituation);
+                TurnData bestAttackInCurrentBattleSituation = GetBestAttack(currentBattleSituationWhenNextSideTurn, attackMovesInCurrentBattleSituation);
 
-                ObjectOnBattle[] attackersData = currentBattleSituation.attackersByObjectId[bestAttackInCurrentBattleSituation._targetIdOnBattle].ToArray();
+                ObjectOnBattle[] attackersData = currentBattleSituationWhenNextSideTurn.attackersByObjectId[bestAttackInCurrentBattleSituation._targetIdOnBattle].ToArray();
                 //Если урон по активному юниту в текущем лучшем контратакующем ходу будет смертельным, то damageByBestAttackInCurrentBattleSituation = 0
                 //Иначе:
-                int damageByBestAttackInCurrentBattleSituation = BattleEngine.CalculateDamageToTargetById(currentBattleSituation, attackersData, currentMove._targetIdOnBattle);
+                int damageByBestAttackInCurrentBattleSituation = BattleEngine.CalculateDamageToTargetById(currentBattleSituationWhenNextSideTurn, attackersData, bestAttackInCurrentBattleSituation._targetIdOnBattle);
 
                 if (damageByBestAttackInCurrentBattleSituation > greaterDamageByCounterAttackOnNextTurn)
                 {
-                    bestMoveWithCounterAttack = bestAttackInCurrentBattleSituation;
+                    bestMoveWithCounterAttack = currentMove;
                     greaterDamageByCounterAttackOnNextTurn = damageByBestAttackInCurrentBattleSituation;
                 }
             }

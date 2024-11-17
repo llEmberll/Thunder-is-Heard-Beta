@@ -135,7 +135,7 @@ public class BaseMap : Map
         };
 
         AISettings AISettingsForEmpireSide = new AISettings(
-            "Attacking",
+            "Waiting",
             Sides.empire,
             null,
             null

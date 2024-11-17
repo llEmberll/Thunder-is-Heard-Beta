@@ -126,6 +126,7 @@ public class FightDirector : MonoBehaviour
     {
         string newTurn = Sides.nextSideTurnByCurrentSide[_battleData.GetTurn()];
         _battleData.SetTurn(newTurn);
+        _battleEngine.currentBattleSituation.NextTurn();
         SaveBattleData();
     }
 

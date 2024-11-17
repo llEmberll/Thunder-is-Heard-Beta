@@ -23,7 +23,7 @@ public static class Tags
     public static string missionDetalization = "MissionDetalization";
 
     public static string objectsOnScene = "ObjectsOnScene";
-    public static string buildsOnScene = "UnitsOnScene";
+    public static string buildsOnScene = "BuildsOnScene";
     public static string unitsOnScene = "UnitsOnScene";
 
     public static string productsNotifications = "ProductsNotifications";

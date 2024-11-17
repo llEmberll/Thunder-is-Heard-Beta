@@ -255,11 +255,28 @@ public class BattleSituation
         RechargeSkillsCooldown();
     }
 
+    public void SkipToSideTurn(string side)
+    {
+        if (this._sideTurn == side) return;
+
+        for (int i = 0; i <= Sides.enemySideBySide.Keys.Count; i++)
+        {
+            NextTurn();
+            if (this._sideTurn == side)
+            {
+                return;
+            }
+        }
+
+        return;
+    }
+
     public void RechargeSkillsCooldown()
     {
         Dictionary<string, ObjectOnBattle> allUnits = empireUnits.Concat(federationUnits).Concat(neutralUnits).ToDictionary(x => x.Key, x => x.Value);
         foreach (UnitOnBattle unit in allUnits.Values)
         {
+            if (unit.skillsData == null || unit.skillsData.Length < 1) continue;
             foreach (SkillOnBattle skill in unit.skillsData)
             {
                 skill.cooldown = Mathf.Max(skill.cooldown - 1, 0);
@@ -520,9 +537,31 @@ public class BattleSituation
     }
 
 
-    public Dictionary<string, ObjectOnBattle> GetTargetsBySide(string side)
+    public Dictionary<string, ObjectOnBattle> GetPossibleTargetsBySide(string side)
     {
-        return GetBuildTargetsBySide(side).Concat(GetUnitTargetsBySide(side)).ToDictionary(x => x.Key, x => x.Value);
+        string targetsSide = Sides.enemySideBySide[side];
+        Dictionary<string, ObjectOnBattle> buildTargets = GetBuildTargetsBySide(targetsSide);
+        Dictionary<string, ObjectOnBattle> unitTargets = GetUnitTargetsBySide(targetsSide);
+        Dictionary<string, ObjectOnBattle> allTargets = buildTargets.Concat(unitTargets).ToDictionary(x => x.Key, x => x.Value);
+        return allTargets;
+    }
+
+    public Dictionary<string, ObjectOnBattle> GetTargetsUnderAttackBySide(string side)
+    {
+        string targetsSide = Sides.enemySideBySide[side];
+        Dictionary<string, ObjectOnBattle> possibleTargets = GetPossibleTargetsBySide(side);
+        Dictionary<string, ObjectOnBattle> targetsUnderAttack = new Dictionary<string, ObjectOnBattle>();
+
+        foreach (var keyValuePair in possibleTargets)
+        {
+            string targetId = keyValuePair.Key;
+            if (attackersByObjectId.ContainsKey(targetId))
+            {
+                targetsUnderAttack.Add(targetId, keyValuePair.Value);
+            }
+        }
+
+        return targetsUnderAttack;
     }
 
     public BattleSituation Clone()
@@ -531,9 +570,9 @@ public class BattleSituation
         BattleSituation clone = new BattleSituation();
 
         // Клонируем _map
-        CellData[] clonedCells = new CellData[clone._map.Cells.Count];
+        CellData[] clonedCells = new CellData[this._map.Cells.Count];
         int index = 0;
-        foreach (var pair in clone._map.Cells)
+        foreach (var pair in this._map.Cells)
         {
             clonedCells[index] = pair.Value.Clone();
             index++;
@@ -650,46 +689,48 @@ public class BattleSituation
     {
         Dictionary<TurnData, BattleSituation> battleSituationByTurn = new Dictionary<TurnData, BattleSituation>();
 
-        Dictionary<string, ObjectOnBattle> possibleBuildTargets = new Dictionary<string, ObjectOnBattle>();
-        Dictionary<string, ObjectOnBattle> possibleUnitTargets = new Dictionary<string, ObjectOnBattle>();
+        Dictionary<string, ObjectOnBattle> buildTargets = new Dictionary<string, ObjectOnBattle>();
+        Dictionary<string, ObjectOnBattle> unitTargets = new Dictionary<string, ObjectOnBattle>();
         if (_sideTurn == Sides.federation)
         {
-            possibleBuildTargets = empireBuilds;
-            possibleUnitTargets = empireUnits;
+            buildTargets = empireBuilds;
+            unitTargets = empireUnits;
         }
         else if (_sideTurn == Sides.empire)
         {
-            possibleBuildTargets = federationBuilds;
-            possibleUnitTargets = federationUnits;
+            buildTargets = federationBuilds;
+            unitTargets = federationUnits;
         }
         else
         {
-            possibleBuildTargets = federationBuilds.Concat(empireBuilds).ToDictionary(x => x.Key, x => x.Value);
-            possibleUnitTargets = federationUnits.Concat(empireUnits).ToDictionary(x => x.Key, x => x.Value);
+            buildTargets = federationBuilds.Concat(empireBuilds).ToDictionary(x => x.Key, x => x.Value);
+            unitTargets = federationUnits.Concat(empireUnits).ToDictionary(x => x.Key, x => x.Value);
         }
 
-       foreach (BuildOnBattle buildTarget in possibleBuildTargets.Values) 
+       foreach (BuildOnBattle buildTarget in buildTargets.Values) 
         {
-            int totalDamage = BattleEngine.CalculateDamageToBuild(this, attackersByObjectId[buildTarget.idOnBattle].ToArray(), buildTarget);
+            if (!attackersByObjectId.ContainsKey(buildTarget.IdOnBattle)) continue;
+            int totalDamage = BattleEngine.CalculateDamageToBuild(this, attackersByObjectId[buildTarget.IdOnBattle].ToArray(), buildTarget);
             BattleSituation currentBattleSituation = this.Clone();
-            currentBattleSituation.BuildChangeHealth(buildTarget.idOnBattle, buildTarget.health - totalDamage);
+            currentBattleSituation.BuildChangeHealth(buildTarget.IdOnBattle, buildTarget.Health - totalDamage);
             currentBattleSituation.NextTurn();
 
             TurnData currentTurn = new TurnData();
-            currentTurn._targetIdOnBattle = buildTarget.idOnBattle;
+            currentTurn._targetIdOnBattle = buildTarget.IdOnBattle;
 
             battleSituationByTurn.Add(currentTurn, currentBattleSituation);
         }
 
-        foreach (UnitOnBattle unitTarget in possibleUnitTargets.Values)
+        foreach (UnitOnBattle unitTarget in unitTargets.Values)
         {
-            int totalDamage = BattleEngine.CalculateDamageToUnit(this, attackersByObjectId[unitTarget.idOnBattle].ToArray(), unitTarget);
+            if (!attackersByObjectId.ContainsKey(unitTarget.IdOnBattle)) continue;
+            int totalDamage = BattleEngine.CalculateDamageToUnit(this, attackersByObjectId[unitTarget.IdOnBattle].ToArray(), unitTarget);
             BattleSituation currentBattleSituation = this.Clone();
-            currentBattleSituation.UnitChangeHealth(unitTarget.idOnBattle, unitTarget.health - totalDamage);
+            currentBattleSituation.UnitChangeHealth(unitTarget.IdOnBattle, unitTarget.Health - totalDamage);
             currentBattleSituation.NextTurn();
 
             TurnData currentTurn = new TurnData();
-            currentTurn._targetIdOnBattle = unitTarget.idOnBattle;
+            currentTurn._targetIdOnBattle = unitTarget.IdOnBattle;
 
             battleSituationByTurn.Add(currentTurn, currentBattleSituation);
         }
@@ -807,7 +848,13 @@ public class BattleSituation
     {
         Dictionary<string, ObjectOnBattle> allUnits = federationUnits.Concat(empireUnits).Concat(neutralUnits).ToDictionary(x => x.Key, x => x.Value);
 
-        if (allUnits.ContainsKey(id)) return allUnits[id] as UnitOnBattle;
+        if (allUnits.ContainsKey(id))
+        {
+            ObjectOnBattle obj = allUnits[id];
+            UnitOnBattle unit = obj as UnitOnBattle;
+            return unit;
+        }
+
         return null;
     }
 

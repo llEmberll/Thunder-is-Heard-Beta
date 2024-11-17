@@ -148,6 +148,7 @@ public class TurnController : MonoBehaviour
         if (!BattleEngine.IsPossibleToAttackTarget(_battleEngine.currentBattleSituation, obj)) return;
 
         ClearRoute();
+        ClearActiveUnit();
         SetTarget(obj);
         Execute();
     }
