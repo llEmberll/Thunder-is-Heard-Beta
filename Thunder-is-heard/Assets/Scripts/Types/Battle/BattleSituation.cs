@@ -546,9 +546,15 @@ public class BattleSituation
         return allTargets;
     }
 
-    public Dictionary<string, ObjectOnBattle> GetTargetsUnderAttackBySide(string side)
+    public Dictionary<string, ObjectOnBattle> GetPossibleUnitTargetsBySide(string side)
     {
         string targetsSide = Sides.enemySideBySide[side];
+        Dictionary<string, ObjectOnBattle> unitTargets = GetUnitTargetsBySide(targetsSide);
+        return unitTargets;
+    }
+
+    public Dictionary<string, ObjectOnBattle> GetTargetsUnderAttackBySide(string side)
+    {
         Dictionary<string, ObjectOnBattle> possibleTargets = GetPossibleTargetsBySide(side);
         Dictionary<string, ObjectOnBattle> targetsUnderAttack = new Dictionary<string, ObjectOnBattle>();
 
@@ -562,6 +568,23 @@ public class BattleSituation
         }
 
         return targetsUnderAttack;
+    }
+
+    public Dictionary<string, ObjectOnBattle> GetUnitTargetsUnderAttackBySide(string side)
+    {
+        Dictionary<string, ObjectOnBattle> possibleTargets = GetPossibleUnitTargetsBySide(side);
+        Dictionary<string, ObjectOnBattle> unitTargetsUnderAttack = new Dictionary<string, ObjectOnBattle>();
+
+        foreach (var keyValuePair in possibleTargets)
+        {
+            string targetId = keyValuePair.Key;
+            if (attackersByObjectId.ContainsKey(targetId))
+            {
+                unitTargetsUnderAttack.Add(targetId, keyValuePair.Value);
+            }
+        }
+
+        return unitTargetsUnderAttack;
     }
 
     public BattleSituation Clone()
@@ -648,6 +671,24 @@ public class BattleSituation
         }
 
         return nearestUnit as UnitOnBattle;
+    }
+
+    public int FindDistanceToNearestUnitBySide(Bector2Int point, string side)
+    {
+        int nearestDistance = int.MaxValue;
+
+        Dictionary<string, ObjectOnBattle> unitsBySide = GetUnitsCollectionBySide(side);
+        foreach (var keyValuePair in unitsBySide)
+        {
+            ObjectOnBattle currentUnit = keyValuePair.Value;
+            List<Bector2Int> routeToCurrentUnit = _map.BuildRoute(point, currentUnit.Position.First(), int.MaxValue);
+            if (routeToCurrentUnit.Count < nearestDistance)
+            {
+                nearestDistance = routeToCurrentUnit.Count;
+            }
+        }
+
+        return nearestDistance;
     }
 
     public MoveForAttackData GetDataForMoveToAttackNearestUnit(UnitOnBattle attacker, string attackerSide)
