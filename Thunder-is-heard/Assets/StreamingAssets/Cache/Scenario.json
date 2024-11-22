@@ -151,7 +151,7 @@
             "AISettings": [
               {
                 "side": "Empire",
-                "type": "Attacking",
+                "type": "Waiting",
                 "targetPositions": null,
                 "targetObjectIds": null
               },

@@ -21,6 +21,8 @@ public class FightDirector : MonoBehaviour
 
     public TurnController _turnController;
 
+    public ResourcesProcessor _resourceProcessor;
+
 
     public void Awake()
     {
@@ -40,6 +42,7 @@ public class FightDirector : MonoBehaviour
         InitUnitsOnFightManager();
         InitBuildsOnFightManager();
         InitTurnController();
+        InitResourcesProcessor();
     }
 
     public void EnableListeners()
@@ -94,6 +97,11 @@ public class FightDirector : MonoBehaviour
         _turnController = GameObject.FindGameObjectWithTag(Tags.turnController).GetComponent<TurnController>();
     }
 
+    public void InitResourcesProcessor()
+    {
+        _resourceProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
+    }
+
     public void InitBattleData(string battleId)
     {
         _battleId = battleId;
@@ -108,6 +116,13 @@ public class FightDirector : MonoBehaviour
         battleTable.ChangeById(_battleId, _battleData);
         Cache.Save(battleTable);
         InitBattleData(_battleId);
+    }
+
+    public void ClearBattle()
+    {
+        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
+        battleTable.DeleteById(_battleId);
+        Cache.Save(battleTable);
     }
 
     public void SyncBattleDataToCurrentBattleSituation()
@@ -344,10 +359,35 @@ public class FightDirector : MonoBehaviour
     public void Defeat()
     {
         DisableListeners();
+        ClearBattle();
+        Destroy(this.gameObject);
     }
 
     public void Victory()
     {
         DisableListeners();
+        GiveRewardAndPassMission();
+        ClearBattle();
+        Destroy(this.gameObject);
+    }
+
+    public void GiveRewardAndPassMission()
+    {
+        string missionId = _battleData.GetMissionId();
+
+        MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
+        CacheItem missionCacheItem = missionTable.GetById(missionId);
+        MissionCacheItem missionData = new MissionCacheItem(missionCacheItem.Fields);
+
+        if (missionData.GetPassed() == false)
+        {
+            ResourcesData victoryGivesData = missionData.GetGives();
+            _resourceProcessor.AddResources(victoryGivesData);
+            _resourceProcessor.Save();
+
+            missionData.SetPassed(true);
+            missionTable.ChangeById(missionId, missionData);
+            Cache.Save(missionTable);
+        }
     }
 }

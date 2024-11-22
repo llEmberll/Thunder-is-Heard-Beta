@@ -34,9 +34,9 @@
           "maxExp": 0
         },
         "createTime": 3,
-        "health": 3,
+        "health": 4,
         "damage": 1,
-        "distance": 2,
+        "distance": 5,
         "mobility": 4,
         "size": {
           "x": 1,

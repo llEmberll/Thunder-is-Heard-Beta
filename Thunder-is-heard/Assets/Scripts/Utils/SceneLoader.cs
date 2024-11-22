@@ -11,6 +11,11 @@ public class SceneLoader
 
         SceneManager.LoadScene(Scenes.fight, LoadSceneMode.Single);
     }
+
+    public static void LoadHome()
+    {
+        SceneManager.LoadScene(Scenes.home, LoadSceneMode.Single);
+    }
 }
 
 public static class FightSceneLoader

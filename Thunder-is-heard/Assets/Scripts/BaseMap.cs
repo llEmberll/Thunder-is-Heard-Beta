@@ -10,7 +10,7 @@ public class BaseMap : Map
 
     public void Start()
     {
-        CreateScenarioForTest();
+
     }
 
     public void CreateScenarioForTest()
@@ -135,7 +135,7 @@ public class BaseMap : Map
         };
 
         AISettings AISettingsForEmpireSide = new AISettings(
-            "Attacking",
+            "Waiting",
             Sides.empire,
             null,
             null
