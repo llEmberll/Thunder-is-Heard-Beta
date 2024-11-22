@@ -88,7 +88,7 @@ public abstract class AbstractAI : AIInterface
                 TurnData bestAttackInCurrentBattleSituation = GetBestAttack(currentBattleSituationWhenNextSideTurn, attackMovesInCurrentBattleSituation);
 
                 ObjectOnBattle[] attackersData = currentBattleSituationWhenNextSideTurn.attackersByObjectId[bestAttackInCurrentBattleSituation._targetIdOnBattle].ToArray();
-                ObjectOnBattle[] activeUnitAttackers = currentBattleSituationWhenNextSideTurn.attackersByObjectId[currentMove._activeUnitIdOnBattle].ToArray();
+                ObjectOnBattle[] activeUnitAttackers = currentBattleSituationWhenNextSideTurn.GetAttackersByTarget(currentActiveUnit).ToArray();
                 int damageToActiveUnitInBestAttackInCurrentBattleSituation = BattleEngine.CalculateDamageToTargetById(currentBattleSituationWhenNextSideTurn, activeUnitAttackers, currentMove._activeUnitIdOnBattle);
                 if (damageToActiveUnitInBestAttackInCurrentBattleSituation >= currentActiveUnit.Health) continue;
                 
