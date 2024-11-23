@@ -190,7 +190,7 @@
           "exp": 0,
           "maxExp": 0
         },
-        "duration": 30,
+        "duration": 65,
         "iconSection": "UIBuildCards",
         "name": "Half a shift",
         "iconName": "oil_station_card"

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class ContractItem : Item
 {
@@ -78,8 +79,8 @@ public class ContractItem : Item
 
     public void OnBuy()
     {
-        int startTime = (int)Time.realtimeSinceStartup;
-        int endTime = startTime + (_duration);
+        DateTime startTime = DateTime.Now;
+        DateTime endTime = startTime.AddSeconds(_duration);
 
         ProcessWorker.CreateProcess(
             Type,

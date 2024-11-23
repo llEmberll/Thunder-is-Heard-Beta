@@ -1,9 +1,5 @@
-using MySqlX.XDevAPI.Common;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using UnityEngine;
+
 
 public static class TimeUtils
 {
@@ -32,12 +28,10 @@ public static class TimeUtils
         {
             result += $"{timeSpan.Minutes}M ";
         }
-        else
+
+        if (timeSpan.Seconds > 0) 
         {
-            if (result == "") 
-            {
-                result += $"{timeSpan.Seconds}S";
-            }
+            result += $"{timeSpan.Seconds}S";
         }
 
         return result.TrimEnd();

@@ -1,22 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ProcessWorker : MonoBehaviour
 {
-    public float currentTime;
+    public DateTime currentTime;
 
     public void Start()
     {
-        currentTime = Time.realtimeSinceStartup;
+        UpdateCurrentTime();
     }
 
     public static void CreateProcess(
         string processName, 
         string processType, 
         string objectOnBaseId, 
-        int startTime, 
-        int EndTime, 
+        DateTime startTime, 
+        DateTime EndTime, 
         ProcessSource source = null
         )
     {
@@ -26,8 +27,8 @@ public class ProcessWorker : MonoBehaviour
         process.SetName( processName );
         process.SetProcessType( processType );
         process.SetObjectOnBaseId( objectOnBaseId );
-        process.SetStartTime( startTime );
-        process.SetEndTime( EndTime );
+        process.SetStartTime( startTime);
+        process.SetEndTime( EndTime);
         process.SetSource( source );
 
         processesTable.AddOne( process );
@@ -51,7 +52,7 @@ public class ProcessWorker : MonoBehaviour
 
     public void UpdateCurrentTime()
     {
-        currentTime = Time.realtimeSinceStartup;
+        currentTime = DateTime.Now;
     }
 
     public void FindAndHandleFinishedProcesses()

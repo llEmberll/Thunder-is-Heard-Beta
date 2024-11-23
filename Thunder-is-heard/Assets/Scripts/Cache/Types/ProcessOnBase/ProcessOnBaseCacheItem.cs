@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
 
 
 [System.Serializable]
@@ -12,12 +11,12 @@ public class ProcessOnBaseCacheItem : CacheItem
     {
         if (!objFields.ContainsKey("startTime"))
         {
-            SetStartTime((int)Time.realtimeSinceStartup);
+            SetStartTime(DateTime.Now);
         }
 
         if (!objFields.ContainsKey("endTime"))
         {
-            SetEndTime((int)Time.realtimeSinceStartup);
+            SetEndTime(DateTime.Now);
         }
 
         if (!objFields.ContainsKey("objectOnBaseId"))
@@ -36,26 +35,30 @@ public class ProcessOnBaseCacheItem : CacheItem
         }
     }
 
-    public int GetStartTime()
+    public DateTime GetStartTime()
     {
-        object value = GetField("startTime");
-        return Convert.ToInt32(value);
+        string dateTimeAsString = GetField("startTime").ToString();
+        return DateTime.Parse(dateTimeAsString);
     }
 
-    public void SetStartTime(int value)
+    public void SetStartTime(DateTime value)
     {
-        SetField("startTime", value);
+        string stringValue = value.ToString("o");
+
+        SetField("startTime", stringValue);
     }
 
-    public int GetEndTime()
+    public DateTime GetEndTime()
     {
-        object value = GetField("endTime");
-        return Convert.ToInt32(value);
+        string dateTimeAsString = GetField("endTime").ToString();
+        return DateTime.Parse(dateTimeAsString);
     }
 
-    public void SetEndTime(int value)
+    public void SetEndTime(DateTime value)
     {
-        SetField("endTime", value);
+        string stringValue = value.ToString("o");
+
+        SetField("endTime", stringValue);
     }
 
     public string GetObjectOnBaseId()

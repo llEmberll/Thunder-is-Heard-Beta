@@ -30,7 +30,7 @@ public class Selector : MonoBehaviour
 
     public Canvas productsInfoCanvas;
     public Vector3 productsInfoCanvasOffset = new Vector3(-0.408f, 2.83f, -0.408f);
-    public int productsEndTime;
+    public DateTime productsEndTime;
     public bool isSelectedObjectProducts = false;
     public TMP_Text productInfoText;
     public Image productionImage;
@@ -337,8 +337,9 @@ public class Selector : MonoBehaviour
 
     public void UpdateProductsLeftTimeText()
     {
-        int currentTime = (int)Time.realtimeSinceStartup;
-        int leftTime = productsEndTime - currentTime;
-        productInfoText.text = "after " + TimeUtils.GetDHMSTimeAsStringBySeconds(leftTime);
+        DateTime currentTime = DateTime.Now;
+        TimeSpan remainingTime = productsEndTime - currentTime;
+        int remainingSeconds = (int)remainingTime.TotalSeconds;
+        productInfoText.text = "after " + TimeUtils.GetDHMSTimeAsStringBySeconds(remainingSeconds);
     }
 }

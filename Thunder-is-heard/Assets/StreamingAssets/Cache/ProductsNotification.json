@@ -157,12 +157,12 @@
         "unitId": null
       }
     },
-    "7b8c9c3b-27c8-4483-8c2b-3576b13930e9": {
+    "2b23e038-e0fa-4bde-81cb-3b128dd12fb0": {
       "fields": {
-        "externalId": "7b8c9c3b-27c8-4483-8c2b-3576b13930e9",
+        "externalId": "2b23e038-e0fa-4bde-81cb-3b128dd12fb0",
         "description": "",
         "sourceObjectId": "d5548f12-27e8-4247-81ef-4fb5e3cade5d",
-        "type": "Idle",
+        "type": "ResourceCollection",
         "gives": {
           "rub": 0,
           "maxRub": 0,
@@ -170,16 +170,16 @@
           "maxFrames": 0,
           "oil": 0,
           "maxOil": 0,
-          "steel": 0,
+          "steel": 6,
           "maxSteel": 0,
           "staff": 0,
           "maxStaff": 0,
           "exp": 0,
           "maxExp": 0
         },
-        "iconSection": "",
-        "iconName": "",
-        "count": 1,
+        "iconSection": "Textures/Interface/Resources/Resources",
+        "iconName": "steel",
+        "count": 6,
         "unitId": null
       }
     }

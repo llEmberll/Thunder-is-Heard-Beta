@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Google.Protobuf.WellKnownTypes;
+using System;
 
 public class UnitProductionItem: Item
 {
@@ -85,8 +85,8 @@ public class UnitProductionItem: Item
 
     public void OnBuy()
     {
-        int startTime = (int)Time.realtimeSinceStartup;
-        int endTime = startTime + (_duration);
+        DateTime startTime = DateTime.Now;
+        DateTime endTime = startTime.AddSeconds(_duration);
 
         ProcessWorker.CreateProcess(
             Type,
