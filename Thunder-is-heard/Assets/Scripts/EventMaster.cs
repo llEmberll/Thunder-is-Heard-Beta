@@ -62,6 +62,12 @@ public class EventMaster: MonoBehaviour
         FightIsStarted?.Invoke();
     }
 
+    public event Action FightIsContinued;
+    public void ContinueFight()
+    {
+        FightIsContinued?.Invoke();
+    }
+
     public event Action<string> NextTurn;
     public void OnNextTurn(string side)
     {

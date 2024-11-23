@@ -24,11 +24,13 @@ public class TurnController : MonoBehaviour
     public void EnableStartListeners()
     {
         EventMaster.current.FightIsStarted += OnStartFight;
+        EventMaster.current.FightIsContinued += OnStartFight;
     }
 
     public void DisableStartListeners()
     {
         EventMaster.current.FightIsStarted -= OnStartFight;
+        EventMaster.current.FightIsContinued -= OnStartFight;
     }
 
     public void EnableObjectClickListeners()

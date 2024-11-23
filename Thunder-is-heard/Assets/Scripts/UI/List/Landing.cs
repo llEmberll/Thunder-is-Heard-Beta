@@ -32,6 +32,7 @@ public class Landing : ItemList
         EventMaster.current.ToggledToBuildMode += Hide;
         EventMaster.current.StartLanding += StartLanding;
         EventMaster.current.FightIsStarted += FinishLanding;
+        EventMaster.current.FightIsContinued += FinishLanding;
         EventMaster.current.LandableUnitFocused += OnLandableUnitFocus;
         EventMaster.current.LandableUnitDefocused += OnLandableUnitDefocus;
         EventMaster.current.BattleObjectRemoved += OnObjectRemoved;
@@ -44,6 +45,7 @@ public class Landing : ItemList
         EventMaster.current.ToggledToBuildMode -= Hide;
         EventMaster.current.StartLanding -= StartLanding;
         EventMaster.current.FightIsStarted -= FinishLanding;
+        EventMaster.current.FightIsContinued -= FinishLanding;
         EventMaster.current.LandableUnitFocused -= OnLandableUnitFocus;
         EventMaster.current.LandableUnitDefocused -= OnLandableUnitDefocus;
         EventMaster.current.BattleObjectRemoved -= OnObjectRemoved;
@@ -165,7 +167,7 @@ public class Landing : ItemList
         _map.SetActiveAll();
         _map.HideAll();
 
-        Hide();
+        Destroy(this.gameObject);
     }
 
     public void OnLandableUnitFocus(LandableUnit target)

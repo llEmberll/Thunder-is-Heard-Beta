@@ -69,7 +69,15 @@ public class FightDirector : MonoBehaviour
 
     public void Start()
     {
-        ContinueFight();
+        if (Scenario._isLanded)
+        {
+            ContinueFight();
+        }
+        else
+        {
+            StartLanding();
+        }
+        
     }
 
     public void InitObjectProcessor()
@@ -108,6 +116,11 @@ public class FightDirector : MonoBehaviour
         BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
         CacheItem cacheItem = battleTable.GetById(battleId);
         _battleData = new BattleCacheItem(cacheItem.Fields);
+    }
+
+    public void SetLandedInBattleData()
+    {
+        _battleData.SetIsLanded(true);
     }
 
     public void SaveBattleData()
@@ -201,11 +214,17 @@ public class FightDirector : MonoBehaviour
         return _battleId;
     }
 
+    public void StartLanding()
+    {
+        Scenario.StartLanding();
+    }
+
     public void ContinueFight()
     {
-        Debug.Log("FightProcessor: continue fight");
-
-        Scenario.Begin();
+        EventMaster.current.ContinueFight();
+        EventMaster.current.OnBaseMode();
+        _scenario.map.HideAll();
+        _turnController.OnNextTurn(_battleData.GetTurn());
     }
 
     public void StartFight()
@@ -213,6 +232,8 @@ public class FightDirector : MonoBehaviour
         EventMaster.current.OnBaseMode();
         _scenario.map.HideAll();
 
+        SetLandedInBattleData();
+        SaveBattleData();
         Scenario._isLanded = true;
         Scenario.Begin();
 
@@ -354,6 +375,12 @@ public class FightDirector : MonoBehaviour
     {
         // Обновить все эффекты на юнитах(например от скиллов) согласно кд и условиям прекращения или продолжения эффекта.
         // Наложить заново эффект от пассивных скиллов если условия соблюдаются
+    }
+
+    public void ReturnToBase()
+    {
+        Debug.Log("Return to base!");
+        SceneLoader.LoadHome();
     }
 
     public void Defeat()

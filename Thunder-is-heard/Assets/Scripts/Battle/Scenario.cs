@@ -92,24 +92,21 @@ public class Scenario
     public void ContinueStage()
     {
         //Сохранить battleData
-
+        EventMaster.current.OnStageBegin(_currentStage);
         CurrentStage.OnProcess();
+    }
+
+    public void StartLanding()
+    {
+        EventMaster.current.Landing(LandableCells, LandingMaxStaff);
     }
 
     public void Begin()
     {
-        if (!_isLanded)
-        {
-            EventMaster.current.Landing(LandableCells, LandingMaxStaff);
-            return;
-        }
-        else
-        {
-            _currentStage = Stages[CurrentStageIndex];
-            EventMaster.current.OnStageBegin(_currentStage);
+        _currentStage = Stages[CurrentStageIndex];
+        EventMaster.current.OnStageBegin(_currentStage);
 
-            CurrentStage.OnStart();
-        }
+        CurrentStage.OnStart();
     }
 
     public void OnNextTurn()

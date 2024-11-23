@@ -10,8 +10,21 @@ public class FightPanel : Panel
 
     public void Awake()
     {
+        EnableListeners();
+    }
+
+    public void EnableListeners()
+    {
         EventMaster.current.StartLanding += ToggleToLanding;
         EventMaster.current.FightIsStarted += ToggleToFight;
+        EventMaster.current.FightIsContinued += ToggleToFight;
+    }
+
+    public void DisableListeners()
+    {
+        EventMaster.current.StartLanding -= ToggleToLanding;
+        EventMaster.current.FightIsStarted -= ToggleToFight;
+        EventMaster.current.FightIsContinued -= ToggleToFight;
     }
 
     public void ToggleToLanding(List<Vector2Int> landableZone, int maxStaff)
@@ -25,5 +38,6 @@ public class FightPanel : Panel
     {
         fightButtons.gameObject.SetActive(true);
         prepareButtons.gameObject.SetActive(false);
+        DisableListeners();
     }
 }
