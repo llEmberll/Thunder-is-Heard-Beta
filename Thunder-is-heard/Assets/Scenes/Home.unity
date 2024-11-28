@@ -4232,7 +4232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d800e34faf3f2204b8092b328aa025b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTime: 0
 --- !u!1 &1136378244
 GameObject:
   m_ObjectHideFlags: 0
@@ -6656,6 +6655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01df61026e40d8646a746f588dac1833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _selectedObject: {fileID: 0}
   selectedBuild: {fileID: 0}
   selector: {fileID: 459220255}
   friendlySelectorSprite: {fileID: 0}
@@ -6674,7 +6674,6 @@ MonoBehaviour:
   damageCount: {fileID: 1501115412502900486}
   productsInfoCanvas: {fileID: 422317277}
   productsInfoCanvasOffset: {x: -0.408, y: 2.83, z: -0.408}
-  productsEndTime: 0
   isSelectedObjectProducts: 0
   productInfoText: {fileID: 875150198}
   productionImage: {fileID: 2323700666514351701}
