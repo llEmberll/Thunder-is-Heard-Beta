@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 227958159275960621}
   - component: {fileID: 3844089539231962680}
+  - component: {fileID: 5143684651146957922}
   m_Layer: 0
   m_Name: FederationAssault
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &3844089539231962680
 SkinnedMeshRenderer:
@@ -131,3 +132,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00009356858, y: -0.00016679266, z: 0.008957867}
     m_Extent: {x: 0.0062234085, y: 0.005702993, z: 0.01019888}
   m_DirtyAABB: 0
+--- !u!65 &5143684651146957922
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6042754195651911675}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.012446817, y: 0.011405986, z: 0.02039776}
+  m_Center: {x: 0.00009356858, y: -0.00016679266, z: 0.008957867}

@@ -98,7 +98,7 @@
         "name": "Osoka",
         "modelPath": "Prefabs/Entity/Units/Osoka",
         "skills": [],
-        "unitType": "infantry",
+        "unitType": "vehicle",
         "doctrine": "land",
         "movementSpeed": 1
       }
@@ -148,6 +148,108 @@
         "iconName": "",
         "name": "Vortex",
         "modelPath": "Prefabs/Entity/Units/Vortex",
+        "skills": [],
+        "unitType": "vehicle",
+        "doctrine": "land",
+        "movementSpeed": 1
+      }
+    },
+    "1db672c3-4207-4629-a1ee-ca054c83ba7c": {
+      "fields": {
+        "externalId": "1db672c3-4207-4629-a1ee-ca054c83ba7c",
+        "description": "",
+        "cost": {
+          "rub": 1000,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 3,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 3,
+        "health": 2,
+        "damage": 2,
+        "distance": 2,
+        "mobility": 4,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconSection": "",
+        "iconName": "",
+        "name": "Scout",
+        "modelPath": "Prefabs/Entity/Units/Scout",
+        "skills": [],
+        "unitType": "infantry",
+        "doctrine": "land",
+        "movementSpeed": 1
+      }
+    },
+    "91207015-36e5-4bf7-b16e-628e67935609": {
+      "fields": {
+        "externalId": "91207015-36e5-4bf7-b16e-628e67935609",
+        "description": "",
+        "cost": {
+          "rub": 1250,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 4,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 5,
+        "health": 1,
+        "damage": 3,
+        "distance": 4,
+        "mobility": 1,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconSection": "",
+        "iconName": "",
+        "name": "Sniper",
+        "modelPath": "Prefabs/Entity/Units/Sniper",
         "skills": [],
         "unitType": "infantry",
         "doctrine": "land",

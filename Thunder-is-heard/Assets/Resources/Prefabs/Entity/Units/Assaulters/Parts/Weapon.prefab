@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3171195832526634525}
   - component: {fileID: 2617514915643897202}
+  - component: {fileID: 1566463461641530883}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &2617514915643897202
 SkinnedMeshRenderer:
@@ -89,3 +90,24 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.000040431507, y: -0.0031178012, z: 0.0077258786}
     m_Extent: {x: 0.007924632, y: 0.0025596083, z: 0.0025605392}
   m_DirtyAABB: 0
+--- !u!65 &1566463461641530883
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6917351462411174353}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.015849264, y: 0.0051192166, z: 0.0051210783}
+  m_Center: {x: -0.000040431507, y: -0.0031178012, z: 0.0077258786}

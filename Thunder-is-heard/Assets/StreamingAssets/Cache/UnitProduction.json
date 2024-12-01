@@ -78,6 +78,58 @@
         "name": "Produce a BMP",
         "iconName": "osoka"
       }
+    },
+    "4265fe0d-845c-4d6e-9fdf-ad29abc0c374": {
+      "fields": {
+        "externalId": "4265fe0d-845c-4d6e-9fdf-ad29abc0c374",
+        "description": "",
+        "type": "Infantry",
+        "cost": {
+          "rub": 400,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "1db672c3-4207-4629-a1ee-ca054c83ba7c",
+        "duration": 7,
+        "iconSection": "UIUnitCards",
+        "name": "Train scout",
+        "iconName": "scout"
+      }
+    },
+    "3551681b-1f08-4937-96a8-d86ac6259bf0": {
+      "fields": {
+        "externalId": "3551681b-1f08-4937-96a8-d86ac6259bf0",
+        "description": "",
+        "type": "Infantry",
+        "cost": {
+          "rub": 500,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "91207015-36e5-4bf7-b16e-628e67935609",
+        "duration": 10,
+        "iconSection": "UIUnitCards",
+        "name": "Train sniper",
+        "iconName": "sniper"
+      }
     }
   }
 }

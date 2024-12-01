@@ -19,6 +19,24 @@
         "description": ""
       }
     },
+    "fb5aa62c-e756-4c31-a177-ee3b0b55f4cf": {
+      "fields": {
+        "coreId": "1db672c3-4207-4629-a1ee-ca054c83ba7c",
+        "type": "Unit",
+        "count": 2,
+        "externalId": "fb5aa62c-e756-4c31-a177-ee3b0b55f4cf",
+        "description": ""
+      }
+    },
+    "6be09344-bbda-41e3-b008-47fa436d6d86": {
+      "fields": {
+        "coreId": "91207015-36e5-4bf7-b16e-628e67935609",
+        "type": "Unit",
+        "count": 2,
+        "externalId": "6be09344-bbda-41e3-b008-47fa436d6d86",
+        "description": ""
+      }
+    },
     "5a5d8f47-1368-4d59-8f48-a1f1d1aefabe": {
       "fields": {
         "coreId": "31391161-4be3-4149-833d-7fdde496946c",

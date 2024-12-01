@@ -428,6 +428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 128613699087611628}
   - component: {fileID: 9088746382115385144}
+  - component: {fileID: 4999886381520884262}
   m_Layer: 0
   m_Name: Assault_2
   m_TagString: Untagged
@@ -444,7 +445,7 @@ Transform:
   m_GameObject: {fileID: 757517155115592790}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.91, y: 0, z: 1.59}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8541670956586932200}
@@ -473,6 +474,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &4999886381520884262
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757517155115592790}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.90800625, y: 1.4212134, z: 0.5818201}
+  m_Center: {x: -0.004448316, y: 0.73675585, z: 0.032941945}
 --- !u!1 &863312286716861063
 GameObject:
   m_ObjectHideFlags: 0
@@ -2411,7 +2433,7 @@ Transform:
   m_GameObject: {fileID: 6466052889009469328}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.91, y: 0, z: 1.59}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8532723259516476719}
@@ -2642,6 +2664,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6309856824244226689}
   - component: {fileID: 277427857376457860}
+  - component: {fileID: 8207187113214462358}
   m_Layer: 0
   m_Name: Assault_1
   m_TagString: Untagged
@@ -2658,7 +2681,7 @@ Transform:
   m_GameObject: {fileID: 6690886650074402875}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.99, y: 0, z: -1.02}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4418831178733115674}
@@ -2687,6 +2710,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &8207187113214462358
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690886650074402875}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.90800625, y: 1.4212134, z: 0.5818201}
+  m_Center: {x: -0.004448316, y: 0.73675585, z: 0.032941945}
 --- !u!1 &6747212275410953962
 GameObject:
   m_ObjectHideFlags: 0
@@ -3191,7 +3235,7 @@ Transform:
   m_GameObject: {fileID: 7718301828488534324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.99, y: 0, z: -1.02}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7410856077517994009}
