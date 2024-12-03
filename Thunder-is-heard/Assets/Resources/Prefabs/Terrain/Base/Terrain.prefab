@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!218 &4519759441921715457
 Terrain:
@@ -78,7 +78,7 @@ TerrainCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2847840988809146447}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b9230351d8469ae4fa2cd20d89aaa1be, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
