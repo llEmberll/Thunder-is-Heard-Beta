@@ -255,10 +255,16 @@ public class EventMaster: MonoBehaviour
         ProductsNotificationCreated?.Invoke(createdProductsNotification);
     }
 
-    public event Action<bool> UIListToggled;
-    public void OnUIListToggle(bool isNowActive)
+    public event Action<Obstacle> ObstacleDemolitionInitiated;
+    public void OnInitiateObstacleDemolition(Obstacle obstacle)
     {
-        UIListToggled?.Invoke(isNowActive);
+        ObstacleDemolitionInitiated?.Invoke(obstacle);
+    }
+
+    public event Action<bool> UIPanelToggled;
+    public void OnUIPanelToggle(bool isNowActive)
+    {
+        UIPanelToggled?.Invoke(isNowActive);
     }
 
     public event Action<LandableUnit> LandableUnitFocused;

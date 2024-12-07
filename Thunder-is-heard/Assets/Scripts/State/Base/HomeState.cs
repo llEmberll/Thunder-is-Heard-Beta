@@ -1,8 +1,7 @@
-
-
 using UnityEngine;
 
-public class HomeState: State
+
+public class HomeState : State
 {
     public override string stateName
     {
@@ -76,6 +75,25 @@ public class HomeState: State
     {
         
     }
+
+
+    public override void OnObstacleClick(Obstacle obstacle)
+    {
+        Debug.Log("Home state: On obstacle click");
+
+        EventMaster.current.OnInitiateObstacleDemolition(obstacle);
+    }
+
+    public override void OnObstacleMouseEnter(Obstacle obstacle)
+    {
+        EventMaster.current.OnObjectEnter(obstacle);
+    }
+
+    public override void OnObstacleMouseExit(Obstacle obstacle)
+    {
+        EventMaster.current.OnObjectExit(obstacle);
+    }
+
 
     public override bool IsCellMustBeVisible(Cell cell)
     {

@@ -1,0 +1,19 @@
+﻿{
+  "name": "PlayerObstacle",
+  "items": {
+    "88199bd8-0f5e-43bb-807e-253f7b94abd3": {
+      "fields": {
+        "externalId": "88199bd8-0f5e-43bb-807e-253f7b94abd3",
+        "description": "",
+        "rotation": 180,
+        "position": [
+          {
+            "x": 0,
+            "y": 5
+          }
+        ],
+        "coreId": "fccb430b-9ab1-4073-a334-6183a40ad0f2"
+      }
+    }
+  }
+}

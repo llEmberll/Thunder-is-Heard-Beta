@@ -40,8 +40,9 @@ public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
     {
         if (!IsProperType(obj.Type)) return;
         if (!items.ContainsKey(obj.ChildId)) return;
-        Destroy(items[obj.ChildId].gameObject);
         items.Remove(obj.ChildId);
+        Destroy(obj.gameObject);
+
     }
 
     public void OnBattleObjectExposed(Entity obj)
@@ -104,7 +105,7 @@ public class BuildsOnFight : ObjectsOnFight, IObjectsOnScene
         string childId = battleBuildData.idOnBattle;
         string workStatus = battleBuildData.workStatus;
 
-        GameObject buildObj = ObjectProcessor.CreateBuildObject(position[0].ToVector2Int(), name, this.transform);
+        GameObject buildObj = ObjectProcessor.CreateEntityObject(position[0].ToVector2Int(), name, this.transform);
         GameObject buildModel = ObjectProcessor.CreateModel(modelPath, rotation, buildObj.transform);
 
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());

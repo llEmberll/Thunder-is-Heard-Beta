@@ -776,7 +776,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3522110986740580501}
   - component: {fileID: 7041115721768753414}
-  - component: {fileID: 858407372755818749}
+  - component: {fileID: 7664249127520677052}
   m_Layer: 0
   m_Name: BMP
   m_TagString: Untagged
@@ -824,7 +824,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &858407372755818749
+--- !u!65 &7664249127520677052
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -839,12 +839,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.36252958, y: 0.20923513, z: 0.66233546}
-  m_Center: {x: -0.05312252, y: 0.12626332, z: 0.16883227}
+  m_Size: {x: 4.625455, y: 2.645206, z: 8.408737}
+  m_Center: {x: -0.009694543, y: -0.42883402, z: 0.8292506}
 --- !u!1 &5268962863782261225
 GameObject:
   m_ObjectHideFlags: 0

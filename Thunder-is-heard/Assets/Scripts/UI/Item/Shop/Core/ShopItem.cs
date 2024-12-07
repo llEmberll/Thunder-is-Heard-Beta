@@ -20,7 +20,7 @@ public abstract class ShopItem : Item
 
     public override void Awake()
     {
-        resourcesProcessor = GameObject.FindGameObjectWithTag("ResourcesProcessor").GetComponent<ResourcesProcessor>();
+        resourcesProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
     }
 
     public override void Interact()

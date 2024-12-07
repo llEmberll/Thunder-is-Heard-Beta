@@ -79,6 +79,23 @@ public class FightState: State
         EventMaster.current.OnCellExit(cell);
     }
 
+
+    public override void OnObstacleClick(Obstacle obstacle)
+    {
+
+    }
+
+    public override void OnObstacleMouseEnter(Obstacle obstacle)
+    {
+        EventMaster.current.OnObjectEnter(obstacle);
+    }
+
+    public override void OnObstacleMouseExit(Obstacle obstacle)
+    {
+        EventMaster.current.OnObjectExit(obstacle);
+    }
+
+
     public override bool IsCellMustBeVisible(Cell cell)
     {
         return false;

@@ -30,8 +30,7 @@
             "damage": 1,
             "distance": 2,
             "side": "Empire",
-            "doctrine": "land",
-            "Distance": 2
+            "doctrine": "land"
           }
         ],
         "builds": [
@@ -63,8 +62,26 @@
             "damage": 0,
             "distance": 0,
             "side": "Empire",
-            "doctrine": "land",
-            "Distance": 0
+            "doctrine": "land"
+          }
+        ],
+        "obstacles": [
+          {
+            "maxHealth": 0,
+            "health": 0,
+            "damage": 0,
+            "distance": 0,
+            "coreId": "fccb430b-9ab1-4073-a334-6183a40ad0f2",
+            "idOnBattle": "c2d90826-6d3e-4e58-8e65-b41ecb304b27",
+            "position": [
+              {
+                "x": 1,
+                "y": 2
+              }
+            ],
+            "rotation": 0,
+            "side": "Neutral",
+            "doctrine": null
           }
         ],
         "landing": {
@@ -111,8 +128,7 @@
                 "damage": 3,
                 "distance": 3,
                 "side": "Empire",
-                "doctrine": "land",
-                "Distance": 3
+                "doctrine": "land"
               }
             ],
             "builds": [
@@ -144,8 +160,7 @@
                 "damage": 0,
                 "distance": 0,
                 "side": "Empire",
-                "doctrine": "land",
-                "Distance": 0
+                "doctrine": "land"
               }
             ],
             "AISettings": [

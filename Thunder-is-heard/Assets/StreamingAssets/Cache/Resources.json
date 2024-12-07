@@ -1,12 +1,12 @@
 ﻿{
   "name": "Resources",
   "items": {
-    "8ccff4c5-6610-44ec-a010-a945e17deb98": {
+    "fd0df41b-856c-4269-a3fd-c8231dce14ce": {
       "fields": {
-        "externalId": "8ccff4c5-6610-44ec-a010-a945e17deb98",
+        "externalId": "fd0df41b-856c-4269-a3fd-c8231dce14ce",
         "description": "",
         "resources": {
-          "rub": 800,
+          "rub": 350,
           "maxRub": 0,
           "frames": 298,
           "maxFrames": 0,

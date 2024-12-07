@@ -113,4 +113,9 @@ public static class Config
         { "Base", "Prefabs/Terrain/Base/Terrain" },
         { "Common", "Prefabs/Terrain/" }
     };
+
+    public static Dictionary<string, string> textPatterns = new Dictionary<string, string>
+    {
+        {"obstacleDemolitionConfirmation", "Снести {name}?" }
+    };
 }

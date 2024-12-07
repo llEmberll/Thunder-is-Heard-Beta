@@ -77,9 +77,9 @@ public class Selector : MonoBehaviour
     {
         _selectedObject = obj;
         ConfigureName(obj);
+        ConfigureSelector(obj);
         ConfigureInfoPanel(obj);
         ConfigureRadius(obj);
-        ConfigureSelector(obj);
         ConfigureHealthSlider(obj);
         ConfigureHealth(obj);
         ConfigureDamage(obj);
@@ -206,7 +206,7 @@ public class Selector : MonoBehaviour
 
     public void ConfigureRadius(Entity obj)
     {
-        if (obj.distance < 1)
+        if (obj.distance < 1 || obj is Obstacle)
         {
             attackRadiusCanvas.enabled = false;
             return;
@@ -231,18 +231,32 @@ public class Selector : MonoBehaviour
 
     public void ConfigureHealthSlider(Entity obj)
     {
+        if (obj is Obstacle)
+        {
+            healthSlider.gameObject.SetActive(false);
+            return;
+        }
+
+        healthSlider.gameObject.SetActive(true);
         healthSlider.maxValue = obj.maxHealth;
         healthSlider.value = obj.currentHealth;
     }
 
     public void ConfigureHealth(Entity obj)
     {
+        if (obj is Obstacle)
+        {
+            healthPanel.gameObject.SetActive(false);
+            return;
+        }
+
+        healthPanel.gameObject.SetActive(true);
         healthCount.text = obj.maxHealth.ToString();
     }
 
     public void ConfigureDamage(Entity obj)
     {
-        if (obj.damage < 1)
+        if (obj.damage < 1 || obj is Obstacle)
         {
             damagePanel.gameObject.SetActive(false);
             return;

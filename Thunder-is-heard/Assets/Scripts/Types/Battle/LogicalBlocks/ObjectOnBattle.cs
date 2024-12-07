@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 
+
 [System.Serializable]
 public abstract class ObjectOnBattle : IObjectOnBattle
 {
@@ -8,43 +9,54 @@ public abstract class ObjectOnBattle : IObjectOnBattle
     [JsonIgnore]
     public string CoreId { get  { return coreId; } }
 
+
     public string idOnBattle;
 
     [JsonIgnore]
     public string IdOnBattle { get { return idOnBattle; } }
+
 
     public Bector2Int[] position;
 
     [JsonIgnore]
     public Bector2Int[] Position { get { return position; } }
 
+
     public int rotation;
 
     [JsonIgnore]
     public int Rotation { get { return rotation; } }
+
 
     public int maxHealth;
 
     [JsonIgnore]
     public int MaxHealth { get { return maxHealth; } }
 
+
     public int health;
 
     [JsonIgnore]
     public int Health { get { return health; } }
+
 
     public int damage;
 
     [JsonIgnore]
     public int Damage { get { return damage; } }
 
+
     public int distance;
+
+    [JsonIgnore]
     public int Distance { get { return distance; } }
+
 
     public string side;
 
     [JsonIgnore]
     public string Side { get { return side; } }
+
 
     public string doctrine;
 

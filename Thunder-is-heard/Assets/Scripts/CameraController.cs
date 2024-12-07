@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
 		screenWidth = Screen.width;
         screenHeight = Screen.height;
 
-        EventMaster.current.UIListToggled += SetIsMovable;
+        EventMaster.current.UIPanelToggled += SetIsMovable;
     }
 
     public void SetIsMovable(bool isMovementForbidden)

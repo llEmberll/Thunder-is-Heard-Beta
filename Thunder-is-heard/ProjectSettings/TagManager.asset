@@ -43,6 +43,7 @@ TagManager:
   - AI
   - Route
   - UIController
+  - ObstaclesOnScene
   layers:
   - Default
   - TransparentFX

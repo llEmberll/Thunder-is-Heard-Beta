@@ -129,6 +129,8 @@ public class TurnController : MonoBehaviour
         if (isAllowedToControl == false) return;
         Debug.Log("Turn controller: OBJECT CLICK");
 
+        if (obj is Obstacle) return; // Ќельз€ взаимодействовать с преп€тстви€ми в бою
+
         if (obj.side == Sides.neutral)
         {
             return;

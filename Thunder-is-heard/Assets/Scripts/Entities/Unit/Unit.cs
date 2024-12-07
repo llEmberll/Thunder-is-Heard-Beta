@@ -55,8 +55,7 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
         Cell nextPoint = GetNextPoint();
         if (nextPoint == null)
         {
-            _onMove = false;
-            EventMaster.current.OnFinishUnitMove(this);
+            FinishMoving();
             return;
         }
 
@@ -85,13 +84,44 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
 
     public void Move(List<Cell> route)
     {
+        animator.StartMove();
         _route = route;
         MoveToPoint(route[0]);
     }
-    
+
+    public void FinishMoving()
+    {
+        animator.FinishMove();
+        _onMove = false;
+        EventMaster.current.OnFinishUnitMove(this);
+    }
+
+    public void ForceFinishMoving()
+    {
+        FinishMoving();
+        Vector2Int finishRoutePosition = _route.Last().position;
+        transform.position = new Vector3(finishRoutePosition.x, transform.position.y, finishRoutePosition.y);
+    }
+
+    public override void OnDestroy()
+    {
+        if (_onMove)
+        {
+            ForceFinishMoving();
+        }
+        
+        base.OnDestroy();
+    }
+
     public void Attack(Entity target)
     {
+        if (_onMove)
+        {
+            ForceFinishMoving();
+        }
+
         RotateToTarget(target.center);
+        animator.Attack();
     }
 
     public void Toggle()

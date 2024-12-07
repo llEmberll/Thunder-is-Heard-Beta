@@ -45,6 +45,14 @@ public abstract class State
 
     public abstract void OnCellMouseExit(Cell cell);
 
+
+    public abstract void OnObstacleClick(Obstacle obstacle);
+
+    public abstract void OnObstacleMouseEnter(Obstacle obstacle);
+
+    public abstract void OnObstacleMouseExit(Obstacle obstaclel);
+
+
     public abstract bool IsCellMustBeVisible(Cell cell);
 
 

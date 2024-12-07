@@ -111,6 +111,23 @@ public class BuildingState : State
         
     }
 
+
+    public override void OnObstacleClick(Obstacle obstacle)
+    {
+
+    }
+
+    public override void OnObstacleMouseEnter(Obstacle obstacle)
+    {
+
+    }
+
+    public override void OnObstacleMouseExit(Obstacle obstacle)
+    {
+
+    }
+
+
     public override bool IsCellMustBeVisible(Cell cell)
     {
         return !cell.occupied;

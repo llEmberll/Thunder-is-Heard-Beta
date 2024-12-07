@@ -42,8 +42,18 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
     {
         if (!IsProperType(obj.Type)) return;
         if (!items.ContainsKey(obj.ChildId)) return;
-        Destroy(items[obj.ChildId].gameObject);
+
+        IEnumerator waitAndDestroy = WaitAndDestroy(obj);
+        StartCoroutine(waitAndDestroy);
+    }
+    public IEnumerator WaitAndDestroy(Entity obj)
+    {
         items.Remove(obj.ChildId);
+
+        obj.Die();
+        yield return new WaitForSeconds(2);
+        
+        Destroy(obj.gameObject);
     }
 
     public void OnBattleObjectExposed(Entity obj)
@@ -107,7 +117,7 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
         string childId = battleUnitData.idOnBattle;
 
 
-        GameObject unitObj = ObjectProcessor.CreateUnitObject(position[0].ToVector2Int(), name, this.transform);
+        GameObject unitObj = ObjectProcessor.CreateEntityObject(position[0].ToVector2Int(), name, this.transform);
         GameObject unitModel = ObjectProcessor.CreateModel(modelPath, rotation, unitObj.transform);
         
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());

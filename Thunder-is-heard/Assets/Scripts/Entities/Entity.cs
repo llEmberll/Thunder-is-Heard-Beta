@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 public abstract class Entity : Interactable, IDamageable
 {
@@ -30,6 +32,8 @@ public abstract class Entity : Interactable, IDamageable
 
     public int maxHealth, currentHealth, damage, distance, mobility;
 
+    public IAnimator animator;
+
 
     public virtual void Awake()
     {
@@ -44,6 +48,13 @@ public abstract class Entity : Interactable, IDamageable
 
         //OnChangeStateEvent
         EventMaster.current.StateChanged += OnChangeState;
+
+        animator = GetComponentInChildren<IAnimator>();
+        if (animator != null)
+        {
+            Debug.Log("animator inited!");
+        }
+        
     }
 
     public void SetName(string value)
@@ -77,7 +88,7 @@ public abstract class Entity : Interactable, IDamageable
         if (damage >= currentHealth)
         {
             currentHealth = 0;
-            Die();
+            OnDestroy();
         }
         else
         {
@@ -193,15 +204,15 @@ public abstract class Entity : Interactable, IDamageable
 
     public virtual void Die()
     {
-        OnDestroy();
+        animator.Death();
     }
 
     public virtual void OnDestroy()
     {
         Debug.Log("On destroy");
 
-        EventMaster.current.OnObjectDestroy(this);
         map.Free(occypiedPoses);
+        EventMaster.current.OnObjectDestroy(this);
     }
 
     public override bool Equals(object obj)

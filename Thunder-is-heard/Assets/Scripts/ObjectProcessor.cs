@@ -457,12 +457,12 @@ public class ObjectProcessor : MonoBehaviour
         GameObject entity = null;
         if (type.Contains("Build"))
         {
-            entity = CreateBuildObject(rootPoint, objName, objectsPool);
+            entity = CreateEntityObject(rootPoint, objName, objectsPool);
         }
 
         else if (type.Contains("Unit"))
         {
-            entity = CreateUnitObject(rootPoint, objName, objectsPool);
+            entity = CreateEntityObject(rootPoint, objName, objectsPool);
         }
 
         else
@@ -477,24 +477,11 @@ public class ObjectProcessor : MonoBehaviour
         return entity;
     }
 
-    public static GameObject CreateBuildObject(Vector2Int position, string name, Transform parent)
+    public static GameObject CreateEntityObject(Vector2Int position, string name, Transform parent)
     {
-        var buildPrefab = Resources.Load<GameObject>(Config.resources["emptyPrefab"]);
+        var prefab = Resources.Load<GameObject>(Config.resources["emptyPrefab"]);
         GameObject obj = Instantiate(
-            buildPrefab,
-            new Vector3(position.x, 0, position.y),
-            Quaternion.identity,
-            parent
-            );
-        obj.name = name;
-        return obj;
-    }
-
-    public static GameObject CreateUnitObject(Vector2Int position, string name, Transform parent)
-    {
-        var unitPrefab = Resources.Load<GameObject>(Config.resources["emptyPrefab"]);
-        GameObject obj = Instantiate(
-            unitPrefab,
+            prefab,
             new Vector3(position.x, 0, position.y),
             Quaternion.identity,
             parent
@@ -693,6 +680,28 @@ public class ObjectProcessor : MonoBehaviour
         ProductsNotifcation component = productsNotificationObj.GetComponent<ProductsNotifcation>();
         component.Init(sourceObjectId, type, icon, productionCount, gives);
     }
+
+    public static void AddAndPrepareObstacleComponent(
+        GameObject buildObj,
+        Transform model,
+        string coreId,
+        string childId,
+        string objName,
+        Vector2Int size,
+        Vector2Int[] occypation,
+        string side
+        )
+    {
+        Obstacle component = buildObj.AddComponent<Obstacle>();
+        component.SetName(objName);
+        component.SetOriginalSize(size);
+        component.SetModel(model);
+        component.SetOccypation(new List<Vector2Int>(occypation));
+        component.SetSide(side);
+        component.coreId = coreId;
+        component.childId = childId;
+    }
+
 
     public static PlayerBuildCacheItem AddNewBuildOnBaseToCache(string buildId, string name, Bector2Int[] occypation, int rotation, string workStatus)
     {

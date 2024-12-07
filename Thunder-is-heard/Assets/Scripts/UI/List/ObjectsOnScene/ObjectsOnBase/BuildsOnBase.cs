@@ -39,8 +39,9 @@ public class BuildsOnBase : ObjectsOnBase
     {
         if (!IsProperType(obj.Type)) return;
         if (!items.ContainsKey(obj.ChildId)) return;
-        Destroy(items[obj.ChildId]);
         items.Remove(obj.ChildId);
+        Destroy(obj.gameObject);
+        
     }
 
     public void OnBaseObjectExposed(Entity obj)
@@ -149,7 +150,7 @@ public class BuildsOnBase : ObjectsOnBase
         string childId = playerBuildData.GetExternalId();
         string workStatus = playerBuildData.GetWorkStatus();
 
-        GameObject buildObj = ObjectProcessor.CreateBuildObject(position[0].ToVector2Int(), name, this.transform);
+        GameObject buildObj = ObjectProcessor.CreateEntityObject(position[0].ToVector2Int(), name, this.transform);
         GameObject buildModel = ObjectProcessor.CreateModel(modelPath, rotation, buildObj.transform);
 
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());

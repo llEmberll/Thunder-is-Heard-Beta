@@ -34,8 +34,8 @@ public class UnitsOnBase : ObjectsOnBase
     {
         if (!IsProperType(obj.Type)) return;
         if (!items.ContainsKey(obj.ChildId)) return;
-        Destroy(items[obj.ChildId]);
         items.Remove(obj.ChildId);
+        Destroy(obj.gameObject);
     }
 
     public void OnBaseObjectExposed(Entity obj)
@@ -96,7 +96,7 @@ public class UnitsOnBase : ObjectsOnBase
         string coreId = playerUnitData.GetCoreId();
         string childId = playerUnitData.GetExternalId();
 
-        GameObject unitObj = ObjectProcessor.CreateUnitObject(position[0].ToVector2Int(), name, this.transform);
+        GameObject unitObj = ObjectProcessor.CreateEntityObject(position[0].ToVector2Int(), name, this.transform);
         GameObject unitModel = ObjectProcessor.CreateModel(modelPath, rotation, unitObj.transform);
 
         map.Occypy(Bector2Int.MassiveToVector2Int(position).ToList());

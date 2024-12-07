@@ -1,4 +1,3 @@
-
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -47,13 +46,13 @@ public class ItemList : UIElement, IFillable
     public override void Hide()
     {
         base.Hide();
-        EventMaster.current.OnUIListToggle(false);
+        EventMaster.current.OnUIPanelToggle(false);
     }
 
     public override void Show()
     {
         base.Show();
-        EventMaster.current.OnUIListToggle(true);
+        EventMaster.current.OnUIPanelToggle(true);
     }
 
     public virtual void FillContent()

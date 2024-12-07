@@ -32,8 +32,9 @@ public class OneCharAnimator : BasicAnimator
 
     public virtual void UpdateIsIdleState()
     {
-        AnimatorStateInfo stateInfo = bodyAnimator.GetCurrentAnimatorStateInfo(0);
-        isIdle = stateInfo.IsName("idle");
+        AnimatorStateInfo bodyStateInfo = bodyAnimator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo weaponStateInfo = weaponAnimator.GetCurrentAnimatorStateInfo(0);
+        isIdle = bodyStateInfo.IsName("idle") && weaponStateInfo.IsName("idle");
     }
 
     public virtual void UpdateChangeAnimationTimer()

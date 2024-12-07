@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
+
 [System.Serializable]
 public class BattleCacheItem : CacheItem
 {
@@ -30,6 +31,11 @@ public class BattleCacheItem : CacheItem
         if (!objFields.ContainsKey("builds"))
         {
             SetBuilds(new BuildOnBattle[] { });
+        }
+
+        if (!objFields.ContainsKey("obstacles"))
+        {
+            SetObstacles(new ObstacleOnBattle[] { });
         }
 
         if (!objFields.ContainsKey("turn"))
@@ -110,6 +116,22 @@ public class BattleCacheItem : CacheItem
     public void SetBuilds(BuildOnBattle[] value)
     {
         SetField("builds", value);
+    }
+
+    public ObstacleOnBattle[] GetObstacles()
+    {
+        object value = GetField("obstacles");
+        if (value == null)
+        {
+            return new ObstacleOnBattle[] { };
+        }
+
+        return JsonConvert.DeserializeObject<ObstacleOnBattle[]>(value.ToString());
+    }
+
+    public void SetObstacles(ObstacleOnBattle[] value)
+    {
+        SetField("obstacles", value);
     }
 
     public string GetTurn()

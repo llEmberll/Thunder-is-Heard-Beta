@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BaseMap : Map
 {
     public override void Awake()
@@ -81,6 +82,23 @@ public class BaseMap : Map
         };
 
         scenarioItem.SetBuilds(scenarioBuilds);
+
+
+        ObstacleOnBattle[] scenarioObstacles = new ObstacleOnBattle[]
+        {
+            new ObstacleOnBattle(
+                    coreObstacleId: "fccb430b-9ab1-4073-a334-6183a40ad0f2",
+                    new Bector2Int[]
+                    {
+                        new Bector2Int(1, 2)
+                    },
+                    0,
+                    Sides.neutral,
+                    obstacleIdOnBattle: "c2d90826-6d3e-4e58-8e65-b41ecb304b27"
+                )
+        };
+
+        scenarioItem.SetObstacles(scenarioObstacles);
 
 
         UnitOnBattle[] stage1Units = new UnitOnBattle[]
@@ -885,5 +903,117 @@ public class BaseMap : Map
 
         unitProductionsTable.Add(new CacheItem[3] { assaulters, vortex, osoka });
         Cache.Save(unitProductionsTable);
+    }
+
+    public void CreateObstacles()
+    {
+        ObstacleCacheTable obstaclesTable = Cache.LoadByType<ObstacleCacheTable>();
+
+        ResourcesData bushDemolitionCost = new ResourcesData();
+        bushDemolitionCost.rub = 250;
+
+        ObstacleCacheItem bush1 = new ObstacleCacheItem(new Dictionary<string, object>());
+        bush1.SetName("Bush");
+        bush1.SetExternalId("ee8c8e9e-8b30-4687-9179-0a279badf766");
+        bush1.SetSize(new Bector2Int(1, 1));
+        bush1.SetDemolitionCost(bushDemolitionCost);
+        bush1.SetModelPath("Prefabs/Entity/Obstacles/Bush1");
+
+        ObstacleCacheItem bush2 = new ObstacleCacheItem(new Dictionary<string, object>());
+        bush2.SetName("Bush");
+        bush2.SetExternalId("429b4e2e-b6a2-465b-982f-4cc96d67a011");
+        bush2.SetSize(new Bector2Int(1, 1));
+        bush2.SetDemolitionCost(bushDemolitionCost);
+        bush2.SetModelPath("Prefabs/Entity/Obstacles/Bush2");
+
+
+        ResourcesData smallPalmDemolitionCost = new ResourcesData();
+        smallPalmDemolitionCost.rub = 400;
+
+        ObstacleCacheItem palm1 = new ObstacleCacheItem(new Dictionary<string, object>());
+        palm1.SetName("Small palm");
+        palm1.SetExternalId("90ebae2b-7633-42c7-9868-406d47583d5a");
+        palm1.SetSize(new Bector2Int(1, 1));
+        palm1.SetDemolitionCost(smallPalmDemolitionCost);
+        palm1.SetModelPath("Prefabs/Entity/Obstacles/Palm1");
+
+        ResourcesData palmDemolitionCost = new ResourcesData();
+        palmDemolitionCost.rub = 600;
+
+        ObstacleCacheItem palm2 = new ObstacleCacheItem(new Dictionary<string, object>());
+        palm2.SetName("Palm");
+        palm2.SetExternalId("bb9da51e-303d-4aed-951d-0248490f76b6");
+        palm2.SetSize(new Bector2Int(1, 1));
+        palm2.SetDemolitionCost(palmDemolitionCost);
+        palm2.SetModelPath("Prefabs/Entity/Obstacles/Palm2");
+
+        ObstacleCacheItem palm3 = new ObstacleCacheItem(new Dictionary<string, object>());
+        palm3.SetName("Palm");
+        palm3.SetExternalId("0b3a9589-3e96-45c9-8e4e-ab6f8dc8cd7a");
+        palm3.SetSize(new Bector2Int(1, 1));
+        palm3.SetDemolitionCost(palmDemolitionCost);
+        palm3.SetModelPath("Prefabs/Entity/Obstacles/Palm3");
+
+        ObstacleCacheItem palm4 = new ObstacleCacheItem(new Dictionary<string, object>());
+        palm4.SetName("Palm");
+        palm4.SetExternalId("7b6c7782-0a71-4501-87f5-ed18b935cea1");
+        palm4.SetSize(new Bector2Int(1, 1));
+        palm4.SetDemolitionCost(palmDemolitionCost);
+        palm4.SetModelPath("Prefabs/Entity/Obstacles/Palm4");
+
+        ObstacleCacheItem palm5 = new ObstacleCacheItem(new Dictionary<string, object>());
+        palm5.SetName("Palm");
+        palm5.SetExternalId("1dc74e29-35f1-4fc5-a3f0-d2c6c39d558b");
+        palm5.SetSize(new Bector2Int(1, 1));
+        palm5.SetDemolitionCost(palmDemolitionCost);
+        palm5.SetModelPath("Prefabs/Entity/Obstacles/Palm5");
+
+
+        ResourcesData smallStoneDemolitionCost = new ResourcesData();
+        smallStoneDemolitionCost.rub = 450;
+
+        ObstacleCacheItem stone1 = new ObstacleCacheItem(new Dictionary<string, object>());
+        stone1.SetName("Small stone");
+        stone1.SetExternalId("fccb430b-9ab1-4073-a334-6183a40ad0f2");
+        stone1.SetSize(new Bector2Int(1, 1));
+        stone1.SetDemolitionCost(smallStoneDemolitionCost);
+        stone1.SetModelPath("Prefabs/Entity/Obstacles/Stone2");
+
+
+        ResourcesData stoneDemolitionCost = new ResourcesData();
+        stoneDemolitionCost.rub = 700;
+
+        ObstacleCacheItem stone2 = new ObstacleCacheItem(new Dictionary<string, object>());
+        stone2.SetName("Stone");
+        stone2.SetExternalId("42c227ad-ce04-458d-ba1a-5e09c9ea9efc");
+        stone2.SetSize(new Bector2Int(1, 1));
+        stone2.SetDemolitionCost(stoneDemolitionCost);
+        stone2.SetModelPath("Prefabs/Entity/Obstacles/Stone1");
+
+        ObstacleCacheItem stone3 = new ObstacleCacheItem(new Dictionary<string, object>());
+        stone3.SetName("Stone");
+        stone3.SetExternalId("48b9e917-ecfb-44ea-ade9-25cec693789e");
+        stone3.SetSize(new Bector2Int(1, 1));
+        stone3.SetDemolitionCost(stoneDemolitionCost);
+        stone3.SetModelPath("Prefabs/Entity/Obstacles/Stone3");
+
+
+        obstaclesTable.Add(new CacheItem[10] { bush1, bush2, palm1, palm2, palm3, palm4, palm5, stone1, stone2, stone3 });
+        Cache.Save(obstaclesTable);
+    }
+
+    public void CreatePlayerObstacles()
+    {
+        PlayerObstacleCacheTable obstaclesTable = Cache.LoadByType<PlayerObstacleCacheTable>();
+
+        PlayerObstacleCacheItem smallStone = new PlayerObstacleCacheItem(new Dictionary<string, object>());
+        smallStone.SetRotation(180);
+        smallStone.SetPosition(new Bector2Int[] { new Bector2Int(0, 5) });
+        smallStone.SetExternalId("88199bd8-0f5e-43bb-807e-253f7b94abd3");
+        smallStone.SetCoreId("fccb430b-9ab1-4073-a334-6183a40ad0f2");
+
+        obstaclesTable.AddOne(smallStone);
+
+        Cache.Save(obstaclesTable);
     }
 }
