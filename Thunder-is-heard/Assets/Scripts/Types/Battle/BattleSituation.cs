@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
+
 
 public class BattleSituation
 {
@@ -23,6 +23,8 @@ public class BattleSituation
     public void InitByBattleDataAndMap(BattleCacheItem battleData, Map map)
     {
         InitMap(map.Cells);
+        InitObstacles(battleData.GetObstacles());
+
         InitSideTurn(battleData.GetTurn());
         InitUnits(battleData.GetUnits());
         InitBuilds(battleData.GetBuilds());
@@ -47,6 +49,17 @@ public class BattleSituation
     public void InitMap(CellData[] cells)
     {
         _map = new MapOnBattle(cells);
+    }
+
+    public void InitObstacles(ObstacleOnBattle[] obstacles)
+    {
+        foreach (var obstacle in obstacles)
+        {
+            foreach (var position in obstacle.Position)
+            {
+                _map.Cells[position]._isOccypy = true;
+            }
+        }
     }
 
     public void InitSideTurn(string sideTurn)
@@ -93,7 +106,7 @@ public class BattleSituation
     {
         Dictionary<string, ObjectOnBattle> buildsBySide = GetBuildsCollectionBySide(buildData.side);
         buildsBySide.Add(buildData.idOnBattle, buildData);
-        foreach (var position in buildData.position)
+        foreach (var position in buildData.Position)
         {
             _map.Cells[position]._isOccypy = true;
         }

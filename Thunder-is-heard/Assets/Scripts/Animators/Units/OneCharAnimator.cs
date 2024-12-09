@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class OneCharAnimator : BasicAnimator
 {
     public bool isIdle = true;
@@ -13,6 +14,7 @@ public class OneCharAnimator : BasicAnimator
     public float leftTimeForChangeAnimation;
 
     public string[] triggers = { "reload", "look_around" };
+    public string[] states = { "idle", "Death", "Idle_reload", "PrepareToAttack", "PrepareToMove", "FromAttackToIdle", "Move", "Idle_look around" };
 
 
     public override void Start()
@@ -61,13 +63,29 @@ public class OneCharAnimator : BasicAnimator
     public override void Attack()
     {
         bodyAnimator.SetTrigger("attack");
+
+        Debug.Log("set attack trigger on BODY");
+
         weaponAnimator.SetTrigger("attack");
+
+        Debug.Log("set attack trigger on WEAPON");
+
+        Debug.Log("body state: " + GetCurrentBodyAnimatorState());
+        Debug.Log("weapon state: " + GetCurrentWeaponAnimatorState());
     }
 
     public override void Death()
     {
+        Debug.Log("In Death");
+        Debug.Log("body state: " + GetCurrentBodyAnimatorState());
+        Debug.Log("weapon state: " + GetCurrentWeaponAnimatorState());
+
         bodyAnimator.SetTrigger("death");
         weaponAnimator.SetTrigger("death");
+
+        Debug.Log("all death triggers set!");
+        Debug.Log("body state: " + GetCurrentBodyAnimatorState());
+        Debug.Log("weapon state: " + GetCurrentWeaponAnimatorState());
     }
 
     public override void StartMove()
@@ -80,5 +98,35 @@ public class OneCharAnimator : BasicAnimator
     {
         bodyAnimator.SetBool("moving", false);
         weaponAnimator.SetBool("moving", false);
+    }
+
+    public string GetCurrentBodyAnimatorState()
+    {
+        AnimatorStateInfo stateInfo = bodyAnimator.GetCurrentAnimatorStateInfo(0);
+
+        foreach (string stateName in states)
+        {
+            if (stateInfo.IsName(stateName))
+            {
+                return stateName;
+            }
+        }
+
+        return null;
+    }
+
+    public string GetCurrentWeaponAnimatorState()
+    {
+        AnimatorStateInfo stateInfo = weaponAnimator.GetCurrentAnimatorStateInfo(0);
+
+        foreach (string stateName in states)
+        {
+            if (stateInfo.IsName(stateName))
+            {
+                return stateName;
+            }
+        }
+
+        return null;
     }
 }

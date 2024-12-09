@@ -70,8 +70,8 @@ public class ObstaclesOnFight : ObjectsOnFight, IObjectsOnScene
         ClearItems();
         items = new Dictionary<string, Obstacle>();
 
-        CacheItem obstacleCacheItem = Cache.LoadByType<ObstacleCacheTable>().GetById(_battleId);
-        BattleCacheItem battleData = new BattleCacheItem(obstacleCacheItem.Fields);
+        CacheItem battleCacheItem = Cache.LoadByType<BattleCacheTable>().GetById(_battleId);
+        BattleCacheItem battleData = new BattleCacheItem(battleCacheItem.Fields);
         ObstacleOnBattle[] obstacles = battleData.GetObstacles();
         foreach (ObstacleOnBattle obstacle in obstacles)
         {

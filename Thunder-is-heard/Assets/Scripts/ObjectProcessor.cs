@@ -20,7 +20,7 @@ public class ObjectProcessor : MonoBehaviour
      
     }
 
-    public static void PutSelectedObjectOnBattleToInventory()
+    public void PutSelectedObjectOnBattleToInventory()
     {
         ObjectPreview preview = FindObjectOfType<ObjectPreview>();
         if (IsSomeObjectSelected(preview))
@@ -112,7 +112,7 @@ public class ObjectProcessor : MonoBehaviour
         AddToInventory(newItem);
     }
 
-    public static void RemoveObjectFromBattle(string battleId, GameObject obj)
+    public void RemoveObjectFromBattle(string battleId, GameObject obj)
     {
         Entity entity = obj.GetComponent<Entity>();
 
@@ -150,7 +150,8 @@ public class ObjectProcessor : MonoBehaviour
         }
 
         Cache.Save(battleTable);
-        Destroy(obj);
+
+        map.Free(entity.occypiedPoses);
 
         EventMaster.current.OnRemoveBattleObject(entity);
         EventMaster.current.OnChangeBattleObjects();

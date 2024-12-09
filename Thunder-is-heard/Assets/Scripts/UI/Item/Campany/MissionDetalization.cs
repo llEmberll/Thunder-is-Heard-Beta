@@ -61,6 +61,28 @@ public class MissionDetalization: UIElement
             return;
         }
 
-        Mission.Load(_id);
+        Load(_id);
+    }
+
+    public static void Load(string missionId)
+    {
+        MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
+        CacheItem cacheItemMission = missionTable.GetById(missionId);
+        MissionCacheItem missionData = new MissionCacheItem(cacheItemMission.Fields);
+
+        ScenarioCacheTable scenarioTable = Cache.LoadByType<ScenarioCacheTable>();
+        CacheItem cacheItemScenario = scenarioTable.GetById(missionData.GetScenarioId());
+        ScenarioCacheItem scenarioData = new ScenarioCacheItem(cacheItemScenario.Fields);
+
+        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
+        BattleCacheItem battleData = new BattleCacheItem(new Dictionary<string, object>());
+        battleData.SetMissionId(missionId);
+        battleData.SetUnits(scenarioData.GetUnits());
+        battleData.SetBuilds(scenarioData.GetBuilds());
+        battleData.SetObstacles(scenarioData.GetObstacles());
+        battleTable.AddOne(battleData);
+        Cache.Save(battleTable);
+
+        SceneLoader.LoadFight(new FightSceneParameters(battleData.GetExternalId()));
     }
 }

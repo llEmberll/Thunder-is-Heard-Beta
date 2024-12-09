@@ -190,6 +190,7 @@ public class FightDirector : MonoBehaviour
 
         UnitOnBattle[] scenarioUnits = scenarioData.GetUnits();
         BuildOnBattle[] scenarioBuilds = scenarioData.GetBuilds();
+        ObstacleOnBattle[] scenarioObstacles = scenarioData.GetObstacles();
 
         LandingData landingData = scenarioData.GetLanding();
         List<Vector2Int> landingCells = Bector2Int.MassiveToVector2Int(landingData.zone).ToList();
@@ -200,7 +201,7 @@ public class FightDirector : MonoBehaviour
         Map map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
         map.Init(mapSize, terrainPath);
 
-        Scenario.Init(map, scenarioUnits, scenarioBuilds, landingCells, landingMaxStaff, stages, stageIndex, isLanded);
+        Scenario.Init(map, scenarioUnits, scenarioBuilds, scenarioObstacles, landingCells, landingMaxStaff, stages, stageIndex, isLanded);
         
     }
 
