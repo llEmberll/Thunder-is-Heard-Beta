@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -133,6 +134,23 @@ public class BattleSituation
         foreach (var position in buildData.position)
         {
             _map.Cells[position]._isOccypy = false;
+        }
+    }
+
+    public void ObjectChangeHealth(string objectId, int newHealth)
+    {
+        UnitOnBattle unit = GetUnitById(objectId);
+        if (unit != null)
+        {
+            UnitChangeHealth(objectId, newHealth);
+            return;
+        }
+
+        BuildOnBattle build = GetBuildById(objectId);
+        if (build != null)
+        {
+            BuildChangeHealth(objectId, newHealth);
+            return;
         }
     }
 
@@ -369,9 +387,11 @@ public class BattleSituation
         Dictionary<string, ObjectOnBattle> unitsForSearchData = GetUnitTargetsBySide(attacker.side);
         Dictionary<string, ObjectOnBattle> buildsForSearchData = GetBuildTargetsBySide(attacker.side);
 
+        UnitOnBattle attackerAsUnit = attacker as UnitOnBattle;
+
         foreach (UnitOnBattle possibleUnitTarget in unitsForSearchData.Values)
         {
-            if (BattleEngine.GetDistanceBetweenPoints(attacker.Position.First(), possibleUnitTarget.Position.First()) <= attacker.distance)
+            if (CanObjectAttackObject(attackerAsUnit, possibleUnitTarget))
             {
                 AddAttackerByObjectId(possibleUnitTarget.idOnBattle, attacker);
             }
@@ -383,7 +403,7 @@ public class BattleSituation
 
         foreach (BuildOnBattle possibleBuildTarget in buildsForSearchData.Values)
         {
-            if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attacker.Position.First(), new RectangleBector2Int(possibleBuildTarget.position)) <= attacker.distance)
+            if (CanObjectAttackObject(attackerAsUnit, possibleBuildTarget))
             {
                 AddAttackerByObjectId(possibleBuildTarget.idOnBattle, attacker);
             }
@@ -394,14 +414,40 @@ public class BattleSituation
         }
     }
 
+    public bool CanObjectAttackObject(ObjectOnBattle attacker, ObjectOnBattle target)
+    {
+        if (attacker is UnitOnBattle && CanMoveWithAttack(attacker as UnitOnBattle))
+        {
+            UnitOnBattle attackerAsUnit = attacker as UnitOnBattle;
+            if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerAsUnit.Position.First(), new RectangleBector2Int(target.Position)) < attackerAsUnit.Distance + attackerAsUnit.Mobility)
+            {
+                // ƒаже в чистом поле невозможно достать до цели
+                return false;
+            }
+
+            List<Bector2Int> attackerReachablePositions = _map.GetReachablePositions(attackerAsUnit.Position.First(), attackerAsUnit.Mobility);
+            foreach (Bector2Int position in attackerReachablePositions)
+            {
+                if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(position, new RectangleBector2Int(target.Position)) <= attackerAsUnit.Distance)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        else
+        {
+            return BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attacker.Position.First(), new RectangleBector2Int(target.Position)) <= attacker.Distance;
+        }
+    }
+
     public void UpdateAttackersForBuildTarget(BuildOnBattle build)
     {
         attackersByObjectId.Remove(build.idOnBattle);
         Dictionary<string, ObjectOnBattle> possibleAttackers = GetAttackersBySide(build.side);
         foreach (ObjectOnBattle possibleAttacker in possibleAttackers.Values)
         {
-            int minDistanceForAttack = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(possibleAttacker.Position.First(), new RectangleBector2Int(build.Position));
-            if (minDistanceForAttack <= possibleAttacker.distance)
+            if (CanObjectAttackObject(possibleAttacker, build)) 
             {
                 AddAttackerByObjectId(build.idOnBattle, possibleAttacker);
             }
@@ -414,8 +460,7 @@ public class BattleSituation
         Dictionary<string, ObjectOnBattle> possibleAttackers = GetAttackersBySide(unit.side);
         foreach (ObjectOnBattle possibleAttacker in possibleAttackers.Values)
         {
-            int minDistanceForAttack = BattleEngine.GetDistanceBetweenPoints(unit.Position.First(), possibleAttacker.Position.First());
-            if (minDistanceForAttack <= possibleAttacker.distance)
+            if (CanObjectAttackObject(possibleAttacker, unit))
             {
                 AddAttackerByObjectId(unit.idOnBattle, possibleAttacker);
             }
@@ -444,8 +489,7 @@ public class BattleSituation
         {
             foreach (var attackerItem in possibleAttackers)
             {
-                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPoints(victimItem.Value.Position.First(), attackerItem.Value.Position.First());
-                if (minDistanceForAttack <= attackerItem.Value.distance) {
+                if (CanObjectAttackObject(attackerItem.Value, victimItem.Value)) {
                     AddAttackerByObjectId(victimItem.Key, attackerItem.Value);
                 }
             }
@@ -460,8 +504,7 @@ public class BattleSituation
         {
             foreach (var attackerItem in possibleAttackers)
             {
-                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerItem.Value.Position.First(), new RectangleBector2Int(victimItem.Value.Position));
-                if (minDistanceForAttack <= attackerItem.Value.distance)
+                if (CanObjectAttackObject(attackerItem.Value, victimItem.Value))
                 {
                     AddAttackerByObjectId(victimItem.Key, attackerItem.Value);
                 }
@@ -483,8 +526,7 @@ public class BattleSituation
         {
             foreach (var attackerItem in possibleAttackers)
             {
-                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPoints(victimItem.Value.Position.First(), attackerItem.Value.Position.First());
-                if (minDistanceForAttack <= attackerItem.Value.distance)
+                if (CanObjectAttackObject(attackerItem.Value, victimItem.Value))
                 {
                     AddAttackerByObjectId(victimItem.Key, attackerItem.Value);
                 }
@@ -500,8 +542,7 @@ public class BattleSituation
         {
             foreach (var attackerItem in possibleAttackers)
             {
-                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerItem.Value.Position.First(), new RectangleBector2Int(victimItem.Value.Position));
-                if (minDistanceForAttack <= attackerItem.Value.distance)
+                if (CanObjectAttackObject(attackerItem.Value, victimItem.Value))
                 {
                     AddAttackerByObjectId(victimItem.Key, attackerItem.Value);
                 }
@@ -523,8 +564,7 @@ public class BattleSituation
         {
             foreach (var attackerItem in possibleAttackers)
             {
-                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPoints(victimItem.Value.Position.First(), attackerItem.Value.Position.First());
-                if (minDistanceForAttack <= attackerItem.Value.distance)
+                if (CanObjectAttackObject(attackerItem.Value, victimItem.Value))
                 {
                     AddAttackerByObjectId(victimItem.Key, attackerItem.Value);
                 }
@@ -540,8 +580,7 @@ public class BattleSituation
         {
             foreach (var attackerItem in possibleAttackers)
             {
-                int minDistanceForAttack = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerItem.Value.Position.First(), new RectangleBector2Int(victimItem.Value.Position));
-                if (minDistanceForAttack <= attackerItem.Value.distance)
+                if (CanObjectAttackObject(attackerItem.Value, victimItem.Value))
                 {
                     AddAttackerByObjectId(victimItem.Key, attackerItem.Value);
                 }
@@ -549,6 +588,20 @@ public class BattleSituation
         }
     }
 
+
+    public bool CanMoveWithAttack(UnitOnBattle unit)
+    {
+        if (unit.skillsData == null || unit.skillsData.Length < 1) return false;
+
+        foreach (var skill in unit.skillsData)
+        {
+            SkillCacheTable skillsTable = Cache.LoadByType<SkillCacheTable>();
+            CacheItem cacheItem = skillsTable.GetById(skill.coreId);
+            SkillCacheItem coreSkillData = new SkillCacheItem(cacheItem.Fields);
+            if (coreSkillData.GetName() == "Move with attack") return true;
+        }
+        return false;
+    }
 
     public Dictionary<string, ObjectOnBattle> GetPossibleTargetsBySide(string side)
     {
@@ -727,6 +780,7 @@ public class BattleSituation
         }
 
         moveForAttackData._turnCountForReach = minPassedDistanceToAttack / attacker.Mobility;
+        if (CanMoveWithAttack(attacker)) moveForAttackData._turnCountForReach -= 1;
         return moveForAttackData;
     }
 
@@ -736,6 +790,78 @@ public class BattleSituation
         battleSituationByTurn = battleSituationByTurn.Concat(GetAllMovementSequels()).ToDictionary(x => x.Key, x => x.Value);
         battleSituationByTurn = battleSituationByTurn.Concat(GetAllAttackingSequels()).ToDictionary(x => x.Key, x => x.Value);
         battleSituationByTurn = battleSituationByTurn.Concat(GetSequelWithPass()).ToDictionary(x => x.Key, x => x.Value);
+        return battleSituationByTurn;
+    }
+
+    public Dictionary<TurnData, BattleSituation> GetAllMovementWithAttackSequels() 
+    {
+        Dictionary<TurnData, BattleSituation> battleSituationByTurn = new Dictionary<TurnData, BattleSituation>();
+        Dictionary<string, ObjectOnBattle> buildTargets = new Dictionary<string, ObjectOnBattle>();
+        Dictionary<string, ObjectOnBattle> unitTargets = new Dictionary<string, ObjectOnBattle>();
+        Dictionary<string, ObjectOnBattle> possibleAttackers = new Dictionary<string, ObjectOnBattle>();
+
+        if (_sideTurn == Sides.federation)
+        {
+            buildTargets = empireBuilds;
+            unitTargets = empireUnits;
+            possibleAttackers = federationUnits;
+        }
+        else if (_sideTurn == Sides.empire)
+        {
+            buildTargets = federationBuilds;
+            unitTargets = federationUnits;
+            possibleAttackers = empireUnits;
+        }
+        else
+        {
+            buildTargets = federationBuilds.Concat(empireBuilds).ToDictionary(x => x.Key, x => x.Value);
+            unitTargets = federationUnits.Concat(empireUnits).ToDictionary(x => x.Key, x => x.Value);
+            possibleAttackers = neutralUnits;
+        }
+
+        Dictionary<string, ObjectOnBattle> filteredAttackers = new Dictionary<string, ObjectOnBattle>();
+        foreach (var item in possibleAttackers)
+        {
+            if (CanMoveWithAttack(item.Value as UnitOnBattle))
+            {
+                filteredAttackers.Add(item.Key, item.Value);
+            }
+        }
+
+        if (filteredAttackers.Count < 1) return battleSituationByTurn;
+
+        foreach (var item in filteredAttackers)
+        {
+            UnitOnBattle currentAttacker = item.Value as UnitOnBattle;
+            List<ObjectOnBattle> targets = GetTargetsByAttacker(currentAttacker);
+            if (targets.Count < 1) continue;
+
+            foreach (ObjectOnBattle target in targets)
+            {
+                int totalDamage = BattleEngine.CalculateDamageToObject(this, attackersByObjectId[target.IdOnBattle].ToArray(), target);
+
+                List<Bector2Int> allPossiblePositionsToMoveAttacker = GetReachablePositionsByUnit(currentAttacker.idOnBattle);
+                List<Bector2Int> positionsFromWhichToAttack = new List<Bector2Int>();
+                foreach (Bector2Int reachablePosition in allPossiblePositionsToMoveAttacker)
+                {
+                    if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(reachablePosition, new RectangleBector2Int(target.Position)) <= currentAttacker.Distance)
+                    {
+                        List<Bector2Int> routeToPosition = _map.BuildRoute(currentAttacker.Position.First(), reachablePosition, currentAttacker.Mobility);
+
+                        BattleSituation currentBattleSituation = this.Clone();
+                        currentBattleSituation.UnitChangePosition(currentAttacker.idOnBattle, reachablePosition);
+                        currentBattleSituation.ObjectChangeHealth(target.idOnBattle, target.Health - totalDamage);
+                        currentBattleSituation.NextTurn();
+
+                        TurnData currentTurn = new TurnData();
+                        currentTurn._targetIdOnBattle = target.IdOnBattle;
+                        currentTurn._activeUnitIdOnBattle = currentAttacker.IdOnBattle;
+                        currentTurn._route = routeToPosition;
+                        battleSituationByTurn.Add(currentTurn, currentBattleSituation);
+                    }
+                }
+            }
+        }
         return battleSituationByTurn;
     }
 
@@ -760,6 +886,7 @@ public class BattleSituation
             buildTargets = federationBuilds.Concat(empireBuilds).ToDictionary(x => x.Key, x => x.Value);
             unitTargets = federationUnits.Concat(empireUnits).ToDictionary(x => x.Key, x => x.Value);
         }
+
 
        foreach (BuildOnBattle buildTarget in buildTargets.Values) 
         {
@@ -788,6 +915,8 @@ public class BattleSituation
 
             battleSituationByTurn.Add(currentTurn, currentBattleSituation);
         }
+
+        battleSituationByTurn.AddRange(GetAllMovementWithAttackSequels());
         return battleSituationByTurn;
     }
 

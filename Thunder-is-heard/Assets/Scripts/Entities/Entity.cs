@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,10 +49,6 @@ public abstract class Entity : Interactable, IDamageable
         EventMaster.current.StateChanged += OnChangeState;
 
         animator = GetComponentInChildren<IAnimator>();
-        if (animator != null)
-        {
-            Debug.Log("animator inited!");
-        }
         
     }
 

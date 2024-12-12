@@ -201,7 +201,7 @@ public class FightDirector : MonoBehaviour
         Map map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
         map.Init(mapSize, terrainPath);
 
-        Scenario.Init(map, scenarioUnits, scenarioBuilds, scenarioObstacles, landingCells, landingMaxStaff, stages, stageIndex, isLanded);
+        Scenario.Init(map, landingCells, landingMaxStaff, stages, stageIndex, isLanded);
         
     }
 
@@ -247,6 +247,9 @@ public class FightDirector : MonoBehaviour
 
         UpdateEffects();
         Debug.Log("Эффекты  обновлены");
+
+        UpdateSkills();
+        Debug.Log("Умения  обновлены");
 
         ChangeSideTurn();
 
@@ -376,6 +379,17 @@ public class FightDirector : MonoBehaviour
     {
         // Обновить все эффекты на юнитах(например от скиллов) согласно кд и условиям прекращения или продолжения эффекта.
         // Наложить заново эффект от пассивных скиллов если условия соблюдаются
+    }
+
+    public void UpdateSkills()
+    {
+        foreach (Unit unit in _unitsOnFightManager.items.Values)
+        {
+            if (unit._skills == null) continue;
+
+            SkillOnBattle[] skillDatas = _battleEngine.currentBattleSituation.GetUnitById(unit.ChildId).SkillsData;
+            ObjectProcessor.ConfigureSkills(unit, skillDatas);
+        }
     }
 
     public void ReturnToBase()

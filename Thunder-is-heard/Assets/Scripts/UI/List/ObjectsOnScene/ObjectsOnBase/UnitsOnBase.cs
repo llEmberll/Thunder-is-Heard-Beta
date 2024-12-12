@@ -95,6 +95,8 @@ public class UnitsOnBase : ObjectsOnBase
         int rotation = playerUnitData.GetRotation();
         string coreId = playerUnitData.GetCoreId();
         string childId = playerUnitData.GetExternalId();
+        string[] skillIds = coreUnitData.GetSkillIds();
+
 
         GameObject unitObj = ObjectProcessor.CreateEntityObject(position[0].ToVector2Int(), name, this.transform);
         GameObject unitModel = ObjectProcessor.CreateModel(modelPath, rotation, unitObj.transform);
@@ -117,7 +119,8 @@ public class UnitsOnBase : ObjectsOnBase
             Sides.federation,
             unitType,
             doctrine,
-            movementSpeed
+            movementSpeed,
+            skillIds
             );
 
         items.Add(childId, unitObj.GetComponent<Unit>());

@@ -54,6 +54,7 @@ public static class Config
         { "landableUnitItem", "Prefabs/UI/GeneratedItems/UnitForLanding/LandableUnitItem" },
         { "ranks", "Textures/Interface/Icons/Ranks/Ranks" },
         { "resourcesIcons", "Textures/Interface/Resources/Resources" },
+        { "UIAttributes", "Textures/Interface/Icons/Attributes/New/attributes/" },
 
         { "enemySelector", "Textures/Interface/Selections/EnemySelector" },
         { "allySelector", "Textures/Interface/Selections/AllySelector" },

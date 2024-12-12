@@ -1,9 +1,12 @@
 
 
+using Unity.VisualScripting;
+
 [System.Serializable]
 public class SkillOnBattle
 {
     public string coreId;
+    public string childId;
     public int cooldown;
     public bool isActive;
 
@@ -35,5 +38,19 @@ public class SkillOnBattle
             hash = hash * 23 + coreId.GetHashCode();
             return hash;
         }
+    }
+
+    public static string[] GetSkillIdsBySkillOnBattleDatas(SkillOnBattle[] datas)
+    {
+        if (datas == null || datas.Length < 1) return new string[] {};
+        string[] ids = new string[datas.Length];
+
+        int index = 0;
+        foreach (SkillOnBattle data in datas)
+        {
+            ids[index] = data.coreId;
+        }
+
+        return ids;
     }
 }

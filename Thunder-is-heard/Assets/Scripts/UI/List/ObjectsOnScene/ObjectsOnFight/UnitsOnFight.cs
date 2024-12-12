@@ -111,6 +111,11 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
         float movementSpeed = coreUnitData.GetMovementSpeed();
 
         string name = coreUnitData.GetName();
+
+        SkillOnBattle[] skillDatas = battleUnitData.SkillsData;
+        string[] skillIds = SkillOnBattle.GetSkillIdsBySkillOnBattleDatas(skillDatas);
+        // Собрать ids скилов и отправить в ObjectProcessor
+
         Bector2Int[] position = new Bector2Int[1] { battleUnitData.position.First() };
         int rotation = battleUnitData.rotation;
         string coreId = battleUnitData.coreId;
@@ -138,8 +143,10 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
             side,
             unitType,
             doctrine,
-            movementSpeed
+            movementSpeed,
+            skillIds
             );
+        ObjectProcessor.ConfigureSkills(unitObj.GetComponent<Unit>(), skillDatas);
 
         items.Add(childId, unitObj.GetComponent<Unit>());
     }

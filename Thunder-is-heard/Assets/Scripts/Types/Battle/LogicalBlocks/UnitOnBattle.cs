@@ -23,12 +23,6 @@ public class UnitOnBattle: ObjectOnBattle
     public SkillOnBattle[] SkillsData { get { return skillsData; } }
 
 
-    public Effect[] effectsData;
-
-    [JsonIgnore]
-    public Effect[] EffectsData { get { return effectsData; } }
-
-
 
     public UnitOnBattle() { }
 
@@ -45,8 +39,7 @@ public class UnitOnBattle: ObjectOnBattle
         string unitDoctrine,
         string unitSide,
         string unitIdOnBattle = null,
-        SkillOnBattle[] unitSkillsData = null,
-        Effect[] unitEffects = null
+        SkillOnBattle[] unitSkillsData = null
         )
     {
         coreId = coreUnitId;
@@ -61,7 +54,6 @@ public class UnitOnBattle: ObjectOnBattle
         doctrine = unitDoctrine;
         side = unitSide;
         skillsData = unitSkillsData;
-        effectsData = unitEffects;
 
         if (unitIdOnBattle == null)
         {
@@ -111,8 +103,7 @@ public class UnitOnBattle: ObjectOnBattle
             doctrine,
             side,
             idOnBattle,
-            skillsData,
-            effectsData
+            skillsData
         );
     }
 }

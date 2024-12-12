@@ -78,6 +78,13 @@ public class BattleEngine : MonoBehaviour
         return 0;
     }
 
+    public static int CalculateDamageToObject(BattleSituation battleSituation, ObjectOnBattle[] attackersData, ObjectOnBattle obj)
+    {
+        if (obj is UnitOnBattle objAsUnit) return CalculateDamageToObject(battleSituation, attackersData, objAsUnit);
+        else if (obj is BuildOnBattle objAsBuild) return CalculateDamageToBuild(battleSituation, attackersData, objAsBuild);
+        return 0;
+    }
+
     public static int CalculateDamageToBuild(BattleSituation battleSituation, ObjectOnBattle[] attackersData, BuildOnBattle build)
     {
         int totalDamage = 0;
@@ -116,6 +123,8 @@ public class BattleEngine : MonoBehaviour
 
     public static int GetDistanceBetweenPointAndRectangleOfPoints(Bector2Int point, RectangleBector2Int rectangle)
     {
+        if (rectangle._size._x == 1 && rectangle._size._y == 1) return GetDistanceBetweenPoints(point, rectangle._startPosition);
+
         // Ќаходим минимальное рассто€ние по каждой оси
         int minDistanceX = Mathf.Min(
             Mathf.Abs(point._x - rectangle._startPosition._x),

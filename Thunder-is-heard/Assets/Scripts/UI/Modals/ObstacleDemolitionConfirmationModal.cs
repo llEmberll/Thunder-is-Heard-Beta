@@ -18,9 +18,6 @@ public class ObstacleDemolitionConfirmationModal : UIElement
 
     public void Start()
     {
-
-        Debug.Log("Start in demolition class");
-
         InitListeners();
         InitResourceProcessor();
         Hide();

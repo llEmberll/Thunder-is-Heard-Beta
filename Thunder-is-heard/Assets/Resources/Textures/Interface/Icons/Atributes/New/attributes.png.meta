@@ -287,7 +287,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackInMotion
+      name: move_with_attack
       rect:
         serializedVersion: 2
         x: 840
@@ -528,7 +528,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      AttackInMotion: -1926577291
       Damage: -151990711
       Distance: 623335279
       DoubleDamage: -156062805
@@ -541,6 +540,7 @@ TextureImporter:
       Health: -266341983
       Mobility: -632086182
       ThrowingGrenade: 1791787653
+      move_with_attack: -1926577291
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_13": 1636646018
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_14": -222219879
       "\u0410\u0442\u0440\u0438\u0431\u0443\u0442\u0438\u043A\u0430\u041E\u0431\u0449\u0430\u044F_16": -232231400

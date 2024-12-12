@@ -2,6 +2,9 @@
 
 public interface ISkill
 {
+    public abstract string CoreId { get; }
+    public abstract string ChildId { get; }
+
     public abstract string Name { get; }
     public abstract bool IsActive { get; }
 
@@ -11,7 +14,6 @@ public interface ISkill
 
     public abstract int Cooldown { get; }
     public abstract int CurrentCooldown { get; set; }
-    public abstract Effect Effect { get; }
 
 
     public abstract UnitsOnFight UnitsManager { get; }

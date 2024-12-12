@@ -11,7 +11,6 @@ public class BaseMap : Map
 
     public void Start()
     {
-
     }
 
     public void CreateScenarioForTest()
@@ -1015,5 +1014,20 @@ public class BaseMap : Map
         obstaclesTable.AddOne(smallStone);
 
         Cache.Save(obstaclesTable);
+    }
+
+    public void CreateSkills()
+    {
+        SkillCacheTable skillsTable = Cache.LoadByType<SkillCacheTable>();
+
+        SkillCacheItem moveWithAttack = new SkillCacheItem(new Dictionary<string, object>());
+        moveWithAttack.SetExternalId("a60f271d-4aa1-41af-b6d1-c89ed667dad6");
+        moveWithAttack.SetName("Move with attack");
+        moveWithAttack.SetRating(0);
+        moveWithAttack.SetIconSection("UIAttributes");
+        moveWithAttack.SetIconName("move_with_attack");
+
+        skillsTable.AddOne(moveWithAttack);
+        Cache.Save(skillsTable);
     }
 }

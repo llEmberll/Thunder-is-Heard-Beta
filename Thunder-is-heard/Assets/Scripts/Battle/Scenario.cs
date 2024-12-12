@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 
 [System.Serializable]
@@ -16,13 +14,6 @@ public class Scenario
     [SerializeField] public Map map;
     public Map Map { get { return map; } }
 
-    [SerializeField] public UnitOnBattle[] _units;
-    [SerializeField] public BuildOnBattle[] _builds;
-    [SerializeField] public ObstacleOnBattle[] _obstacles;
-
-    public UnitOnBattle[] Units { get { return _units; } }
-    public BuildOnBattle[] Builds { get { return _builds; } }
-    public ObstacleOnBattle[] Obstacles { get { return _obstacles; } }
 
     [SerializeField] public List<IStage> _stages;
     public List<IStage> Stages { get { return _stages; } }
@@ -40,12 +31,9 @@ public class Scenario
     public ObjectProcessor _objectProcessor;
 
 
-    public void Init(Map scenarioMap, UnitOnBattle[] units, BuildOnBattle[] builds, ObstacleOnBattle[] obstacles, List<Vector2Int> scenarioLandableCells, int landingMaxStaff, List<IStage> scenarioStages, int currentStage, bool isLanded)
+    public void Init(Map scenarioMap, List<Vector2Int> scenarioLandableCells, int landingMaxStaff, List<IStage> scenarioStages, int currentStage, bool isLanded)
     {
         map = scenarioMap;
-        _units = units;
-        _builds = builds;
-        _obstacles = obstacles;
         _landableCells = scenarioLandableCells;
         _landingMaxStaff = landingMaxStaff;
         _stages = scenarioStages;
@@ -134,6 +122,4 @@ public class Scenario
 
         ContinueStage();
     }
-
-
 }

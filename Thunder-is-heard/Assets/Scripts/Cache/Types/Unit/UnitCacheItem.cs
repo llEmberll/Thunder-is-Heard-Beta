@@ -1,4 +1,3 @@
-using Google.Protobuf.WellKnownTypes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -60,9 +59,9 @@ public class UnitCacheItem : CacheItem
             SetIconName("");
         }
 
-        if (!objFields.ContainsKey("skills"))
+        if (!objFields.ContainsKey("skillIds"))
         {
-            SetSkills(new string[] { });
+            SetSkillIds(new string[] { });
         }
 
         if (!objFields.ContainsKey("unitType"))
@@ -215,9 +214,9 @@ public class UnitCacheItem : CacheItem
         SetField("mobility", value);
     }
 
-    public string[] GetSkills()
+    public string[] GetSkillIds()
     {
-        object value = GetField("skills");
+        object value = GetField("skillIds");
         if (value == null)
         {
             return new string[] { };
@@ -226,9 +225,9 @@ public class UnitCacheItem : CacheItem
         return JsonConvert.DeserializeObject<string[]>(value.ToString());
     }
 
-    public void SetSkills(string[] value)
+    public void SetSkillIds(string[] value)
     {
-        SetField("skills", value);
+        SetField("skillIds", value);
     }
 
     public string GetUnitType()

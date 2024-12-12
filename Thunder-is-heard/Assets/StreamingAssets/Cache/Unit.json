@@ -46,7 +46,7 @@
         "iconName": "",
         "name": "Assaulters",
         "modelPath": "Prefabs/Entity/Units/Assaulters",
-        "skills": [],
+        "skillIds": [],
         "unitType": "infantry",
         "doctrine": "land",
         "movementSpeed": 1
@@ -97,7 +97,7 @@
         "iconName": "",
         "name": "Osoka",
         "modelPath": "Prefabs/Entity/Units/Osoka",
-        "skills": [],
+        "skillIds": [],
         "unitType": "vehicle",
         "doctrine": "land",
         "movementSpeed": 1
@@ -148,7 +148,7 @@
         "iconName": "",
         "name": "Vortex",
         "modelPath": "Prefabs/Entity/Units/Vortex",
-        "skills": [],
+        "skillIds": [],
         "unitType": "vehicle",
         "doctrine": "land",
         "movementSpeed": 1
@@ -199,7 +199,7 @@
         "iconName": "",
         "name": "Scout",
         "modelPath": "Prefabs/Entity/Units/Scout",
-        "skills": [],
+        "skillIds": [ "a60f271d-4aa1-41af-b6d1-c89ed667dad6" ],
         "unitType": "infantry",
         "doctrine": "land",
         "movementSpeed": 1
@@ -250,7 +250,7 @@
         "iconName": "",
         "name": "Sniper",
         "modelPath": "Prefabs/Entity/Units/Sniper",
-        "skills": [],
+        "skillIds": [],
         "unitType": "infantry",
         "doctrine": "land",
         "movementSpeed": 1

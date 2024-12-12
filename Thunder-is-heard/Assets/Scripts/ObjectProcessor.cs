@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
 public class ObjectProcessor : MonoBehaviour
 {
     public Map map;
@@ -210,7 +211,8 @@ public class ObjectProcessor : MonoBehaviour
                 size: currentCoreUnitData.GetSize().ToVector2Int(),
                 occypation: new List<Vector2Int>() { unit.position.First().ToVector2Int() },
                 unit.health,
-                unit.side
+                unit.side,
+                unit.skillsData
                 );
         }
     }
@@ -242,7 +244,18 @@ public class ObjectProcessor : MonoBehaviour
     }
 
     // ¬ключить преобразование скилов и эффектов, сделать фабрику скилов и эффектов
-    public void CreateObjectOnBattle(string battleId, string coreId, string type, Transform model, string objName, Vector2Int size, List<Vector2Int> occypation, int? currentHealth = null, string side = null)
+    public void CreateObjectOnBattle(
+        string battleId, 
+        string coreId,
+        string type, 
+        Transform model,
+        string objName, 
+        Vector2Int size,
+        List<Vector2Int> occypation, 
+        int? currentHealth = null, 
+        string side = null,
+        SkillOnBattle[] skillDatas = null
+        )
     {
         if (battleId == null) return;
         if (side == null) side = Sides.federation;
@@ -325,6 +338,16 @@ public class ObjectProcessor : MonoBehaviour
 
             entity = CreateObject(coreId, type, model, objName, size, occypation);
 
+            string[] skillIds = new string[] {};
+            if (skillDatas == null)
+            {
+                skillIds = coreUnitData.GetSkillIds();
+            }
+            else
+            {
+                skillIds = SkillOnBattle.GetSkillIdsBySkillOnBattleDatas(skillDatas);
+            }
+
             AddAndPrepareUnitComponent(
                 entity,
                 model,
@@ -341,8 +364,10 @@ public class ObjectProcessor : MonoBehaviour
                 side,
                 unitType,
                 doctrine,
-                movementSpeed
+                movementSpeed,
+                skillIds
                 );
+            ConfigureSkills(entity.GetComponent<Unit>(), skillDatas);
         }
 
         EventMaster.current.ExposeObject(entity.GetComponent<Entity>());
@@ -410,6 +435,7 @@ public class ObjectProcessor : MonoBehaviour
             string unitType = coreUnitData.GetUnitType();
             string doctrine = coreUnitData.GetDoctrine();
             float movementSpeed = coreUnitData.GetMovementSpeed();
+            string[] skillIds = coreUnitData.GetSkillIds();
 
             PlayerUnitCacheItem playerUnitCacheItem = AddNewUnitOnBaseToCache(
             coreId,
@@ -436,7 +462,8 @@ public class ObjectProcessor : MonoBehaviour
                 side,
                 unitType,
                 doctrine,
-                movementSpeed
+                movementSpeed,
+                skillIds
                 );
         }
 
@@ -651,10 +678,14 @@ public class ObjectProcessor : MonoBehaviour
         string side,
         string unitType,
         string doctrine,
-        float movementSpeed
+        float movementSpeed,
+        string[] skillIds
         )
     {
         Unit component = unitObj.AddComponent<Unit>();
+        component.coreId = coreId;
+        component.childId = childId;
+
         component.SetName(objName);
         component.SetOriginalSize(size);
         component.SetModel(model);
@@ -665,8 +696,42 @@ public class ObjectProcessor : MonoBehaviour
         component.SetDoctrine(doctrine);
         component.SetMovementSpeed(movementSpeed);
 
-        component.coreId = coreId;
-        component.childId = childId;
+        if (skillIds == null || skillIds.Length < 1) return;
+        Skill[] skillComponents = new Skill[skillIds.Length];
+
+        int index = 0;
+        foreach (string skillId in skillIds)
+        {
+            Skill currentSkillComponent = SkillFactory.GetSkillById(skillId);
+            skillComponents[index] = currentSkillComponent;
+            index++;
+        }
+
+        component.SetSkills(skillComponents);
+    }
+
+    public static void ConfigureSkills(Unit unit, SkillOnBattle[] skillDatas)
+    {
+        if (skillDatas == null || skillDatas.Length == 0) return;
+
+        Skill[] skillComponents = unit._skills;
+
+        foreach (Skill skillComponent in skillComponents)
+        {
+            string currentSkillCoreId = skillComponent.CoreId;
+            SkillOnBattle currentSkillOnBattle = null;
+            foreach (SkillOnBattle skillOnBattle in skillDatas)
+            {
+                if (skillOnBattle.coreId == currentSkillCoreId)
+                {
+                    currentSkillOnBattle = skillOnBattle;
+                }
+            }
+
+            if (currentSkillOnBattle == null) continue;
+
+            skillComponent.Configure(currentSkillOnBattle);
+        }
     }
 
     public static void AddAndPrepareProductsNotificationComponent(
@@ -800,8 +865,7 @@ public class ObjectProcessor : MonoBehaviour
         int distance,
         int mobility,
         string side = null,
-        SkillOnBattle[] skillsData = null,
-        Effect[] effectsData = null
+        SkillOnBattle[] skillsData = null
         )
     {
         if (side == null) side = Sides.federation;
@@ -836,8 +900,7 @@ public class ObjectProcessor : MonoBehaviour
             unitType,
             doctrine,
             side,
-            unitSkillsData: skillsData,
-            unitEffects: effectsData
+            unitSkillsData: skillsData
             );
         updatedBattleUnits[battleUnits.Length] = newUnit;
 

@@ -9,7 +9,14 @@ public abstract class AttackModifier : Skill
     public ICondition[] Conditions { get { return _conditions; } }
 
 
+    public AttackModifier()
+    {
+
+    }
+
     public AttackModifier(
+        string coreId,
+        string childId,
         string name, 
         bool isActive, 
         string targetType, 
@@ -17,9 +24,8 @@ public abstract class AttackModifier : Skill
         string targetUnitDoctrine,
         int cooldown, 
         int currentCooldown, 
-        Effect effect,
         ICondition[] conditions
-        ) : base(name, isActive, targetType, targetUnitType, targetUnitDoctrine, cooldown, currentCooldown, effect)
+        ) : base(coreId, childId, name, isActive, targetType, targetUnitType, targetUnitDoctrine, cooldown, currentCooldown)
     {
         _conditions = conditions;
     }

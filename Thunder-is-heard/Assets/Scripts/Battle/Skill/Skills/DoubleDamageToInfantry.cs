@@ -8,6 +8,8 @@ public class DoubleDamageToInfantry : AttackModifier
 
 
     public DoubleDamageToInfantry(
+        string coreId,
+        string childId,
         string name,
         bool isActive,
         string targetType,
@@ -15,9 +17,8 @@ public class DoubleDamageToInfantry : AttackModifier
         string targetUnitDoctrine,
         int cooldown,
         int currentCooldown,
-        Effect effect,
         ICondition[] conditions
-        ) : base(name, isActive, targetType, targetUnitType, targetUnitDoctrine, cooldown, currentCooldown, effect, conditions) 
+        ) : base(coreId, childId,name, isActive, targetType, targetUnitType, targetUnitDoctrine, cooldown, currentCooldown, conditions) 
     {
     }
     
