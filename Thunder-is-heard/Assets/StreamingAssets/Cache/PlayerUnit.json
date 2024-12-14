@@ -4,13 +4,13 @@
       "fields": {
         "externalId": "c1e921ea-3934-49e6-86ba-eb5bb9768934",
         "description": "",
-        "rotation": 270,
+        "rotation": 0,
         "coreId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
         "name": "Vortex",
         "position": [
           {
-            "x": 12,
-            "y": 1
+            "x": 11,
+            "y": 0
           }
         ]
       }

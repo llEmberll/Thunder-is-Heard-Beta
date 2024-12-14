@@ -6,8 +6,8 @@ public static class SkillFactory
 {
     public static Dictionary<string, Type> skillsByName = new Dictionary<string, Type>()
     {
-        { "MoveWithAttack", typeof(MoveWithAttack) },
-        { "DoubleDamageToInfantry", typeof(DoubleDamageToInfantry) },
+        { "Move with attack", typeof(MoveWithAttack) },
+        { "Double damage to infantry", typeof(DoubleDamageToInfantry) },
     };
 
     public static Skill GetSkillById(string id)

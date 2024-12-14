@@ -27,6 +27,10 @@ public class Selector : MonoBehaviour
     public Image damagePanel;
     public TMP_Text damageCount;
 
+    public GameObject skillsPanel;
+    public Transform skillsContent;
+    public GameObject _skillPrefab;
+
 
     public Canvas productsInfoCanvas;
     public Vector3 productsInfoCanvasOffset = new Vector3(-0.408f, 2.83f, -0.408f);
@@ -40,13 +44,13 @@ public class Selector : MonoBehaviour
     void Start()
     {
         InitSelectorSprites();
+        InitSkillElementPrefab();
         TurnOff();
 
         EventMaster.current.EnteredOnObject += OnEnterObject;
         EventMaster.current.ExitedOnObject += OnExitObject;
         EventMaster.current.DamagedObject += OnDamageObject;
         EventMaster.current.DestroyedObject += OnDestroyObject;
-
     }
 
     public void InitSelectorSprites()
@@ -57,6 +61,10 @@ public class Selector : MonoBehaviour
         attackableSelector = Resources.Load<Sprite>(Config.resources["attackableSelector"]);
     }
 
+    public void InitSkillElementPrefab()
+    {
+        _skillPrefab = Resources.Load<GameObject>(Config.resources["UISkillItemPrefab"]);
+    }
 
     private void Update()
     {
@@ -97,7 +105,7 @@ public class Selector : MonoBehaviour
         else if (obj is Unit)
         {
             Unit unit = (Unit)obj;
-            if (unit._skills != null)
+            if (unit._skills != null && unit._skills.Length > 0)
             {
                 ConfigureSkillsInfo(unit);
             }
@@ -128,6 +136,7 @@ public class Selector : MonoBehaviour
     public void TurnOff()
     {
         _selectedObject = null;
+        skillsPanel.SetActive(false);
         objectInfoCanvas.enabled = attackRadiusCanvas.enabled =  productsInfoCanvas.enabled = false;
         selector.SetActive(false);
         isSelectedObjectProducts = false;
@@ -308,7 +317,43 @@ public class Selector : MonoBehaviour
 
     public void ConfigureSkillsInfo(Unit unit)
     {
-        // реализовать
+        skillsPanel.SetActive(true);
+        ClearSkills();
+
+        foreach (Skill skillOnUnit in unit._skills)
+        {
+            CreateSkill(skillOnUnit.CoreId);
+        }
+    }
+
+    public void ClearSkills()
+    {
+        foreach (Transform child in skillsContent)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    public void CreateSkill(string skillId)
+    {
+        SkillCacheTable skillsTable = Cache.LoadByType<SkillCacheTable>();
+        CacheItem cacheItem = skillsTable.GetById(skillId);
+        SkillCacheItem coreSkillData = new SkillCacheItem(cacheItem.Fields);
+        string iconSection = Config.resources[coreSkillData.GetIconSection()];
+        string iconName = coreSkillData.GetIconName();
+        Sprite icon = FindSpriteByName(iconName, Resources.LoadAll<Sprite>(iconSection));
+
+        string descriptionText = coreSkillData.GetName();
+
+        GameObject skillObject = Instantiate(_skillPrefab);
+        skillObject.transform.SetParent(skillsContent, false);
+
+        Image skillImage = skillObject.transform.Find("Icon").GetComponent<Image>();
+        skillImage.sprite = icon;
+
+        GameObject skillDescription = skillObject.transform.Find("Description").gameObject;
+        TMP_Text skillDescriptionTextComponent = skillDescription.GetComponent<TMP_Text>();
+        skillDescriptionTextComponent.text = descriptionText;
     }
 
     public void ConfigureProductsInfoCanvasPosition(Build build)
@@ -318,6 +363,22 @@ public class Selector : MonoBehaviour
             productsInfoCanvasOffset.y,
             build.model.transform.position.z + productsInfoCanvasOffset.z
         );
+    }
+
+    public Sprite FindSpriteByName(string name, Sprite[] sprites)
+    {
+        if (sprites == null) return null;
+
+        name = name.ToLower();
+        foreach (Sprite icon in sprites)
+        {
+            if (name.Contains(icon.name))
+            {
+                return icon;
+            }
+        }
+
+        return null;
     }
 
     public void ConfigureProductionForContract(string contractId)

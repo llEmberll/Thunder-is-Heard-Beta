@@ -31,7 +31,7 @@ public class AttackingAI : AbstractAI
         TurnData bestMoveWithNextTurnAttack = GetBestAttackOnNextTurn(battleSituation, movements);
         if (bestMoveWithNextTurnAttack != null) return bestMoveWithNextTurnAttack;
 
-        Dictionary<string, ObjectOnBattle> objectsUnderAttack = battleSituation.GetUnitTargetsUnderAttackBySide(battleSituation._sideTurn);
+        Dictionary<string, ObjectOnBattle> objectsUnderAttack = battleSituation.GetUnitsUnderAttackBySide(battleSituation._sideTurn);
         if (objectsUnderAttack.Count > 0)
         {
             return GetMovementWithFastestApproachToAttack(battleSituation, movements);

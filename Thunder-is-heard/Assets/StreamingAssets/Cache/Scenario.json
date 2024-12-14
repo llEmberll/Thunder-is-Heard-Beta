@@ -15,7 +15,6 @@
             "mobility": 2,
             "type": "infantry",
             "skillsData": null,
-            "effectsData": null,
             "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
             "idOnBattle": "03a65484-e0c4-4bec-a8eb-277c22a53ef4",
             "position": [
@@ -103,7 +102,7 @@
               "y": 1
             }
           ],
-          "maxStaff": 40
+          "maxStaff": 6
         },
         "stages": [
           {
@@ -111,22 +110,28 @@
             "units": [
               {
                 "mobility": 4,
-                "type": "vehicle",
-                "skillsData": null,
-                "effectsData": null,
-                "coreId": "035655f8-a347-4057-87cc-83385fa20660",
-                "idOnBattle": "725f70fd-417e-4ca7-9b6f-ff5b19c8e4e6",
-                "position": [
+                "type": "infantry",
+                "skillsData": [
                   {
-                    "x": 4,
-                    "y": 5
+                    "coreId": "a60f271d-4aa1-41af-b6d1-c89ed667dad6",
+                    "childId": null,
+                    "cooldown": 0,
+                    "isActive": false
                   }
                 ],
-                "rotation": 90,
-                "maxHealth": 6,
-                "health": 6,
-                "damage": 3,
-                "distance": 3,
+                "coreId": "1db672c3-4207-4629-a1ee-ca054c83ba7c",
+                "idOnBattle": "0608207f-edff-490c-a726-9d6893b882b9",
+                "position": [
+                  {
+                    "x": 5,
+                    "y": 4
+                  }
+                ],
+                "rotation": 0,
+                "maxHealth": 2,
+                "health": 2,
+                "damage": 2,
+                "distance": 1,
                 "side": "Empire",
                 "doctrine": "land"
               }

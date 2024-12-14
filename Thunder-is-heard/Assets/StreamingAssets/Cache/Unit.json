@@ -189,7 +189,7 @@
         "createTime": 3,
         "health": 2,
         "damage": 2,
-        "distance": 2,
+        "distance": 1,
         "mobility": 4,
         "size": {
           "x": 1,

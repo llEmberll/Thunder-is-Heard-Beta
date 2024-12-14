@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
+
 
 public class WaitingAI : AbstractAI
 {
@@ -17,7 +15,7 @@ public class WaitingAI : AbstractAI
             return GetBestAttack(_battleEngine.currentBattleSituation, attackMoves);
         }
 
-        Dictionary<string, ObjectOnBattle> objectsUnderAttack = _battleEngine.currentBattleSituation.GetTargetsUnderAttackBySide(_battleEngine.currentBattleSituation._sideTurn);
+        Dictionary<string, ObjectOnBattle> objectsUnderAttack = _battleEngine.currentBattleSituation.GetObjectsUnderAttackBySide(_battleEngine.currentBattleSituation._sideTurn);
         Dictionary<TurnData, BattleSituation> movementMoves = _battleEngine.currentBattleSituation.GetAllMovementSequels();
         if (objectsUnderAttack.Count < 1 || movementMoves.Count < 1)
         {

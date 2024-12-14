@@ -36,8 +36,17 @@ public abstract class AbstractAI : AIInterface
                 destructions.Add(keyValuePair.Key, keyValuePair.Value);
             }
 
-            ObjectOnBattle[] attackersData = currentBattleSituation.attackersByObjectId[keyValuePair.Key._targetIdOnBattle].ToArray();
-            int currentDamage = BattleEngine.CalculateDamageToTargetById(currentBattleSituation, attackersData, keyValuePair.Key._targetIdOnBattle);
+            List<ObjectOnBattle> attackersData = currentBattleSituation.GetAttackersByTargetId(keyValuePair.Key._targetIdOnBattle);
+            if (keyValuePair.Key._activeUnitIdOnBattle != null)
+            {
+                ObjectOnBattle activeUnitAttacker = currentBattleSituation.GetUnitById(keyValuePair.Key._activeUnitIdOnBattle);
+                if (!attackersData.Contains(activeUnitAttacker))
+                {
+                    attackersData.Add(activeUnitAttacker);
+                }
+            }
+
+            int currentDamage = BattleEngine.CalculateDamageToTargetById(currentBattleSituation, attackersData.ToArray(), keyValuePair.Key._targetIdOnBattle);
             if (currentDamage > greaterDamage)
             {
                 turnWithGreaterDamage = keyValuePair.Key;
@@ -87,12 +96,17 @@ public abstract class AbstractAI : AIInterface
             {
                 TurnData bestAttackInCurrentBattleSituation = GetBestAttack(currentBattleSituationWhenNextSideTurn, attackMovesInCurrentBattleSituation);
 
-                ObjectOnBattle[] attackersData = currentBattleSituationWhenNextSideTurn.attackersByObjectId[bestAttackInCurrentBattleSituation._targetIdOnBattle].ToArray();
+                List<ObjectOnBattle> attackersData = currentBattleSituationWhenNextSideTurn.GetAttackersByTargetId(bestAttackInCurrentBattleSituation._targetIdOnBattle);
+
+                if (!attackersData.Contains(currentActiveUnit))
+                {
+                    attackersData.Add(currentActiveUnit);
+                }
                 ObjectOnBattle[] activeUnitAttackers = currentBattleSituationWhenNextSideTurn.GetAttackersByTarget(currentActiveUnit).ToArray();
                 int damageToActiveUnitInBestAttackInCurrentBattleSituation = BattleEngine.CalculateDamageToTargetById(currentBattleSituationWhenNextSideTurn, activeUnitAttackers, currentMove._activeUnitIdOnBattle);
                 if (damageToActiveUnitInBestAttackInCurrentBattleSituation >= currentActiveUnit.Health) continue;
                 
-                int damageByBestAttackInCurrentBattleSituation = BattleEngine.CalculateDamageToTargetById(currentBattleSituationWhenNextSideTurn, attackersData, bestAttackInCurrentBattleSituation._targetIdOnBattle);
+                int damageByBestAttackInCurrentBattleSituation = BattleEngine.CalculateDamageToTargetById(currentBattleSituationWhenNextSideTurn, attackersData.ToArray(), bestAttackInCurrentBattleSituation._targetIdOnBattle);
                 int currentDistanceToEnemy = currentBattleSituationWhenNextSideTurn.FindDistanceToNearestUnitBySide(currentActiveUnit.Position.First(), Sides.enemySideBySide[battleSituation._sideTurn]);
                 if (damageByBestAttackInCurrentBattleSituation > greaterDamageByAttackOnNextTurn)
                 {

@@ -149,12 +149,30 @@ public class TurnController : MonoBehaviour
 
     public void OnEnemyObjectClick(Entity obj)
     {
-        if (!BattleEngine.IsPossibleToAttackTarget(_battleEngine.currentBattleSituation, obj)) return;
+        if (CanMoveWithAttack(obj))
+        {
+            SetTarget(obj);
+            Execute();
+        }
+        else
+        {
+            if (!BattleEngine.IsPossibleToAttackTarget(_battleEngine.currentBattleSituation, obj)) return;
+            ClearRoute();
+            ClearActiveUnit();
+            SetTarget(obj);
+            Execute();
+        }
+    }
 
-        ClearRoute();
-        ClearActiveUnit();
-        SetTarget(obj);
-        Execute();
+    public bool CanMoveWithAttack(Entity obj)
+    {
+        if (_turnData._activeUnitIdOnBattle == null) return false;
+        UnitOnBattle activeUnitOnBattle = _battleEngine.currentBattleSituation.GetUnitById(_turnData._activeUnitIdOnBattle);
+        if (!_battleEngine.currentBattleSituation.CanMoveWithAttack(activeUnitOnBattle)) return false;
+        if (_turnData._route == null || _turnData._route.Count < 1) return false;
+
+        ObjectOnBattle targetObjectOnBattle = _battleEngine.currentBattleSituation.GetObjectById(obj.ChildId);
+        return _battleEngine.currentBattleSituation.CanObjectAttackWithoutMovingObjectFromNewPosition(activeUnitOnBattle, targetObjectOnBattle, _turnData._route.Last());
     }
 
     public void OnFriendlyObjectClick(Entity obj)

@@ -76,9 +76,22 @@ public class UnitOnBattle: ObjectOnBattle
         doctrine = unit._doctrine;
         side = unit.side;
 
-        //skillsData = реализовать;
-        //effectsData = реализовать;
+        if (unit._skills == null ||  unit._skills.Length < 1)
+        {
+            skillsData = null;
+        }
+        else
+        {
+            SkillOnBattle[] collectedSkillsData = new SkillOnBattle[unit._skills.Length];
 
+            int index = 0;
+            foreach (Skill skill in unit._skills)
+            {
+                collectedSkillsData[index] = new SkillOnBattle(skill);
+            }
+            skillsData = collectedSkillsData;
+        }
+       
         string unitIdOnBattle = unit.ChildId;
         if (unitIdOnBattle == null)
         {

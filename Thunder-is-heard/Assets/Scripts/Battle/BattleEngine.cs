@@ -80,7 +80,7 @@ public class BattleEngine : MonoBehaviour
 
     public static int CalculateDamageToObject(BattleSituation battleSituation, ObjectOnBattle[] attackersData, ObjectOnBattle obj)
     {
-        if (obj is UnitOnBattle objAsUnit) return CalculateDamageToObject(battleSituation, attackersData, objAsUnit);
+        if (obj is UnitOnBattle objAsUnit) return CalculateDamageToUnit(battleSituation, attackersData, objAsUnit);
         else if (obj is BuildOnBattle objAsBuild) return CalculateDamageToBuild(battleSituation, attackersData, objAsBuild);
         return 0;
     }
@@ -284,7 +284,6 @@ public class BattleEngine : MonoBehaviour
 
     public static bool IsPossibleToAttackTarget(BattleSituation battleSituation, Entity entity)
     {
-        Dictionary<string, List<ObjectOnBattle>> attackersData = battleSituation.attackersByObjectId;
         return battleSituation.attackersByObjectId.ContainsKey(entity.ChildId);
     }
 

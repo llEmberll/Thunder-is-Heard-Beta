@@ -273,7 +273,8 @@ public class FightDirector : MonoBehaviour
     {
         if (turnData != null)
         {
-            if (IsTurnContainsMovement(turnData)) 
+            bool isTurnContainsMovement = IsTurnContainsMovement(turnData);
+            if (isTurnContainsMovement) 
             {
                 Debug.Log("Ход с передвижением");
 
@@ -301,14 +302,23 @@ public class FightDirector : MonoBehaviour
 
                 Debug.Log("Ход с атакой по " + target.name);
 
-                UnitOnBattle[] attackersData = _battleEngine.currentBattleSituation.attackersByObjectId[target.ChildId].ToArray().OfType<UnitOnBattle>().ToArray();
-                if (attackersData != null && attackersData.Length > 0)
+                List<UnitOnBattle> attackersData = _battleEngine.currentBattleSituation.GetAttackersByTargetId(target.ChildId).ToArray().OfType<UnitOnBattle>().ToList();
+                
+                if (isTurnContainsMovement)
+                {
+                    UnitOnBattle activeUnit = _battleEngine.currentBattleSituation.GetUnitById(turnData._activeUnitIdOnBattle);
+                    if (!attackersData.Contains(activeUnit))
+                    {
+                        attackersData.Add(activeUnit);
+                    }
+                }
+                if (attackersData != null && attackersData.Count > 0)
                 {
 
                     Debug.Log(attackersData.Count() + "атакующих");
 
-                    List<Unit> attackers = _unitsOnFightManager.GetUnitsByBattleUnitsData(attackersData);
-                    int damage = BattleEngine.CalculateDamageToEntity(_battleEngine.currentBattleSituation, attackersData, target); // Нужно учесть модификаторы от скилов + эффекты
+                    List<Unit> attackers = _unitsOnFightManager.GetUnitsByBattleUnitsData(attackersData.ToArray());
+                    int damage = BattleEngine.CalculateDamageToEntity(_battleEngine.currentBattleSituation, attackersData.ToArray(), target); // Нужно учесть модификаторы от скилов + эффекты
 
                     Debug.Log("Урон " + damage);
 

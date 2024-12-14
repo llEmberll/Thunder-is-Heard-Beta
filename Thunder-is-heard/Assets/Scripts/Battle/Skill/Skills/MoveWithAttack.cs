@@ -5,6 +5,11 @@ public class MoveWithAttack : Skill
     public string name = "Move with attack";
 
 
+    public MoveWithAttack()
+    {
+
+    }
+
     public MoveWithAttack(
         string coreId,
         string childId,

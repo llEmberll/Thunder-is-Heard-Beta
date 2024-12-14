@@ -414,31 +414,36 @@ public class BattleSituation
         }
     }
 
+    public bool CanObjectAttackWithoutMovingObjectFromNewPosition(ObjectOnBattle attacker, ObjectOnBattle target, Bector2Int newPosition)
+    {
+        return BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(newPosition, new RectangleBector2Int(target.Position)) <= attacker.Distance;
+    }
+
     public bool CanObjectAttackObject(ObjectOnBattle attacker, ObjectOnBattle target)
     {
-        if (attacker is UnitOnBattle && CanMoveWithAttack(attacker as UnitOnBattle))
-        {
-            UnitOnBattle attackerAsUnit = attacker as UnitOnBattle;
-            if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerAsUnit.Position.First(), new RectangleBector2Int(target.Position)) < attackerAsUnit.Distance + attackerAsUnit.Mobility)
-            {
-                // ƒаже в чистом поле невозможно достать до цели
-                return false;
-            }
+        //if (attacker is UnitOnBattle && CanMoveWithAttack(attacker as UnitOnBattle))
+        //{
+        //    UnitOnBattle attackerAsUnit = attacker as UnitOnBattle;
+        //    if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerAsUnit.Position.First(), new RectangleBector2Int(target.Position)) < attackerAsUnit.Distance + attackerAsUnit.Mobility)
+        //    {
+        //        // ƒаже в чистом поле невозможно достать до цели
+        //        return false;
+        //    }
 
-            List<Bector2Int> attackerReachablePositions = _map.GetReachablePositions(attackerAsUnit.Position.First(), attackerAsUnit.Mobility);
-            foreach (Bector2Int position in attackerReachablePositions)
-            {
-                if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(position, new RectangleBector2Int(target.Position)) <= attackerAsUnit.Distance)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        else
-        {
+        //    List<Bector2Int> attackerReachablePositions = _map.GetReachablePositions(attackerAsUnit.Position.First(), attackerAsUnit.Mobility);
+        //    foreach (Bector2Int position in attackerReachablePositions)
+        //    {
+        //        if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(position, new RectangleBector2Int(target.Position)) <= attackerAsUnit.Distance)
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
+        //else
+        //{
             return BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attacker.Position.First(), new RectangleBector2Int(target.Position)) <= attacker.Distance;
-        }
+        //}
     }
 
     public void UpdateAttackersForBuildTarget(BuildOnBattle build)
@@ -588,6 +593,11 @@ public class BattleSituation
         }
     }
 
+    public bool CanMoveWithAttack(string unitId)
+    {
+        UnitOnBattle unit = GetUnitById(unitId);
+        return CanMoveWithAttack(unit);
+    }
 
     public bool CanMoveWithAttack(UnitOnBattle unit)
     {
@@ -606,8 +616,9 @@ public class BattleSituation
     public Dictionary<string, ObjectOnBattle> GetPossibleTargetsBySide(string side)
     {
         string targetsSide = Sides.enemySideBySide[side];
-        Dictionary<string, ObjectOnBattle> buildTargets = GetBuildTargetsBySide(targetsSide);
-        Dictionary<string, ObjectOnBattle> unitTargets = GetUnitTargetsBySide(targetsSide);
+
+        Dictionary<string, ObjectOnBattle> buildTargets = GetBuildsCollectionBySide(targetsSide);
+        Dictionary<string, ObjectOnBattle> unitTargets = GetUnitsCollectionBySide(targetsSide);
         Dictionary<string, ObjectOnBattle> allTargets = buildTargets.Concat(unitTargets).ToDictionary(x => x.Key, x => x.Value);
         return allTargets;
     }
@@ -619,9 +630,9 @@ public class BattleSituation
         return unitTargets;
     }
 
-    public Dictionary<string, ObjectOnBattle> GetTargetsUnderAttackBySide(string side)
+    public Dictionary<string, ObjectOnBattle> GetObjectsUnderAttackBySide(string side)
     {
-        Dictionary<string, ObjectOnBattle> possibleTargets = GetPossibleTargetsBySide(side);
+        Dictionary<string, ObjectOnBattle> possibleTargets = GetPossibleTargetsBySide(Sides.enemySideBySide[side]);
         Dictionary<string, ObjectOnBattle> targetsUnderAttack = new Dictionary<string, ObjectOnBattle>();
 
         foreach (var keyValuePair in possibleTargets)
@@ -636,7 +647,7 @@ public class BattleSituation
         return targetsUnderAttack;
     }
 
-    public Dictionary<string, ObjectOnBattle> GetUnitTargetsUnderAttackBySide(string side)
+    public Dictionary<string, ObjectOnBattle> GetUnitsUnderAttackBySide(string side)
     {
         Dictionary<string, ObjectOnBattle> possibleTargets = GetPossibleUnitTargetsBySide(side);
         Dictionary<string, ObjectOnBattle> unitTargetsUnderAttack = new Dictionary<string, ObjectOnBattle>();
@@ -796,26 +807,18 @@ public class BattleSituation
     public Dictionary<TurnData, BattleSituation> GetAllMovementWithAttackSequels() 
     {
         Dictionary<TurnData, BattleSituation> battleSituationByTurn = new Dictionary<TurnData, BattleSituation>();
-        Dictionary<string, ObjectOnBattle> buildTargets = new Dictionary<string, ObjectOnBattle>();
-        Dictionary<string, ObjectOnBattle> unitTargets = new Dictionary<string, ObjectOnBattle>();
         Dictionary<string, ObjectOnBattle> possibleAttackers = new Dictionary<string, ObjectOnBattle>();
 
         if (_sideTurn == Sides.federation)
         {
-            buildTargets = empireBuilds;
-            unitTargets = empireUnits;
             possibleAttackers = federationUnits;
         }
         else if (_sideTurn == Sides.empire)
         {
-            buildTargets = federationBuilds;
-            unitTargets = federationUnits;
             possibleAttackers = empireUnits;
         }
         else
         {
-            buildTargets = federationBuilds.Concat(empireBuilds).ToDictionary(x => x.Key, x => x.Value);
-            unitTargets = federationUnits.Concat(empireUnits).ToDictionary(x => x.Key, x => x.Value);
             possibleAttackers = neutralUnits;
         }
 
@@ -833,12 +836,15 @@ public class BattleSituation
         foreach (var item in filteredAttackers)
         {
             UnitOnBattle currentAttacker = item.Value as UnitOnBattle;
-            List<ObjectOnBattle> targets = GetTargetsByAttacker(currentAttacker);
+            Dictionary<string, ObjectOnBattle> targets = GetReachableTargetsForUnitWithMoveWithAttack(currentAttacker);
             if (targets.Count < 1) continue;
 
-            foreach (ObjectOnBattle target in targets)
+            foreach (ObjectOnBattle target in targets.Values)
             {
-                int totalDamage = BattleEngine.CalculateDamageToObject(this, attackersByObjectId[target.IdOnBattle].ToArray(), target);
+                List<ObjectOnBattle> allTargetAttackers = GetAttackersByTarget(target);
+                allTargetAttackers.Add(currentAttacker);
+                
+                int totalDamage = BattleEngine.CalculateDamageToObject(this, allTargetAttackers.ToArray(), target);
 
                 List<Bector2Int> allPossiblePositionsToMoveAttacker = GetReachablePositionsByUnit(currentAttacker.idOnBattle);
                 List<Bector2Int> positionsFromWhichToAttack = new List<Bector2Int>();
@@ -976,6 +982,12 @@ public class BattleSituation
         return new Dictionary<TurnData, BattleSituation>() { { turn, battleSituationWithPass } };
     }
 
+    public List<ObjectOnBattle> GetAttackersByTargetId(string targetId)
+    {
+        ObjectOnBattle target = GetObjectById(targetId);
+        return GetAttackersByTarget(target);
+    }
+
     public List<ObjectOnBattle> GetAttackersByTarget(ObjectOnBattle target)
     {
         List<ObjectOnBattle> attackers = new List<ObjectOnBattle>();
@@ -1002,7 +1014,42 @@ public class BattleSituation
         }
 
         return targets;
-    } 
+    }
+
+    public Dictionary<string, ObjectOnBattle> GetReachableTargetsForUnitWithMoveWithAttack(UnitOnBattle attacker)
+    {
+        Dictionary<string, ObjectOnBattle> targetsBySide = GetPossibleTargetsBySide(attacker.side);
+
+        Dictionary<string, ObjectOnBattle> reachableTargets = new Dictionary<string, ObjectOnBattle>();
+
+        foreach (var target in targetsBySide.Values)
+        {
+            Bector2Int attackerPosition = attacker.Position.First();
+            int attackerDistanceWithMobility = attacker.Distance + attacker.Mobility;
+            RectangleBector2Int targetRectangle = new RectangleBector2Int(target.Position);
+
+            int distanceBetweenAttackerAndTarget = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(attackerPosition, targetRectangle);
+            bool targetAttackable = distanceBetweenAttackerAndTarget <= attackerDistanceWithMobility;
+
+            if (!targetAttackable)
+            {
+                // ƒаже в чистом поле невозможно достать до цели
+                continue;
+            }
+
+            List<Bector2Int> attackerReachablePositions = _map.GetReachablePositions(attacker.Position.First(), attacker.Mobility);
+            foreach (Bector2Int position in attackerReachablePositions)
+            {
+                if (BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(position, new RectangleBector2Int(target.Position)) <= attacker.Distance)
+                {
+                    reachableTargets.Add(target.idOnBattle, target);
+                    break;
+                }
+            }
+        }
+
+        return reachableTargets;
+    }
 
     public bool IsObjectExist(string objectId)
     {

@@ -115,6 +115,21 @@ public class BaseMap : Map
                     Doctrines.land,
                     Sides.empire,
                     unitIdOnBattle: "725f70fd-417e-4ca7-9b6f-ff5b19c8e4e6"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "1db672c3-4207-4629-a1ee-ca054c83ba7c",
+                    new Bector2Int[] { new Bector2Int(5, 4) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 2,
+                    unitDistance: 1,
+                    unitMobility: 4,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitSkillsData: new SkillOnBattle[] { new SkillOnBattle("a60f271d-4aa1-41af-b6d1-c89ed667dad6", 0, false) },
+                    unitIdOnBattle: "0608207f-edff-490c-a726-9d6893b882b9"
                     )
         };
 

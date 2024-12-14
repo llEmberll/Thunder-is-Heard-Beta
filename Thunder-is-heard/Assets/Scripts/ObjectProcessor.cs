@@ -13,12 +13,12 @@ public class ObjectProcessor : MonoBehaviour
     public void Awake()
     {
         map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
-        EventMaster.current.ObjectOnBaseWorkStatusChanged += ChangeObjectOnBaseWorkStatus;
+        
     }
 
     public void Start()
     {
-     
+        EventMaster.current.ObjectOnBaseWorkStatusChanged += ChangeObjectOnBaseWorkStatus;
     }
 
     public void PutSelectedObjectOnBattleToInventory()
@@ -243,7 +243,6 @@ public class ObjectProcessor : MonoBehaviour
         }
     }
 
-    // ¬ключить преобразование скилов и эффектов, сделать фабрику скилов и эффектов
     public void CreateObjectOnBattle(
         string battleId, 
         string coreId,

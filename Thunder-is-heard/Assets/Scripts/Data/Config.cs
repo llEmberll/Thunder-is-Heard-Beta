@@ -47,6 +47,7 @@ public static class Config
         { "UIMaterialShopItemPrefab", "Prefabs/UI/GeneratedItems/Shop/MaterialItem" },
         { "UIMissionItemPrefab", "Prefabs/UI/GeneratedItems/Campany/MissionItem" },
         { "UIUnitLandablePrefab", "Prefabs/UI/GeneratedItems/LandableUnit/LandableUnit" },
+        { "UISkillItemPrefab", "Prefabs/UI/GeneratedItems/Common/Skill/SkillItem" },
 
         { "UIProductsNotificationPrefab", "Prefabs/UI/GeneratedItems/Common/ProductsNotification/ProductsNotification" },
         { "UIBuildCards", "Textures/Interface/Cards/Builds/cards/" },

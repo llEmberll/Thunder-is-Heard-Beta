@@ -1,7 +1,5 @@
 
 
-using Unity.VisualScripting;
-
 [System.Serializable]
 public class SkillOnBattle
 {
@@ -11,6 +9,13 @@ public class SkillOnBattle
     public bool isActive;
 
     public SkillOnBattle() { }
+
+    public SkillOnBattle(Skill skillComponent)
+    {
+        coreId = skillComponent.CoreId;
+        cooldown = skillComponent.Cooldown;
+        isActive = skillComponent.IsActive;
+    }
 
     public SkillOnBattle(string coreSkillId, int skillCooldown, bool isSkillActive)
     {
