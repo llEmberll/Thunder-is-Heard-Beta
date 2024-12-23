@@ -7,6 +7,11 @@ public interface IStage
     public Scenario Scenario { get; }
     public UnitOnBattle[] Units { get; }
     public BuildOnBattle[] Builds { get; }
+
+    public Replic[] ReplicsOnStart { get; }
+    public Replic[] ReplicsOnPass { get; }
+    public Replic[] ReplicsOnFail { get; }
+
     public List<IScenarioEvent> Events { get; }
 
 
@@ -16,12 +21,24 @@ public interface IStage
     public List<ICondition> ConditionsForPass { get; }
     public List<ICondition> ConditionsForFail { get; }
 
-    public void Init(Scenario stageScenario, AISettings[] AISettings, List<ICondition> conditionsForPass, List<ICondition> conditionsForFail, UnitOnBattle[] units, BuildOnBattle[] builds);
+    public void Init(
+        Scenario stageScenario, 
+        AISettings[] AISettings, 
+        List<ICondition> conditionsForPass, 
+        List<ICondition> conditionsForFail,
+        UnitOnBattle[] units, 
+        BuildOnBattle[] builds,
+        Replic[] replicsOnStart,
+        Replic[] replicsOnPass,
+        Replic[] replicOnFail
+        );
     public void SetScenario(Scenario value);
     public void SetConditionsForPass(List<ICondition> conditions);
     public void SetConditionsForFail(List<ICondition> conditions);
     public void SetUnits(UnitOnBattle[] units);
     public void SetBuilds(BuildOnBattle[] builds);
+    public void SetReplics(Replic[] replicOnStart, Replic[] replicOnPass, Replic[] replicOnFail);
+
     public void SetCustomProperties();
 
 

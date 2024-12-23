@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 
 public static class StageFactory
 {
@@ -20,8 +19,11 @@ public static class StageFactory
         List<ICondition> conditionsForFail = ConditionFactory.GetConditionsByIds(data.conditionsForDefeat);
         UnitOnBattle[] units = data.units;
         BuildOnBattle[] builds = data.builds;
+        Replic[] replicsOnStart = data.replicsOnStart;
+        Replic[] replicsOnPass = data.replicsOnPass;
+        Replic[] replicsOnFail = data.replicsOnFail;
 
-        stage.Init(scenario, data.AISettings, conditionsForPass, conditionsForFail, units, builds);
+        stage.Init(scenario, data.AISettings, conditionsForPass, conditionsForFail, units, builds, replicsOnStart, replicsOnPass, replicsOnFail);
         return stage;
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+
 public class FightDirector : MonoBehaviour
 {
     public string _battleId;
@@ -23,6 +24,8 @@ public class FightDirector : MonoBehaviour
 
     public ResourcesProcessor _resourceProcessor;
 
+    public DialogueController _dialogueController;
+
 
     public void Awake()
     {
@@ -33,7 +36,7 @@ public class FightDirector : MonoBehaviour
     {
         InitBattleData(FightSceneLoader.parameters._battleId);
 
-        ConstructScenario();
+        InitScenario();
 
         EnableListeners();
 
@@ -43,6 +46,7 @@ public class FightDirector : MonoBehaviour
         InitBuildsOnFightManager();
         InitTurnController();
         InitResourcesProcessor();
+        InitDialogueController();
     }
 
     public void EnableListeners()
@@ -67,6 +71,7 @@ public class FightDirector : MonoBehaviour
         EventMaster.current.StageIndexChanged -= ChangeStageIndex;
     }
 
+
     public void Start()
     {
         if (Scenario._isLanded)
@@ -75,9 +80,8 @@ public class FightDirector : MonoBehaviour
         }
         else
         {
-            StartLanding();
+            StartCoroutine(BeforeScenarioBegin());
         }
-        
     }
 
     public void InitObjectProcessor()
@@ -108,6 +112,11 @@ public class FightDirector : MonoBehaviour
     public void InitResourcesProcessor()
     {
         _resourceProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
+    }
+
+    public void InitDialogueController()
+    {
+        _dialogueController = GameObject.FindGameObjectWithTag(Tags.dialogueController).GetComponent<DialogueController>();
     }
 
     public void InitBattleData(string battleId)
@@ -170,9 +179,9 @@ public class FightDirector : MonoBehaviour
         SaveBattleData();
     }
 
-    public void ConstructScenario()
+    public void InitScenario()
     {
-        _scenario = new Scenario();
+        _scenario = GameObject.FindGameObjectWithTag(Tags.scenario).GetComponent<Scenario>();
 
         MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
         CacheItem cacheItemMission = missionTable.GetById(_battleData.GetMissionId());
@@ -191,6 +200,7 @@ public class FightDirector : MonoBehaviour
         UnitOnBattle[] scenarioUnits = scenarioData.GetUnits();
         BuildOnBattle[] scenarioBuilds = scenarioData.GetBuilds();
         ObstacleOnBattle[] scenarioObstacles = scenarioData.GetObstacles();
+        Replic[] scenarioStartDialogue = scenarioData.GetStartDialogue();
 
         LandingData landingData = scenarioData.GetLanding();
         List<Vector2Int> landingCells = Bector2Int.MassiveToVector2Int(landingData.zone).ToList();
@@ -201,7 +211,7 @@ public class FightDirector : MonoBehaviour
         Map map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
         map.Init(mapSize, terrainPath);
 
-        Scenario.Init(map, landingCells, landingMaxStaff, stages, stageIndex, isLanded);
+        Scenario.Init(map, landingCells, landingMaxStaff, stages, stageIndex, scenarioStartDialogue, isLanded);
         
     }
 
@@ -213,6 +223,12 @@ public class FightDirector : MonoBehaviour
     public string GetBattleId()
     {
         return _battleId;
+    }
+
+    public IEnumerator BeforeScenarioBegin()
+    {
+        yield return StartCoroutine(Scenario.StartInitialDialogue());
+        StartLanding();
     }
 
     public void StartLanding()
@@ -230,18 +246,23 @@ public class FightDirector : MonoBehaviour
 
     public void StartFight()
     {
+        StartCoroutine(WaitForScenarioBegin());
+    }
+
+    public IEnumerator WaitForScenarioBegin()
+    {
         EventMaster.current.OnBaseMode();
         _scenario.map.HideAll();
 
         SetLandedInBattleData();
         SaveBattleData();
         Scenario._isLanded = true;
-        Scenario.Begin();
+        yield return StartCoroutine(Scenario.Begin());
 
         _turnController.OnNextTurn(_battleData.GetTurn());
     }
 
-    public void NextTurn()
+    public IEnumerator NextTurn()
     {
         Debug.Log("Следующий ход");
 
@@ -257,9 +278,10 @@ public class FightDirector : MonoBehaviour
 
         Debug.Log("Данные по очередерности обновлены");
 
-        Scenario.OnNextTurn();
+        yield return StartCoroutine(Scenario.OnNextTurn());
 
         Debug.Log("Сценарий обновлен");
+
 
         SyncBattleDataToCurrentBattleSituation();
 
@@ -336,7 +358,12 @@ public class FightDirector : MonoBehaviour
             }
         }
 
-        NextTurn();
+        StartCoroutine(WaitForHandleNextTurn());
+    }
+
+    public IEnumerator WaitForHandleNextTurn()
+    {
+        yield return StartCoroutine(NextTurn());
     }
 
     public void ChangeUnitOccypation(Unit unit, Cell newOccypation)

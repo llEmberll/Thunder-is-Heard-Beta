@@ -2,18 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [System.Serializable]
 public class BasicStage: IStage
 {
     [SerializeField] public Scenario _scenario;
     [SerializeField] public UnitOnBattle[] _units;
     [SerializeField] public BuildOnBattle[] _builds;
+
+    [SerializeField] public Replic[] _replicsOnStart;
+    [SerializeField] public Replic[] _replicsOnPass;
+    [SerializeField] public Replic[] _replicsOnFail;
+
     [SerializeField] public List<IScenarioEvent> events;
     [SerializeField] public List<ICondition> _conditionsForPass;
     [SerializeField] public List<ICondition> _conditionsForFail;
 
     public UnitOnBattle[] Units { get { return _units; } }
     public BuildOnBattle[] Builds { get { return _builds; } }
+
+    public Replic[] ReplicsOnStart { get { return _replicsOnStart; } }
+    public Replic[] ReplicsOnPass { get { return _replicsOnPass; } }
+    public Replic[] ReplicsOnFail { get { return _replicsOnFail; } }
 
     public List<IScenarioEvent> Events { get { return events; } }
 
@@ -30,9 +40,23 @@ public class BasicStage: IStage
 
 
     public ObjectProcessor _objectProcessor;
+    public DialogueController _dialogueController;
+
+    public bool isDialogue = false;
+    public int replicIndex;
 
 
-    public virtual void Init(Scenario stageScenario, AISettings[] AISettings, List<ICondition> conditionsForPass, List<ICondition> conditionsForFail, UnitOnBattle[] units, BuildOnBattle[] builds)
+    public virtual void Init(
+        Scenario stageScenario, 
+        AISettings[] AISettings, 
+        List<ICondition> conditionsForPass, 
+        List<ICondition> conditionsForFail, 
+        UnitOnBattle[] units, 
+        BuildOnBattle[] builds,
+        Replic[] replicsOnStart,
+        Replic[] replicsOnPass,
+        Replic[] replicsOnFail
+        )
     {
         SetScenario(stageScenario);
         SetAISettingsBySide(AISettings);
@@ -40,14 +64,41 @@ public class BasicStage: IStage
         SetConditionsForFail(conditionsForFail);
         SetUnits(units);
         SetBuilds(builds);
+        SetReplics(replicsOnStart, replicsOnPass, replicsOnFail);
         SetCustomProperties();
 
         InitObjectProcessor();
+        InitDialogueController();
     }
 
     public void InitObjectProcessor()
     {
         _objectProcessor = GameObject.FindGameObjectWithTag(Tags.objectProcessor).GetComponent<ObjectProcessor>();
+    }
+
+    public void InitDialogueController()
+    {
+        _dialogueController = GameObject.FindGameObjectWithTag(Tags.dialogueController).GetComponent<DialogueController>();
+    }
+
+    public void EnableListeners()
+    {
+        
+    }
+
+    public void DisableListeners()
+    {
+
+    }
+
+    public void EnableEndDialogueListener()
+    {
+        EventMaster.current.DialogueEnd += OnEndDialogue;
+    }
+
+    public void DisableEndDialogueListener()
+    {
+        EventMaster.current.DialogueEnd -= OnEndDialogue;
     }
 
     public void SetScenario(Scenario value)
@@ -92,6 +143,13 @@ public class BasicStage: IStage
         _builds = builds;
     }
 
+    public virtual void SetReplics(Replic[] replicsOnStart, Replic[] replicsOnEnd, Replic[] replicsOnFail)
+    {
+        _replicsOnStart = replicsOnStart;
+        _replicsOnPass = replicsOnEnd;
+        _replicsOnFail = replicsOnFail;
+    }
+
     public void CreateObjects()
     {
         _objectProcessor.CreateObjectsOnBattle(_units, _builds);
@@ -105,14 +163,44 @@ public class BasicStage: IStage
     public void OnStart()
     {
         CreateObjects();
+        
+        if (ReplicsOnStart != null && ReplicsOnStart.Length > 0)
+        {
+            BeginDialogue(ReplicsOnStart);
+        }
+        else
+        {
+            EventMaster.current.OnUpdateStage();
+        }
     }
+
+    public void BeginDialogue(Replic[] replics)
+    {
+       isDialogue = true;
+        EventMaster.current.BeginDialogue(replics);
+        EnableEndDialogueListener();
+    }
+
+    public void OnEndDialogue()
+    {
+        if (isDialogue)
+        {
+            isDialogue = false;
+            DisableEndDialogueListener();
+            EventMaster.current.OnUpdateStage();
+        }
+    }
+
 
     public void OnProcess()
     {
+        EventMaster.current.OnUpdateStage();
     }
 
     public void OnFinish()
     {
+        EventMaster.current.OnUpdateStage();
+        
     }
 
     public bool IsPassed()
@@ -127,10 +215,26 @@ public class BasicStage: IStage
 
     public void OnPass()
     {
+        if (ReplicsOnPass != null && ReplicsOnPass.Length > 0)
+        {
+            BeginDialogue(ReplicsOnPass);
+        }
+        else
+        {
+            EventMaster.current.OnUpdateStage();
+        }
     }
 
     public void OnFail()
     {
+        if (ReplicsOnFail != null && ReplicsOnFail.Length > 0)
+        {
+            BeginDialogue(ReplicsOnFail);
+        }
+        else
+        {
+            EventMaster.current.OnUpdateStage();
+        }
     }
 
     public bool IsAllConditionsForPassComply()

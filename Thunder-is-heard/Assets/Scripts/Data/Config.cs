@@ -56,6 +56,7 @@ public static class Config
         { "ranks", "Textures/Interface/Icons/Ranks/Ranks" },
         { "resourcesIcons", "Textures/Interface/Resources/Resources" },
         { "UIAttributes", "Textures/Interface/Icons/Attributes/New/attributes/" },
+        { "chars", "Textures/Interface/Dialogues/Chars/" },
 
         { "enemySelector", "Textures/Interface/Selections/EnemySelector" },
         { "allySelector", "Textures/Interface/Selections/AllySelector" },

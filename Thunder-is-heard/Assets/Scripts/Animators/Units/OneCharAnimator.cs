@@ -63,29 +63,13 @@ public class OneCharAnimator : BasicAnimator
     public override void Attack()
     {
         bodyAnimator.SetTrigger("attack");
-
-        Debug.Log("set attack trigger on BODY");
-
         weaponAnimator.SetTrigger("attack");
-
-        Debug.Log("set attack trigger on WEAPON");
-
-        Debug.Log("body state: " + GetCurrentBodyAnimatorState());
-        Debug.Log("weapon state: " + GetCurrentWeaponAnimatorState());
     }
 
     public override void Death()
     {
-        Debug.Log("In Death");
-        Debug.Log("body state: " + GetCurrentBodyAnimatorState());
-        Debug.Log("weapon state: " + GetCurrentWeaponAnimatorState());
-
         bodyAnimator.SetTrigger("death");
         weaponAnimator.SetTrigger("death");
-
-        Debug.Log("all death triggers set!");
-        Debug.Log("body state: " + GetCurrentBodyAnimatorState());
-        Debug.Log("weapon state: " + GetCurrentWeaponAnimatorState());
     }
 
     public override void StartMove()

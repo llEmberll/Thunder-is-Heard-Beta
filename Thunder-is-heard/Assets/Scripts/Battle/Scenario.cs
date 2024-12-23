@@ -1,9 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 [System.Serializable]
-public class Scenario
+public class Scenario: MonoBehaviour
 {
     [SerializeField] public List<Vector2Int> _landableCells;
     public List<Vector2Int> LandableCells { get { return _landableCells; } }
@@ -25,13 +26,22 @@ public class Scenario
     [SerializeField] public int _currentStageIndex = 0;
     public int CurrentStageIndex { get { return _currentStageIndex; } }
 
+
+    [SerializeField] public Replic[] _initialDialogue;
+    public Replic[] InitialDialogue { get { return _initialDialogue; } }
+
+    public bool waitingForEndDialogue = false;
+
+
     public bool _isLanded = false;
 
 
     public ObjectProcessor _objectProcessor;
 
+    public bool waitingForUpdateStage = false;
 
-    public void Init(Map scenarioMap, List<Vector2Int> scenarioLandableCells, int landingMaxStaff, List<IStage> scenarioStages, int currentStage, bool isLanded)
+
+    public void Init(Map scenarioMap, List<Vector2Int> scenarioLandableCells, int landingMaxStaff, List<IStage> scenarioStages, int currentStage, Replic[] startDialogue, bool isLanded)
     {
         map = scenarioMap;
         _landableCells = scenarioLandableCells;
@@ -46,10 +56,13 @@ public class Scenario
         {
             _currentStage = _stages[_currentStageIndex];
         }
+
+        _initialDialogue = startDialogue;
         
         _isLanded = isLanded;
 
         InitObjectProcessor();
+        EnableListenerForUpdateStage();
     }
 
     public void InitObjectProcessor()
@@ -57,10 +70,47 @@ public class Scenario
         _objectProcessor = GameObject.FindGameObjectWithTag(Tags.objectProcessor).GetComponent<ObjectProcessor>();
     }
 
-    public void ToNextStage()
+    public void EnableListenerForUpdateStage()
+    {
+        EventMaster.current.StageUpdated += OnUpdateStage;
+        waitingForUpdateStage = true;
+    }
+
+    public void DisableListenerForUpdateStage()
+    {
+        EventMaster.current.StageUpdated -= OnUpdateStage;
+        waitingForUpdateStage = false;
+    }
+
+    public void OnUpdateStage()
+    {
+        DisableListenerForUpdateStage();
+    }
+
+    public void EnableListenerForEndDialogue()
+    {
+        waitingForEndDialogue = true;
+        EventMaster.current.DialogueEnd += OnEndDialogue;
+    }
+
+    public void DisableListenerForEndDialogue()
+    {
+        waitingForEndDialogue = false;
+        EventMaster.current.DialogueEnd -= OnEndDialogue;
+    }
+
+    public void OnEndDialogue()
+    {
+        waitingForEndDialogue = false;
+    }
+
+    public IEnumerator ToNextStage()
     {
         Debug.Log("Çàâåðøåíèå ïðåäûäóùåãî ýòàïà");
+        EnableListenerForUpdateStage();
         CurrentStage.OnFinish();
+        yield return new WaitUntil(() => !waitingForUpdateStage);
+
 
         _currentStageIndex++;
         if (_currentStageIndex + 1 > _stages.Count)
@@ -68,7 +118,7 @@ public class Scenario
             Debug.Log("ÏÎÁÅÄÀ");
 
             EventMaster.current.WinFight();
-            return;
+            yield break;
         }
 
         _currentStage = Stages[_currentStageIndex];
@@ -77,14 +127,30 @@ public class Scenario
         EventMaster.current.OnNextStage(_currentStage);
 
         Debug.Log("Íà÷àëî íîâîãî ýòàïà");
+
+        EnableListenerForUpdateStage();
         CurrentStage.OnStart();
+        yield return new WaitUntil(() => !waitingForUpdateStage);
     }
 
-    public void ContinueStage()
+    public IEnumerator ContinueStage()
     {
         //Ñîõðàíèòü battleData
         EventMaster.current.OnStageBegin(_currentStage);
+
+        EnableListenerForUpdateStage();
         CurrentStage.OnProcess();
+        yield return new WaitUntil(() => !waitingForUpdateStage);
+    }
+
+    public IEnumerator StartInitialDialogue()
+    {
+        if (InitialDialogue != null && InitialDialogue.Length > 0)
+        {
+            EventMaster.current.BeginDialogue(InitialDialogue);
+            EnableListenerForEndDialogue();
+            yield return new WaitUntil(() => !waitingForEndDialogue);
+        }
     }
 
     public void StartLanding()
@@ -92,34 +158,42 @@ public class Scenario
         EventMaster.current.Landing(LandableCells, LandingMaxStaff);
     }
 
-    public void Begin()
+    public IEnumerator Begin()
     {
         _currentStage = Stages[CurrentStageIndex];
         EventMaster.current.OnStageBegin(_currentStage);
 
+        EnableListenerForUpdateStage();
         CurrentStage.OnStart();
+        yield return new WaitUntil(() => !waitingForUpdateStage);
     }
 
-    public void OnNextTurn()
+    public IEnumerator OnNextTurn()
     {
         if (CurrentStage.IsFailed())
         {
             Debug.Log("ÏÎÐÀÆÅÍÈÅ");
 
+            EnableListenerForUpdateStage();
             CurrentStage.OnFail();
+            yield return new WaitUntil(() => !waitingForUpdateStage);
             EventMaster.current.LoseFigth();
-            return;
         }
 
-        if (CurrentStage.IsPassed()) 
+        else if (CurrentStage.IsPassed()) 
         {
             Debug.Log("ÑËÅÄÓÞÙÈÉ ÝÒÀÏ");
 
+            EnableListenerForUpdateStage();
             CurrentStage.OnPass();
-            ToNextStage();
-            return;
+            yield return new WaitUntil(() => !waitingForUpdateStage);
+
+            yield return StartCoroutine(ToNextStage());
         }
 
-        ContinueStage();
+        else
+        {
+            yield return StartCoroutine(ContinueStage());
+        }
     }
 }

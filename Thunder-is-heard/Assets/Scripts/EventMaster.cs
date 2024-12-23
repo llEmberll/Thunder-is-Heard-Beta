@@ -322,5 +322,33 @@ public class EventMaster: MonoBehaviour
         DamagedObject?.Invoke(obj);
     }
 
+    public event Action<Replic[]> BegunDialogue;
+    public void BeginDialogue(Replic[] replics)
+    {
+        BegunDialogue?.Invoke(replics);
+    }
 
+    public event Action DialogueEnd;
+    public void OnEndDialogue()
+    {
+        DialogueEnd?.Invoke();
+    }
+
+    public event Action ReplicPassed;
+    public void OnPassReplic()
+    {
+        ReplicPassed?.Invoke();
+    }
+
+    public event Action StageUpdated;
+    public void OnUpdateStage()
+    {
+        StageUpdated?.Invoke();
+    }
+
+    public event Action ScenarioUpdated;
+    public void OnUpdateScenario()
+    {
+        ScenarioUpdated?.Invoke();
+    }
 }

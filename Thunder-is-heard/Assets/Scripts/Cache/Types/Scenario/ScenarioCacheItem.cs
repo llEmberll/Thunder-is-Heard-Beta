@@ -28,6 +28,11 @@ public class ScenarioCacheItem : CacheItem
             SetBuilds(new BuildOnBattle[] { });
         }
 
+        if (!objFields.ContainsKey("startDialogue"))
+        {
+            SetStartDialogue(new Replic[] { });
+        }
+
         if (!objFields.ContainsKey("obstacles"))
         {
             SetObstacles(new ObstacleOnBattle[] { });
@@ -95,6 +100,22 @@ public class ScenarioCacheItem : CacheItem
     public void SetBuilds(BuildOnBattle[] value)
     {
         SetField("builds", value);
+    }
+
+    public Replic[] GetStartDialogue()
+    {
+        object value = GetField("startDialogue");
+        if (value == null)
+        {
+            return new Replic[] { };
+        }
+
+        return JsonConvert.DeserializeObject<Replic[]>(value.ToString());
+    }
+
+    public void SetStartDialogue(Replic[] value)
+    {
+        SetField("startDialogue", value);
     }
 
     public ObstacleOnBattle[] GetObstacles()

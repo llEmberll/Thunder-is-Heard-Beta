@@ -64,6 +64,18 @@
             "doctrine": "land"
           }
         ],
+        "startDialogue": [
+          {
+            "charName": "officer",
+            "charSide": "Federation",
+            "text": "Так, мы на месте"
+          },
+          {
+            "charName": "fighter",
+            "charSide": "Empire",
+            "text": "Хана вам!"
+          }
+        ],
         "obstacles": [
           {
             "maxHealth": 0,
@@ -108,6 +120,26 @@
           {
             "id": "BasicStage",
             "units": [
+              {
+                "mobility": 4,
+                "type": "vehicle",
+                "skillsData": null,
+                "coreId": "035655f8-a347-4057-87cc-83385fa20660",
+                "idOnBattle": "725f70fd-417e-4ca7-9b6f-ff5b19c8e4e6",
+                "position": [
+                  {
+                    "x": 4,
+                    "y": 5
+                  }
+                ],
+                "rotation": 90,
+                "maxHealth": 6,
+                "health": 6,
+                "damage": 3,
+                "distance": 3,
+                "side": "Empire",
+                "doctrine": "land"
+              },
               {
                 "mobility": 4,
                 "type": "infantry",
@@ -166,6 +198,52 @@
                 "distance": 0,
                 "side": "Empire",
                 "doctrine": "land"
+              }
+            ],
+            "replicsOnStart": [
+              {
+                "charName": "officer",
+                "charSide": "Federation",
+                "text": "Привет, это тестовая реплика!"
+              },
+              {
+                "charName": "tank_girl",
+                "charSide": "Federation",
+                "text": "Уничтожь всех врагов на поле"
+              },
+              {
+                "charName": "fighter",
+                "charSide": "Empire",
+                "text": "Ну попробуй"
+              }
+            ],
+            "replicsOnPass": [
+              {
+                "charName": "commander",
+                "charSide": "Empire",
+                "text": "Впечатляет"
+              },
+              {
+                "charName": "officer",
+                "charSide": "Federation",
+                "text": "Отличная работа, командир! Но в следующий раз ведите себя более аккуратно, хорошо? Имперцы мастера изобретать ловушки в чистом поле......................................."
+              }
+            ],
+            "replicsOnFail": [
+              {
+                "charName": "officer",
+                "charSide": "Federation",
+                "text": "Черт, их слишком много. Уходим"
+              },
+              {
+                "charName": "fighter",
+                "charSide": "Federation",
+                "text": "Теперь вы понимаете, что сопротивление бесполезно?"
+              },
+              {
+                "charName": "tank_girl",
+                "charSide": "Federation",
+                "text": "Это еще не конец, при следующей встрече пощады не будет."
               }
             ],
             "AISettings": [

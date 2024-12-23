@@ -11,6 +11,7 @@ public class BaseMap : Map
 
     public void Start()
     {
+
     }
 
     public void CreateScenarioForTest()
@@ -179,12 +180,42 @@ public class BaseMap : Map
             null
             );
 
+        Replic[] scenarioStartDialogue = new Replic[]
+        {
+            new Replic(charName: "officer", charSide: Sides.federation, text: "Так, мы на месте"),
+            new Replic(charName: "fighter", charSide: Sides.empire, text: "Хана вам!"),
+        };
+
+        Replic[] startReplicsForStage1 = new Replic[]
+        {
+            new Replic(charName: "officer", charSide: Sides.federation, text: "Привет, это тестовая реплика!"),
+            new Replic(charName: "tank_girl", charSide: Sides.federation, text: "Уничтожь всех врагов на поле"),
+            new Replic(charName: "fighter", charSide: Sides.empire, text: "Ну попробуй"),
+        };
+
+        Replic[] passReplicForStage1 = new Replic[]
+        {
+            new Replic(charName: "commander", charSide: Sides.empire, text: "Впечатляет"),
+            new Replic(charName: "officer", charSide: Sides.federation, text: "Отличная работа, командир! Но в следующий раз ведите себя более аккуратно, хорошо? Имперцы мастера изобретать ловушки в чистом поле......................................."),
+        };
+
+        Replic[] failReplicForStage1 = new Replic[]
+        {
+            new Replic(charName: "officer", charSide: Sides.federation, text: "Черт, их слишком много. Уходим"),
+            new Replic(charName: "fighter", charSide: Sides.federation, text: "Теперь вы понимаете, что сопротивление бесполезно?"),
+            new Replic(charName: "tank_girl", charSide: Sides.federation, text: "Это еще не конец, при следующей встрече пощады не будет."),
+        };
+
+
         StageData[] stages = new StageData[]
         {
             new StageData(
                 stage1Units, 
                 stage1Builds, 
-
+                startReplicsForStage1,
+                passReplicForStage1,
+                failReplicForStage1,
+                // Создать
                 new AISettings[] { AISettingsForEmpireSide, AISettingsForNeutralSide },
 
                 stage1ConditionsForDefeat, 
@@ -193,6 +224,7 @@ public class BaseMap : Map
         };
 
         scenarioItem.SetStages( stages );
+        scenarioItem.SetStartDialogue(scenarioStartDialogue);
 
         table.AddOne(scenarioItem);
         Cache.Save(table);

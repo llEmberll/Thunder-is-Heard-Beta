@@ -35,5 +35,7 @@ public static class Tags
     public static string objectProcessor = "ObjectProcessor";
     public static string fightDirector = "FightDirector";
     public static string battleEngine = "BattleEngine";
+    public static string scenario = "Scenario";
     public static string turnController = "TurnController";
+    public static string dialogueController = "DialogueController";
 }

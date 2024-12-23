@@ -37,7 +37,7 @@
         "health": 3,
         "damage": 1,
         "distance": 2,
-        "mobility": 4,
+        "mobility": 2,
         "size": {
           "x": 1,
           "y": 1
@@ -138,8 +138,8 @@
         "createTime": 3,
         "health": 5,
         "damage": 2,
-        "distance": 2,
-        "mobility": 6,
+        "distance": 1,
+        "mobility": 5,
         "size": {
           "x": 1,
           "y": 1
@@ -148,7 +148,7 @@
         "iconName": "",
         "name": "Vortex",
         "modelPath": "Prefabs/Entity/Units/Vortex",
-        "skillIds": [],
+        "skillIds": [ "a60f271d-4aa1-41af-b6d1-c89ed667dad6" ],
         "unitType": "vehicle",
         "doctrine": "land",
         "movementSpeed": 1
@@ -188,7 +188,7 @@
         },
         "createTime": 3,
         "health": 2,
-        "damage": 2,
+        "damage": 1,
         "distance": 1,
         "mobility": 4,
         "size": {
@@ -239,9 +239,9 @@
         },
         "createTime": 5,
         "health": 1,
-        "damage": 3,
+        "damage": 2,
         "distance": 4,
-        "mobility": 1,
+        "mobility": 2,
         "size": {
           "x": 1,
           "y": 1
