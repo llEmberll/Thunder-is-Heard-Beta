@@ -1069,7 +1069,7 @@ public class BaseMap : Map
 
         SkillCacheItem moveWithAttack = new SkillCacheItem(new Dictionary<string, object>());
         moveWithAttack.SetExternalId("a60f271d-4aa1-41af-b6d1-c89ed667dad6");
-        moveWithAttack.SetName("Move with attack");
+        moveWithAttack.SetName("Атака в движении");
         moveWithAttack.SetRating(0);
         moveWithAttack.SetIconSection("UIAttributes");
         moveWithAttack.SetIconName("move_with_attack");

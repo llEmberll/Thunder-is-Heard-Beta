@@ -51,7 +51,9 @@ public static class Config
 
         { "UIProductsNotificationPrefab", "Prefabs/UI/GeneratedItems/Common/ProductsNotification/ProductsNotification" },
         { "UIBuildCards", "Textures/Interface/Cards/Builds/cards/" },
-        { "UIUnitCards", "Textures/Interface/Cards/Unit/cards/" },
+        { "UIUnitCards", "Textures/Interface/Cards/Units/Base/vehicle_cards/" },
+        { "UIUnitLandingCards", "Textures/Interface/Cards/Units/Landing/vehicle_cards/" },
+        { "UIMaterialCards", "Textures/Interface/Cards/Materials/" },
         { "landableUnitItem", "Prefabs/UI/GeneratedItems/UnitForLanding/LandableUnitItem" },
         { "ranks", "Textures/Interface/Icons/Ranks/Ranks" },
         { "resourcesIcons", "Textures/Interface/Resources/Resources" },

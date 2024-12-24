@@ -21,8 +21,9 @@
           "Rub": 0
         },
         "createTime": 3,
-        "iconPath": "Textures/Interface/Cards/Material/Megafone",
-        "name": "Megaphone"
+        "iconSection": "UIMaterialCards",
+        "iconName": "megafone",
+        "name": "Мегафон"
       }
     }
   }

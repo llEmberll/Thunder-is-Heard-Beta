@@ -55,10 +55,10 @@ public class Selector : MonoBehaviour
 
     public void InitSelectorSprites()
     {
-        friendlySelectorSprite = Resources.Load<Sprite>(Config.resources["allySelector"]);
-        enemySelectorSprite = Resources.Load<Sprite>(Config.resources["enemySelector"]);
-        neutralSelectorSprite = Resources.Load<Sprite>(Config.resources["neutralSelector"]);
-        attackableSelector = Resources.Load<Sprite>(Config.resources["attackableSelector"]);
+        friendlySelectorSprite = ResourcesUtils.LoadIcon(Config.resources["allySelector"]);
+        enemySelectorSprite = ResourcesUtils.LoadIcon(Config.resources["enemySelector"]);
+        neutralSelectorSprite = ResourcesUtils.LoadIcon(Config.resources["neutralSelector"]);
+        attackableSelector = ResourcesUtils.LoadIcon(Config.resources["attackableSelector"]);
     }
 
     public void InitSkillElementPrefab()
@@ -341,7 +341,7 @@ public class Selector : MonoBehaviour
         SkillCacheItem coreSkillData = new SkillCacheItem(cacheItem.Fields);
         string iconSection = Config.resources[coreSkillData.GetIconSection()];
         string iconName = coreSkillData.GetIconName();
-        Sprite icon = FindSpriteByName(iconName, Resources.LoadAll<Sprite>(iconSection));
+        Sprite icon = ResourcesUtils.LoadIcon(iconSection, iconName);
 
         string descriptionText = coreSkillData.GetName();
 

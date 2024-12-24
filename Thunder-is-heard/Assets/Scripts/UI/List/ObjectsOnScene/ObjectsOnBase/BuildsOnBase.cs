@@ -99,34 +99,8 @@ public class BuildsOnBase : ObjectsOnBase
     {
         List<Vector2Int> buildPosition = Bector2Int.MassiveToVector2Int(sourceBuildData.GetPosition()).ToList();
         Vector2Int buildCenter = Entity.CalculateCenter(buildPosition);
-
-        Sprite[] iconSection = new Sprite[] {};
-        try
-        {
-            iconSection = Resources.LoadAll<Sprite>(productsNotificationData.GetIconSection());
-        }
-        catch (System.Exception e)
-        {
-
-            Debug.Log("Load icon error! section = " + productsNotificationData.GetIconSection() + "| icon name = " + productsNotificationData.GetIconName());
-        }
             
-        Sprite icon = null;
-        if (iconSection.Length == 1) 
-        { 
-            icon = iconSection[0];
-        }
-        else if (productsNotificationData.GetIconName() != "")
-        {
-            foreach (Sprite i in iconSection)
-            {
-                if (i.name == productsNotificationData.GetIconName())
-                {
-                    icon = i;
-                    break;
-                }
-            }
-        }
+        Sprite icon = ResourcesUtils.LoadIcon(productsNotificationData.GetIconSection(), productsNotificationData.GetIconName());
 
         GameObject productsNotificationObj = ObjectProcessor.CreateProductsNotificationObject(buildCenter, sourceBuildData.GetName() + "ProductsNotification", productsNotificationsBucket);
         ObjectProcessor.AddAndPrepareProductsNotificationComponent(

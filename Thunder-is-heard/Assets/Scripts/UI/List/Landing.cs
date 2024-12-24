@@ -228,8 +228,7 @@ public class Landing : ItemList
         int distance = unitData.GetDistance();
         int mobility = unitData.GetMobility();
         int count = inventoryItemData.GetCount();
-        Sprite[] iconSection = Resources.LoadAll<Sprite>(unitData.GetIconSection());
-        Sprite icon = SpriteUtils.FindSpriteByName(unitData.GetIconName(), iconSection);
+        Sprite icon = ResourcesUtils.LoadIcon(unitData.GetLandingIconSection(), unitData.GetLandingIconName());
 
         GameObject itemObject = CreateObject(Config.resources["UI" + "Unit" + "LandablePrefab"], content);
         itemObject.name = name;

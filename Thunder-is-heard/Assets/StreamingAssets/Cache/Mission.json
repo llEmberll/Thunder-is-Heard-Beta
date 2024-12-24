@@ -4,7 +4,7 @@
     "589dc04e-153d-46b7-bb57-db641aaae115": {
       "fields": {
         "externalId": "589dc04e-153d-46b7-bb57-db641aaae115",
-        "description": "Description",
+        "description": "Описание",
         "scenarioId": "7d1660fb-10ad-4a55-9810-2c411120070f",
         "rewards": [],
         "passed": true,
@@ -26,7 +26,7 @@
           "x": -425,
           "y": -237
         },
-        "name": "First step"
+        "name": "Первые шаги"
       }
     }
   }

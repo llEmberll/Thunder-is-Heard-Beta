@@ -8,7 +8,7 @@
         "rotation": 90,
         "workStatus": "Idle",
         "coreId": "9b2cf240-5f63-4107-8751-eb91b95b94d9",
-        "name": "Headbuild",
+        "name": "Штаб",
         "position": [
           {
             "x": 2,
@@ -56,7 +56,7 @@
         "rotation": 180,
         "workStatus": "Finished",
         "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
-        "name": "Mine",
+        "name": "Шахта",
         "position": [
           {
             "x": 8,
@@ -84,7 +84,7 @@
         "rotation": 270,
         "workStatus": "Idle",
         "coreId": "8878498b-a4bc-4dc8-8f39-bc9e987a689f",
-        "name": "Office",
+        "name": "Офис",
         "position": [
           {
             "x": 5,
@@ -132,7 +132,7 @@
         "rotation": 0,
         "workStatus": "Idle",
         "coreId": "065a4f61-5b0e-450e-b89b-299651f90b4d",
-        "name": "TrainingCenter",
+        "name": "Тренировочный центр",
         "position": [
           {
             "x": 5,
@@ -180,7 +180,7 @@
         "rotation": 0,
         "workStatus": "Idle",
         "coreId": "64a4568c-bfaf-408e-9537-8e489ccaca56",
-        "name": "OilStation",
+        "name": "Нефтевышка",
         "position": [
           {
             "x": 8,
@@ -208,7 +208,7 @@
         "rotation": 180,
         "workStatus": "Idle",
         "coreId": "7dfc9c80-ddac-45e9-bcdf-61166e068cad",
-        "name": "Factory",
+        "name": "Завод",
         "position": [
           {
             "x": 8,
@@ -236,7 +236,7 @@
         "rotation": 0,
         "workStatus": "Finished",
         "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
-        "name": "Mine",
+        "name": "Шахта",
         "position": [
           {
             "x": 3,

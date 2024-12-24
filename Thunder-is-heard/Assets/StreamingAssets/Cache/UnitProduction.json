@@ -22,8 +22,8 @@
         },
         "unitId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
         "duration": 5,
-        "iconSection": "UIUnitCards",
-        "name": "Train assaulters",
+        "iconSection": "Textures/Interface/Cards/Units",
+        "name": "Тренировать штурмовиков",
         "iconName": "assaulters"
       }
     },
@@ -49,7 +49,7 @@
         "unitId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
         "duration": 20,
         "iconSection": "UIUnitCards",
-        "name": "Produce a light combat vehicle",
+        "name": "Произвести боевой джип",
         "iconName": "vortex"
       }
     },
@@ -75,7 +75,7 @@
         "unitId": "035655f8-a347-4057-87cc-83385fa20660",
         "duration": 30,
         "iconSection": "UIUnitCards",
-        "name": "Produce a BMP",
+        "name": "Произвести БМП",
         "iconName": "osoka"
       }
     },
@@ -100,8 +100,8 @@
         },
         "unitId": "1db672c3-4207-4629-a1ee-ca054c83ba7c",
         "duration": 7,
-        "iconSection": "UIUnitCards",
-        "name": "Train scout",
+        "iconSection": "Textures/Interface/Cards/Units",
+        "name": "Тренировать разведку",
         "iconName": "scout"
       }
     },
@@ -126,8 +126,8 @@
         },
         "unitId": "91207015-36e5-4bf7-b16e-628e67935609",
         "duration": 10,
-        "iconSection": "UIUnitCards",
-        "name": "Train sniper",
+        "iconSection": "Textures/Interface/Cards/Units",
+        "name": "Тренировать снайпера",
         "iconName": "sniper"
       }
     }

@@ -6,7 +6,7 @@
         "description": "",
         "rotation": 0,
         "coreId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
-        "name": "Vortex",
+        "name": "Вихрь",
         "position": [
           {
             "x": 11,
@@ -21,7 +21,7 @@
         "description": "",
         "rotation": 270,
         "coreId": "035655f8-a347-4057-87cc-83385fa20660",
-        "name": "Osoka",
+        "name": "БМП Осока",
         "position": [
           {
             "x": 11,
@@ -36,7 +36,7 @@
         "description": "",
         "rotation": 180,
         "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-        "name": "Assaulters",
+        "name": "Штурмовики",
         "position": [
           {
             "x": 4,
@@ -51,7 +51,7 @@
         "description": "",
         "rotation": 180,
         "coreId": "91207015-36e5-4bf7-b16e-628e67935609",
-        "name": "Sniper",
+        "name": "Снайпер",
         "position": [
           {
             "x": 5,
@@ -66,7 +66,7 @@
         "description": "",
         "rotation": 180,
         "coreId": "1db672c3-4207-4629-a1ee-ca054c83ba7c",
-        "name": "Scout",
+        "name": "Разведка",
         "position": [
           {
             "x": 6,

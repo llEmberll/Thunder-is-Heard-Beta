@@ -32,7 +32,7 @@ public class LandableUnit: ExposableInventoryItem
     public override void UpdateUI()
     {
         TmpName.text = _objName;
-        TmpCount.text = _count.ToString();
+        TmpCount.text = "x" + _count.ToString();
         TmpStaff.text = staff.ToString();
     }
 

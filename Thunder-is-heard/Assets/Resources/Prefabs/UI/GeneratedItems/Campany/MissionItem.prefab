@@ -253,6 +253,7 @@ MonoBehaviour:
   _id: 
   _objName: 
   _sourceObjectId: 
+  _position: {x: 0, y: 0}
   _isPassed: 0
   _givesData:
     rub: 0
@@ -267,7 +268,7 @@ MonoBehaviour:
     maxStaff: 0
     exp: 0
     maxExp: 0
-  detalization: {fileID: 0}
+  _detalization: {fileID: 0}
 --- !u!1 &4558282223552890075
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,8 +337,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Mission 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3fed0eb56bf44f149b66906868d5cffe, type: 2}
+  m_sharedMaterial: {fileID: -7731315771721874415, guid: 3fed0eb56bf44f149b66906868d5cffe, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -361,7 +362,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.7
+  m_fontSize: 16.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

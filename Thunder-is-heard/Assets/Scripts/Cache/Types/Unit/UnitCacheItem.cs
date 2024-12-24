@@ -59,6 +59,17 @@ public class UnitCacheItem : CacheItem
             SetIconName("");
         }
 
+        if (!objFields.ContainsKey("landingIconSection"))
+        {
+            SetLandingIconSection("");
+        }
+
+        if (!objFields.ContainsKey("landingIconName"))
+        {
+            SetLandingIconName("");
+        }
+
+
         if (!objFields.ContainsKey("skillIds"))
         {
             SetSkillIds(new string[] { });
@@ -108,6 +119,26 @@ public class UnitCacheItem : CacheItem
     public void SetIconName(string value)
     {
         SetField("iconName", value);
+    }
+
+    public string? GetLandingIconSection()
+    {
+        return (string?)GetField("landingIconSection");
+    }
+
+    public void SetLandingIconSection(string value)
+    {
+        SetField("landingIconSection", value);
+    }
+
+    public string? GetLandingIconName()
+    {
+        return (string?)GetField("landingIconName");
+    }
+
+    public void SetLandingIconName(string value)
+    {
+        SetField("landingIconName", value);
     }
 
 

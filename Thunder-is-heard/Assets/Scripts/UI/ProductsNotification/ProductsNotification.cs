@@ -54,9 +54,9 @@ public class ProductsNotifcation : UIElement
 
     public void InitSprites()
     {
-        backgroundWhenIdle = Resources.Load<Sprite>(Config.resources["productsCollectionBackgroundIconIdle"]);
-        backgroundWhenCollectionAllowed = Resources.Load<Sprite>(Config.resources["productsCollectionBackgroundIconAllow"]);
-        backgroundWhenCollectionForbidden = Resources.Load<Sprite>(Config.resources["productsCollectionBackgroundIconForbidden"]);
+        backgroundWhenIdle = ResourcesUtils.LoadIcon(Config.resources["productsCollectionBackgroundIconIdle"]);
+        backgroundWhenCollectionAllowed = ResourcesUtils.LoadIcon(Config.resources["productsCollectionBackgroundIconAllow"]);
+        backgroundWhenCollectionForbidden = ResourcesUtils.LoadIcon(Config.resources["productsCollectionBackgroundIconForbidden"]);
     }
 
     public void InitEvents()

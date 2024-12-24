@@ -42,7 +42,7 @@
         "iconName": "headbuild_card",
         "interactionComponentName": "Inaction",
         "interactionComponentType": "",
-        "name": "Headbuild",
+        "name": "Штаб",
         "modelPath": "Prefabs/Entity/Builds/Headbuild",
         "size": {
           "x": 3,
@@ -91,7 +91,7 @@
         "iconName": "mine_card",
         "interactionComponentName": "ContractComponent",
         "interactionComponentType": "Steel",
-        "name": "Mine",
+        "name": "Шахта",
         "modelPath": "Prefabs/Entity/Builds/Mine",
         "size": {
           "x": 2,
@@ -140,7 +140,7 @@
         "iconName": "oil_station_card",
         "interactionComponentName": "ContractComponent",
         "interactionComponentType": "Oil",
-        "name": "OilStation",
+        "name": "Нефтевышка",
         "modelPath": "Prefabs/Entity/Builds/OilStation",
         "size": {
           "x": 2,
@@ -189,7 +189,7 @@
         "iconName": "office_card",
         "interactionComponentName": "ContractComponent",
         "interactionComponentType": "Rub",
-        "name": "Office",
+        "name": "Офис",
         "modelPath": "Prefabs/Entity/Builds/Office",
         "size": {
           "x": 3,
@@ -238,7 +238,7 @@
         "iconName": "tent_card",
         "interactionComponentName": "Inaction",
         "interactionComponentType": "",
-        "name": "Tent",
+        "name": "Казарма",
         "modelPath": "Prefabs/Entity/Builds/Tent",
         "size": {
           "x": 2,
@@ -287,7 +287,7 @@
         "iconName": "warehouse_card",
         "interactionComponentName": "Inaction",
         "interactionComponentType": "",
-        "name": "Warehouse",
+        "name": "Склад",
         "modelPath": "Prefabs/Entity/Builds/Warehouse",
         "size": {
           "x": 2,
@@ -336,7 +336,7 @@
         "iconName": "training_center_card",
         "interactionComponentName": "UnitProductionComponent",
         "interactionComponentType": "Infantry",
-        "name": "TrainingCenter",
+        "name": "Тренировочный центр",
         "modelPath": "Prefabs/Entity/Builds/TrainingCenter",
         "size": {
           "x": 3,
@@ -385,7 +385,7 @@
         "iconName": "factory_card",
         "interactionComponentName": "UnitProductionComponent",
         "interactionComponentType": "Vehicle",
-        "name": "Factory",
+        "name": "Завод",
         "modelPath": "Prefabs/Entity/Builds/Factory",
         "size": {
           "x": 2,

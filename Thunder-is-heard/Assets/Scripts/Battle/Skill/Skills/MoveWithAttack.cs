@@ -2,7 +2,7 @@
 
 public class MoveWithAttack : Skill
 {
-    public string name = "Move with attack";
+    public string name = "Атака в движении";
 
 
     public MoveWithAttack()

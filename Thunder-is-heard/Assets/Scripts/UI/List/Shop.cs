@@ -81,8 +81,7 @@ public class Shop : ItemList
         int distance = buildData.GetDistance();
         int count = shopItemData.GetCount();
         string description = buildData.GetDescription();
-        Sprite[] iconSection = Resources.LoadAll<Sprite>(buildData.GetIconSection());
-        Sprite icon = SpriteUtils.FindSpriteByName(buildData.GetIconName(), iconSection);
+        Sprite icon = ResourcesUtils.LoadIcon(buildData.GetIconSection(), buildData.GetIconName());
 
         GameObject itemObject = CreateObject(Config.resources["UI" + "Build" + "ShopItemPrefab"], content);
         itemObject.name = name;
@@ -115,8 +114,7 @@ public class Shop : ItemList
         int mobility = unitData.GetMobility();
         int count = ShopItemData.GetCount();
         string description = unitData.GetDescription();
-        Sprite[] iconSection = Resources.LoadAll<Sprite>(unitData.GetIconSection());
-        Sprite icon = SpriteUtils.FindSpriteByName(unitData.GetIconName(), iconSection);
+        Sprite icon = ResourcesUtils.LoadIcon(unitData.GetIconSection(), unitData.GetIconName());
 
         GameObject itemObject = CreateObject(Config.resources["UI" + "Unit" + "ShopItemPrefab"], content);
         itemObject.name = name;
@@ -145,7 +143,7 @@ public class Shop : ItemList
         ResourcesData cost = materialData.GetCost();
         int count = ShopItemData.GetCount();
         string description = materialData.GetDescription();
-        Sprite icon = Resources.Load<Sprite>(materialData.GetIconPath());
+        Sprite icon = ResourcesUtils.LoadIcon(materialData.GetIconSection(), materialData.GetIconName());
 
         GameObject itemObject = CreateObject(Config.resources["UI" + "Material" + "ShopItemPrefab"], content);
         itemObject.name = name;

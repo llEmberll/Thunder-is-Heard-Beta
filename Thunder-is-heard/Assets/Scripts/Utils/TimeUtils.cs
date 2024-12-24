@@ -7,7 +7,7 @@ public static class TimeUtils
     {
         if (seconds < 1)
         {
-            return "instantly";
+            return "мгновенно";
         }
 
         TimeSpan timeSpan = TimeSpan.FromSeconds(seconds);
@@ -16,22 +16,22 @@ public static class TimeUtils
 
         if (timeSpan.Days > 0)
         {
-            result += $"{timeSpan.Days}D ";
+            result += $"{timeSpan.Days}Д ";
         }
 
         if (timeSpan.Hours > 0)
         {
-            result += $"{timeSpan.Hours}H ";
+            result += $"{timeSpan.Hours}Ч ";
         }
 
         if (timeSpan.Minutes > 0)
         {
-            result += $"{timeSpan.Minutes}M ";
+            result += $"{timeSpan.Minutes}М ";
         }
 
         if (timeSpan.Seconds > 0) 
         {
-            result += $"{timeSpan.Seconds}S";
+            result += $"{timeSpan.Seconds}С";
         }
 
         return result.TrimEnd();
@@ -41,7 +41,7 @@ public static class TimeUtils
     {
         if (seconds < 1)
         {
-            return "instantly";
+            return "мгновенно";
         }
 
         TimeSpan timeSpan = TimeSpan.FromSeconds(seconds);
@@ -50,22 +50,22 @@ public static class TimeUtils
 
         if (timeSpan.Days > 0)
         {
-            result += $"{timeSpan.Days}D ";
+            result += $"{timeSpan.Days}Д ";
         }
 
         if (timeSpan.Hours > 0)
         {
-            result += $"{timeSpan.Hours}H ";
+            result += $"{timeSpan.Hours}Ч ";
         }
 
         if (timeSpan.Minutes > 0)
         {
-            result += $"{timeSpan.Minutes}M ";
+            result += $"{timeSpan.Minutes}М ";
         }
 
         if (timeSpan.Seconds > 0)
         {
-            result += $"{timeSpan.Seconds}S";
+            result += $"{timeSpan.Seconds}С";
         }
 
         return result.TrimEnd();

@@ -608,7 +608,7 @@ public class BattleSituation
             SkillCacheTable skillsTable = Cache.LoadByType<SkillCacheTable>();
             CacheItem cacheItem = skillsTable.GetById(skill.coreId);
             SkillCacheItem coreSkillData = new SkillCacheItem(cacheItem.Fields);
-            if (coreSkillData.GetName() == "Move with attack") return true;
+            if (coreSkillData.GetName() == "Атака в движении") return true;
         }
         return false;
     }

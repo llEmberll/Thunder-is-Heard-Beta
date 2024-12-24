@@ -36,7 +36,7 @@
         },
         "duration": 10,
         "iconSection": "UIBuildCards",
-        "name": "Steel express",
+        "name": "Экспресс",
         "iconName": "mine_card"
       }
     },
@@ -75,7 +75,7 @@
         },
         "duration": 25,
         "iconSection": "UIBuildCards",
-        "name": "Half a shift",
+        "name": "Половина смены",
         "iconName": "mine_card"
       }
     },
@@ -114,7 +114,7 @@
         },
         "duration": 60,
         "iconSection": "UIBuildCards",
-        "name": "Full shift",
+        "name": "Полная смена",
         "iconName": "mine_card"
       }
     },
@@ -153,7 +153,7 @@
         },
         "duration": 10,
         "iconSection": "UIBuildCards",
-        "name": "Oil express",
+        "name": "Экспресс",
         "iconName": "oil_station_card"
       }
     },
@@ -192,7 +192,7 @@
         },
         "duration": 65,
         "iconSection": "UIBuildCards",
-        "name": "Half a shift",
+        "name": "Половина смены",
         "iconName": "oil_station_card"
       }
     },
@@ -231,7 +231,7 @@
         },
         "duration": 65,
         "iconSection": "UIBuildCards",
-        "name": "Full shift",
+        "name": "Полная смена",
         "iconName": "oil_station_card"
       }
     },
@@ -270,7 +270,7 @@
         },
         "duration": 5,
         "iconSection": "UIBuildCards",
-        "name": "Rub express",
+        "name": "Экспресс",
         "iconName": "office_card"
       }
     },
@@ -309,7 +309,7 @@
         },
         "duration": 25,
         "iconSection": "UIBuildCards",
-        "name": "Half a shift",
+        "name": "Половина смены",
         "iconName": "office_card"
       }
     },
@@ -348,7 +348,7 @@
         },
         "duration": 60,
         "iconSection": "UIBuildCards",
-        "name": "Full shift",
+        "name": "Полная смена",
         "iconName": "office_card"
       }
     }

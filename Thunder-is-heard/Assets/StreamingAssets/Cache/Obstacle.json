@@ -26,7 +26,7 @@
         "iconSection": "",
         "iconName": "",
         "modelPath": "Prefabs/Entity/Obstacles/Bush1",
-        "name": "Bush"
+        "name": "Куст"
       }
     },
     "429b4e2e-b6a2-465b-982f-4cc96d67a011": {
@@ -54,7 +54,7 @@
         "iconSection": "",
         "iconName": "",
         "modelPath": "Prefabs/Entity/Obstacles/Bush2",
-        "name": "Bush"
+        "name": "Куст"
       }
     },
     "90ebae2b-7633-42c7-9868-406d47583d5a": {
@@ -82,7 +82,7 @@
         "iconSection": "",
         "iconName": "",
         "modelPath": "Prefabs/Entity/Obstacles/Palm1",
-        "name": "Small palm"
+        "name": "Небольшая пальма"
       }
     },
     "bb9da51e-303d-4aed-951d-0248490f76b6": {
@@ -110,7 +110,7 @@
         "iconSection": "",
         "iconName": "",
         "modelPath": "Prefabs/Entity/Obstacles/Palm2",
-        "name": "Palm"
+        "name": "Пальма"
       }
     },
     "0b3a9589-3e96-45c9-8e4e-ab6f8dc8cd7a": {
@@ -138,7 +138,7 @@
         "iconSection": "",
         "iconName": "",
         "modelPath": "Prefabs/Entity/Obstacles/Palm3",
-        "name": "Palm"
+        "name": "Пальма"
       }
     },
     "7b6c7782-0a71-4501-87f5-ed18b935cea1": {
@@ -166,7 +166,7 @@
         "iconSection": "",
         "iconName": "",
         "modelPath": "Prefabs/Entity/Obstacles/Palm4",
-        "name": "Palm"
+        "name": "Пальма"
       }
     },
     "1dc74e29-35f1-4fc5-a3f0-d2c6c39d558b": {
@@ -194,7 +194,7 @@
         "iconSection": "",
         "iconName": "",
         "modelPath": "Prefabs/Entity/Obstacles/Palm5",
-        "name": "Palm"
+        "name": "Пальма"
       }
     },
     "fccb430b-9ab1-4073-a334-6183a40ad0f2": {
@@ -222,7 +222,7 @@
         "iconSection": "",
         "iconName": "",
         "modelPath": "Prefabs/Entity/Obstacles/Stone2",
-        "name": "Small stone"
+        "name": "Небольшой камень"
       }
     },
     "42c227ad-ce04-458d-ba1a-5e09c9ea9efc": {
@@ -250,7 +250,7 @@
         "iconSection": "",
         "iconName": "",
         "modelPath": "Prefabs/Entity/Obstacles/Stone1",
-        "name": "Stone"
+        "name": "Камень"
       }
     },
     "48b9e917-ecfb-44ea-ade9-25cec693789e": {
@@ -278,7 +278,7 @@
         "iconSection": "",
         "iconName": "",
         "modelPath": "Prefabs/Entity/Obstacles/Stone3",
-        "name": "Stone"
+        "name": "Камень"
       }
     }
   }
