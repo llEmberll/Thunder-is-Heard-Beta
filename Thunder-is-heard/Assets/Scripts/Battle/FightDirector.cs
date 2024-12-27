@@ -246,6 +246,7 @@ public class FightDirector : MonoBehaviour
 
     public void StartFight()
     {
+        EventMaster.current.OnExitBuildMode();
         StartCoroutine(WaitForScenarioBegin());
     }
 

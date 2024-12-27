@@ -5,7 +5,7 @@
       "fields": {
         "externalId": "589dc04e-153d-46b7-bb57-db641aaae115",
         "description": "Описание",
-        "scenarioId": "7d1660fb-10ad-4a55-9810-2c411120070f",
+        "scenarioId": "aa815447-cdcd-464d-8f37-307f35a15ad6",
         "rewards": [],
         "passed": true,
         "gives": {
@@ -26,7 +26,7 @@
           "x": -425,
           "y": -237
         },
-        "name": "Первые шаги"
+        "name": "Аванпост врага"
       }
     }
   }

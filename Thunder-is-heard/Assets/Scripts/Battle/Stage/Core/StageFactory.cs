@@ -15,15 +15,15 @@ public static class StageFactory
         
         Type type = stages[data.id];
         IStage stage = (IStage)Activator.CreateInstance(type);
-        List<ICondition> conditionsForPass = ConditionFactory.GetConditionsByIds(data.conditionsForVictory);
-        List<ICondition> conditionsForFail = ConditionFactory.GetConditionsByIds(data.conditionsForDefeat);
+        ICondition conditionsForPass = ConditionFactory.CreateCondition(data.conditionsForVictory);
+        ICondition conditionsForFail = ConditionFactory.CreateCondition(data.conditionsForDefeat);
         UnitOnBattle[] units = data.units;
         BuildOnBattle[] builds = data.builds;
         Replic[] replicsOnStart = data.replicsOnStart;
         Replic[] replicsOnPass = data.replicsOnPass;
         Replic[] replicsOnFail = data.replicsOnFail;
 
-        stage.Init(scenario, data.AISettings, conditionsForPass, conditionsForFail, units, builds, replicsOnStart, replicsOnPass, replicsOnFail);
+        stage.Init(scenario, data.AISettings, conditionsForPass, conditionsForFail, units, builds, replicsOnStart, replicsOnPass, replicsOnFail, (IStage)data.stageOnFail);
         return stage;
     }
 

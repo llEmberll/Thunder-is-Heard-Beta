@@ -1,17 +1,31 @@
-
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using UnityEngine;
 
 
+[System.Serializable]
 public class RectangleBector2Int
 {
+    [JsonProperty("startPosition")]
     public Bector2Int _startPosition;
+
+    [JsonProperty("size")]
     public Bector2Int _size;
 
-    public RectangleBector2Int(Bector2Int startPosition, Bector2Int size)
+
+    public RectangleBector2Int() { }
+
+    public RectangleBector2Int(Bector2Int startPosition, Bector2Int endPosition)
     {
-        _startPosition = startPosition;
-        _size = size;
+        int minX = startPosition._x; 
+        int minY = startPosition._y;
+        int maxX = endPosition._x; 
+        int maxY = endPosition._y;
+
+        _startPosition = new Bector2Int(minX, minY);
+        _size = new Bector2Int(maxX - minX + 1, maxY - minY + 1);
     }
+
 
     public RectangleBector2Int(Bector2Int[] positions)
     {
@@ -31,5 +45,27 @@ public class RectangleBector2Int
 
             _startPosition = new Bector2Int(minX, minY);
             _size = new Bector2Int(maxX - minX + 1, maxY - minY + 1);
+    }
+
+    public Bector2Int[] GetPositions()
+    {
+        List<Bector2Int> positions = new List<Bector2Int>();
+
+        for (int x = _startPosition._x; x < _startPosition._x + _size._x; x++)
+        {
+            for (int y = _startPosition._y; y < _startPosition._y + _size._y; y++)
+            {
+                positions.Add(new Bector2Int(x, y));
+            }
+        }
+
+        return positions.ToArray();
+    }
+
+    public bool Contains(Bector2Int point)
+    {
+        // Проверяем, находится ли точка в пределах прямоугольника
+        return point._x >= _startPosition._x && point._x < _startPosition._x + _size._x &&
+               point._y >= _startPosition._y && point._y < _startPosition._y + _size._y;
     }
 }

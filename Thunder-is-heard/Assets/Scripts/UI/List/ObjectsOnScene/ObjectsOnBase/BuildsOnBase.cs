@@ -214,7 +214,7 @@ public class BuildsOnBase : ObjectsOnBase
         CacheItem currentBuildItem = buildsOnBaseTable.GetById(productsNotification.GetSourceObjectId());
         if (currentBuildItem == null)
         {
-            Debug.Log("Build for finded productsNotification not found: " + productsNotification.GetSourceObjectId());
+            Debug.Log("Build for founded productsNotification not found: " + productsNotification.GetSourceObjectId());
             return;
         }
 

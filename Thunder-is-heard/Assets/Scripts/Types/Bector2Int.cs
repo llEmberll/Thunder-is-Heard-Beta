@@ -58,6 +58,24 @@ public class Bector2Int
         return positions;
     }
 
+    public static Bector2Int[] GetRectangle(Bector2Int start, Bector2Int end)
+    {
+        int width = end._x - start._x + 1;
+        int height = end._y - start._y + 1;
+        Bector2Int[] positions = new Bector2Int[width * height];
+
+        int index = 0;
+        for (int y = start._y; y <= end._y; y++)
+        {
+            for (int x = start._x; x <= end._x; x++)
+            {
+                positions[index++] = new Bector2Int(x, y);
+            }
+        }
+
+        return positions;
+    }
+
     public override bool Equals(object obj)
     {
         if (obj == null || GetType() != obj.GetType())

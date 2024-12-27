@@ -38,8 +38,8 @@ public class DialogueController : UIElement
     // scrollbar
     public Scrollbar _replicScrollbar;
     public Image _scrollbarAsImage;
-    public int scrollbarXPositionForLeftSide = -74;
-    public int scrollbarXPositionForRightSide = 74;
+    public int scrollbarXPositionForLeftSide;
+    public int scrollbarXPositionForRightSide;
     // scrollbar
 
 
@@ -52,6 +52,7 @@ public class DialogueController : UIElement
     public void Init()
     {
         InitSprites();
+        InitScrollbarPosition();
         EnableListeners();
     }
 
@@ -65,6 +66,12 @@ public class DialogueController : UIElement
         {
             _spriteByCharName.Add(sprite.name, sprite);
         }
+    }
+
+    public void InitScrollbarPosition()
+    {
+        scrollbarXPositionForLeftSide = (int)_scrollbarAsImage.rectTransform.position.x;
+        scrollbarXPositionForRightSide = -scrollbarXPositionForLeftSide;
     }
 
     public void EnableListeners()
@@ -107,13 +114,13 @@ public class DialogueController : UIElement
 
     public void BeginDialogue(Replic[] replics)
     {
+        Show();
         EnablePassReplicListener();
 
         _replics = replics;
         _currentReplicIndex = 0;
 
         UpdateDialogue(replics[_currentReplicIndex]);
-        Show();
     }
 
     public void UpdateDialogue(Replic replic)
@@ -123,6 +130,7 @@ public class DialogueController : UIElement
 
     public void UpdateDialogue(string charName, string side, string text)
     {
+        Show();
         _charSide = side;
         _charName = charName;
         _replicTextComponentValue = text;
@@ -171,20 +179,20 @@ public class DialogueController : UIElement
 
     public void UpdateScrollbar()
     {
-        _replicScrollbar.value = 1;
-
         Vector2 oldPosition = _scrollbarAsImage.rectTransform.position;
         int xPosition;
         if (_charSide == Sides.federation)
         {
-            xPosition = scrollbarXPositionForLeftSide;
+            xPosition = scrollbarXPositionForLeftSide; 
         }
         else
         {
-            xPosition = scrollbarXPositionForRightSide;
+            xPosition = scrollbarXPositionForRightSide; 
         }
 
         _scrollbarAsImage.rectTransform.position = new Vector2(xPosition, oldPosition.y);
+
+        _replicScrollbar.value = 1f;
     }
 
     public void UpdateAmbient()

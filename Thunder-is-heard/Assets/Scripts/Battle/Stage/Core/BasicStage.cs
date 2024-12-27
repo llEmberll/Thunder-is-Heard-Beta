@@ -15,8 +15,8 @@ public class BasicStage: IStage
     [SerializeField] public Replic[] _replicsOnFail;
 
     [SerializeField] public List<IScenarioEvent> events;
-    [SerializeField] public List<ICondition> _conditionsForPass;
-    [SerializeField] public List<ICondition> _conditionsForFail;
+    [SerializeField] public ICondition _conditionsForPass;
+    [SerializeField] public ICondition _conditionsForFail;
 
     public UnitOnBattle[] Units { get { return _units; } }
     public BuildOnBattle[] Builds { get { return _builds; } }
@@ -32,9 +32,12 @@ public class BasicStage: IStage
     public Dictionary<string, AISettings> AISettingsBySide { get { return _AISettingsBySide; } }
 
 
-    public List<ICondition> ConditionsForPass { get { return _conditionsForPass; } }
+    public ICondition ConditionsForPass { get { return _conditionsForPass; } }
 
-    public List<ICondition> ConditionsForFail { get { return _conditionsForFail; } }
+    public ICondition ConditionsForFail { get { return _conditionsForFail; } }
+
+    public IStage _stageOnFail = null;
+    public IStage StageOnFail { get { return _stageOnFail; } }
 
     public Scenario Scenario { get { return _scenario; } }
 
@@ -47,15 +50,16 @@ public class BasicStage: IStage
 
 
     public virtual void Init(
-        Scenario stageScenario, 
-        AISettings[] AISettings, 
-        List<ICondition> conditionsForPass, 
-        List<ICondition> conditionsForFail, 
-        UnitOnBattle[] units, 
+        Scenario stageScenario,
+        AISettings[] AISettings,
+        ICondition conditionsForPass,
+        ICondition conditionsForFail,
+        UnitOnBattle[] units,
         BuildOnBattle[] builds,
         Replic[] replicsOnStart,
         Replic[] replicsOnPass,
-        Replic[] replicsOnFail
+        Replic[] replicsOnFail,
+        IStage stageOnFail = null
         )
     {
         SetScenario(stageScenario);
@@ -65,6 +69,7 @@ public class BasicStage: IStage
         SetUnits(units);
         SetBuilds(builds);
         SetReplics(replicsOnStart, replicsOnPass, replicsOnFail);
+        _stageOnFail = stageOnFail;
         SetCustomProperties();
 
         InitObjectProcessor();
@@ -115,22 +120,14 @@ public class BasicStage: IStage
         }
     }
 
-    public virtual void SetConditionsForPass(List<ICondition> conditions)
+    public virtual void SetConditionsForPass(ICondition conditions)
     {
         _conditionsForPass = conditions;
-        foreach (ICondition condition in _conditionsForPass)
-        {
-            condition.Init(_scenario);
-        }
     }
 
-    public virtual void SetConditionsForFail(List<ICondition> conditions)
+    public virtual void SetConditionsForFail(ICondition conditions)
     {
         _conditionsForFail = conditions;
-        foreach (ICondition condition in _conditionsForFail)
-        {
-            condition.Init(_scenario);
-        }
     }
 
     public virtual void SetUnits(UnitOnBattle[] units)
@@ -239,27 +236,11 @@ public class BasicStage: IStage
 
     public bool IsAllConditionsForPassComply()
     {
-        foreach (var condition in ConditionsForPass) 
-        { 
-            if (!condition.IsComply())
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return ConditionsForPass.IsComply();
     }
 
     public bool IsAllConditionsForFailComply()
     {
-        foreach (var condition in ConditionsForFail)
-        {
-            if (!condition.IsComply())
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return ConditionsForFail.IsComply();
     }
 }

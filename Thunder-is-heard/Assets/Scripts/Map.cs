@@ -51,8 +51,9 @@ public class Map : MonoBehaviour
     public void InitTerrain(string terrainPath)
     {
         Transform terrainObj = Instantiate(Resources.Load<Terrain>(terrainPath).transform, parent: terrainParent.transform);
+        terrainObj.transform.position = new Vector3(0, 0, 0);
 
-        terrainParent.transform.position -= new Vector3(5, 0, 5);
+        terrainParent.transform.position += new Vector3(-5, 0, -5);
 
         terrain = terrainObj.GetComponent<Terrain>();
         TerrainData terrainData = terrain.terrainData;
@@ -101,33 +102,33 @@ public class Map : MonoBehaviour
 
     public Dictionary<Vector2Int, Cell> FindCellsByPosition(List<Vector2Int> positions)
     {
-        Dictionary<Vector2Int, Cell> finded = new Dictionary<Vector2Int, Cell> ();
+        Dictionary<Vector2Int, Cell> founded = new Dictionary<Vector2Int, Cell> ();
 
         foreach (Vector2Int position in positions)
         {
             if (Cells.ContainsKey(position))
             {
-                finded.Add(position, cells[position]);
+                founded.Add(position, cells[position]);
             }
         }
 
-        return finded;
+        return founded;
     }
 
     public Dictionary<Bector2Int, Cell> FindCellsByPosition(List<Bector2Int> positions)
     {
-        Dictionary<Bector2Int, Cell> finded = new Dictionary<Bector2Int, Cell>();
+        Dictionary<Bector2Int, Cell> founded = new Dictionary<Bector2Int, Cell>();
 
         foreach (Bector2Int position in positions)
         {
             Vector2Int currentPosition = position.ToVector2Int();
             if (Cells.ContainsKey(currentPosition))
             {
-                finded.Add(position, cells[currentPosition]);
+                founded.Add(position, cells[currentPosition]);
             }
         }
 
-        return finded;
+        return founded;
     }
 
     public static bool IsNeighnorCells(Cell cell1, Cell cell2)

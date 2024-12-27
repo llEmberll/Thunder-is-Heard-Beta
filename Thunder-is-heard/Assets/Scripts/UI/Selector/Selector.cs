@@ -11,7 +11,8 @@ public class Selector : MonoBehaviour
     public Build selectedBuild = null;
 
     public GameObject selector;
-    public Sprite friendlySelectorSprite, enemySelectorSprite, neutralSelectorSprite, attackableSelector;
+    public List<GameObject> selectorsForAttackers = new List<GameObject>();
+    public Sprite friendlySelectorSprite, enemySelectorSprite, neutralSelectorSprite, attackableSelectorSprite;
 
     public Canvas attackRadiusCanvas;
     public int attackRadiusSizePerCell = 800;
@@ -40,9 +41,15 @@ public class Selector : MonoBehaviour
     public Image productionImage;
     public TMP_Text productionCount;
 
+    public UnitsOnFight _unitsOnFight;
+    public BuildsOnFight _buildsOnFight;
+    public BattleEngine _battleEngine;
+    public bool isFight;
+
 
     void Start()
     {
+        InitState();
         InitSelectorSprites();
         InitSkillElementPrefab();
         TurnOff();
@@ -53,12 +60,24 @@ public class Selector : MonoBehaviour
         EventMaster.current.DestroyedObject += OnDestroyObject;
     }
 
+    public void InitState()
+    {
+        SceneState sceneState = GameObject.FindWithTag("State").GetComponent<SceneState>();
+        isFight = sceneState.currentState.stateName == "Fight";
+        if (isFight )
+        {
+            _battleEngine = GameObject.FindGameObjectWithTag(Tags.battleEngine).GetComponent<BattleEngine>();
+            _unitsOnFight = GameObject.FindGameObjectWithTag(Tags.unitsOnScene).GetComponent<UnitsOnFight>();
+            _buildsOnFight = GameObject.FindGameObjectWithTag(Tags.buildsOnScene).GetComponent<BuildsOnFight>();
+        }
+    }
+
     public void InitSelectorSprites()
     {
         friendlySelectorSprite = ResourcesUtils.LoadIcon(Config.resources["allySelector"]);
         enemySelectorSprite = ResourcesUtils.LoadIcon(Config.resources["enemySelector"]);
         neutralSelectorSprite = ResourcesUtils.LoadIcon(Config.resources["neutralSelector"]);
-        attackableSelector = ResourcesUtils.LoadIcon(Config.resources["attackableSelector"]);
+        attackableSelectorSprite = ResourcesUtils.LoadIcon(Config.resources["attackableSelector"]);
     }
 
     public void InitSkillElementPrefab()
@@ -85,7 +104,7 @@ public class Selector : MonoBehaviour
     {
         _selectedObject = obj;
         ConfigureName(obj);
-        ConfigureSelector(obj);
+        ConfigureSelector(obj, selector);
         ConfigureInfoPanel(obj);
         ConfigureRadius(obj);
         ConfigureHealthSlider(obj);
@@ -109,6 +128,11 @@ public class Selector : MonoBehaviour
             {
                 ConfigureSkillsInfo(unit);
             }
+        }
+
+        if (isFight)
+        {
+            ConfigureAttackersDisplay(obj);
         }
     }
 
@@ -139,6 +163,15 @@ public class Selector : MonoBehaviour
         skillsPanel.SetActive(false);
         objectInfoCanvas.enabled = attackRadiusCanvas.enabled =  productsInfoCanvas.enabled = false;
         selector.SetActive(false);
+        if (selectorsForAttackers != null && selectorsForAttackers.Count > 0)
+        {
+            foreach (var selector in selectorsForAttackers)
+            {
+                Destroy(selector.gameObject);
+            }
+            selectorsForAttackers = new List<GameObject>();
+        }
+
         isSelectedObjectProducts = false;
     }
 
@@ -162,16 +195,23 @@ public class Selector : MonoBehaviour
         );
     }
 
-    public void ConfigureSelector(Entity obj)
+    public void ConfigureSelector(Entity obj, GameObject targetSelector)
     {
-        selector.SetActive(true);
-        ConfigureSelectorSprite(obj);
-        ConfigureSelectorPosition(obj);
-        ConfigureSelectorSize(obj);
+        targetSelector.SetActive(true);
+        ConfigureSelectorSprite(obj, targetSelector);
+        ConfigureSelectorPosition(obj, targetSelector);
+        ConfigureSelectorSize(obj, targetSelector);
 
     }
 
-    public void ConfigureSelectorSprite(Entity obj)
+    public void ConfigureSelectorForAttacker(Entity attacker)
+    {
+        GameObject targetSelector = Instantiate(selector, selector.transform.position, Quaternion.identity, transform);
+        selectorsForAttackers.Add(targetSelector);
+        ConfigureSelector(attacker, targetSelector);
+    }
+
+    public void ConfigureSelectorSprite(Entity obj, GameObject targetSelector)
     {
         Dictionary<string, Sprite> selectorSpriteBySide = new Dictionary<string, Sprite>()
         {
@@ -180,32 +220,39 @@ public class Selector : MonoBehaviour
             { Sides.neutral, neutralSelectorSprite },
         };
 
-        SpriteRenderer selectorImage = selector.GetComponent<SpriteRenderer>();
+        SpriteRenderer selectorImage = targetSelector.GetComponent<SpriteRenderer>();
 
         string side = obj.side;
-
-        Sprite spriteForSelector = selectorSpriteBySide[side];
+        Sprite spriteForSelector;
+        if (isFight && side == Sides.empire && _battleEngine.currentBattleSituation.GetAttackersByTargetId(obj.ChildId).Count > 0)
+        {
+            spriteForSelector = attackableSelectorSprite;
+        }
+        else
+        {
+            spriteForSelector = selectorSpriteBySide[side];
+        }
 
         selectorImage.sprite = spriteForSelector;
     }
 
-    public void ConfigureSelectorPosition(Entity obj)
+    public void ConfigureSelectorPosition(Entity obj, GameObject targetSelector)
     {
-        selector.transform.position = new Vector3(
+        targetSelector.transform.position = new Vector3(
             obj.model.transform.position.x, 
-            selector.transform.position.y, 
+            targetSelector.transform.position.y, 
             obj.model.transform.position.z
         );
     }
 
-    public void ConfigureSelectorSize(Entity obj)
+    public void ConfigureSelectorSize(Entity obj, GameObject targetSelector)
     {
         int maxSize  =obj.currentSize.x;
         if (obj.currentSize.y > maxSize) {
             maxSize = obj.currentSize.y;
         }
 
-        selector.transform.localScale = new Vector3(
+        targetSelector.transform.localScale = new Vector3(
                 maxSize,
                 maxSize,
                 maxSize
@@ -416,5 +463,21 @@ public class Selector : MonoBehaviour
         TimeSpan remainingTime = productsEndTime - currentTime;
         int remainingSeconds = (int)remainingTime.TotalSeconds;
         productInfoText.text = "after " + TimeUtils.GetDHMSTimeAsStringBySeconds(remainingSeconds);
+    }
+
+    public void ConfigureAttackersDisplay(Entity obj)
+    {
+        List<ObjectOnBattle> attackersOnBattle = _battleEngine.currentBattleSituation.GetAttackersByTargetId(obj.ChildId);
+        foreach (ObjectOnBattle attackerOnBattle in attackersOnBattle)
+        {
+            Entity foundedAttackerEntity = _unitsOnFight.FindObjectByChildId(attackerOnBattle.IdOnBattle);
+            if (foundedAttackerEntity == null)
+            {
+                foundedAttackerEntity = _buildsOnFight.FindObjectByChildId(attackerOnBattle.IdOnBattle);
+            }
+            if (foundedAttackerEntity == null) continue;
+
+            ConfigureSelectorForAttacker(foundedAttackerEntity);
+        }
     }
 }

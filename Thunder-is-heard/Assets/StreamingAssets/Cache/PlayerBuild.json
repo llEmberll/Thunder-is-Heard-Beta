@@ -1,11 +1,10 @@
 ﻿{
-  "name": "PlayerBuild",
   "items": {
-    "1aa0c91d-7fa5-4a9b-b034-4179518b6650": {
+    "809544a9-ecbc-4100-be6b-81f59540b65c": {
       "fields": {
-        "externalId": "1aa0c91d-7fa5-4a9b-b034-4179518b6650",
+        "externalId": "809544a9-ecbc-4100-be6b-81f59540b65c",
         "description": "",
-        "rotation": 90,
+        "rotation": 180,
         "workStatus": "Idle",
         "coreId": "9b2cf240-5f63-4107-8751-eb91b95b94d9",
         "name": "Штаб",
@@ -257,5 +256,6 @@
         ]
       }
     }
-  }
+  },
+  "name": "PlayerBuild"
 }

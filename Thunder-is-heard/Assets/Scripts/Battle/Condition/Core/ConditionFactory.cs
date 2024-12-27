@@ -1,39 +1,46 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Newtonsoft.Json;
+
 
 public static class ConditionFactory
 {
-    public static Dictionary<string, Type> conditions = new Dictionary<string, Type>()
+    public static ICondition CreateCondition(ConditionData conditionData)
     {
-        { "DestroyAllAllies", typeof(DestroyAllAllies) },
-        { "DestroyAllEnemy", typeof(DestroyAllEnemy) }
-    };
-
-    public static ICondition GetConditionById(string id)
-    {
-        if (conditions.ContainsKey(id))
+        switch (conditionData.Type)
         {
-            Type type = conditions[id];
-            return (ICondition)Activator.CreateInstance(type);
+            case "DestroyAllEnemies":
+                return new DestroyAllEnemiesCondition();
+            case "DestroyAllAllies":
+                return new DestroyAllAlliesCondition();
+            case "AttackObject":
+                string targetObjectId = (string)conditionData.Data["targetObjectId"];
+                return new AttackObjectCondition(targetObjectId);
+            case "DestroyObjects":
+                string[] targetObjectIds = JsonConvert.DeserializeObject<string[]>(conditionData.Data["targetObjectIds"].ToString());
+                return new DestroyObjectsCondition(targetObjectIds);
+            case "SideReachPosition":
+                RectangleBector2Int positionRectangle = JsonConvert.DeserializeObject<RectangleBector2Int>(conditionData.Data["positionRectangle"].ToString());
+                string side = (string)conditionData.Data["side"];
+                return new SideReachPositionCondition(positionRectangle, side);
+            case "And":
+                ConditionData[] andConditionsData = JsonConvert.DeserializeObject<ConditionData[]>(conditionData.Data["conditions"].ToString());
+                return new AndCondition(CreateConditions(andConditionsData));
+            case "Or":
+                ConditionData[] orConditionsData = JsonConvert.DeserializeObject<ConditionData[]>(conditionData.Data["conditions"].ToString());
+                return new OrCondition(CreateConditions(orConditionsData));
+            default:
+                throw new ArgumentException("Неизвестный тип условия: " + conditionData.Type);
         }
-
-        return null;
     }
 
-    public static List<ICondition> GetConditionsByIds(string[] ids)
+    public static List<ICondition> CreateConditions(ConditionData[] conditionsData)
     {
-        List<ICondition> conditions  = new List<ICondition>();
-        foreach (string id in ids)
+        List<ICondition> conditions = new List<ICondition>();
+        foreach (var conditionData in conditionsData)
         {
-            ICondition condition = GetConditionById(id);
-            if (condition != null)
-            {
-                conditions.Add(condition);
-            }
+            conditions.Add(CreateCondition(conditionData));
         }
-
         return conditions;
     }
 }

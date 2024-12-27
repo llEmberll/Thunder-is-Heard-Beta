@@ -9,6 +9,7 @@ public class AIFactory
     {
         { "Waiting", typeof(WaitingAI) },
         { "Attacking", typeof(AttackingAI) },
+        { "Frozen", typeof(FrozenAI) },
     };
 
     public static AIInterface GetConfiguredAIByTypeAndSettings(AISettings settings)

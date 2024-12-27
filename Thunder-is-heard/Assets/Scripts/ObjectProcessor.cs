@@ -40,6 +40,13 @@ public class ObjectProcessor : MonoBehaviour
         ObjectPreview preview = FindObjectOfType<ObjectPreview>();
         if (IsSomeObjectSelected(preview))
         {
+            if (preview.buildedObjectOnScene.name == "Штаб")
+            {
+                Debug.Log("Нельзя снести штаб");
+                return;
+            }
+            return;
+
             Debug.Log("selected object putted to inv");
 
             AddGameObjectToInventory(preview.buildedObjectOnScene);
@@ -187,8 +194,15 @@ public class ObjectProcessor : MonoBehaviour
 
     public void CreateObjectsOnBattle(UnitOnBattle[] unitDatas, BuildOnBattle[] buildDatas)
     {
-        CreateUnitsOnBattle(unitDatas);
-        CreateBuildsOnBattle(buildDatas);
+        if (unitDatas != null && unitDatas.Length > 0)
+        {
+            CreateUnitsOnBattle(unitDatas);
+        }
+        
+        if (buildDatas != null && buildDatas.Length > 0)
+        {
+            CreateBuildsOnBattle(buildDatas);
+        }
     }
 
     public void CreateUnitsOnBattle(UnitOnBattle[] units)

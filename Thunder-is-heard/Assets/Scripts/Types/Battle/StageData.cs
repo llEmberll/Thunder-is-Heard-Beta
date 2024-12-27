@@ -14,10 +14,13 @@ public class StageData
 
     public AISettings[] AISettings;
 
-    public string[] conditionsForDefeat;
-    public string[] conditionsForVictory;
+    public ConditionData conditionsForDefeat;
+    public ConditionData conditionsForVictory;
+
+    public StageData stageOnFail = null;
 
     
+    public StageData() { }
 
     public StageData(
         UnitOnBattle[] stageUnits,
@@ -25,10 +28,11 @@ public class StageData
         Replic[] stageReplicsOnStart,
         Replic[] stageReplicsOnPass,
         Replic[] stageReplicsOnFail,
-        AISettings[] StageAISettings,
-        string[] stageConditionsForDefeat, 
-        string[] stageConditionsForVictory,
-        string stageId = "BasicStage"
+        AISettings[] stageAISettings,
+        ConditionData stageConditionsForDefeat, 
+        ConditionData stageConditionsForVictory,
+        string stageId = "BasicStage",
+        StageData stageStageOnFail = null
         )
     {
         id = stageId;
@@ -37,8 +41,9 @@ public class StageData
         replicsOnStart = stageReplicsOnStart;
         replicsOnPass = stageReplicsOnPass;
         replicsOnFail = stageReplicsOnFail;
-        AISettings = StageAISettings;
+        AISettings = stageAISettings;
         conditionsForDefeat = stageConditionsForDefeat;
         conditionsForVictory = stageConditionsForVictory;
+        stageOnFail = stageStageOnFail;
     }
 }

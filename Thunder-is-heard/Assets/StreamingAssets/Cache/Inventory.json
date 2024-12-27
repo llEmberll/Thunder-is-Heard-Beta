@@ -5,7 +5,7 @@
       "fields": {
         "coreId": "9b2cf240-5f63-4107-8751-eb91b95b94d9",
         "type": "Build",
-        "count": 1,
+        "count": 2,
         "externalId": "dfdde537-2796-404c-a7df-66c7b48d5907",
         "description": ""
       }
@@ -23,7 +23,7 @@
       "fields": {
         "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
         "type": "Unit",
-        "count": 780,
+        "count": 743,
         "externalId": "4029afc4-bde8-4f40-bf45-513ba328b07e",
         "description": ""
       }
