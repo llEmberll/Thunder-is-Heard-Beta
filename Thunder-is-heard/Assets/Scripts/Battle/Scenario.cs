@@ -3,31 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[System.Serializable]
 public class Scenario: MonoBehaviour
 {
-    [SerializeField] public List<Vector2Int> _landableCells;
+    public List<Vector2Int> _landableCells;
     public List<Vector2Int> LandableCells { get { return _landableCells; } }
 
-    [SerializeField] public int _landingMaxStaff;
+    public int _landingMaxStaff;
     public int LandingMaxStaff { get { return _landingMaxStaff; } }
 
-    [SerializeField] public Map map;
+    public Map map;
     public Map Map { get { return map; } }
 
 
-    [SerializeField] public List<IStage> _stages;
+    public List<IStage> _stages;
     public List<IStage> Stages { get { return _stages; } }
 
 
-    [SerializeField] public IStage _currentStage;
+    public IStage _currentStage;
     public IStage CurrentStage { get { return _currentStage; } }
 
-    [SerializeField] public int _currentStageIndex = 0;
+    public int _currentStageIndex = 0;
     public int CurrentStageIndex { get { return _currentStageIndex; } }
 
 
-    [SerializeField] public Replic[] _initialDialogue;
+    public Replic[] _initialDialogue;
     public Replic[] InitialDialogue { get { return _initialDialogue; } }
 
     public bool waitingForEndDialogue = false;
@@ -135,7 +134,6 @@ public class Scenario: MonoBehaviour
 
     public IEnumerator ContinueStage()
     {
-        //Сохранить battleData
         EventMaster.current.OnStageBegin(_currentStage);
 
         EnableListenerForUpdateStage();

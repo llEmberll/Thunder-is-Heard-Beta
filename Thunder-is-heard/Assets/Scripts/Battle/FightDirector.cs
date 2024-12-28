@@ -290,6 +290,8 @@ public class FightDirector : MonoBehaviour
 
         EventMaster.current.OnNextTurn(_battleData.GetTurn());
         _turnController.OnNextTurn(_battleData.GetTurn());
+
+        yield break;
     }
 
     public void ExecuteTurn(TurnData turnData)

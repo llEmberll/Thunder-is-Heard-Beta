@@ -247,7 +247,12 @@ public class BaseMap : Map
         //// Стартовый диалог
         Replic[] startDialogueForStage1 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Взгляните Командир! Позиции укреплены, однако малочисленны. По всей видимости, прошлое нападение исходило отсюда"),
+            new Replic(
+                charName: Chars.officer, 
+                charSide: Sides.federation, 
+                text: "Взгляните Командир! Позиции укреплены, однако малочисленны. По всей видимости, прошлое нападение исходило отсюда",
+                focus: new Bector2Int(12, 20)
+                ),
             new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Обратите внимание на количество войск противника. Их немало, но, если мы их разобьём по частям, мы существенно облегчим себе задачу"),
             new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Снежана правду говорит. Рекомендую слушать её советы. Иногда они могут вам здорово помочь"),
         };
@@ -352,7 +357,12 @@ public class BaseMap : Map
         //// Стартовый диалог
         Replic[] startDialogueForStage3 = new Replic[]
         {
-            new Replic(charName: Chars.fighter, charSide: Sides.empire, text: "Вы что, совсем страх потеряли?! Парни, немедленно принести мне головы тех наглецов!"),
+            new Replic(
+                charName: Chars.fighter, 
+                charSide: Sides.empire, 
+                text: "Вы что, совсем страх потеряли?! Парни, немедленно принести мне головы тех наглецов!", 
+                focus: new Bector2Int(11, 17)
+                ),
             new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Не бойтесь! Неожиданность – наше преимущество! Подведите все войска и используйте перекрёстный огонь против наступающих солдат")
         };
         //// Cтартовый диалог
@@ -407,7 +417,7 @@ public class BaseMap : Map
         //// Стартовый диалог
         Replic[] startDialogueForStage4 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Прекрасно! Гарнизон разбит! Уничтожьте их казарму и с ними будет покончено!")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Прекрасно! Гарнизон разбит! Уничтожьте их казарму и с ними будет покончено!", focus: new Bector2Int(17, 22))
         };
         //// Cтартовый диалог
 
@@ -456,7 +466,7 @@ public class BaseMap : Map
         //// Стартовый диалог
         Replic[] startDialogueForStage5 = new Replic[]
         {
-            new Replic(charName: Chars.fighter, charSide: Sides.empire, text: "Ну что вы встали, глупцы?! Атакуйте этих никчёмных бездарей!"),
+            new Replic(charName: Chars.fighter, charSide: Sides.empire, text: "Ну что вы встали, глупцы?! Атакуйте этих никчёмных бездарей!", focus: new Bector2Int(12, 30)),
         };
         //// Cтартовый диалог
 
@@ -539,7 +549,12 @@ public class BaseMap : Map
         //// Стартовый диалог
         Replic[] startDialogueForStage6 = new Replic[]
         {
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Командир, аккуратней! Неизвестно, сколько ещё подкреплений они могут вызвать. Хорошенько подумайте про оборону. Старайтесь не допускать потерь…"),
+            new Replic(
+                charName: Chars.tankGirl, 
+                charSide: Sides.federation, 
+                text: "Командир, аккуратней! Неизвестно, сколько ещё подкреплений они могут вызвать. Хорошенько подумайте про оборону. Старайтесь не допускать потерь…",
+                focus: new Bector2Int(12, 30)
+                )
         };
         //// Cтартовый диалог
 

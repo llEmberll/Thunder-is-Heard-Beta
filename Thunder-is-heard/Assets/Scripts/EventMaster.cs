@@ -56,6 +56,12 @@ public class EventMaster: MonoBehaviour
         StartLanding?.Invoke(landableCells, landingMaxStaff);
     }
 
+    public event Action ToBattleButtonPressed;
+    public void OnPressToBattleButton()
+    {
+        ToBattleButtonPressed?.Invoke();
+    }
+
     public event Action FightIsStarted;
     public void StartFight()
     {
@@ -265,6 +271,12 @@ public class EventMaster: MonoBehaviour
     public void OnUIPanelToggle(bool isNowActive)
     {
         UIPanelToggled?.Invoke(isNowActive);
+    }
+
+    public event Action<Vector2Int> CameraNeedFocusOnPosition;
+    public void FocusCameraOnPosition(Vector2Int position)
+    {
+        CameraNeedFocusOnPosition?.Invoke(position);
     }
 
     public event Action<LandableUnit> LandableUnitFocused;

@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
+
 
 public class CameraController : MonoBehaviour
 {
     public bool _isMovable = true;
+
+    public Vector2 focus;
+    public bool haveFocus = false;
 
     public float cameraHeight = 9f;
     public float focusOffset;
@@ -14,7 +19,7 @@ public class CameraController : MonoBehaviour
     public float maxSpeed = 0.5f;
     public float zoomSpeed = 1f;
     private Camera mainCamera;
-    private Vector3 targetPosition;
+    private Vector3 cameraPosition;
     public float currentSpeed = 0f;
 
 	public Vector2 sizeLimit = new Vector2(2.5f, 5f);
@@ -32,17 +37,29 @@ public class CameraController : MonoBehaviour
         
         mainCamera = Camera.main;
         map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
-        FocusOnPoint(map.centralCell.position);
+        MoveOnPoint(map.centralCell.position);
         FindMovementThreshold();
 
 
-        targetPosition = transform.position;
+        cameraPosition = transform.position;
         
 
 		screenWidth = Screen.width;
         screenHeight = Screen.height;
 
+        EnableListeners();
+    }
+
+    public void EnableListeners()
+    {
         EventMaster.current.UIPanelToggled += SetIsMovable;
+        EventMaster.current.CameraNeedFocusOnPosition += SetSoftFocusOnPoint;
+    }
+
+    public void DisableListeners()
+    {
+        EventMaster.current.UIPanelToggled -= SetIsMovable;
+        EventMaster.current.CameraNeedFocusOnPosition -= SetSoftFocusOnPoint;
     }
 
     public void SetIsMovable(bool isMovementForbidden)
@@ -50,9 +67,35 @@ public class CameraController : MonoBehaviour
         _isMovable = !isMovementForbidden;
     }
 
-    private void FocusOnPoint(Vector2Int point)
+    public void MoveOnPoint(Vector2Int point)
     {
         transform.position = new Vector3(point.x - focusOffset , cameraHeight, point.y - focusOffset);
+    }
+
+    public void SetSoftFocusOnPoint(Vector2Int point)
+    {
+        Debug.Log("Set focus on " + point);
+        focus = point;
+        haveFocus = true;
+    }
+
+    public void SoftMoveOnFocus()
+    {
+        Vector3 focusVector3 = new Vector3(focus.x -focusOffset, cameraHeight, focus.y - focusOffset);
+        float speedForMoveToFocus = movementSpeed + Vector3.Distance(transform.position, focusVector3);
+
+        Vector3 direction = (focusVector3 - transform.position).normalized;
+
+        direction.Normalize();
+        cameraPosition += direction * speedForMoveToFocus * currentSpeed * mainCamera.orthographicSize * Time.deltaTime;
+        // Move camera to target position
+        transform.position = Vector3.Lerp(transform.position, cameraPosition, 0.030f);
+
+        if (Vector3.Distance(transform.position, focusVector3) < 0.1f)
+        {
+            transform.position = focusVector3;
+            haveFocus = false;
+        }
     }
 
     public void FindMovementThreshold()
@@ -66,7 +109,14 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (haveFocus)
+        {
+            SoftMoveOnFocus();
+            return;
+        }
+
         if (!_isMovable) return;
+
         // Move camera based on cursor position
         Vector3 cursorPosition = Input.mousePosition;
         Vector3 movement = Vector3.zero;
@@ -106,13 +156,13 @@ public class CameraController : MonoBehaviour
             currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);
         
         movement.Normalize();
-        targetPosition += movement * movementSpeed * currentSpeed * mainCamera.orthographicSize * Time.deltaTime;
-        targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
-        targetPosition.z = Mathf.Clamp(targetPosition.z, minZ, maxZ);
+        cameraPosition += movement * movementSpeed * currentSpeed * mainCamera.orthographicSize * Time.deltaTime;
+        cameraPosition.x = Mathf.Clamp(cameraPosition.x, minX, maxX);
+        cameraPosition.z = Mathf.Clamp(cameraPosition.z, minZ, maxZ);
         // Zoom camera with mouse wheel
         float zoomAmount = Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
         mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - zoomAmount, sizeLimit.x, sizeLimit.y);
         // Move camera to target position
-        transform.position = Vector3.Lerp(transform.position, targetPosition, 0.030f);
+        transform.position = Vector3.Lerp(transform.position, cameraPosition, 0.030f);
     }
 }

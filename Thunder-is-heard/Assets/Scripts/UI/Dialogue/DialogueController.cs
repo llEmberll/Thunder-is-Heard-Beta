@@ -125,10 +125,10 @@ public class DialogueController : UIElement
 
     public void UpdateDialogue(Replic replic)
     {
-        UpdateDialogue(replic._charName, replic._charSide, replic._text);
+        UpdateDialogue(replic._charName, replic._charSide, replic._text, replic._focus);
     }
 
-    public void UpdateDialogue(string charName, string side, string text)
+    public void UpdateDialogue(string charName, string side, string text, Bector2Int focus)
     {
         Show();
         _charSide = side;
@@ -138,6 +138,10 @@ public class DialogueController : UIElement
         UpdateText();
         UpdateScrollbar();
         UpdateAmbient();
+        if (focus != null)
+        {
+            EventMaster.current.FocusCameraOnPosition(focus.ToVector2());
+        }
     }
 
     public void UpdateChar()

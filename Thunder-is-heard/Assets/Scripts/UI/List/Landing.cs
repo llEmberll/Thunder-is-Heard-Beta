@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 
@@ -20,6 +21,8 @@ public class Landing : ItemList
     public Map _map;
     public UnitsOnFight _unitsOnScene;
 
+    public Image notLandedStaffForFightWarning;
+
 
     public override void Awake()
     {
@@ -31,7 +34,7 @@ public class Landing : ItemList
         EventMaster.current.ToggledOffBuildMode += Show;
         EventMaster.current.ToggledToBuildMode += Hide;
         EventMaster.current.StartLanding += StartLanding;
-        EventMaster.current.FightIsStarted += FinishLanding;
+        EventMaster.current.ToBattleButtonPressed += OnPressedToBattleButton;
         EventMaster.current.FightIsContinued += FinishLanding;
         EventMaster.current.LandableUnitFocused += OnLandableUnitFocus;
         EventMaster.current.LandableUnitDefocused += OnLandableUnitDefocus;
@@ -44,7 +47,7 @@ public class Landing : ItemList
         EventMaster.current.ToggledOffBuildMode -= Show;
         EventMaster.current.ToggledToBuildMode -= Hide;
         EventMaster.current.StartLanding -= StartLanding;
-        EventMaster.current.FightIsStarted -= FinishLanding;
+        EventMaster.current.ToBattleButtonPressed -= OnPressedToBattleButton;
         EventMaster.current.FightIsContinued -= FinishLanding;
         EventMaster.current.LandableUnitFocused -= OnLandableUnitFocus;
         EventMaster.current.LandableUnitDefocused -= OnLandableUnitDefocus;
@@ -158,12 +161,26 @@ public class Landing : ItemList
         Show();
     }
 
+    public void OnPressedToBattleButton()
+    {
+        if (_landedStaff > 0)
+        {
+            EventMaster.current.StartFight();
+            FinishLanding();
+        }
+        else
+        {
+            notLandedStaffForFightWarning.gameObject.SetActive(true);
+        }
+    }
+
     public void FinishLanding()
     {
         Debug.Log("Landing: finish landing");
 
         DisableListeners();
 
+        notLandedStaffForFightWarning.gameObject.SetActive(false);
         _map.SetActiveAll();
         _map.HideAll();
 

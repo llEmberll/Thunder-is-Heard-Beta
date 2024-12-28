@@ -3,20 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[System.Serializable]
-public class BasicStage: IStage
+public class BasicStage: MonoBehaviour, IStage
 {
-    [SerializeField] public Scenario _scenario;
-    [SerializeField] public UnitOnBattle[] _units;
-    [SerializeField] public BuildOnBattle[] _builds;
+    public Scenario _scenario;
+    public UnitOnBattle[] _units;
+    public BuildOnBattle[] _builds;
 
-    [SerializeField] public Replic[] _replicsOnStart;
-    [SerializeField] public Replic[] _replicsOnPass;
-    [SerializeField] public Replic[] _replicsOnFail;
+    public Replic[] _replicsOnStart;
+    public Replic[] _replicsOnPass;
+    public Replic[] _replicsOnFail;
 
-    [SerializeField] public List<IScenarioEvent> events;
-    [SerializeField] public ICondition _conditionsForPass;
-    [SerializeField] public ICondition _conditionsForFail;
+    public List<IScenarioEvent> events;
+    public ICondition _conditionsForPass;
+    public ICondition _conditionsForFail;
 
     public UnitOnBattle[] Units { get { return _units; } }
     public BuildOnBattle[] Builds { get { return _builds; } }
