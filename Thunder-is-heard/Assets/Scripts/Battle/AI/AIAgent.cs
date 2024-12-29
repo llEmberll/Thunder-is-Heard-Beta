@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class AIAgent : MonoBehaviour
 {
     public List<string> _sides;
@@ -79,18 +80,13 @@ public class AIAgent : MonoBehaviour
 
     public void OnNextTurn(string side)
     {
-        Debug.Log("AI: On next turn");
-
         if (_sides.Contains(side))
         {
             _turnData = AIBySide[side].GetTurn();
-
-            Debug.Log("AI: ходит за " + side);
             Execute();
         }
         else
         {
-            Debug.Log("AI: side is federation");
         }
     }
 
@@ -101,8 +97,6 @@ public class AIAgent : MonoBehaviour
 
     public void Execute()
     {
-        Debug.Log("AI: Execute");
-
         EventMaster.current.OnExecuteTurn(_turnData);
         ClearTurnData();
     }

@@ -279,6 +279,12 @@ public class EventMaster: MonoBehaviour
         CameraNeedFocusOnPosition?.Invoke(position);
     }
 
+    public event Action CameraFocusCanceled;
+    public void CancelFocus()
+    {
+        CameraFocusCanceled?.Invoke();
+    }
+
     public event Action<LandableUnit> LandableUnitFocused;
     public void OnLandableUnitFocus(LandableUnit unit)
     {

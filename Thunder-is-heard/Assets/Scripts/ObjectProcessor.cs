@@ -45,7 +45,6 @@ public class ObjectProcessor : MonoBehaviour
                 Debug.Log("Нельзя снести штаб");
                 return;
             }
-            return;
 
             Debug.Log("selected object putted to inv");
 

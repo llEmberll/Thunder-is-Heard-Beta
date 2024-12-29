@@ -21,7 +21,7 @@
           "maxExp": 0
         },
         "unitId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-        "duration": 5,
+        "duration": 50,
         "iconSection": "Textures/Interface/Cards/Units",
         "name": "Тренировать штурмовиков",
         "iconName": "assaulters"
@@ -47,7 +47,7 @@
           "maxExp": 0
         },
         "unitId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
-        "duration": 20,
+        "duration": 280,
         "iconSection": "UIUnitCards",
         "name": "Произвести боевой джип",
         "iconName": "vortex"
@@ -73,7 +73,7 @@
           "maxExp": 0
         },
         "unitId": "035655f8-a347-4057-87cc-83385fa20660",
-        "duration": 30,
+        "duration": 360,
         "iconSection": "UIUnitCards",
         "name": "Произвести БМП",
         "iconName": "osoka"
@@ -85,7 +85,7 @@
         "description": "",
         "type": "Infantry",
         "cost": {
-          "rub": 400,
+          "rub": 450,
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
@@ -99,7 +99,7 @@
           "maxExp": 0
         },
         "unitId": "1db672c3-4207-4629-a1ee-ca054c83ba7c",
-        "duration": 7,
+        "duration": 60,
         "iconSection": "Textures/Interface/Cards/Units",
         "name": "Тренировать разведку",
         "iconName": "scout"
@@ -111,7 +111,7 @@
         "description": "",
         "type": "Infantry",
         "cost": {
-          "rub": 500,
+          "rub": 550,
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
@@ -125,7 +125,7 @@
           "maxExp": 0
         },
         "unitId": "91207015-36e5-4bf7-b16e-628e67935609",
-        "duration": 10,
+        "duration": 90,
         "iconSection": "Textures/Interface/Cards/Units",
         "name": "Тренировать снайпера",
         "iconName": "sniper"

@@ -1,6 +1,7 @@
 using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 
@@ -11,6 +12,8 @@ public class MissionDetalization: UIElement
     public string _id = null;
     public TMP_Text TmpName, TmpDescription;
     public Transform _gives;
+
+    public Image noReserveWarning;
 
     public bool IsClickedOutside()
     {
@@ -64,8 +67,14 @@ public class MissionDetalization: UIElement
         Load(_id);
     }
 
-    public static void Load(string missionId)
+    public void Load(string missionId)
     {
+        if (!HaveReserve())
+        {
+            noReserveWarning.gameObject.SetActive(true);
+            return;
+        }
+
         MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
         CacheItem cacheItemMission = missionTable.GetById(missionId);
         MissionCacheItem missionData = new MissionCacheItem(cacheItemMission.Fields);
@@ -84,5 +93,17 @@ public class MissionDetalization: UIElement
         Cache.Save(battleTable);
 
         SceneLoader.LoadFight(new FightSceneParameters(battleData.GetExternalId()));
+    }
+
+    public static bool HaveReserve()
+    {
+        InventoryCacheTable inventory = Cache.LoadByType<InventoryCacheTable>();
+        foreach (CacheItem item in inventory.Items.Values)
+        {
+            InventoryCacheItem currentItemData = new InventoryCacheItem(item.Fields);
+            if (currentItemData.GetType() == "Unit") return true;
+        }
+
+        return false;
     }
 }

@@ -115,8 +115,6 @@ public class TurnController : MonoBehaviour
         if (isAllowedToControl == false) return;
         if (obj is Unit unit)
         {
-            Debug.Log("TurnController: On unit enter");
-
             if (_turnData._activeUnitIdOnBattle != null && _turnData._activeUnitIdOnBattle == unit.ChildId)
             {
                 ClearRoute();
@@ -127,8 +125,6 @@ public class TurnController : MonoBehaviour
     public void OnObjectClick(Entity obj)
     {
         if (isAllowedToControl == false) return;
-        Debug.Log("Turn controller: OBJECT CLICK");
-
         if (obj is Obstacle) return; // Ќельз€ взаимодействовать с преп€тстви€ми в бою
 
         if (obj.side == Sides.neutral)
@@ -199,8 +195,6 @@ public class TurnController : MonoBehaviour
     public void OnCellClick(Cell cell)
     {
         if (isAllowedToControl == false) return;
-        Debug.Log("Turn controller: CELL CLICK");
-
         if (!cell.visible) return;
 
         if (_turnData == null || _turnData._route == null)

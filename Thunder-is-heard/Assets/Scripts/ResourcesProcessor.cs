@@ -155,6 +155,10 @@ public class ResourcesProcessor : MonoBehaviour
 
     public static Sprite GetResourceSpriteByName(string name)
     {
+        if (name == "exp")
+        {
+            return ResourcesUtils.LoadIcon(Config.resources["expIcon"], "0");
+        }
         Sprite[] icons = Resources.LoadAll<Sprite>(Config.resources["resourcesIcons"]);
 
         name = name.ToLower();

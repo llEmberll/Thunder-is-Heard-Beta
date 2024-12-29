@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 
@@ -54,12 +51,14 @@ public class CameraController : MonoBehaviour
     {
         EventMaster.current.UIPanelToggled += SetIsMovable;
         EventMaster.current.CameraNeedFocusOnPosition += SetSoftFocusOnPoint;
+        EventMaster.current.CameraFocusCanceled += CancelFocus;
     }
 
     public void DisableListeners()
     {
         EventMaster.current.UIPanelToggled -= SetIsMovable;
         EventMaster.current.CameraNeedFocusOnPosition -= SetSoftFocusOnPoint;
+        EventMaster.current.CameraFocusCanceled -= CancelFocus;
     }
 
     public void SetIsMovable(bool isMovementForbidden)
@@ -79,6 +78,12 @@ public class CameraController : MonoBehaviour
         haveFocus = true;
     }
 
+    public void CancelFocus()
+    {
+        Debug.Log("focus canceled");
+        haveFocus = false;
+    }
+
     public void SoftMoveOnFocus()
     {
         Vector3 focusVector3 = new Vector3(focus.x -focusOffset, cameraHeight, focus.y - focusOffset);
@@ -93,6 +98,9 @@ public class CameraController : MonoBehaviour
 
         if (Vector3.Distance(transform.position, focusVector3) < 0.1f)
         {
+            Debug.Log("focus достигнут!");
+            Debug.Log("Позиция камеры - " + transform.position);
+
             transform.position = focusVector3;
             haveFocus = false;
         }

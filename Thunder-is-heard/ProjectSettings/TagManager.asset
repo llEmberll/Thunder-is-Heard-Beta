@@ -47,6 +47,7 @@ TagManager:
   - DialogueController
   - Scenario
   - FightProcessor
+  - Stages
   layers:
   - Default
   - TransparentFX

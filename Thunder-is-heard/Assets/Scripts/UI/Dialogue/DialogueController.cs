@@ -108,6 +108,7 @@ public class DialogueController : UIElement
         DisablePassReplicListener();
 
         EventMaster.current.OnEndDialogue();
+        EventMaster.current.CancelFocus();
 
         Hide();
     }

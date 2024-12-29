@@ -9,7 +9,7 @@
         "rewards": [],
         "passed": true,
         "gives": {
-          "rub": 650,
+          "rub": 1000,
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
@@ -19,7 +19,7 @@
           "maxSteel": 0,
           "staff": 0,
           "maxStaff": 0,
-          "exp": 100,
+          "exp": 300,
           "maxExp": 0
         },
         "poseOnMap": {

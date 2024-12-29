@@ -11,7 +11,7 @@ public class BaseMap : Map
 
     public void Start()
     {
-        CreateScenarioForEnemyOutpost();
+        //CreateScenarioForEnemyOutpost();
     }
 
     public void CreateScenarioForEnemyOutpost()
@@ -236,10 +236,16 @@ public class BaseMap : Map
         ///// ИИ
 
         //// Условия
-        string sideForConditionDataStage1 = Sides.federation;
+        string sideForConditionsDataStage1 = Sides.federation;
         RectangleBector2Int rectangleForConditionDataStage1 = new RectangleBector2Int(new Bector2Int(0, 14), new Bector2Int(26, 35));
-        Dictionary<string, object> dataForConditionDataStage1 = new Dictionary<string, object>() { { "side", sideForConditionDataStage1}, { "positionRectangle", rectangleForConditionDataStage1 } };
-        ConditionData victoryConditionDataForStage1 = new ConditionData(type: "SideReachPosition", dataForConditionDataStage1);
+        Dictionary<string, object> dataForConditionData1Stage1 = new Dictionary<string, object>() { { "side", sideForConditionsDataStage1 }, { "positionRectangle", rectangleForConditionDataStage1 } };
+        ConditionData victoryConditionData1ForStage1 = new ConditionData(type: "SideReachPosition", dataForConditionData1Stage1);
+
+        Dictionary<string, object> dataForConditionData2Stage1 = new Dictionary<string, object>() { { "attackerSide", sideForConditionsDataStage1 }, { "targetObjectId", "5168ce99-2415-4eb2-9cc4-530174d7ef4a" } };
+        ConditionData victoryConditionData2ForStage1 = new ConditionData(type: "ReachToAttackObject", dataForConditionData2Stage1);
+
+        Dictionary<string, object> victoryDataForConditionDataStage1 = new Dictionary<string, object>() { { "conditions", new ConditionData[] { victoryConditionData1ForStage1, victoryConditionData2ForStage1 } } };
+        ConditionData victoryConditionDataForStage1 = new ConditionData(type: "Or", victoryDataForConditionDataStage1);
 
         ConditionData defeatConditionDataForStage1 = new ConditionData(type: "DestroyAllAllies", null);
         //// Условия
@@ -251,7 +257,7 @@ public class BaseMap : Map
                 charName: Chars.officer, 
                 charSide: Sides.federation, 
                 text: "Взгляните Командир! Позиции укреплены, однако малочисленны. По всей видимости, прошлое нападение исходило отсюда",
-                focus: new Bector2Int(12, 20)
+                focus: new Bector2Int(14, 25)
                 ),
             new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Обратите внимание на количество войск противника. Их немало, но, если мы их разобьём по частям, мы существенно облегчим себе задачу"),
             new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Снежана правду говорит. Рекомендую слушать её советы. Иногда они могут вам здорово помочь"),
@@ -466,7 +472,7 @@ public class BaseMap : Map
         //// Стартовый диалог
         Replic[] startDialogueForStage5 = new Replic[]
         {
-            new Replic(charName: Chars.fighter, charSide: Sides.empire, text: "Ну что вы встали, глупцы?! Атакуйте этих никчёмных бездарей!", focus: new Bector2Int(12, 30)),
+            new Replic(charName: Chars.fighter, charSide: Sides.empire, text: "Ну что вы встали, глупцы?! Атакуйте этих никчёмных бездарей!", focus: new Bector2Int(14, 25)),
         };
         //// Cтартовый диалог
 
@@ -553,7 +559,7 @@ public class BaseMap : Map
                 charName: Chars.tankGirl, 
                 charSide: Sides.federation, 
                 text: "Командир, аккуратней! Неизвестно, сколько ещё подкреплений они могут вызвать. Хорошенько подумайте про оборону. Старайтесь не допускать потерь…",
-                focus: new Bector2Int(12, 30)
+                focus: new Bector2Int(13, 25)
                 )
         };
         //// Cтартовый диалог

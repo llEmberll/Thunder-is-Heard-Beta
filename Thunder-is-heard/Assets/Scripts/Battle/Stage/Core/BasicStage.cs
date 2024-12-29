@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public class BasicStage: MonoBehaviour, IStage
+public class BasicStage: IStage
 {
     public Scenario _scenario;
     public UnitOnBattle[] _units;
@@ -87,7 +86,7 @@ public class BasicStage: MonoBehaviour, IStage
 
     public void EnableListeners()
     {
-        
+
     }
 
     public void DisableListeners()
@@ -113,7 +112,7 @@ public class BasicStage: MonoBehaviour, IStage
     public void SetAISettingsBySide(AISettings[] value)
     {
         _AISettingsBySide = new Dictionary<string, AISettings>();
-        foreach (var settings  in value)
+        foreach (var settings in value)
         {
             _AISettingsBySide.Add(settings.side, settings);
         }
@@ -159,7 +158,7 @@ public class BasicStage: MonoBehaviour, IStage
     public void OnStart()
     {
         CreateObjects();
-        
+
         if (ReplicsOnStart != null && ReplicsOnStart.Length > 0)
         {
             BeginDialogue(ReplicsOnStart);
@@ -172,7 +171,7 @@ public class BasicStage: MonoBehaviour, IStage
 
     public void BeginDialogue(Replic[] replics)
     {
-       isDialogue = true;
+        isDialogue = true;
         EventMaster.current.BeginDialogue(replics);
         EnableEndDialogueListener();
     }
@@ -196,7 +195,7 @@ public class BasicStage: MonoBehaviour, IStage
     public void OnFinish()
     {
         EventMaster.current.OnUpdateStage();
-        
+
     }
 
     public bool IsPassed()

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 
 public interface IStage
@@ -25,11 +24,11 @@ public interface IStage
     public IStage StageOnFail { get; }
 
     public void Init(
-        Scenario stageScenario, 
-        AISettings[] AISettings, 
-        ICondition conditionsForPass, 
+        Scenario stageScenario,
+        AISettings[] AISettings,
+        ICondition conditionsForPass,
         ICondition conditionsForFail,
-        UnitOnBattle[] units, 
+        UnitOnBattle[] units,
         BuildOnBattle[] builds,
         Replic[] replicsOnStart,
         Replic[] replicsOnPass,

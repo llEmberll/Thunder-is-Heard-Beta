@@ -111,8 +111,10 @@ public class Selector : MonoBehaviour
         ConfigureHealth(obj);
         ConfigureDamage(obj);
 
+        bool mayHaveAttackers = false;
         if (obj is Build)
         {
+            mayHaveAttackers = true;
             Build build = (Build)obj;
             selectedBuild = build;
             if (build.workStatus == WorkStatuses.working)
@@ -123,6 +125,7 @@ public class Selector : MonoBehaviour
 
         else if (obj is Unit)
         {
+            mayHaveAttackers = true;
             Unit unit = (Unit)obj;
             if (unit._skills != null && unit._skills.Length > 0)
             {
@@ -130,7 +133,7 @@ public class Selector : MonoBehaviour
             }
         }
 
-        if (isFight)
+        if (isFight && mayHaveAttackers)
         {
             ConfigureAttackersDisplay(obj);
         }

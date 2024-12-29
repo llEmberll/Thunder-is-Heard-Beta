@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -758,10 +759,17 @@ public class BattleSituation
         foreach (var keyValuePair in unitsBySide)
         {
             ObjectOnBattle currentUnit = keyValuePair.Value;
-            List<Bector2Int> routeToCurrentUnit = _map.BuildRoute(point, currentUnit.Position.First(), int.MaxValue);
-            if (routeToCurrentUnit.Count < nearestDistance)
+            try
             {
-                nearestDistance = routeToCurrentUnit.Count;
+                List<Bector2Int> routeToCurrentUnit = _map.BuildRoute(point, currentUnit.Position.First(), int.MaxValue);
+                if (routeToCurrentUnit.Count < nearestDistance)
+                {
+                    nearestDistance = routeToCurrentUnit.Count;
+                }
+            }
+            catch
+            {
+                continue;
             }
         }
 
@@ -781,12 +789,19 @@ public class BattleSituation
         foreach (var keyValuePair in unitsBySide)
         {
             ObjectOnBattle currentUnit = keyValuePair.Value;
-            List<Bector2Int> shortestRouteToAttackCurrentUnit = _map.BuildRouteForAttackTarget(attacker.Position.First(), currentUnit.Position.First(), attackRange: attacker.Distance, int.MaxValue);
-            if (shortestRouteToAttackCurrentUnit.Count < minPassedDistanceToAttack)
+            try
             {
-                nearestUnit = currentUnit;
-                minPassedDistanceToAttack = shortestRouteToAttackCurrentUnit.Count;
-                moveForAttackData._fullRoute = shortestRouteToAttackCurrentUnit;
+                List<Bector2Int> shortestRouteToAttackCurrentUnit = _map.BuildRouteForAttackTarget(attacker.Position.First(), currentUnit.Position.First(), attackRange: attacker.Distance, int.MaxValue);
+                if (shortestRouteToAttackCurrentUnit.Count < minPassedDistanceToAttack)
+                {
+                    nearestUnit = currentUnit;
+                    minPassedDistanceToAttack = shortestRouteToAttackCurrentUnit.Count;
+                    moveForAttackData._fullRoute = shortestRouteToAttackCurrentUnit;
+                }
+            }
+            catch
+            {
+                continue;
             }
         }
 

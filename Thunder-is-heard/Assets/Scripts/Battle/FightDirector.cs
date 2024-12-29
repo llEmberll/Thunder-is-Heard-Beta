@@ -58,6 +58,7 @@ public class FightDirector : MonoBehaviour
 
         EventMaster.current.TurnExecuted += ExecuteTurn;
         EventMaster.current.StageIndexChanged += ChangeStageIndex;
+        EventMaster.current.ScenarioUpdated += OnScenarioUpdated;
     }
 
     public void DisableListeners()
@@ -69,6 +70,7 @@ public class FightDirector : MonoBehaviour
 
         EventMaster.current.TurnExecuted -= ExecuteTurn;
         EventMaster.current.StageIndexChanged -= ChangeStageIndex;
+        EventMaster.current.ScenarioUpdated -= OnScenarioUpdated;
     }
 
 
@@ -263,7 +265,20 @@ public class FightDirector : MonoBehaviour
         _turnController.OnNextTurn(_battleData.GetTurn());
     }
 
-    public IEnumerator NextTurn()
+    public void OnScenarioUpdated()
+    {
+        Debug.Log("Сценарий обновлен");
+
+
+        SyncBattleDataToCurrentBattleSituation();
+
+        Debug.Log("Битва синхронизирована");
+
+        EventMaster.current.OnNextTurn(_battleData.GetTurn());
+        _turnController.OnNextTurn(_battleData.GetTurn());
+    }
+
+    public void NextTurn()
     {
         Debug.Log("Следующий ход");
 
@@ -279,27 +294,20 @@ public class FightDirector : MonoBehaviour
 
         Debug.Log("Данные по очередерности обновлены");
 
-        yield return StartCoroutine(Scenario.OnNextTurn());
-
-        Debug.Log("Сценарий обновлен");
-
-
-        SyncBattleDataToCurrentBattleSituation();
-
-        Debug.Log("Битва синхронизирована");
-
-        EventMaster.current.OnNextTurn(_battleData.GetTurn());
-        _turnController.OnNextTurn(_battleData.GetTurn());
-
-        yield break;
+        StartCoroutine(Scenario.OnNextTurn());
     }
 
     public void ExecuteTurn(TurnData turnData)
     {
+        StartCoroutine(WaitExecuteTurn(turnData));
+    }
+
+    public IEnumerator WaitExecuteTurn(TurnData turnData)
+    {
         if (turnData != null)
         {
             bool isTurnContainsMovement = IsTurnContainsMovement(turnData);
-            if (isTurnContainsMovement) 
+            if (isTurnContainsMovement)
             {
                 Debug.Log("Ход с передвижением");
 
@@ -312,6 +320,7 @@ public class FightDirector : MonoBehaviour
                 Debug.Log(activeUnit.name + "движется к позиции " + turnData._route.Last());
 
                 activeUnit.Move(_battleEngine.GetCellsByBector2IntPositions(turnData._route));
+                yield return new WaitUntil(() => !activeUnit._onMove);
 
                 // Подождать прибытия юнита
                 //Время ожидания в секундах = скорость юнита * длина маршрута * 0.5
@@ -328,7 +337,7 @@ public class FightDirector : MonoBehaviour
                 Debug.Log("Ход с атакой по " + target.name);
 
                 List<UnitOnBattle> attackersData = _battleEngine.currentBattleSituation.GetAttackersByTargetId(target.ChildId).ToArray().OfType<UnitOnBattle>().ToList();
-                
+
                 if (isTurnContainsMovement)
                 {
                     UnitOnBattle activeUnit = _battleEngine.currentBattleSituation.GetUnitById(turnData._activeUnitIdOnBattle);
@@ -357,16 +366,12 @@ public class FightDirector : MonoBehaviour
                     BattleEngine.OnAttackTarget(_battleEngine.currentBattleSituation, target, damage);
 
                     target.GetDamage(damage);
+                    yield return new WaitForSeconds(1);
                 }
             }
         }
 
-        StartCoroutine(WaitForHandleNextTurn());
-    }
-
-    public IEnumerator WaitForHandleNextTurn()
-    {
-        yield return StartCoroutine(NextTurn());
+        NextTurn();
     }
 
     public void ChangeUnitOccypation(Unit unit, Cell newOccypation)

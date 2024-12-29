@@ -14,8 +14,12 @@ public static class ConditionFactory
             case "DestroyAllAllies":
                 return new DestroyAllAlliesCondition();
             case "AttackObject":
-                string targetObjectId = (string)conditionData.Data["targetObjectId"];
-                return new AttackObjectCondition(targetObjectId);
+                string targetObjectIdForAttack = (string)conditionData.Data["targetObjectId"];
+                return new AttackObjectCondition(targetObjectIdForAttack);
+            case "ReachToAttackObject":
+                string targetObjectIdForReachToAttack = (string)conditionData.Data["targetObjectId"];
+                string attackerSide = (string)conditionData.Data["attackerSide"];
+                return new ReachToAttackObjectCondition(targetObjectIdForReachToAttack, attackerSide);
             case "DestroyObjects":
                 string[] targetObjectIds = JsonConvert.DeserializeObject<string[]>(conditionData.Data["targetObjectIds"].ToString());
                 return new DestroyObjectsCondition(targetObjectIds);

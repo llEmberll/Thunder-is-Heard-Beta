@@ -7,6 +7,45 @@
         "description": "",
         "type": "Steel",
         "cost": {
+          "rub": 200,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 1,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "duration": 25,
+        "iconSection": "UIBuildCards",
+        "name": "Экспресс",
+        "iconName": "mine_card"
+      }
+    },
+    "4766fc0c-db3e-46f8-853a-06dfa7f62d29": {
+      "fields": {
+        "externalId": "4766fc0c-db3e-46f8-853a-06dfa7f62d29",
+        "description": "",
+        "type": "Steel",
+        "cost": {
           "rub": 500,
           "maxRub": 0,
           "frames": 0,
@@ -27,53 +66,14 @@
           "maxFrames": 0,
           "oil": 0,
           "maxOil": 0,
-          "steel": 2,
+          "steel": 3,
           "maxSteel": 0,
           "staff": 0,
           "maxStaff": 0,
           "exp": 0,
           "maxExp": 0
         },
-        "duration": 10,
-        "iconSection": "UIBuildCards",
-        "name": "Экспресс",
-        "iconName": "mine_card"
-      }
-    },
-    "4766fc0c-db3e-46f8-853a-06dfa7f62d29": {
-      "fields": {
-        "externalId": "4766fc0c-db3e-46f8-853a-06dfa7f62d29",
-        "description": "",
-        "type": "Steel",
-        "cost": {
-          "rub": 1200,
-          "maxRub": 0,
-          "frames": 0,
-          "maxFrames": 0,
-          "oil": 0,
-          "maxOil": 0,
-          "steel": 0,
-          "maxSteel": 0,
-          "staff": 0,
-          "maxStaff": 0,
-          "exp": 0,
-          "maxExp": 0
-        },
-        "gives": {
-          "rub": 0,
-          "maxRub": 0,
-          "frames": 0,
-          "maxFrames": 0,
-          "oil": 0,
-          "maxOil": 0,
-          "steel": 6,
-          "maxSteel": 0,
-          "staff": 0,
-          "maxStaff": 0,
-          "exp": 0,
-          "maxExp": 0
-        },
-        "duration": 25,
+        "duration": 90,
         "iconSection": "UIBuildCards",
         "name": "Половина смены",
         "iconName": "mine_card"
@@ -85,7 +85,7 @@
         "description": "",
         "type": "Steel",
         "cost": {
-          "rub": 2150,
+          "rub": 1350,
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
@@ -105,14 +105,14 @@
           "maxFrames": 0,
           "oil": 0,
           "maxOil": 0,
-          "steel": 15,
+          "steel": 9,
           "maxSteel": 0,
           "staff": 0,
           "maxStaff": 0,
           "exp": 0,
           "maxExp": 0
         },
-        "duration": 60,
+        "duration": 300,
         "iconSection": "UIBuildCards",
         "name": "Полная смена",
         "iconName": "mine_card"
@@ -124,7 +124,7 @@
         "description": "",
         "type": "Oil",
         "cost": {
-          "rub": 600,
+          "rub": 250,
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
@@ -142,7 +142,7 @@
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
-          "oil": 2,
+          "oil": 1,
           "maxOil": 0,
           "steel": 0,
           "maxSteel": 0,
@@ -151,7 +151,7 @@
           "exp": 0,
           "maxExp": 0
         },
-        "duration": 10,
+        "duration": 20,
         "iconSection": "UIBuildCards",
         "name": "Экспресс",
         "iconName": "oil_station_card"
@@ -163,7 +163,7 @@
         "description": "",
         "type": "Oil",
         "cost": {
-          "rub": 1400,
+          "rub": 650,
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
@@ -181,7 +181,7 @@
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
-          "oil": 5,
+          "oil": 3,
           "maxOil": 0,
           "steel": 0,
           "maxSteel": 0,
@@ -190,7 +190,7 @@
           "exp": 0,
           "maxExp": 0
         },
-        "duration": 65,
+        "duration": 70,
         "iconSection": "UIBuildCards",
         "name": "Половина смены",
         "iconName": "oil_station_card"
@@ -202,7 +202,7 @@
         "description": "",
         "type": "Oil",
         "cost": {
-          "rub": 2750,
+          "rub": 1350,
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
@@ -220,7 +220,7 @@
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
-          "oil": 12,
+          "oil": 8,
           "maxOil": 0,
           "steel": 0,
           "maxSteel": 0,
@@ -229,7 +229,7 @@
           "exp": 0,
           "maxExp": 0
         },
-        "duration": 65,
+        "duration": 250,
         "iconSection": "UIBuildCards",
         "name": "Полная смена",
         "iconName": "oil_station_card"
@@ -255,7 +255,7 @@
           "maxExp": 0
         },
         "gives": {
-          "rub": 550,
+          "rub": 350,
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
@@ -268,7 +268,7 @@
           "exp": 0,
           "maxExp": 0
         },
-        "duration": 5,
+        "duration": 45,
         "iconSection": "UIBuildCards",
         "name": "Экспресс",
         "iconName": "office_card"
@@ -294,7 +294,7 @@
           "maxExp": 0
         },
         "gives": {
-          "rub": 1800,
+          "rub": 1250,
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
@@ -307,7 +307,7 @@
           "exp": 0,
           "maxExp": 0
         },
-        "duration": 25,
+        "duration": 150,
         "iconSection": "UIBuildCards",
         "name": "Половина смены",
         "iconName": "office_card"
@@ -323,7 +323,7 @@
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
-          "oil": 5,
+          "oil": 7,
           "maxOil": 0,
           "steel": 0,
           "maxSteel": 0,
@@ -333,7 +333,7 @@
           "maxExp": 0
         },
         "gives": {
-          "rub": 3750,
+          "rub": 3000,
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
@@ -346,7 +346,7 @@
           "exp": 0,
           "maxExp": 0
         },
-        "duration": 60,
+        "duration": 500,
         "iconSection": "UIBuildCards",
         "name": "Полная смена",
         "iconName": "office_card"

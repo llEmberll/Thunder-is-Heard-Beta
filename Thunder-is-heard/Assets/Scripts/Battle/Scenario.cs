@@ -1,9 +1,9 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Scenario: MonoBehaviour
+public class Scenario : MonoBehaviour
 {
     public List<Vector2Int> _landableCells;
     public List<Vector2Int> LandableCells { get { return _landableCells; } }
@@ -57,7 +57,7 @@ public class Scenario: MonoBehaviour
         }
 
         _initialDialogue = startDialogue;
-        
+
         _isLanded = isLanded;
 
         InitObjectProcessor();
@@ -105,7 +105,7 @@ public class Scenario: MonoBehaviour
 
     public IEnumerator ToNextStage()
     {
-        Debug.Log("Çàâåðøåíèå ïðåäûäóùåãî ýòàïà");
+        Debug.Log("Ã‡Ã Ã¢Ã¥Ã°Ã¸Ã¥Ã­Ã¨Ã¥ Ã¯Ã°Ã¥Ã¤Ã»Ã¤Ã³Ã¹Ã¥Ã£Ã® Ã½Ã²Ã Ã¯Ã ");
         EnableListenerForUpdateStage();
         CurrentStage.OnFinish();
         yield return new WaitUntil(() => !waitingForUpdateStage);
@@ -114,7 +114,7 @@ public class Scenario: MonoBehaviour
         _currentStageIndex++;
         if (_currentStageIndex + 1 > _stages.Count)
         {
-            Debug.Log("ÏÎÁÅÄÀ");
+            Debug.Log("ÃÃŽÃÃ…Ã„Ã€");
 
             EventMaster.current.WinFight();
             yield break;
@@ -125,7 +125,7 @@ public class Scenario: MonoBehaviour
         EventMaster.current.OnStageIndexChange(_currentStageIndex);
         EventMaster.current.OnNextStage(_currentStage);
 
-        Debug.Log("Íà÷àëî íîâîãî ýòàïà");
+        Debug.Log("ÃÃ Ã·Ã Ã«Ã® Ã­Ã®Ã¢Ã®Ã£Ã® Ã½Ã²Ã Ã¯Ã ");
 
         EnableListenerForUpdateStage();
         CurrentStage.OnStart();
@@ -170,28 +170,26 @@ public class Scenario: MonoBehaviour
     {
         if (CurrentStage.IsFailed())
         {
-            Debug.Log("ÏÎÐÀÆÅÍÈÅ");
-
             EnableListenerForUpdateStage();
             CurrentStage.OnFail();
             yield return new WaitUntil(() => !waitingForUpdateStage);
+            EventMaster.current.OnUpdateScenario();
             EventMaster.current.LoseFigth();
         }
 
-        else if (CurrentStage.IsPassed()) 
+        else if (CurrentStage.IsPassed())
         {
-            Debug.Log("ÑËÅÄÓÞÙÈÉ ÝÒÀÏ");
-
             EnableListenerForUpdateStage();
             CurrentStage.OnPass();
             yield return new WaitUntil(() => !waitingForUpdateStage);
-
             yield return StartCoroutine(ToNextStage());
+            EventMaster.current.OnUpdateScenario();
         }
 
         else
         {
             yield return StartCoroutine(ContinueStage());
+            EventMaster.current.OnUpdateScenario();
         }
     }
 }

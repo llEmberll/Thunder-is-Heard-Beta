@@ -10,94 +10,6 @@
         "name": "Штаб",
         "position": [
           {
-            "x": 2,
-            "y": 5
-          },
-          {
-            "x": 2,
-            "y": 6
-          },
-          {
-            "x": 2,
-            "y": 7
-          },
-          {
-            "x": 3,
-            "y": 5
-          },
-          {
-            "x": 3,
-            "y": 6
-          },
-          {
-            "x": 3,
-            "y": 7
-          },
-          {
-            "x": 4,
-            "y": 5
-          },
-          {
-            "x": 4,
-            "y": 6
-          },
-          {
-            "x": 4,
-            "y": 7
-          }
-        ]
-      }
-    },
-    "43d618a7-6155-47bb-b684-ba43c7502e51": {
-      "fields": {
-        "externalId": "43d618a7-6155-47bb-b684-ba43c7502e51",
-        "description": "",
-        "rotation": 180,
-        "workStatus": "Finished",
-        "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
-        "name": "Шахта",
-        "position": [
-          {
-            "x": 8,
-            "y": 2
-          },
-          {
-            "x": 8,
-            "y": 3
-          },
-          {
-            "x": 9,
-            "y": 2
-          },
-          {
-            "x": 9,
-            "y": 3
-          }
-        ]
-      }
-    },
-    "438d908b-5101-4c4b-bded-31ffec9e96f8": {
-      "fields": {
-        "externalId": "438d908b-5101-4c4b-bded-31ffec9e96f8",
-        "description": "",
-        "rotation": 270,
-        "workStatus": "Idle",
-        "coreId": "8878498b-a4bc-4dc8-8f39-bc9e987a689f",
-        "name": "Офис",
-        "position": [
-          {
-            "x": 5,
-            "y": 5
-          },
-          {
-            "x": 5,
-            "y": 6
-          },
-          {
-            "x": 5,
-            "y": 7
-          },
-          {
             "x": 6,
             "y": 5
           },
@@ -120,95 +32,11 @@
           {
             "x": 7,
             "y": 7
-          }
-        ]
-      }
-    },
-    "56a3b5c1-cb7c-4267-b38f-a7e3091758b5": {
-      "fields": {
-        "externalId": "56a3b5c1-cb7c-4267-b38f-a7e3091758b5",
-        "description": "",
-        "rotation": 0,
-        "workStatus": "Idle",
-        "coreId": "065a4f61-5b0e-450e-b89b-299651f90b4d",
-        "name": "Тренировочный центр",
-        "position": [
-          {
-            "x": 5,
-            "y": 2
-          },
-          {
-            "x": 5,
-            "y": 3
-          },
-          {
-            "x": 5,
-            "y": 4
-          },
-          {
-            "x": 6,
-            "y": 2
-          },
-          {
-            "x": 6,
-            "y": 3
-          },
-          {
-            "x": 6,
-            "y": 4
-          },
-          {
-            "x": 7,
-            "y": 2
-          },
-          {
-            "x": 7,
-            "y": 3
-          },
-          {
-            "x": 7,
-            "y": 4
-          }
-        ]
-      }
-    },
-    "de25b740-a229-46d3-b066-8b7248f5facf": {
-      "fields": {
-        "externalId": "de25b740-a229-46d3-b066-8b7248f5facf",
-        "description": "",
-        "rotation": 0,
-        "workStatus": "Idle",
-        "coreId": "64a4568c-bfaf-408e-9537-8e489ccaca56",
-        "name": "Нефтевышка",
-        "position": [
-          {
-            "x": 8,
-            "y": 4
           },
           {
             "x": 8,
             "y": 5
           },
-          {
-            "x": 9,
-            "y": 4
-          },
-          {
-            "x": 9,
-            "y": 5
-          }
-        ]
-      }
-    },
-    "e79e55ac-11f9-444a-bd09-1879d091a6fc": {
-      "fields": {
-        "externalId": "e79e55ac-11f9-444a-bd09-1879d091a6fc",
-        "description": "",
-        "rotation": 180,
-        "workStatus": "Idle",
-        "coreId": "7dfc9c80-ddac-45e9-bcdf-61166e068cad",
-        "name": "Завод",
-        "position": [
           {
             "x": 8,
             "y": 6
@@ -216,42 +44,6 @@
           {
             "x": 8,
             "y": 7
-          },
-          {
-            "x": 9,
-            "y": 6
-          },
-          {
-            "x": 9,
-            "y": 7
-          }
-        ]
-      }
-    },
-    "d5548f12-27e8-4247-81ef-4fb5e3cade5d": {
-      "fields": {
-        "externalId": "d5548f12-27e8-4247-81ef-4fb5e3cade5d",
-        "description": "",
-        "rotation": 0,
-        "workStatus": "Finished",
-        "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
-        "name": "Шахта",
-        "position": [
-          {
-            "x": 3,
-            "y": 2
-          },
-          {
-            "x": 3,
-            "y": 3
-          },
-          {
-            "x": 4,
-            "y": 2
-          },
-          {
-            "x": 4,
-            "y": 3
           }
         ]
       }

@@ -57,6 +57,7 @@ public static class Config
         { "landableUnitItem", "Prefabs/UI/GeneratedItems/UnitForLanding/LandableUnitItem" },
         { "ranks", "Textures/Interface/Icons/Ranks/Ranks" },
         { "resourcesIcons", "Textures/Interface/Resources/Resources" },
+        { "expIcon", "Textures/Interface/Icons/Ranks/Ranks" },
         { "UIAttributes", "Textures/Interface/Icons/Attributes/New/attributes/" },
         { "chars", "Textures/Interface/Dialogues/Chars/" },
 

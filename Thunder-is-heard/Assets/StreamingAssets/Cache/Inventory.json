@@ -1,102 +1,12 @@
 ﻿{
   "name": "Inventory",
   "items": {
-    "dfdde537-2796-404c-a7df-66c7b48d5907": {
-      "fields": {
-        "coreId": "9b2cf240-5f63-4107-8751-eb91b95b94d9",
-        "type": "Build",
-        "count": 2,
-        "externalId": "dfdde537-2796-404c-a7df-66c7b48d5907",
-        "description": ""
-      }
-    },
-    "4fefe21f-9a3a-4c9e-8dc0-d00d090f961b": {
-      "fields": {
-        "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
-        "type": "Build",
-        "count": 3,
-        "externalId": "4fefe21f-9a3a-4c9e-8dc0-d00d090f961b",
-        "description": ""
-      }
-    },
     "4029afc4-bde8-4f40-bf45-513ba328b07e": {
       "fields": {
         "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
         "type": "Unit",
-        "count": 730,
+        "count": 10,
         "externalId": "4029afc4-bde8-4f40-bf45-513ba328b07e",
-        "description": ""
-      }
-    },
-    "3d0273d2-3380-4dbc-890c-07467c9c577e": {
-      "fields": {
-        "coreId": "1db672c3-4207-4629-a1ee-ca054c83ba7c",
-        "type": "Unit",
-        "count": 777,
-        "externalId": "3d0273d2-3380-4dbc-890c-07467c9c577e",
-        "description": ""
-      }
-    },
-    "51997aff-db7e-483f-b016-d504f2d1d39a": {
-      "fields": {
-        "coreId": "91207015-36e5-4bf7-b16e-628e67935609",
-        "type": "Unit",
-        "count": 814,
-        "externalId": "51997aff-db7e-483f-b016-d504f2d1d39a",
-        "description": ""
-      }
-    },
-    "15ced328-ca2b-40fa-8fce-c4fbc7ca32fa": {
-      "fields": {
-        "coreId": "31391161-4be3-4149-833d-7fdde496946c",
-        "type": "Material",
-        "count": 15,
-        "externalId": "15ced328-ca2b-40fa-8fce-c4fbc7ca32fa",
-        "description": ""
-      }
-    },
-    "1f4d9db4-9548-4e0d-bc29-feea88e51927": {
-      "fields": {
-        "coreId": "8878498b-a4bc-4dc8-8f39-bc9e987a689f",
-        "type": "Build",
-        "count": 1,
-        "externalId": "1f4d9db4-9548-4e0d-bc29-feea88e51927",
-        "description": ""
-      }
-    },
-    "afca07e7-c956-4c32-b076-e9809130a176": {
-      "fields": {
-        "coreId": "64a4568c-bfaf-408e-9537-8e489ccaca56",
-        "type": "Build",
-        "count": 1,
-        "externalId": "afca07e7-c956-4c32-b076-e9809130a176",
-        "description": ""
-      }
-    },
-    "d4102c9c-e3ba-4303-ba55-f0daa18fcbd4": {
-      "fields": {
-        "coreId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
-        "type": "Unit",
-        "count": 1,
-        "externalId": "d4102c9c-e3ba-4303-ba55-f0daa18fcbd4",
-        "description": ""
-      }
-    },
-    "9785687b-9864-410d-929a-b54b14c6a17b": {
-      "fields": {
-        "coreId": "035655f8-a347-4057-87cc-83385fa20660",
-        "type": "Unit",
-        "count": 6,
-        "externalId": "9785687b-9864-410d-929a-b54b14c6a17b",
-        "description": ""
-      }
-    },
-    "c01d5a6a-4034-4a39-8802-c8c8d4d9dd66": {
-      "fields": {
-        "coreId": "3d9f0f22-409e-40d7-8511-f4584b583dc0",
-        "type": "Build",
-        "count": 1,
-        "externalId": "c01d5a6a-4034-4a39-8802-c8c8d4d9dd66",
         "description": ""
       }
     }
