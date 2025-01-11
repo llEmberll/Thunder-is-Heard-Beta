@@ -5,10 +5,8 @@ using System.Threading;
 using UnityEngine;
 using System;
 using TMPro;
-using UnityEngine.UI;
 using System.Linq;
 using Unity.VisualScripting;
-using System.ComponentModel;
 
 public class ContractComponent : InteractionComponent
 {

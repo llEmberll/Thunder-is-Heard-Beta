@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using System;
 using System.Reflection;
-using UnityEngine.UI;
+
 
 public abstract class ShopItem : Item
 {

@@ -5,6 +5,9 @@ public class CameraController : MonoBehaviour
 {
     public bool _isMovable = true;
 
+    public bool _isDragging = false;
+    public Vector2 _lastMousePosition;
+
     public Vector2 focus;
     public bool haveFocus = false;
 
@@ -23,6 +26,7 @@ public class CameraController : MonoBehaviour
 
 	public float screenWidth;
     public float screenHeight;
+    public float _aspectRatio;
 
     public float minX, maxX, minZ, maxZ;
 
@@ -43,6 +47,7 @@ public class CameraController : MonoBehaviour
 
 		screenWidth = Screen.width;
         screenHeight = Screen.height;
+        SetAspectRatio();
 
         EnableListeners();
     }
@@ -64,6 +69,11 @@ public class CameraController : MonoBehaviour
     public void SetIsMovable(bool isMovementForbidden)
     {
         _isMovable = !isMovementForbidden;
+    }
+
+    public void SetAspectRatio()
+    {
+        _aspectRatio = screenWidth / screenHeight;
     }
 
     public void MoveOnPoint(Vector2Int point)
@@ -115,6 +125,27 @@ public class CameraController : MonoBehaviour
         //TODO рассчитать min и max координаты камеры в зависимости от размера игрового поля
     }
 
+    public void UpdateLastMousePosition()
+    {
+        _lastMousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+    }
+
+    public void UpdateIsDraggingStatus()
+    {
+        // Проверяем нажатие ЛКМ
+        if (Input.GetMouseButtonDown(0))
+        {
+            _isDragging = true;
+            UpdateLastMousePosition();
+        }
+
+        // Проверяем отпускание ЛКМ
+        if (Input.GetMouseButtonUp(0))
+        {
+            _isDragging = false;
+        }
+    }
+
     private void Update()
     {
         if (haveFocus)
@@ -125,48 +156,31 @@ public class CameraController : MonoBehaviour
 
         if (!_isMovable) return;
 
-        // Move camera based on cursor position
-        Vector3 cursorPosition = Input.mousePosition;
-        Vector3 movement = Vector3.zero;
+        UpdateIsDraggingStatus();
+        if (_isDragging)
+        {
+            Vector2 delta = new Vector2(Input.mousePosition.x, Input.mousePosition.y) - _lastMousePosition;
+            delta.y *= _aspectRatio;
+            delta.Normalize();
 
-        bool needMove = false;
-        
-        if (cursorPosition.x < 0.1f * screenWidth)
-        {
-            movement += (Vector3.left/2 + Vector3.forward/2);
-            needMove = true;
-        }
-        else if (cursorPosition.x > 0.9f * screenWidth)
-        {
-            movement += (Vector3.right/2 + Vector3.back/2);
-            needMove = true;
-        }
-        if (cursorPosition.y < 0.1f * screenHeight)
-        {
-            movement += (Vector3.back/2 + Vector3.left/2);
-            needMove = true;
-        }
-        else if (cursorPosition.y > 0.9f * screenHeight)
-        {
-            movement += (Vector3.forward/2 + Vector3.right/2);
-            needMove = true;
+            float speedForCamera = movementSpeed / 2;
+            float totalMovementMultiplier = speedForCamera * mainCamera.orthographicSize * Time.deltaTime;
+
+            if (delta.x != 0)
+            {
+                cameraPosition += new Vector3(-delta.x * totalMovementMultiplier, 0, delta.x * totalMovementMultiplier);
+            }
+
+            if (delta.y != 0)
+            {
+                cameraPosition += new Vector3(-delta.y * totalMovementMultiplier, 0, -delta.y * totalMovementMultiplier);
+            }
+
+            cameraPosition.x = Mathf.Clamp(cameraPosition.x, minX, maxX);
+            cameraPosition.z = Mathf.Clamp(cameraPosition.z, minZ, maxZ);
+            UpdateLastMousePosition();
         }
 
-        if (needMove)
-        {
-            currentSpeed += acceleration * Time.deltaTime;
-        }
-        else
-        {
-            currentSpeed -= (acceleration * Time.deltaTime) * 2;
-        }
-
-            currentSpeed = Mathf.Clamp(currentSpeed, 0f, maxSpeed);
-        
-        movement.Normalize();
-        cameraPosition += movement * movementSpeed * currentSpeed * mainCamera.orthographicSize * Time.deltaTime;
-        cameraPosition.x = Mathf.Clamp(cameraPosition.x, minX, maxX);
-        cameraPosition.z = Mathf.Clamp(cameraPosition.z, minZ, maxZ);
         // Zoom camera with mouse wheel
         float zoomAmount = Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
         mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - zoomAmount, sizeLimit.x, sizeLimit.y);

@@ -22,7 +22,7 @@
         },
         "unitId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
         "duration": 50,
-        "iconSection": "Textures/Interface/Cards/Units",
+        "iconSection": "Textures/Interface/Cards/Units/Base",
         "name": "Тренировать штурмовиков",
         "iconName": "assaulters"
       }
@@ -100,7 +100,7 @@
         },
         "unitId": "1db672c3-4207-4629-a1ee-ca054c83ba7c",
         "duration": 60,
-        "iconSection": "Textures/Interface/Cards/Units",
+        "iconSection": "Textures/Interface/Cards/Units/Base",
         "name": "Тренировать разведку",
         "iconName": "scout"
       }
@@ -126,7 +126,7 @@
         },
         "unitId": "91207015-36e5-4bf7-b16e-628e67935609",
         "duration": 90,
-        "iconSection": "Textures/Interface/Cards/Units",
+        "iconSection": "Textures/Interface/Cards/Units/Base",
         "name": "Тренировать снайпера",
         "iconName": "sniper"
       }

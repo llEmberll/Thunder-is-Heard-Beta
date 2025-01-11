@@ -14,6 +14,7 @@ public class MissionDetalization: UIElement
     public Transform _gives;
 
     public Image noReserveWarning;
+    public Image finishCurrentFightWarning;
 
     public bool IsClickedOutside()
     {
@@ -69,6 +70,12 @@ public class MissionDetalization: UIElement
 
     public void Load(string missionId)
     {
+        if (HaveCurrentFightNow())
+        {
+            finishCurrentFightWarning.gameObject.SetActive(true);
+            return;
+        }
+
         if (!HaveReserve())
         {
             noReserveWarning.gameObject.SetActive(true);
@@ -105,5 +112,11 @@ public class MissionDetalization: UIElement
         }
 
         return false;
+    }
+
+    public static bool HaveCurrentFightNow()
+    {
+        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
+        return battleTable.Items.Count > 0;
     }
 }

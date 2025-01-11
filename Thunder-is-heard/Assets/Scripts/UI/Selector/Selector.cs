@@ -450,8 +450,7 @@ public class Selector : MonoBehaviour
         UnitProductionCacheItem unitProductionItemData = new UnitProductionCacheItem(itemData.Fields);
 
         ConfigureProductionCountText(1);
-        Sprite[] unitIconSection = Resources.LoadAll<Sprite>(Config.resources[unitProductionItemData.GetIconSection()]);
-        productionImage.sprite = SpriteUtils.FindSpriteByName(unitProductionItemData.GetIconName(), unitIconSection);
+        productionImage.sprite = ResourcesUtils.LoadIcon(unitProductionItemData.GetIconSection(), unitProductionItemData.GetIconName());
     }
 
     public void ConfigureProductionCountText(int count)

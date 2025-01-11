@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,6 +68,7 @@ public class ObjectPreview: MonoBehaviour
         size = objSize;
         model = objModel;
         InitModel();
+        ToggleModelBoxColliders(false);
 
         objectsPool = GameObject.FindWithTag(Config.exposableObjectsTypeToObjectsOnSceneTag[type]).GetComponent<ObjectsOnBase>();
 
@@ -184,6 +186,20 @@ public class ObjectPreview: MonoBehaviour
         }
 
         return changedMaterials;
+    }
+
+    public void ToggleModelBoxColliders(bool enabled)
+    {
+        Transform[] children = model.gameObject.GetComponentsInChildren<Transform>();
+
+        foreach (Transform child in children)
+        {
+            BoxCollider boxCollider = child.GetComponent<BoxCollider>();
+            if (boxCollider != null)
+            {
+                boxCollider.enabled = enabled;
+            }
+        }
     }
 
     public void Rotate()
@@ -328,6 +344,7 @@ public class ObjectPreview: MonoBehaviour
     public Transform prepareModelToExposing()
     {
         SetMaterialsRecursive(model.gameObject, modelMaterials);
+        ToggleModelBoxColliders(true);
         return model;
     }
 

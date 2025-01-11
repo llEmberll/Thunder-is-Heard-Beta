@@ -50,7 +50,14 @@ public class UnitProductionComponent : InteractionComponent
         UnitProductionCacheItem unitProductionItem = new UnitProductionCacheItem(sourceItem.Fields);
         string unitId = unitProductionItem.GetUnitId();
 
-        string unitIconSection = Config.resources[unitProductionItem.GetIconSection()];
+        string unitIconSection;
+        if (Config.resources.ContainsKey(unitProductionItem.GetIconSection())) {
+            unitIconSection = Config.resources[unitProductionItem.GetIconSection()];
+        }
+        else
+        {
+             unitIconSection = unitProductionItem.GetIconSection();
+        }
         string unitIconName = unitProductionItem.GetIconName();
         int unitCount = 1;
 

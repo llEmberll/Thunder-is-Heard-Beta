@@ -1,31 +1,4 @@
 ﻿{
   "name": "ProductsNotification",
-  "items": {
-    "9c3c259d-f903-4975-b0b1-b535674633aa": {
-      "fields": {
-        "externalId": "9c3c259d-f903-4975-b0b1-b535674633aa",
-        "description": "",
-        "sourceObjectId": "1670831d-3577-4140-a646-47ae24b75cb6",
-        "type": "ResourceCollection",
-        "gives": {
-          "rub": 0,
-          "maxRub": 0,
-          "frames": 0,
-          "maxFrames": 0,
-          "oil": 0,
-          "maxOil": 0,
-          "steel": 2,
-          "maxSteel": 0,
-          "staff": 0,
-          "maxStaff": 0,
-          "exp": 0,
-          "maxExp": 0
-        },
-        "iconSection": "Textures/Interface/Resources/Resources",
-        "iconName": "steel",
-        "count": 2,
-        "unitId": null
-      }
-    }
-  }
+  "items": {}
 }
