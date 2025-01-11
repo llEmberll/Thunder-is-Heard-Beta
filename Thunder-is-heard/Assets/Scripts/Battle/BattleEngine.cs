@@ -318,8 +318,6 @@ public class BattleEngine : MonoBehaviour
 
     public void OnExposeObject(Entity obj)
     {
-        Debug.Log("OnExposeObject in battleEngine");
-
         if (obj is Unit unit)
         {
             OnExposeUnit(unit);

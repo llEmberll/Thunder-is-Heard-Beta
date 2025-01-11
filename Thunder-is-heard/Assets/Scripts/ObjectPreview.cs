@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,10 +41,20 @@ public class ObjectPreview: MonoBehaviour
 
     public void Start()
     {
+        EnableListeners();
+        EventMaster.current.OnCreatePreview(this);
+    }
+
+    public void EnableListeners()
+    {
         EventMaster.current.ToggledOffBuildMode += OnExitBuildMode;
         EventMaster.current.PreviewRotated += Rotate;
+    }
 
-        EventMaster.current.OnCreatePreview(this);
+    public void DisableListeners()
+    {
+        EventMaster.current.ToggledOffBuildMode -= OnExitBuildMode;
+        EventMaster.current.PreviewRotated -= Rotate;
     }
 
     public static ObjectPreview Create()
@@ -258,6 +267,7 @@ public class ObjectPreview: MonoBehaviour
         
         Material newMaterial = exposableStatus ? materialAvailable : materialUnvailable;
         SetMaterialRecursive(model.gameObject, newMaterial);
+        Debug.Log("in Update status: new material is unvailable - " + !exposableStatus);
     }
 
     public bool IsExceedingMaxStaff()
@@ -301,6 +311,8 @@ public class ObjectPreview: MonoBehaviour
     public void CreateObjectOnBattle()
     {
         objectProcessor.CreateObjectOnBattle(_battleId, id, type, model, name, size, occypation);
+
+        Debug.Log("Created object");
     }
 
     public void ReplaceObjectOnBattle()
@@ -318,6 +330,8 @@ public class ObjectPreview: MonoBehaviour
         if (buildedObjectOnScene == null)
         {
             model = prepareModelToExposing();
+            Debug.Log("Model materials is back!");
+
 
             _baseState.OnCreatePreviewObject(this);
             AfterExpose();
@@ -339,6 +353,10 @@ public class ObjectPreview: MonoBehaviour
         model = newBody;
         model.name = "Model";
         InitModel();
+
+        Debug.Log("cloned model & init again!");
+
+        UpdateExposableStatus();
     }
 
     public Transform prepareModelToExposing()
@@ -382,14 +400,8 @@ public class ObjectPreview: MonoBehaviour
             BackModelToStartState();
         }
 
-        UnsubscribeAll();
+        DisableListeners();
         EventMaster.current.OnDeletePreview();
         Destroy(this.gameObject);
-    }
-
-    public void UnsubscribeAll()
-    {
-        EventMaster.current.ToggledOffBuildMode -= OnExitBuildMode;
-        EventMaster.current.PreviewRotated -= Rotate;
     }
 }

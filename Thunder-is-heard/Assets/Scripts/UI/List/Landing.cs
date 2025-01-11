@@ -155,8 +155,6 @@ public class Landing : ItemList
         _map.SetActive(landableZone);
         _map.Display(landableZone);
 
-        Debug.Log("Cells displayed!");
-
         Show();
     }
 

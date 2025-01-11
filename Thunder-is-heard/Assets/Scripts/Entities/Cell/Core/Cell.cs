@@ -87,7 +87,6 @@ public class Cell : Interactable
 
     public override void OnClick()
     {
-        Debug.Log("Clicked on Cell!");
         stateMachine.currentState.OnCellClick(this);
     }
 
