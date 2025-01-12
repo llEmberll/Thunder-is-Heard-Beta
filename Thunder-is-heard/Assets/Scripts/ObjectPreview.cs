@@ -267,7 +267,6 @@ public class ObjectPreview: MonoBehaviour
         
         Material newMaterial = exposableStatus ? materialAvailable : materialUnvailable;
         SetMaterialRecursive(model.gameObject, newMaterial);
-        Debug.Log("in Update status: new material is unvailable - " + !exposableStatus);
     }
 
     public bool IsExceedingMaxStaff()
@@ -311,8 +310,6 @@ public class ObjectPreview: MonoBehaviour
     public void CreateObjectOnBattle()
     {
         objectProcessor.CreateObjectOnBattle(_battleId, id, type, model, name, size, occypation);
-
-        Debug.Log("Created object");
     }
 
     public void ReplaceObjectOnBattle()
@@ -330,9 +327,6 @@ public class ObjectPreview: MonoBehaviour
         if (buildedObjectOnScene == null)
         {
             model = prepareModelToExposing();
-            Debug.Log("Model materials is back!");
-
-
             _baseState.OnCreatePreviewObject(this);
             AfterExpose();
         }
@@ -353,9 +347,6 @@ public class ObjectPreview: MonoBehaviour
         model = newBody;
         model.name = "Model";
         InitModel();
-
-        Debug.Log("cloned model & init again!");
-
         UpdateExposableStatus();
     }
 

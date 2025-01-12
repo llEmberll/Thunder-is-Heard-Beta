@@ -96,15 +96,23 @@ public class CameraController : MonoBehaviour
 
     public void SoftMoveOnFocus()
     {
+        Debug.Log("In SoftMove");
+
         Vector3 focusVector3 = new Vector3(focus.x -focusOffset, cameraHeight, focus.y - focusOffset);
-        float speedForMoveToFocus = movementSpeed + Vector3.Distance(transform.position, focusVector3);
 
         Vector3 direction = (focusVector3 - transform.position).normalized;
 
+        float moveToFocusSpeed = 0.35f;
+
         direction.Normalize();
-        cameraPosition += direction * speedForMoveToFocus * currentSpeed * mainCamera.orthographicSize * Time.deltaTime;
+        cameraPosition += direction * Vector3.Distance(transform.position, focusVector3) * moveToFocusSpeed * mainCamera.orthographicSize * Time.deltaTime;
+
+        Debug.Log("Move calculated: " + cameraPosition);
+
         // Move camera to target position
         transform.position = Vector3.Lerp(transform.position, cameraPosition, 0.030f);
+
+        Debug.Log("Camera moved");
 
         if (Vector3.Distance(transform.position, focusVector3) < 0.1f)
         {
@@ -150,6 +158,7 @@ public class CameraController : MonoBehaviour
     {
         if (haveFocus)
         {
+            Debug.Log("Update: focus true");
             SoftMoveOnFocus();
             return;
         }

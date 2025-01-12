@@ -10407,7 +10407,7 @@
               "y": 2
             }
           ],
-          "maxStaff": 10
+          "maxStaff": 100
         },
         "stages": [
           {
