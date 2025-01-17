@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 
 
@@ -43,9 +42,9 @@ public class ScenarioCacheItem : CacheItem
             SetLanding(new LandingData(new Bector2Int[] {}, 0));
         }
 
-        if (!objFields.ContainsKey("stages"))
+        if (!objFields.ContainsKey("startStage"))
         {
-            SetStages(new StageData[] { });
+            SetStartStage(new StageData());
         }
     }
 
@@ -150,20 +149,20 @@ public class ScenarioCacheItem : CacheItem
         SetField("landing", value);
     }
 
-    public StageData[] GetStages()
+    public StageData GetStartStage()
     {
-        object value = GetField("stages");
+        object value = GetField("startStage");
         if (value == null)
         {
-            return new StageData[] {};
+            return new StageData();
         }
 
-        return JsonConvert.DeserializeObject<StageData[]>(value.ToString());
+        return JsonConvert.DeserializeObject<StageData>(value.ToString());
     }
 
-    public void SetStages(StageData[] value)
+    public void SetStartStage(StageData value)
     {
-        SetField("stages", value);
+        SetField("startStage", value);
     }
 
     public override CacheItem Clone()

@@ -15,15 +15,8 @@ public class Scenario : MonoBehaviour
     public Map Map { get { return map; } }
 
 
-    public List<IStage> _stages;
-    public List<IStage> Stages { get { return _stages; } }
-
-
     public IStage _currentStage;
     public IStage CurrentStage { get { return _currentStage; } }
-
-    public int _currentStageIndex = 0;
-    public int CurrentStageIndex { get { return _currentStageIndex; } }
 
 
     public Replic[] _initialDialogue;
@@ -40,21 +33,13 @@ public class Scenario : MonoBehaviour
     public bool waitingForUpdateStage = false;
 
 
-    public void Init(Map scenarioMap, List<Vector2Int> scenarioLandableCells, int landingMaxStaff, List<IStage> scenarioStages, int currentStage, Replic[] startDialogue, bool isLanded)
+    public void Init(Map scenarioMap, List<Vector2Int> scenarioLandableCells, int landingMaxStaff, IStage currentStage, Replic[] startDialogue, bool isLanded)
     {
         map = scenarioMap;
         _landableCells = scenarioLandableCells;
         _landingMaxStaff = landingMaxStaff;
-        _stages = scenarioStages;
-        _currentStageIndex = currentStage;
-        if (_stages.Count == 0)
-        {
-            _currentStage = null;
-        }
-        else
-        {
-            _currentStage = _stages[_currentStageIndex];
-        }
+
+        _currentStage = currentStage;
 
         _initialDialogue = startDialogue;
 
@@ -103,26 +88,15 @@ public class Scenario : MonoBehaviour
         waitingForEndDialogue = false;
     }
 
-    public IEnumerator ToNextStage()
+    public IEnumerator ToNextStage(IStage nextStage)
     {
         Debug.Log("Çàâåðøåíèå ïðåäûäóùåãî ýòàïà");
         EnableListenerForUpdateStage();
         CurrentStage.OnFinish();
         yield return new WaitUntil(() => !waitingForUpdateStage);
 
-
-        _currentStageIndex++;
-        if (_currentStageIndex + 1 > _stages.Count)
-        {
-            Debug.Log("ÏÎÁÅÄÀ");
-
-            EventMaster.current.WinFight();
-            yield break;
-        }
-
-        _currentStage = Stages[_currentStageIndex];
-
-        EventMaster.current.OnStageIndexChange(_currentStageIndex);
+        _currentStage = nextStage;
+        EventMaster.current.OnCurrentStageChange(CurrentStage);
         EventMaster.current.OnNextStage(_currentStage);
 
         Debug.Log("Íà÷àëî íîâîãî ýòàïà");
@@ -158,8 +132,7 @@ public class Scenario : MonoBehaviour
 
     public IEnumerator Begin()
     {
-        _currentStage = Stages[CurrentStageIndex];
-        EventMaster.current.OnStageBegin(_currentStage);
+        EventMaster.current.OnStageBegin(CurrentStage);
 
         EnableListenerForUpdateStage();
         CurrentStage.OnStart();
@@ -173,8 +146,17 @@ public class Scenario : MonoBehaviour
             EnableListenerForUpdateStage();
             CurrentStage.OnFail();
             yield return new WaitUntil(() => !waitingForUpdateStage);
-            EventMaster.current.OnUpdateScenario();
-            EventMaster.current.LoseFigth();
+
+            IStage nextStage = CurrentStage.StageOnFail;
+            if (nextStage == null)
+            {
+                EventMaster.current.LoseFigth();
+                yield break;
+            }
+            else
+            {
+                yield return StartCoroutine(ToNextStage(nextStage));
+            }
         }
 
         else if (CurrentStage.IsPassed())
@@ -182,14 +164,23 @@ public class Scenario : MonoBehaviour
             EnableListenerForUpdateStage();
             CurrentStage.OnPass();
             yield return new WaitUntil(() => !waitingForUpdateStage);
-            yield return StartCoroutine(ToNextStage());
-            EventMaster.current.OnUpdateScenario();
+            IStage nextStage = CurrentStage.StageOnPass;
+            if (nextStage == null)
+            {
+                Debug.Log("ÏÎÁÅÄÀ");
+
+                EventMaster.current.WinFight();
+                yield break;
+            }
+            else
+            {
+                yield return StartCoroutine(ToNextStage(nextStage));
+            }
         }
 
         else
         {
             yield return StartCoroutine(ContinueStage());
-            EventMaster.current.OnUpdateScenario();
         }
     }
 }

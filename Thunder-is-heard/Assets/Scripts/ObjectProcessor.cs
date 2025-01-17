@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -212,7 +211,7 @@ public class ObjectProcessor : MonoBehaviour
             if (currentCacheItem == null) continue;
             UnitCacheItem currentCoreUnitData = new UnitCacheItem(currentCacheItem.Fields);
             Transform model = CreateModel(currentCoreUnitData.GetModelPath() + "/" + unit.side, unit.rotation).transform;
-            Vector3 unitObjPosition = new Vector3(unit.position.First()._x, model.transform.position.y, unit.position.First()._y);
+            Vector3 unitObjPosition = new Vector3(unit.position.First()._x, 0, unit.position.First()._y);
             model.transform.position += unitObjPosition;
 
             CreateObjectOnBattle(

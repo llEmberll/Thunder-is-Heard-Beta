@@ -11,7 +11,7 @@ public class BaseMap : Map
 
     public void Start()
     {
-        //CreateScenarioForEnemyOutpost();
+
     }
 
     public void CreateScenarioForEnemyOutpost()
@@ -217,8 +217,6 @@ public class BaseMap : Map
         // Начальный диалог сценария
 
         // Этапы
-        List<StageData> stages = new List<StageData>();
-
         //// Этап 1
         ///// ИИ
         AISettings AISettingsForEmpireSideInStage1 = new AISettings(
@@ -270,17 +268,16 @@ public class BaseMap : Map
             new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Мы не справились с задачей, их гарнизоны были слишком сильны! Отступаем!")
         };
         //// Диалог в случае провала
-        stages.Add(new StageData(
+        StageData stage1 = new StageData(
                 stageUnits: null,
                 stageBuilds: null,
                 stageReplicsOnStart: startDialogueForStage1,
                 stageReplicsOnPass: null,
                 stageReplicsOnFail: failDialogueForStage1,
                 stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage1, AISettingsForNeutralSideInStage1 },
-                stageConditionsForDefeat: defeatConditionDataForStage1,
-                stageConditionsForVictory: victoryConditionDataForStage1
-                )
-            );
+                stageConditionsForFail: defeatConditionDataForStage1,
+                stageConditionsForPass: victoryConditionDataForStage1
+                );
         //// Этап 1
 
         //// Этап 2
@@ -323,19 +320,154 @@ public class BaseMap : Map
             new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Вражеские подкрепления на месте, нужно было уничтожить штаб пока была возможность! Нельзя допустить окружения, отступаем...")
         };
         //// Диалог в случае провала
-
-        stages.Add(new StageData(
+        StageData stageOnPassStage1 = new StageData(
                 stageUnits: null,
                 stageBuilds: null,
                 stageReplicsOnStart: startDialogueForStage2,
                 stageReplicsOnPass: null,
-                stageReplicsOnFail: failDialogueForStage2,
+                stageReplicsOnFail: null,
                 stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage2, AISettingsForNeutralSideInStage2 },
-                stageConditionsForDefeat: defeatConditionDataForStage2,
-                stageConditionsForVictory: victoryConditionDataWithDestroyHeadbuildForStage2
-                )
-            );
+                stageConditionsForFail: defeatConditionDataForStage2,
+                stageConditionsForPass: victoryConditionDataWithDestroyHeadbuildForStage2
+                );
         //// Этап 2
+
+        //// Этап 2.1
+        ///// ИИ
+        AISettings AISettingsForEmpireSideInStage21 = new AISettings(
+            "Attacking",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage21 = new AISettings(
+            "Attacking",
+            Sides.neutral,
+            null,
+            null
+            );
+        ///// ИИ
+
+        //// Условия
+        ConditionData victoryConditionDataForStage21 = new ConditionData(type: "DestroyAllEnemies", null);
+
+        ConditionData defeatConditionDataForStage21 = new ConditionData(type: "DestroyAllAllies", null);
+        //// Условия
+
+        //// Стартовый диалог
+        Replic[] startDialogueForStage21 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation, 
+                text: "Вражеские подкрепления на месте, нужно было уничтожить штаб пока была возможность...",
+                focus: new Bector2Int(13, 25)
+                )
+        };
+        //// Cтартовый диалог
+
+        //// Диалог в случае провала
+        Replic[] failDialogueForStage21 = new Replic[]
+        {
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Мы не справились с задачей, их гарнизоны были слишком сильны! Отступаем!")
+        };
+        //// Диалог в случае провала
+        
+        //// Диалог в случае успеха
+        Replic[] passDialogueForStage21 = new Replic[]
+        {
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Ура! Победа за нами! Враг разбит, и мы наконец возвращаем территории, пусть и небольшие"),
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Не забудьте трофейные винтовки! С патронами и оружием нынче очень туго")
+        };
+        //// Диалог в случае успеха
+
+        //// Юниты
+        UnitOnBattle[] stage21Units = new UnitOnBattle[]
+        {
+            new UnitOnBattle(
+                    coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
+                    unitPosition: new Bector2Int[] { new Bector2Int(13, 35) },
+                    unitRotation: 180,
+                    unitMaxHealth: 6,
+                    unitHealth: 6,
+                    unitDamage: 3,
+                    unitDistance: 3,
+                    unitMobility: 4,
+                    UnitTypes.vehicle,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "844b3458-b8c4-4fc5-a72b-44033ea5836c"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
+                    unitPosition: new Bector2Int[] { new Bector2Int(13, 34) },
+                    unitRotation: 180,
+                    unitMaxHealth: 6,
+                    unitHealth: 6,
+                    unitDamage: 3,
+                    unitDistance: 3,
+                    unitMobility: 4,
+                    UnitTypes.vehicle,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "e512b440-1c13-460d-b399-6e42a3823eec"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
+                    unitPosition: new Bector2Int[] { new Bector2Int(13, 33) },
+                    unitRotation: 180,
+                    unitMaxHealth: 5,
+                    unitHealth: 5,
+                    unitDamage: 2,
+                    unitDistance: 1,
+                    unitMobility: 5,
+                    UnitTypes.vehicle,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitSkillsData: new SkillOnBattle[] { new SkillOnBattle("a60f271d-4aa1-41af-b6d1-c89ed667dad6", 0, false) },
+                    unitIdOnBattle: "44310c6b-a692-4fec-a2f6-56862f95f7c5"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(12, 33) },
+                    unitRotation: 180,
+                    unitMaxHealth: 3,
+                    unitHealth: 3,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "479e4109-c2f5-4b67-90f7-a79d5563bf6f"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(14, 33) },
+                    unitRotation: 180,
+                    unitMaxHealth: 3,
+                    unitHealth: 3,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "103f5510-8b4a-4755-a56e-ae2fab4d1259"
+                    ),
+        };
+        //// Юниты
+        StageData stageOnFailStage2 = new StageData(
+                stageUnits: stage21Units,
+                stageBuilds: null,
+                stageReplicsOnStart: startDialogueForStage21,
+                stageReplicsOnPass: passDialogueForStage21,
+                stageReplicsOnFail: failDialogueForStage21,
+                stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage21, AISettingsForNeutralSideInStage21 },
+                stageConditionsForFail: defeatConditionDataForStage21,
+                stageConditionsForPass: victoryConditionDataForStage21
+                );
+        //// Этап 2.1
 
         //// Этап 3
         ///// ИИ
@@ -379,18 +511,16 @@ public class BaseMap : Map
             new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Мы не справились с задачей, их гарнизоны были слишком сильны! Отступаем!")
         };
         //// Диалог в случае провала
-
-        stages.Add(new StageData(
+        StageData stageOnPassStage2 = new StageData(
                 stageUnits: null,
                 stageBuilds: null,
                 stageReplicsOnStart: startDialogueForStage3,
                 stageReplicsOnPass: null,
                 stageReplicsOnFail: failDialogueForStage3,
                 stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage3, AISettingsForNeutralSideInStage3 },
-                stageConditionsForDefeat: defeatConditionDataForStage3,
-                stageConditionsForVictory: victoryConditionDataForStage3
-                )
-            );
+                stageConditionsForFail: defeatConditionDataForStage3,
+                stageConditionsForPass: victoryConditionDataForStage3
+                );
         //// Этап 3
 
         //// Этап 4
@@ -427,25 +557,154 @@ public class BaseMap : Map
         };
         //// Cтартовый диалог
 
-        //// Диалог в случае провала
-        Replic[] failDialogueForStage4 = new Replic[]
-        {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Вражеские подкрепления на месте, момент упущен! Нельзя допустить окружения, отступаем...")
-        };
-        //// Диалог в случае провала
-
-        stages.Add(new StageData(
+        StageData stageOnPassStage3 = new StageData(
                 stageUnits: null,
                 stageBuilds: null,
                 stageReplicsOnStart: startDialogueForStage4,
                 stageReplicsOnPass: null,
-                stageReplicsOnFail: failDialogueForStage4,
+                stageReplicsOnFail: null,
                 stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage4, AISettingsForNeutralSideInStage4 },
-                stageConditionsForDefeat: defeatConditionDataForStage4,
-                stageConditionsForVictory: victoryConditionDataWithDestroyTentForStage4
-                )
-            );
+                stageConditionsForFail: defeatConditionDataForStage4,
+                stageConditionsForPass: victoryConditionDataWithDestroyTentForStage4
+                );
         //// Этап 4
+        
+        //// Этап 4.1
+        ///// ИИ
+        AISettings AISettingsForEmpireSideInStage41 = new AISettings(
+            "Attacking",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage41 = new AISettings(
+            "Attacking",
+            Sides.neutral,
+            null,
+            null
+            );
+        ///// ИИ
+
+        //// Условия
+        ConditionData victoryConditionDataForStage41 = new ConditionData(type: "DestroyAllEnemies", null);
+
+        ConditionData defeatConditionDataForStage41 = new ConditionData(type: "DestroyAllAllies", null);
+        //// Условия
+
+        //// Стартовый диалог
+        Replic[] startDialogueForStage41 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer, 
+                charSide: Sides.federation, 
+                text: "Вражеские подкрепления на месте, нужно было уничтожить казарму и отходить пока была возможность...",
+                focus: new Bector2Int(13, 25)
+                )
+        };
+        //// Cтартовый диалог
+
+        //// Диалог в случае провала
+        Replic[] failDialogueForStage41 = new Replic[]
+        {
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Мы не справились с задачей, их гарнизоны были слишком сильны! Отступаем!")
+        };
+        //// Диалог в случае провала
+
+        //// Диалог в случае успеха
+        Replic[] passDialogueForStage41 = new Replic[]
+        {
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Ура! Победа за нами! Враг разбит, и мы наконец возвращаем территории, пусть и небольшие"),
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Не забудьте трофейные винтовки! С патронами и оружием нынче очень туго")
+        };
+        //// Диалог в случае успеха
+
+        //// Юниты
+        UnitOnBattle[] stage41Units = new UnitOnBattle[]
+        {
+            new UnitOnBattle(
+                    coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
+                    unitPosition: new Bector2Int[] { new Bector2Int(13, 35) },
+                    unitRotation: 180,
+                    unitMaxHealth: 6,
+                    unitHealth: 6,
+                    unitDamage: 3,
+                    unitDistance: 3,
+                    unitMobility: 4,
+                    UnitTypes.vehicle,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "844b3458-b8c4-4fc5-a72b-44033ea5836c"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
+                    unitPosition: new Bector2Int[] { new Bector2Int(13, 34) },
+                    unitRotation: 180,
+                    unitMaxHealth: 6,
+                    unitHealth: 6,
+                    unitDamage: 3,
+                    unitDistance: 3,
+                    unitMobility: 4,
+                    UnitTypes.vehicle,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "e512b440-1c13-460d-b399-6e42a3823eec"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
+                    unitPosition: new Bector2Int[] { new Bector2Int(13, 33) },
+                    unitRotation: 180,
+                    unitMaxHealth: 5,
+                    unitHealth: 5,
+                    unitDamage: 2,
+                    unitDistance: 1,
+                    unitMobility: 5,
+                    UnitTypes.vehicle,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitSkillsData: new SkillOnBattle[] { new SkillOnBattle("a60f271d-4aa1-41af-b6d1-c89ed667dad6", 0, false) },
+                    unitIdOnBattle: "44310c6b-a692-4fec-a2f6-56862f95f7c5"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(12, 33) },
+                    unitRotation: 180,
+                    unitMaxHealth: 3,
+                    unitHealth: 3,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "479e4109-c2f5-4b67-90f7-a79d5563bf6f"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(14, 33) },
+                    unitRotation: 180,
+                    unitMaxHealth: 3,
+                    unitHealth: 3,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "103f5510-8b4a-4755-a56e-ae2fab4d1259"
+                    ),
+        };
+        //// Юниты
+        StageData stageOnFailStage4 = new StageData(
+                stageUnits: stage41Units,
+                stageBuilds: null,
+                stageReplicsOnStart: startDialogueForStage41,
+                stageReplicsOnPass: passDialogueForStage41,
+                stageReplicsOnFail: failDialogueForStage41,
+                stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage41, AISettingsForNeutralSideInStage41 },
+                stageConditionsForFail: defeatConditionDataForStage41,
+                stageConditionsForPass: victoryConditionDataForStage41
+                );
+        //// Этап 4.1
 
         //// Этап 5
         ///// ИИ
@@ -516,18 +775,16 @@ public class BaseMap : Map
                     ),
         };
         //// Юниты
-
-        stages.Add(new StageData(
+        StageData stageOnPassStage4 = new StageData(
                 stageUnits: stage5Units,
                 stageBuilds: null,
                 stageReplicsOnStart: startDialogueForStage5,
                 stageReplicsOnPass: null,
                 stageReplicsOnFail: failDialogueForStage5,
                 stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage5, AISettingsForNeutralSideInStage5 },
-                stageConditionsForDefeat: defeatConditionDataForStage5,
-                stageConditionsForVictory: victoryConditionDataForStage5
-                )
-            );
+                stageConditionsForFail: defeatConditionDataForStage5,
+                stageConditionsForPass: victoryConditionDataForStage5
+                );
         //// Этап 5
 
         //// Этап 6
@@ -612,230 +869,28 @@ public class BaseMap : Map
                     ),
         };
         //// Юниты
-
-        stages.Add(new StageData(
+        StageData stageOnPassStage5 = new StageData(
                 stageUnits: stage6Units,
                 stageBuilds: null,
                 stageReplicsOnStart: startDialogueForStage6,
                 stageReplicsOnPass: passDialogueForStage6,
                 stageReplicsOnFail: failDialogueForStage6,
                 stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage6, AISettingsForNeutralSideInStage6 },
-                stageConditionsForDefeat: defeatConditionDataForStage6,
-                stageConditionsForVictory: victoryConditionDataForStage6
-                )
-            );
+                stageConditionsForFail: defeatConditionDataForStage6,
+                stageConditionsForPass: victoryConditionDataForStage6
+                );
         //// Этап 6
+
+        stage1.stageOnPass = stageOnPassStage1;
+        stageOnPassStage1.stageOnPass = stageOnPassStage2;
+        stageOnPassStage1.stageOnFail = stageOnFailStage2;
+        stageOnPassStage2.stageOnPass = stageOnPassStage3;
+        stageOnPassStage3.stageOnPass = stageOnPassStage4;
+        stageOnPassStage3.stageOnFail = stageOnFailStage4;
+        stageOnPassStage4.stageOnPass = stageOnPassStage5;
         // Этапы
 
-        scenarioItem.SetStages(stages.ToArray());
-        table.AddOne(scenarioItem);
-        Cache.Save(table);
-    }
-
-    public void CreateScenarioForTest()
-    {
-        ScenarioCacheTable table = Cache.LoadByType<ScenarioCacheTable>();
-
-        ScenarioCacheItem scenarioItem = new ScenarioCacheItem(new Dictionary<string, object>());
-
-        scenarioItem.SetExternalId("7d1660fb-10ad-4a55-9810-2c411120070f");
-        scenarioItem.SetName("Scenario1 for tests");
-        scenarioItem.SetTerrainPath(Config.terrainsPath["Base"]);
-        scenarioItem.SetMapSize(new Bector2Int(new Vector2Int(8, 8)));
-
-        LandingData landingData = new LandingData(
-            new Bector2Int[]
-            {
-                new Bector2Int(new Vector2Int(0, 0)),
-                new Bector2Int(new Vector2Int(0, 1)),
-                new Bector2Int(new Vector2Int(1, 0)),
-                new Bector2Int(new Vector2Int(1, 1))
-            },
-            6
-            );
-
-        scenarioItem.SetLanding(landingData);
-
-        UnitOnBattle[] scenarioUnits = new UnitOnBattle[]
-        {
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    new Bector2Int[] { new Bector2Int(2, 2) },
-                    0,
-                    3,
-                    2,
-                    1,
-                    2,
-                    2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "03a65484-e0c4-4bec-a8eb-277c22a53ef4"
-                    )
-        };
-
-        scenarioItem.SetUnits(scenarioUnits);
-
-        BuildOnBattle[] scenarioBuilds = new BuildOnBattle[]
-        {
-            new BuildOnBattle(
-                    coreBuildId: "64a4568c-bfaf-408e-9537-8e489ccaca56",
-                    new Bector2Int[]
-                    {
-                        new Bector2Int(3, 3),
-                        new Bector2Int(3, 4),
-                        new Bector2Int(4, 3),
-                        new Bector2Int(4, 4)
-                    },
-                    180,
-                    6,
-                    6,
-                    0,
-                    0,
-                    Doctrines.land,
-                    Sides.empire,
-                    WorkStatuses.idle,
-                    buildIdOnBattle: "8f338821-eaf1-4670-8633-fe57ca21ecd0"
-                )
-        };
-
-        scenarioItem.SetBuilds(scenarioBuilds);
-
-
-        ObstacleOnBattle[] scenarioObstacles = new ObstacleOnBattle[]
-        {
-            new ObstacleOnBattle(
-                    coreObstacleId: "fccb430b-9ab1-4073-a334-6183a40ad0f2",
-                    new Bector2Int[]
-                    {
-                        new Bector2Int(1, 2)
-                    },
-                    0,
-                    Sides.neutral,
-                    obstacleIdOnBattle: "c2d90826-6d3e-4e58-8e65-b41ecb304b27"
-                )
-        };
-
-        scenarioItem.SetObstacles(scenarioObstacles);
-
-
-        UnitOnBattle[] stage1Units = new UnitOnBattle[]
-        {
-            new UnitOnBattle(
-                    coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
-                    new Bector2Int[] { new Bector2Int(4, 5) },
-                    90,
-                    6,
-                    6,
-                    3,
-                    3,
-                    4,
-                    UnitTypes.vehicle,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "725f70fd-417e-4ca7-9b6f-ff5b19c8e4e6"
-                    ),
-            new UnitOnBattle(
-                    coreUnitId: "1db672c3-4207-4629-a1ee-ca054c83ba7c",
-                    new Bector2Int[] { new Bector2Int(5, 4) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 2,
-                    unitDistance: 1,
-                    unitMobility: 4,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitSkillsData: new SkillOnBattle[] { new SkillOnBattle("a60f271d-4aa1-41af-b6d1-c89ed667dad6", 0, false) },
-                    unitIdOnBattle: "0608207f-edff-490c-a726-9d6893b882b9"
-                    )
-        };
-
-        BuildOnBattle[] stage1Builds = new BuildOnBattle[]
-        {
-            new BuildOnBattle(
-                    coreBuildId: "64a4568c-bfaf-408e-9537-8e489ccaca56",
-                    new Bector2Int[]
-                    {
-                        new Bector2Int(5, 5),
-                        new Bector2Int(5, 6),
-                        new Bector2Int(6, 5),
-                        new Bector2Int(6, 6)
-                    },
-                    180,
-                    6,
-                    6,
-                    0,
-                    0,
-                    Doctrines.land,
-                    Sides.empire,
-                    WorkStatuses.idle,
-                    buildIdOnBattle: "68881a80-41e1-41da-8784-bbe4b4bbe3dc"
-                )
-        };
-
-        ConditionData victoryConditionDataForStage1 = new ConditionData(type: "DestroyAllEnemies", null);
-
-        ConditionData defeatConditionDataForStage1 = new ConditionData(type: "DestroyAllAllies", null);
-
-        AISettings AISettingsForEmpireSide = new AISettings(
-            "Waiting",
-            Sides.empire,
-            null,
-            null
-            );
-        AISettings AISettingsForNeutralSide = new AISettings(
-            "Waiting",
-            Sides.neutral,
-            null,
-            null
-            );
-
-        Replic[] scenarioStartDialogue = new Replic[]
-        {
-            new Replic(charName: "officer", charSide: Sides.federation, text: "Так, мы на месте"),
-            new Replic(charName: "fighter", charSide: Sides.empire, text: "Хана вам!"),
-        };
-
-        Replic[] startReplicsForStage1 = new Replic[]
-        {
-            new Replic(charName: "officer", charSide: Sides.federation, text: "Привет, это тестовая реплика!"),
-            new Replic(charName: "tank_girl", charSide: Sides.federation, text: "Уничтожь всех врагов на поле"),
-            new Replic(charName: "fighter", charSide: Sides.empire, text: "Ну попробуй"),
-        };
-
-        Replic[] passReplicForStage1 = new Replic[]
-        {
-            new Replic(charName: "commander", charSide: Sides.empire, text: "Впечатляет"),
-            new Replic(charName: "officer", charSide: Sides.federation, text: "Отличная работа, командир! Но в следующий раз ведите себя более аккуратно, хорошо? Имперцы мастера изобретать ловушки в чистом поле......................................."),
-        };
-
-        Replic[] failReplicForStage1 = new Replic[]
-        {
-            new Replic(charName: "officer", charSide: Sides.federation, text: "Черт, их слишком много. Уходим"),
-            new Replic(charName: "fighter", charSide: Sides.federation, text: "Теперь вы понимаете, что сопротивление бесполезно?"),
-            new Replic(charName: "tank_girl", charSide: Sides.federation, text: "Это еще не конец, при следующей встрече пощады не будет."),
-        };
-
-
-        StageData[] stages = new StageData[]
-        {
-            new StageData(
-                stageUnits: null, 
-                stageBuilds: null, 
-                stageReplicsOnStart: startReplicsForStage1,
-                stageReplicsOnPass: null,
-                stageReplicsOnFail: failReplicForStage1,
-                stageAISettings: new AISettings[] { AISettingsForEmpireSide, AISettingsForNeutralSide },
-                stageConditionsForDefeat: defeatConditionDataForStage1, 
-                stageConditionsForVictory: victoryConditionDataForStage1
-                )
-        };
-
-        scenarioItem.SetStages( stages );
-        scenarioItem.SetStartDialogue(scenarioStartDialogue);
-
+        scenarioItem.SetStartStage(stage1);
         table.AddOne(scenarioItem);
         Cache.Save(table);
     }

@@ -13,9 +13,9 @@ public class BattleCacheItem : CacheItem
             SetMissionId("");
         }
 
-        if (!objFields.ContainsKey("stageIndex"))
+        if (!objFields.ContainsKey("currentStage"))
         {
-            SetStageIndex(0);
+            SetCurrentStage(null);
         }
 
         if (!objFields.ContainsKey("isLanded"))
@@ -59,21 +59,21 @@ public class BattleCacheItem : CacheItem
         SetField("missionId", value);
     }
 
-    public int GetStageIndex()
+    public StageData GetCurrentStage()
     {
-        object value = GetField("stageIndex");
+        object value = GetField("currentStage");
 
         if (value == null)
         {
-            return 0;
+            return null;
         }
 
-        return Convert.ToInt32(value);
+        return JsonConvert.DeserializeObject<StageData>(value.ToString());
     }
 
-    public void SetStageIndex(int value)
+    public void SetCurrentStage(StageData value)
     {
-        SetField("stageIndex", value);
+        SetField("currentStage", value);
     }
 
     public bool GetIsLanded()

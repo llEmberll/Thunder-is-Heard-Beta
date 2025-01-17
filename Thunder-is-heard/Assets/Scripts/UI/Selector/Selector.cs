@@ -58,6 +58,7 @@ public class Selector : MonoBehaviour
         EventMaster.current.ExitedOnObject += OnExitObject;
         EventMaster.current.DamagedObject += OnDamageObject;
         EventMaster.current.DestroyedObject += OnDestroyObject;
+        EventMaster.current.UnitMoveFinished += OnFinishSomeUnitMove;
     }
 
     public void InitState()
@@ -100,6 +101,14 @@ public class Selector : MonoBehaviour
         }
     }
 
+    public void OnFinishSomeUnitMove(Unit unit)
+    {
+        if (_selectedObject != null && _selectedObject.ChildId == unit.ChildId)
+        {
+            OnEnterObject(unit);
+        }
+    }
+
     public void OnEnterObject(Entity obj)
     {
         _selectedObject = obj;
@@ -123,10 +132,14 @@ public class Selector : MonoBehaviour
             }
         }
 
-        else if (obj is Unit)
+        else if (obj is Unit unit)
         {
+            if (unit._onMove == true)
+            {
+                TurnOff(false);
+                return;
+            }
             mayHaveAttackers = true;
-            Unit unit = (Unit)obj;
             if (unit._skills != null && unit._skills.Length > 0)
             {
                 ConfigureSkillsInfo(unit);
@@ -160,9 +173,9 @@ public class Selector : MonoBehaviour
         TurnOff();
     }
 
-    public void TurnOff()
+    public void TurnOff(bool forgetSelectedObject = true)
     {
-        _selectedObject = null;
+        if (forgetSelectedObject == true) _selectedObject = null;
         skillsPanel.SetActive(false);
         objectInfoCanvas.enabled = attackRadiusCanvas.enabled =  productsInfoCanvas.enabled = false;
         selector.SetActive(false);

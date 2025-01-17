@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BasicStage: IStage
 {
+    public string _stageId;
+    public string StageId { get { return _stageId; } }
+
     public Scenario _scenario;
     public UnitOnBattle[] _units;
     public BuildOnBattle[] _builds;
@@ -26,13 +29,17 @@ public class BasicStage: IStage
     public List<IScenarioEvent> Events { get { return events; } }
 
 
-    public Dictionary<string, AISettings> _AISettingsBySide;
-    public Dictionary<string, AISettings> AISettingsBySide { get { return _AISettingsBySide; } }
+    public AISettings[] _AISettings;
+    public AISettings[] AISettings { get { return _AISettings; } }
 
 
     public ICondition ConditionsForPass { get { return _conditionsForPass; } }
 
     public ICondition ConditionsForFail { get { return _conditionsForFail; } }
+
+
+    public IStage _stageOnPass = null;
+    public IStage StageOnPass { get { return _stageOnPass; } }
 
     public IStage _stageOnFail = null;
     public IStage StageOnFail { get { return _stageOnFail; } }
@@ -48,6 +55,7 @@ public class BasicStage: IStage
 
 
     public virtual void Init(
+        string stageId,
         Scenario stageScenario,
         AISettings[] AISettings,
         ICondition conditionsForPass,
@@ -57,16 +65,19 @@ public class BasicStage: IStage
         Replic[] replicsOnStart,
         Replic[] replicsOnPass,
         Replic[] replicsOnFail,
+        IStage stageOnPass = null,
         IStage stageOnFail = null
         )
     {
+        _stageId = stageId;
         SetScenario(stageScenario);
-        SetAISettingsBySide(AISettings);
+        SetAISettings(AISettings);
         SetConditionsForPass(conditionsForPass);
         SetConditionsForFail(conditionsForFail);
         SetUnits(units);
         SetBuilds(builds);
         SetReplics(replicsOnStart, replicsOnPass, replicsOnFail);
+        _stageOnPass = stageOnPass;
         _stageOnFail = stageOnFail;
         SetCustomProperties();
 
@@ -109,13 +120,9 @@ public class BasicStage: IStage
         _scenario = value;
     }
 
-    public void SetAISettingsBySide(AISettings[] value)
+    public void SetAISettings(AISettings[] value)
     {
-        _AISettingsBySide = new Dictionary<string, AISettings>();
-        foreach (var settings in value)
-        {
-            _AISettingsBySide.Add(settings.side, settings);
-        }
+        _AISettings = value;
     }
 
     public virtual void SetConditionsForPass(ICondition conditions)

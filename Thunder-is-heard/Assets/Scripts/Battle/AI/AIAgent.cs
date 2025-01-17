@@ -61,18 +61,18 @@ public class AIAgent : MonoBehaviour
     {
         if (AIBySide == null) AIBySide = new Dictionary<string, AIInterface>();
 
-        Dictionary<string, AISettings> AISettingsBySide = nextStage.AISettingsBySide;
+        AISettings[] AISettingsBySide = nextStage.AISettings;
         foreach (var item in AISettingsBySide)
         {
-            if (_sides.Contains(item.Key))
+            if (_sides.Contains(item.side))
             {
-                if (AIBySide.ContainsKey(item.Key))
+                if (AIBySide.ContainsKey(item.side))
                 {
-                    AIBySide[item.Key] = AIFactory.GetConfiguredAIByTypeAndSettings(item.Value);
+                    AIBySide[item.side] = AIFactory.GetConfiguredAIByTypeAndSettings(item);
                 }
                 else
                 {
-                    AIBySide.Add(item.Key, AIFactory.GetConfiguredAIByTypeAndSettings(item.Value));
+                    AIBySide.Add(item.side, AIFactory.GetConfiguredAIByTypeAndSettings(item));
                 }
             }
         }

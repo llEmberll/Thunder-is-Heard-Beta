@@ -5,17 +5,8 @@
       "fields": {
         "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
         "type": "Unit",
-        "count": 981,
+        "count": 999,
         "externalId": "4029afc4-bde8-4f40-bf45-513ba328b07e",
-        "description": ""
-      }
-    },
-    "7b0cd171-f8fd-4e40-b09b-642ad53d1ea6": {
-      "fields": {
-        "coreId": "035655f8-a347-4057-87cc-83385fa20660",
-        "type": "Unit",
-        "count": 988,
-        "externalId": "7b0cd171-f8fd-4e40-b09b-642ad53d1ea6",
         "description": ""
       }
     }

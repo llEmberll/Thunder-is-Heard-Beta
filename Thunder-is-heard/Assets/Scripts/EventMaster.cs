@@ -322,10 +322,10 @@ public class EventMaster: MonoBehaviour
     }
 
 
-    public event Action<int> StageIndexChanged;
-    public void OnStageIndexChange(int index)
+    public event Action<IStage> CurrentStageChanged;
+    public void OnCurrentStageChange(IStage currentStage)
     {
-        StageIndexChanged?.Invoke(index);
+        CurrentStageChanged?.Invoke(currentStage);
     }
 
     public event Action<Entity> DestroyedObject;

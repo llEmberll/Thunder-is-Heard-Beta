@@ -57,8 +57,7 @@ public class FightDirector : MonoBehaviour
         EventMaster.current.BattleObjectsChanged += ReloadBattleData;
 
         EventMaster.current.TurnExecuted += ExecuteTurn;
-        EventMaster.current.StageIndexChanged += ChangeStageIndex;
-        EventMaster.current.ScenarioUpdated += OnScenarioUpdated;
+        EventMaster.current.CurrentStageChanged += ChangeCurrentStage;
     }
 
     public void DisableListeners()
@@ -69,8 +68,7 @@ public class FightDirector : MonoBehaviour
         EventMaster.current.BattleObjectsChanged -= ReloadBattleData;
 
         EventMaster.current.TurnExecuted -= ExecuteTurn;
-        EventMaster.current.StageIndexChanged -= ChangeStageIndex;
-        EventMaster.current.ScenarioUpdated -= OnScenarioUpdated;
+        EventMaster.current.CurrentStageChanged -= ChangeCurrentStage;
     }
 
 
@@ -175,9 +173,10 @@ public class FightDirector : MonoBehaviour
         SaveBattleData();
     }
 
-    public void ChangeStageIndex(int index)
+    public void ChangeCurrentStage(IStage stage)
     {
-        _battleData.SetStageIndex(index);
+        StageData serializedStage = StageFactory.SerializeStage(stage);
+        _battleData.SetCurrentStage(serializedStage);
         SaveBattleData();
     }
 
@@ -195,9 +194,15 @@ public class FightDirector : MonoBehaviour
 
         bool isLanded = _battleData.GetIsLanded();
 
-        int stageIndex = _battleData.GetStageIndex();
-        StageData[] stageDatas = scenarioData.GetStages();
-        List<IStage> stages = StageFactory.GetAndInitStagesByStageDatasAndScenario(stageDatas, Scenario);
+        IStage currentStage;
+        if (_battleData.GetCurrentStage() != null)
+        {
+            currentStage = StageFactory.GetAndInitStageByStageDataAndScenario(_battleData.GetCurrentStage(), Scenario);
+        }
+        else
+        {
+            currentStage = StageFactory.GetAndInitStageByStageDataAndScenario(scenarioData.GetStartStage(), Scenario);
+        }
 
         UnitOnBattle[] scenarioUnits = scenarioData.GetUnits();
         BuildOnBattle[] scenarioBuilds = scenarioData.GetBuilds();
@@ -213,7 +218,7 @@ public class FightDirector : MonoBehaviour
         Map map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
         map.Init(mapSize, terrainPath);
 
-        Scenario.Init(map, landingCells, landingMaxStaff, stages, stageIndex, scenarioStartDialogue, isLanded);
+        Scenario.Init(map, landingCells, landingMaxStaff, currentStage, scenarioStartDialogue, isLanded);
         
     }
 
@@ -278,7 +283,7 @@ public class FightDirector : MonoBehaviour
         _turnController.OnNextTurn(_battleData.GetTurn());
     }
 
-    public void NextTurn()
+    public IEnumerator NextTurn()
     {
         Debug.Log("Следующий ход");
 
@@ -294,7 +299,8 @@ public class FightDirector : MonoBehaviour
 
         Debug.Log("Данные по очередерности обновлены");
 
-        StartCoroutine(Scenario.OnNextTurn());
+        yield return StartCoroutine(Scenario.OnNextTurn());
+        OnScenarioUpdated();
     }
 
     public void ExecuteTurn(TurnData turnData)
@@ -371,7 +377,7 @@ public class FightDirector : MonoBehaviour
             }
         }
 
-        NextTurn();
+        yield return StartCoroutine(NextTurn());
     }
 
     public void ChangeUnitOccypation(Unit unit, Cell newOccypation)

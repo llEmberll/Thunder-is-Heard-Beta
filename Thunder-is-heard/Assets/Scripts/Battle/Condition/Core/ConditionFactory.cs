@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Linq;
 
 
 public static class ConditionFactory
@@ -46,5 +47,97 @@ public static class ConditionFactory
             conditions.Add(CreateCondition(conditionData));
         }
         return conditions;
+    }
+
+    public static ConditionData SerializeCondition(ICondition condition)
+    {
+        if (condition is DestroyAllEnemiesCondition)
+        {
+            return new ConditionData
+            {
+                Type = "DestroyAllEnemies",
+                Data = new Dictionary<string, object>()
+            };
+        }
+        else if (condition is DestroyAllAlliesCondition)
+        {
+            return new ConditionData
+            {
+                Type = "DestroyAllAllies",
+                Data = new Dictionary<string, object>()
+            };
+        }
+        else if (condition is AttackObjectCondition attackObjectCondition)
+        {
+            return new ConditionData
+            {
+                Type = "AttackObject",
+                Data = new Dictionary<string, object>
+                {
+                    { "targetObjectId", attackObjectCondition._targetObjectId }
+                }
+            };
+        }
+        else if (condition is ReachToAttackObjectCondition reachToAttackObjectCondition)
+        {
+            return new ConditionData
+            {
+                Type = "ReachToAttackObject",
+                Data = new Dictionary<string, object>
+                {
+                    { "targetObjectId", reachToAttackObjectCondition._targetObjectId },
+                    { "attackerSide", reachToAttackObjectCondition._attackerSide }
+                }
+            };
+        }
+        else if (condition is DestroyObjectsCondition destroyObjectsCondition)
+        {
+            return new ConditionData
+            {
+                Type = "DestroyObjects",
+                Data = new Dictionary<string, object>
+                {
+                    { "targetObjectIds", JsonConvert.SerializeObject(destroyObjectsCondition._targetObjectIds) }
+                }
+            };
+        }
+        else if (condition is SideReachPositionCondition sideReachPositionCondition)
+        {
+            return new ConditionData
+            {
+                Type = "SideReachPosition",
+                Data = new Dictionary<string, object>
+                {
+                    { "positionRectangle", JsonConvert.SerializeObject(sideReachPositionCondition._positionRectangle) },
+                    { "side", sideReachPositionCondition._side }
+                }
+            };
+        }
+        else if (condition is AndCondition andCondition)
+        {
+            var conditionsData = andCondition._conditions.Select(SerializeCondition).ToArray();
+            return new ConditionData
+            {
+                Type = "And",
+                Data = new Dictionary<string, object>
+                {
+                    { "conditions", JsonConvert.SerializeObject(conditionsData) }
+                }
+            };
+        }
+        else if (condition is OrCondition orCondition)
+        {
+            var conditionsData = orCondition._conditions.Select(SerializeCondition).ToArray();
+            return new ConditionData
+            {
+                Type = "Or",
+                Data = new Dictionary<string, object>
+                {
+                    { "conditions", JsonConvert.SerializeObject(conditionsData) }
+                }
+            };
+        }
+
+        throw new ArgumentException("Неизвестный тип условия: " + condition.GetType().Name);
     }
 }

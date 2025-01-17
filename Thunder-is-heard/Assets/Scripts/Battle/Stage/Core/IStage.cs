@@ -1,9 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 
 
 public interface IStage
 {
+    public string StageId { get; }
+
     public Scenario Scenario { get; }
     public UnitOnBattle[] Units { get; }
     public BuildOnBattle[] Builds { get; }
@@ -15,15 +16,17 @@ public interface IStage
     public List<IScenarioEvent> Events { get; }
 
 
-    public Dictionary<string, AISettings> AISettingsBySide { get; }
+    public AISettings[] AISettings { get; }
 
 
     public ICondition ConditionsForPass { get; }
     public ICondition ConditionsForFail { get; }
 
+    public IStage StageOnPass { get; }
     public IStage StageOnFail { get; }
 
     public void Init(
+        string stageId,
         Scenario stageScenario,
         AISettings[] AISettings,
         ICondition conditionsForPass,
@@ -33,6 +36,7 @@ public interface IStage
         Replic[] replicsOnStart,
         Replic[] replicsOnPass,
         Replic[] replicOnFail,
+        IStage stageOnPass,
         IStage stageOnFail
         );
     public void SetScenario(Scenario value);

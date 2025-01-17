@@ -14,9 +14,10 @@ public class StageData
 
     public AISettings[] AISettings;
 
-    public ConditionData conditionsForDefeat;
-    public ConditionData conditionsForVictory;
+    public ConditionData conditionsForFail;
+    public ConditionData conditionsForPass;
 
+    public StageData stageOnPass = null;
     public StageData stageOnFail = null;
 
     
@@ -29,9 +30,10 @@ public class StageData
         Replic[] stageReplicsOnPass,
         Replic[] stageReplicsOnFail,
         AISettings[] stageAISettings,
-        ConditionData stageConditionsForDefeat, 
-        ConditionData stageConditionsForVictory,
+        ConditionData stageConditionsForFail,
+        ConditionData stageConditionsForPass,
         string stageId = "BasicStage",
+        StageData stageStageOnPass = null,
         StageData stageStageOnFail = null
         )
     {
@@ -42,8 +44,9 @@ public class StageData
         replicsOnPass = stageReplicsOnPass;
         replicsOnFail = stageReplicsOnFail;
         AISettings = stageAISettings;
-        conditionsForDefeat = stageConditionsForDefeat;
-        conditionsForVictory = stageConditionsForVictory;
+        conditionsForFail = stageConditionsForFail;
+        conditionsForPass = stageConditionsForPass;
+        stageOnPass = stageStageOnPass;
         stageOnFail = stageStageOnFail;
     }
 }

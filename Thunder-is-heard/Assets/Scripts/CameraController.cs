@@ -172,7 +172,7 @@ public class CameraController : MonoBehaviour
             delta.y *= _aspectRatio;
             delta.Normalize();
 
-            float speedForCamera = movementSpeed / 2;
+            float speedForCamera = movementSpeed / 5;
             float totalMovementMultiplier = speedForCamera * mainCamera.orthographicSize * Time.deltaTime;
 
             if (delta.x != 0)
