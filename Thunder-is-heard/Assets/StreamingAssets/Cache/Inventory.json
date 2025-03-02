@@ -5,8 +5,26 @@
       "fields": {
         "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
         "type": "Unit",
-        "count": 999,
+        "count": 998,
         "externalId": "4029afc4-bde8-4f40-bf45-513ba328b07e",
+        "description": ""
+      }
+    },
+    "7ab130a3-023b-4664-892e-346f53939a1d": {
+      "fields": {
+        "coreId": "035655f8-a347-4057-87cc-83385fa20660",
+        "type": "Unit",
+        "count": 996,
+        "externalId": "7ab130a3-023b-4664-892e-346f53939a1d",
+        "description": ""
+      }
+    },
+    "df947b9a-04f3-4d65-ace8-514ecc43bdae": {
+      "fields": {
+        "coreId": "31391161-4be3-4149-833d-7fdde496946c",
+        "type": "Material",
+        "count": 1,
+        "externalId": "df947b9a-04f3-4d65-ace8-514ecc43bdae",
         "description": ""
       }
     }

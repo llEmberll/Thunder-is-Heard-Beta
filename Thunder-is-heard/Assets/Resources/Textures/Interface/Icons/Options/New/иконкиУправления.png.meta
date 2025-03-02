@@ -248,10 +248,10 @@ TextureImporter:
       name: "\u0438\u043A\u043E\u043D\u043A\u0438\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F_6"
       rect:
         serializedVersion: 2
-        x: 134
-        y: 787
-        width: 600
-        height: 600
+        x: 100
+        y: 741
+        width: 675
+        height: 693
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -355,7 +355,7 @@ TextureImporter:
         serializedVersion: 2
         x: 1667
         y: 83
-        width: 680
+        width: 694
         height: 560
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
