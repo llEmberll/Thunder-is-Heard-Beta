@@ -1,11 +1,37 @@
 ﻿{
   "name": "ProductsNotification",
   "items": {
-    "17a3ca60-fe66-4ea3-89ca-f80dec066a22": {
+    "7e7842f7-5f9e-4a09-b37b-faf278dc761c": {
       "fields": {
-        "externalId": "17a3ca60-fe66-4ea3-89ca-f80dec066a22",
+        "externalId": "7e7842f7-5f9e-4a09-b37b-faf278dc761c",
         "description": "",
         "sourceObjectId": "177802f0-fdd3-4ead-9f68-1ea5c8a75437",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "b24ae00b-bf31-42d3-a3e5-6d252d6c5d81": {
+      "fields": {
+        "externalId": "b24ae00b-bf31-42d3-a3e5-6d252d6c5d81",
+        "description": "",
+        "sourceObjectId": "aad00679-0365-4aa1-9948-96710864114f",
         "type": "Idle",
         "gives": {
           "rub": 0,

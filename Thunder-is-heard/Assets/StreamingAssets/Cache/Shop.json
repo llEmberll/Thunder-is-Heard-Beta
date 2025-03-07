@@ -1,15 +1,6 @@
 ﻿{
   "name": "Shop",
   "items": {
-    "17a0b5c7-8fb1-4f6f-958a-16cdda359b61": {
-      "fields": {
-        "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
-        "type": "Build",
-        "count": 1,
-        "externalId": "17a0b5c7-8fb1-4f6f-958a-16cdda359b61",
-        "description": ""
-      }
-    },
     "043cb2aa-5b7c-49d5-afe0-db36e37170c5": {
       "fields": {
         "coreId": "7dfc9c80-ddac-45e9-bcdf-61166e068cad",
