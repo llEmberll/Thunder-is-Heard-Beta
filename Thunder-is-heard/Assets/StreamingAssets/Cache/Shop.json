@@ -18,6 +18,15 @@
         "externalId": "eeafde71-f9d2-4e61-97fd-cb3ce1f9e3e0",
         "description": ""
       }
+    },
+    "55ec7f7d-a8bc-4d22-9884-0187affde0c8": {
+      "fields": {
+        "coreId": "ab0f64f0-5c33-4cbe-8cd1-79934d0d1741",
+        "type": "Unit",
+        "count": 2,
+        "externalId": "55ec7f7d-a8bc-4d22-9884-0187affde0c8",
+        "description": ""
+      }
     }
   }
 }

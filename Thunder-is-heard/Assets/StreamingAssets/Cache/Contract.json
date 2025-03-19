@@ -37,7 +37,7 @@
         "duration": 25,
         "iconSection": "UIBuildCards",
         "name": "Экспресс",
-        "iconName": "mine_card"
+        "iconName": "mine"
       }
     },
     "4766fc0c-db3e-46f8-853a-06dfa7f62d29": {
@@ -76,7 +76,7 @@
         "duration": 90,
         "iconSection": "UIBuildCards",
         "name": "Половина смены",
-        "iconName": "mine_card"
+        "iconName": "mine"
       }
     },
     "e5215c51-f22f-4655-9d32-6f49fc0510fc": {
@@ -115,7 +115,7 @@
         "duration": 300,
         "iconSection": "UIBuildCards",
         "name": "Полная смена",
-        "iconName": "mine_card"
+        "iconName": "mine"
       }
     },
     "7a837319-57a3-457f-9fab-bd6d8bf35021": {
@@ -154,7 +154,7 @@
         "duration": 20,
         "iconSection": "UIBuildCards",
         "name": "Экспресс",
-        "iconName": "oil_station_card"
+        "iconName": "oil_station"
       }
     },
     "6c6b3001-cfa9-4761-8e40-ae26e88f6ca5": {
@@ -193,7 +193,7 @@
         "duration": 70,
         "iconSection": "UIBuildCards",
         "name": "Половина смены",
-        "iconName": "oil_station_card"
+        "iconName": "oil_station"
       }
     },
     "522a3c5c-ce58-42b5-b237-80ac15845b6a": {
@@ -232,7 +232,7 @@
         "duration": 250,
         "iconSection": "UIBuildCards",
         "name": "Полная смена",
-        "iconName": "oil_station_card"
+        "iconName": "oil_station"
       }
     },
     "4a9f0fb4-51fe-452f-9159-6368e00d9b1f": {
@@ -271,7 +271,7 @@
         "duration": 45,
         "iconSection": "UIBuildCards",
         "name": "Экспресс",
-        "iconName": "office_card"
+        "iconName": "office"
       }
     },
     "fc4c6678-2349-4927-a222-3fa0a54b8459": {
@@ -310,7 +310,7 @@
         "duration": 150,
         "iconSection": "UIBuildCards",
         "name": "Половина смены",
-        "iconName": "office_card"
+        "iconName": "office"
       }
     },
     "c5f7ec2d-db3a-48a2-8845-51607d342e9c": {
@@ -349,7 +349,7 @@
         "duration": 500,
         "iconSection": "UIBuildCards",
         "name": "Полная смена",
-        "iconName": "office_card"
+        "iconName": "office"
       }
     }
   }

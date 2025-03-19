@@ -50,9 +50,9 @@ public static class Config
         { "UISkillItemPrefab", "Prefabs/UI/GeneratedItems/Common/Skill/SkillItem" },
 
         { "UIProductsNotificationPrefab", "Prefabs/UI/GeneratedItems/Common/ProductsNotification/ProductsNotification" },
-        { "UIBuildCards", "Textures/Interface/Cards/Builds/cards/" },
-        { "UIUnitCards", "Textures/Interface/Cards/Units/Base/vehicle_cards/" },
-        { "UIUnitLandingCards", "Textures/Interface/Cards/Units/Landing/vehicle_cards/" },
+        { "UIBuildCards", "Textures/Interface/Cards/Builds/" },
+        { "UIUnitCards", "Textures/Interface/Cards/Units/Base/" },
+        { "UIUnitLandingCards", "Textures/Interface/Cards/Units/Landing/" },
         { "UIMaterialCards", "Textures/Interface/Cards/Materials/" },
         { "landableUnitItem", "Prefabs/UI/GeneratedItems/UnitForLanding/LandableUnitItem" },
         { "ranks", "Textures/Interface/Icons/Ranks/Ranks" },

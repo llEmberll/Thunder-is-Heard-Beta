@@ -79,6 +79,32 @@
         "iconName": "osoka"
       }
     },
+    "b6e51a78-f18a-4b71-9f30-c0c6afa3516e": {
+      "fields": {
+        "externalId": "b6e51a78-f18a-4b71-9f30-c0c6afa3516e",
+        "description": "",
+        "type": "Vehicle",
+        "cost": {
+          "rub": 4000,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 5,
+          "maxOil": 0,
+          "steel": 9,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "ab0f64f0-5c33-4cbe-8cd1-79934d0d1741",
+        "duration": 700,
+        "iconSection": "UIUnitCards",
+        "name": "Произвести леопард'",
+        "iconName": "leopard"
+      }
+    },
     "4265fe0d-845c-4d6e-9fdf-ad29abc0c374": {
       "fields": {
         "externalId": "4265fe0d-845c-4d6e-9fdf-ad29abc0c374",

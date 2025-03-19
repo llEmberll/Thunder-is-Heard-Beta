@@ -1,5 +1,4 @@
 ﻿{
-  "name": "PlayerUnit",
   "items": {
     "182f03c4-0acc-464f-bd35-64f63c4d166d": {
       "fields": {
@@ -10,8 +9,8 @@
         "name": "Штурмовики",
         "position": [
           {
-            "x": 7,
-            "y": 4
+            "x": 8,
+            "y": 2
           }
         ]
       }
@@ -30,6 +29,37 @@
           }
         ]
       }
+    },
+    "28f5e559-2e2b-4766-b93e-ffd27db0e357": {
+      "fields": {
+        "externalId": "28f5e559-2e2b-4766-b93e-ffd27db0e357",
+        "description": "",
+        "rotation": 0,
+        "coreId": "035655f8-a347-4057-87cc-83385fa20660",
+        "name": "БМП Осока",
+        "position": [
+          {
+            "x": 9,
+            "y": 4
+          }
+        ]
+      }
+    },
+    "a81953f1-312d-4652-9211-fa65cf80d183": {
+      "fields": {
+        "externalId": "a81953f1-312d-4652-9211-fa65cf80d183",
+        "description": "",
+        "rotation": 180,
+        "coreId": "ab0f64f0-5c33-4cbe-8cd1-79934d0d1741",
+        "name": "Леопард",
+        "position": [
+          {
+            "x": 7,
+            "y": 4
+          }
+        ]
+      }
     }
-  }
+  },
+  "name": "PlayerUnit"
 }

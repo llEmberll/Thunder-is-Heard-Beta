@@ -160,6 +160,59 @@
         "movementSpeed": 1
       }
     },
+    "ab0f64f0-5c33-4cbe-8cd1-79934d0d1741": {
+      "fields": {
+        "externalId": "ab0f64f0-5c33-4cbe-8cd1-79934d0d1741",
+        "description": "",
+        "cost": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 10,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 14,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 3,
+        "health": 8,
+        "damage": 5,
+        "distance": 3,
+        "mobility": 3,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconSection": "UIUnitCards",
+        "iconName": "leopard",
+        "landingIconSection": "UIUnitLandingCards",
+        "landingIconName": "leopard",
+        "name": "Леопард",
+        "modelPath": "Prefabs/Entity/Units/Leopard",
+        "skillIds": [],
+        "unitType": "vehicle",
+        "doctrine": "land",
+        "movementSpeed": 1
+      }
+    },
     "1db672c3-4207-4629-a1ee-ca054c83ba7c": {
       "fields": {
         "externalId": "1db672c3-4207-4629-a1ee-ca054c83ba7c",
