@@ -3889,6 +3889,10 @@ PrefabInstance:
       propertyPath: m_Bones.Array.data[45]
       value: 
       objectReference: {fileID: 7640914492218431085}
+    - target: {fileID: 3844089539231962680, guid: f4a378a72a72d194d85d8c1b649b880d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 04980332c8f36b542aad6fc797365100, type: 2}
     - target: {fileID: 6042754195651911675, guid: f4a378a72a72d194d85d8c1b649b880d, type: 3}
       propertyPath: m_Name
       value: Assault
@@ -3931,6 +3935,10 @@ PrefabInstance:
       propertyPath: m_Bones.Array.data[3]
       value: 
       objectReference: {fileID: 7432243769287799516}
+    - target: {fileID: 2617514915643897202, guid: 07b15e4afef136549afa8230e1a81be7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4bd1659d899e51147abb076f5bda6207, type: 2}
     - target: {fileID: 3171195832526634525, guid: 07b15e4afef136549afa8230e1a81be7, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -4017,6 +4025,10 @@ PrefabInstance:
       propertyPath: m_Bones.Array.data[3]
       value: 
       objectReference: {fileID: 6162120637017021560}
+    - target: {fileID: 2617514915643897202, guid: 07b15e4afef136549afa8230e1a81be7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4bd1659d899e51147abb076f5bda6207, type: 2}
     - target: {fileID: 3171195832526634525, guid: 07b15e4afef136549afa8230e1a81be7, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -4315,6 +4327,10 @@ PrefabInstance:
       propertyPath: m_Bones.Array.data[45]
       value: 
       objectReference: {fileID: 4345985858590681600}
+    - target: {fileID: 3844089539231962680, guid: f4a378a72a72d194d85d8c1b649b880d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 04980332c8f36b542aad6fc797365100, type: 2}
     - target: {fileID: 6042754195651911675, guid: f4a378a72a72d194d85d8c1b649b880d, type: 3}
       propertyPath: m_Name
       value: Assault

@@ -26,8 +26,8 @@ public class Cell : Interactable
         Free();
 
         _meshRenderer = gameObject.GetComponent<MeshRenderer>();
-        basicMaterial = Resources.Load(Config.resources["materials"] + Type + "/Basic", typeof(Material)) as Material;
-        selectMaterial = Resources.Load(Config.resources["materials"] + Type + "/Select", typeof(Material)) as Material;
+        basicMaterial = Resources.Load(Config.resources["defaultCellMaterial"], typeof(Material)) as Material;
+        selectMaterial = Resources.Load(Config.resources["selectCellMaterial"], typeof(Material)) as Material;
         
         
         position = new Vector2Int((int)transform.position.x, (int)transform.position.z);

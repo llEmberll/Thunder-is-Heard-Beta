@@ -1,11 +1,11 @@
 ﻿{
   "name": "ProductsNotification",
   "items": {
-    "7e7842f7-5f9e-4a09-b37b-faf278dc761c": {
+    "8a0d0f80-ca85-496b-a725-e8d14f39c929": {
       "fields": {
-        "externalId": "7e7842f7-5f9e-4a09-b37b-faf278dc761c",
+        "externalId": "8a0d0f80-ca85-496b-a725-e8d14f39c929",
         "description": "",
-        "sourceObjectId": "177802f0-fdd3-4ead-9f68-1ea5c8a75437",
+        "sourceObjectId": "7b1b8938-8902-4344-9432-2e17b18ca83b",
         "type": "Idle",
         "gives": {
           "rub": 0,
@@ -27,11 +27,11 @@
         "unitId": null
       }
     },
-    "b24ae00b-bf31-42d3-a3e5-6d252d6c5d81": {
+    "20e2ea05-1f5a-4f53-8614-ae748cf62629": {
       "fields": {
-        "externalId": "b24ae00b-bf31-42d3-a3e5-6d252d6c5d81",
+        "externalId": "20e2ea05-1f5a-4f53-8614-ae748cf62629",
         "description": "",
-        "sourceObjectId": "aad00679-0365-4aa1-9948-96710864114f",
+        "sourceObjectId": "86ec03bc-2969-4cf4-92ef-33f669df300c",
         "type": "Idle",
         "gives": {
           "rub": 0,

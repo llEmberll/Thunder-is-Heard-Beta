@@ -53,6 +53,32 @@
         "iconName": "vortex"
       }
     },
+    "c3f0b39a-7a55-4673-afc6-8352d5c4025c": {
+      "fields": {
+        "externalId": "c3f0b39a-7a55-4673-afc6-8352d5c4025c",
+        "description": "",
+        "type": "Vehicle",
+        "cost": {
+          "rub": 1200,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 1,
+          "maxOil": 0,
+          "steel": 3,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "1a82fa0c-1eb3-4e4d-bc63-43213b1bed28",
+        "duration": 200,
+        "iconSection": "UIUnitCards",
+        "name": "Произвести бтр",
+        "iconName": "beaver"
+      }
+    },
     "957bb263-524a-4460-8375-234b86055d7c": {
       "fields": {
         "externalId": "957bb263-524a-4460-8375-234b86055d7c",
@@ -79,30 +105,30 @@
         "iconName": "osoka"
       }
     },
-    "b6e51a78-f18a-4b71-9f30-c0c6afa3516e": {
+    "c2bfc6ac-66c0-4322-a861-6c5420975b92": {
       "fields": {
-        "externalId": "b6e51a78-f18a-4b71-9f30-c0c6afa3516e",
+        "externalId": "c2bfc6ac-66c0-4322-a861-6c5420975b92",
         "description": "",
         "type": "Vehicle",
         "cost": {
-          "rub": 4000,
+          "rub": 3000,
           "maxRub": 0,
           "frames": 0,
           "maxFrames": 0,
-          "oil": 5,
+          "oil": 4,
           "maxOil": 0,
-          "steel": 9,
+          "steel": 8,
           "maxSteel": 0,
           "staff": 0,
           "maxStaff": 0,
           "exp": 0,
           "maxExp": 0
         },
-        "unitId": "ab0f64f0-5c33-4cbe-8cd1-79934d0d1741",
-        "duration": 700,
+        "unitId": "c87ab088-db0b-4813-94da-929939248d76",
+        "duration": 600,
         "iconSection": "UIUnitCards",
-        "name": "Произвести леопард'",
-        "iconName": "leopard"
+        "name": "Произвести танк'",
+        "iconName": "obt"
       }
     },
     "4265fe0d-845c-4d6e-9fdf-ad29abc0c374": {

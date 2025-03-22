@@ -29,6 +29,7 @@ public static class Config
         {"UICards", "Textures/Interface/Cards/" },
         {"materialPreview", "Materials/Preview/" },
         {"defaultCellMaterial", "Materials/Cell/Basic" },
+        {"selectCellMaterial", "Materials/Cell/Select" },
         {"landableCellMaterial", "Materials/Cell/Landable" },
         { "prefabs", "Prefabs/" },
         { "entityPrefabs", "Prefabs/Entity/" },
