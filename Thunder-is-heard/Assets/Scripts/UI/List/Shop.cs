@@ -1,11 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Shop : ItemList
 {
     public List<ShopItem> items;
+
+    public ISubsituableShopBehaviour _behaviour;
+
+
+    public override void Awake()
+    {
+        ChangeBehaviour();
+        base.Awake();
+    }
 
     public override void Start()
     {
@@ -18,7 +25,7 @@ public class Shop : ItemList
 
     public void IncreaseItem(string id, string type, int count)
     {
-        foreach (var item in items)
+        foreach (var item in _behaviour.GetItems(this))
         {
             if (item.coreId == id && item.Type == type)
             {
@@ -28,6 +35,7 @@ public class Shop : ItemList
         }
     }
 
+    // Придумать обход реальной таблицы с подменой
     public override void FillContent()
     {
         ClearItems();
@@ -158,5 +166,21 @@ public class Shop : ItemList
     public void InitContent()
     {
         content = GameObject.FindGameObjectWithTag(Tags.shopItems).transform;
+    }
+
+    public void ChangeBehaviour(string name = "Base")
+    {
+        _behaviour = SubsituableShopFactory.GetBehaviourById(name);
+        _behaviour.Init();
+    }
+
+    public bool IsAvailableToBuy(ShopItem item)
+    {
+        return _behaviour.IsAvailableToBuy(item);
+    }
+
+    public void OnBuy(ShopItem item)
+    {
+        _behaviour.OnBuy(item);
     }
 }

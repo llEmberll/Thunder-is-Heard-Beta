@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class MaterialShopItem: ShopItem
 {
@@ -24,10 +21,6 @@ public class MaterialShopItem: ShopItem
 
     public override void OnBuy()
     {
-        ObjectProcessor.OnBuyMaterial(coreId);
-        resourcesProcessor.SubstractResources(costData);
-        resourcesProcessor.Save();
-
-        Substract();
+        conductor.OnBuy(this);
     }
 }

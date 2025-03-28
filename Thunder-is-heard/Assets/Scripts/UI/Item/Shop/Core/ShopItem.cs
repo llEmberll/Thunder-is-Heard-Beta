@@ -1,7 +1,5 @@
 using TMPro;
 using UnityEngine;
-using System;
-using System.Reflection;
 
 
 public abstract class ShopItem : Item
@@ -18,9 +16,11 @@ public abstract class ShopItem : Item
     public ResourcesData givesData;
     public Transform gives;
 
+    public Shop conductor;
+
     public override void Awake()
     {
-        resourcesProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
+        conductor = GameObject.FindGameObjectWithTag(Tags.shop).GetComponent<Shop>();
     }
 
     public override void Interact()
@@ -32,7 +32,7 @@ public abstract class ShopItem : Item
 
     public bool IsAvailableToBuy()
     {
-        return resourcesProcessor.IsAvailableToBuy(costData);
+        return conductor.IsAvailableToBuy(this);
     }
 
     public abstract void OnBuy();

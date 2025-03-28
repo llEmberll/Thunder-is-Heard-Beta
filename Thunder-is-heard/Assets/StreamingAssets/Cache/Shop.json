@@ -72,15 +72,6 @@
         "externalId": "55ec7f7d-a8bc-4d22-9884-0187affde0c8",
         "description": ""
       }
-    },
-    "5a5d8f47-1368-4d59-8f48-a1f1d1aefabe": {
-      "fields": {
-        "coreId": "31391161-4be3-4149-833d-7fdde496946c",
-        "type": "Material",
-        "count": 1,
-        "externalId": "5a5d8f47-1368-4d59-8f48-a1f1d1aefabe",
-        "description": ""
-      }
     }
   }
 }

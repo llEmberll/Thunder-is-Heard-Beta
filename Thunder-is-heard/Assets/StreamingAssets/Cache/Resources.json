@@ -1,14 +1,14 @@
 ﻿{
   "name": "Resources",
   "items": {
-    "5dcbd1f6-7b32-45fc-8145-f38151ca757e": {
+    "5448038d-55e8-4250-a320-430373bd3bf9": {
       "fields": {
-        "externalId": "5dcbd1f6-7b32-45fc-8145-f38151ca757e",
+        "externalId": "5448038d-55e8-4250-a320-430373bd3bf9",
         "description": "",
         "resources": {
           "rub": 3000,
           "maxRub": 0,
-          "frames": 5,
+          "frames": 4,
           "maxFrames": 0,
           "oil": 7,
           "maxOil": 0,

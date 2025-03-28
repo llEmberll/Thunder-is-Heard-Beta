@@ -44,11 +44,7 @@ public abstract class ExposableShopItem : ShopItem
 
     public override void OnBuy()
     {
-        CreatePreview();
-
-        EventMaster.current.OnBuildMode();
-        EventMaster.current.ToggledOffBuildMode += OnCancelExposing;
-        EventMaster.current.ObjectExposed += OnObjectExposed;
+        conductor.OnBuy(this);
     }
 
     public void CreatePreview()
