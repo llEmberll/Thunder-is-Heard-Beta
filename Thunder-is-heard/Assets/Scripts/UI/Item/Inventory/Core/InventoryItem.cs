@@ -1,11 +1,17 @@
 using TMPro;
-using UnityEngine;
 
 public abstract class InventoryItem : Item
 {
     public string coreId;
 
     public TMP_Text TmpCount;
+
+    public Inventory conductor;
+
+    public void SetConductor(Inventory value)
+    {
+        conductor = value;
+    }
 
     public override void EnableListeners()
     {
@@ -24,7 +30,15 @@ public abstract class InventoryItem : Item
         }
     }
 
-    public abstract override void Interact();
+    public override void Interact()
+    {
+        OnUse();
+    }
+
+    public void OnUse()
+    {
+        conductor.OnUse(this);
+    }
 
     public override void UpdateUI()
     {

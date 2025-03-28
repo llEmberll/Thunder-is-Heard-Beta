@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Newtonsoft.Json;
@@ -41,15 +39,6 @@ public abstract class ExposableInventoryItem : InventoryItem
         }
 
         base.UpdateUI();
-    }
-
-    public override void Interact()
-    {
-        CreatePreview();
-
-        EventMaster.current.OnBuildMode();
-        EventMaster.current.ToggledOffBuildMode += OnCancelExposing;
-        EventMaster.current.ObjectExposed += OnObjectExposed;
     }
 
     public void CreatePreview()

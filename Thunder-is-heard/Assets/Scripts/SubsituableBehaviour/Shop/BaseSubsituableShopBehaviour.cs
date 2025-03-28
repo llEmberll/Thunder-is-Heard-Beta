@@ -5,22 +5,22 @@ public class BaseSubsituableShopBehaviour : ISubsituableShopBehaviour
 {
     public ResourcesProcessor resourcesProcessor;
 
-    public List<ShopItem> GetItems(Shop conductor)
+    public virtual List<ShopItem> GetItems(Shop conductor)
     {
         return conductor.items;
     }
 
-    public void Init()
+    public virtual void Init()
     {
         resourcesProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent< ResourcesProcessor >();
     }
 
-    public bool IsAvailableToBuy(ShopItem item)
+    public virtual bool IsAvailableToBuy(ShopItem item)
     {
         return resourcesProcessor.IsAvailableToBuy(item.costData);
     }
 
-    public void OnBuy(ShopItem item)
+    public virtual void OnBuy(ShopItem item)
     {
         if (item is ExposableShopItem) OnBuyExposableItem(item as ExposableShopItem);
         else
@@ -33,7 +33,7 @@ public class BaseSubsituableShopBehaviour : ISubsituableShopBehaviour
         }
     }
 
-    public void OnBuyExposableItem(ExposableShopItem item)
+    public virtual void OnBuyExposableItem(ExposableShopItem item)
     {
         item.CreatePreview();
 

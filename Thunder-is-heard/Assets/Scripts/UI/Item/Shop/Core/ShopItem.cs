@@ -4,8 +4,6 @@ using UnityEngine;
 
 public abstract class ShopItem : Item
 {
-    public ResourcesProcessor resourcesProcessor;
-
     public string coreId;
 
     public TMP_Text TmpCount;
@@ -16,11 +14,14 @@ public abstract class ShopItem : Item
     public ResourcesData givesData;
     public Transform gives;
 
+    public ResourcesProcessor resourcesProcessor;
+
     public Shop conductor;
 
-    public override void Awake()
+
+    public void SetConductor(Shop value)
     {
-        conductor = GameObject.FindGameObjectWithTag(Tags.shop).GetComponent<Shop>();
+        conductor = value;
     }
 
     public override void Interact()
@@ -35,7 +36,10 @@ public abstract class ShopItem : Item
         return conductor.IsAvailableToBuy(this);
     }
 
-    public abstract void OnBuy();
+    public void OnBuy()
+    {
+        conductor.OnBuy(this);
+    }
 
     public override void UpdateUI()
     {

@@ -18,9 +18,4 @@ public class MaterialShopItem: ShopItem
 
         UpdateUI();
     }
-
-    public override void OnBuy()
-    {
-        conductor.OnBuy(this);
-    }
 }

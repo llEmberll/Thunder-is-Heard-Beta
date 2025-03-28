@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Newtonsoft.Json;
@@ -40,11 +38,6 @@ public abstract class ExposableShopItem : ShopItem
         }
 
         base.UpdateUI();
-    }
-
-    public override void OnBuy()
-    {
-        conductor.OnBuy(this);
     }
 
     public void CreatePreview()

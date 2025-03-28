@@ -1,0 +1,9 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- Событийную систему я использую через свой скрипт Assets/Scripts/EventMaster.cs, вызывая методы, написанные в нем и передавая необходимые аргументы вот так: EventMaster.current.EventMethod()

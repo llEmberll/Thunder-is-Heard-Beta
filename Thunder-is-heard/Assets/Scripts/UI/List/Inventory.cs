@@ -1,11 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Inventory : ItemList
 {
     public List<InventoryItem> items;
+
+    public ISubsituableInventoryBehaviour _behaviour;
+
+    public override void Awake()
+    {
+        ChangeBehaviour();
+        base.Awake();
+    }
 
     public override void Start()
     {
@@ -18,7 +24,7 @@ public class Inventory : ItemList
 
     public void IncreaseItem(string id, string type, int count)
     {
-        foreach (var item in items)
+        foreach (var item in _behaviour.GetItems(this))
         {
             if (item.coreId == id && item.Type == type)
             {
@@ -95,6 +101,7 @@ public class Inventory : ItemList
             description,
             icon
             );
+        buildComponent.SetConductor(this);
         return buildComponent;
     }
 
@@ -127,6 +134,7 @@ public class Inventory : ItemList
             description,
             icon
             );
+        unitComponent.SetConductor(this);
         return unitComponent;
     }
 
@@ -143,11 +151,23 @@ public class Inventory : ItemList
         MaterialInventoryItem materialComponent = itemObject.GetComponent<MaterialInventoryItem>();
 
         materialComponent.Init(id, name, count, description, icon);
+        materialComponent.SetConductor(this);
         return materialComponent;
     }
 
     public void InitContent()
     {
         content = GameObject.FindGameObjectWithTag(Tags.inventoryItems).transform;
+    }
+
+    public void ChangeBehaviour(string name = "Base")
+    {
+        _behaviour = SubsituableInventoryFactory.GetBehaviourById(name);
+        _behaviour.Init();
+    }
+
+    public void OnUse(InventoryItem item)
+    {
+        _behaviour.OnUse(item);
     }
 }

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class MaterialInventoryItem: InventoryItem
 {
@@ -19,9 +16,5 @@ public class MaterialInventoryItem: InventoryItem
         _count = objectCount;
 
         UpdateUI();
-    }
-
-    public override void Interact()
-    {
     }
 }

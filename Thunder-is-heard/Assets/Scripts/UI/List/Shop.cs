@@ -107,6 +107,7 @@ public class Shop : ItemList
             description, 
             icon
             );
+        buildComponent.SetConductor(this);
         return buildComponent;
     }
 
@@ -141,6 +142,7 @@ public class Shop : ItemList
             description, 
             icon
             );
+        unitComponent.SetConductor(this);
         return unitComponent;
     }
 
@@ -158,6 +160,7 @@ public class Shop : ItemList
         MaterialShopItem materialComponent = itemObject.GetComponent<MaterialShopItem>();
 
         materialComponent.Init(id, name, cost, count, description, icon);
+        materialComponent.SetConductor(this);
         return materialComponent;
     }
 
