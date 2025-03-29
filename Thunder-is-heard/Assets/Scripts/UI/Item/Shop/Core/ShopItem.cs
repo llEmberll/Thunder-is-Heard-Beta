@@ -19,6 +19,12 @@ public abstract class ShopItem : Item
     public Shop conductor;
 
 
+    public override void Awake()
+    {
+        resourcesProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
+        base.Awake();
+    }
+
     public void SetConductor(Shop value)
     {
         conductor = value;

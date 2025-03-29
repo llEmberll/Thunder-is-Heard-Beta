@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
 
 public class ContractItem : Item
 {
@@ -22,6 +19,8 @@ public class ContractItem : Item
 
     public ResourcesData givesData;
     public Transform gives;
+
+    public Contracts conductor;
 
     public void Init(
         string contractId, 
@@ -45,6 +44,11 @@ public class ContractItem : Item
         _duration = contractDuration;
 
         UpdateUI();
+    }
+
+    public void SetConductor(Contracts value)
+    {
+        conductor = value;
     }
 
     public override void Awake()
@@ -73,23 +77,11 @@ public class ContractItem : Item
 
     public bool IsAvailableToBuy()
     {
-        return resourcesProcessor.IsAvailableToBuy(costData);
+        return conductor.IsAvailableToBuy(this);
     }
 
     public void OnBuy()
     {
-        DateTime startTime = DateTime.Now;
-        DateTime endTime = startTime.AddSeconds(_duration);
-
-        ProcessWorker.CreateProcess(
-            Type,
-            ProcessTypes.component,
-            _sourceObjectId,
-            startTime,
-            endTime,
-            new ProcessSource(Type, _id)
-            );
-        resourcesProcessor.SubstractResources(costData);
-        resourcesProcessor.Save();
+        conductor.OnBuy(this);
     }
 }

@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Contracts : ItemList
@@ -9,6 +7,15 @@ public class Contracts : ItemList
 
     public string _contractType;
     public string _sourceObjectId;
+
+    public ISubsituableContractsBehaviour _behaviour;
+
+
+    public override void Awake()
+    {
+        ChangeBehaviour();
+        base.Awake();
+    }
 
     public override void Start()
     {
@@ -71,6 +78,23 @@ public class Contracts : ItemList
             description,
             icon
             );
+        contractComponent.SetConductor(this);
         return contractComponent;
+    }
+
+    public void ChangeBehaviour(string name = "Base")
+    {
+        _behaviour = SubsituableContractsFactory.GetBehaviourById(name);
+        _behaviour.Init();
+    }
+
+    public bool IsAvailableToBuy(ContractItem item)
+    {
+        return _behaviour.IsAvailableToBuy(item);
+    }
+
+    public void OnBuy(ContractItem item)
+    {
+        _behaviour.OnBuy(item);
     }
 }

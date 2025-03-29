@@ -1,4 +1,5 @@
 ﻿{
+  "name": "PlayerBuild",
   "items": {
     "809544a9-ecbc-4100-be6b-81f59540b65c": {
       "fields": {
@@ -47,7 +48,34 @@
           }
         ]
       }
+    },
+    "c83180db-f3ca-4889-9151-5ea1eb7b22ef": {
+      "fields": {
+        "externalId": "c83180db-f3ca-4889-9151-5ea1eb7b22ef",
+        "description": "",
+        "rotation": 0,
+        "workStatus": "Working",
+        "coreId": "64a4568c-bfaf-408e-9537-8e489ccaca56",
+        "name": "Нефтевышка",
+        "position": [
+          {
+            "x": 9,
+            "y": 5
+          },
+          {
+            "x": 9,
+            "y": 6
+          },
+          {
+            "x": 10,
+            "y": 5
+          },
+          {
+            "x": 10,
+            "y": 6
+          }
+        ]
+      }
     }
-  },
-  "name": "PlayerBuild"
+  }
 }
