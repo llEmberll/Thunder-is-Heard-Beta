@@ -1,20 +1,4 @@
 ﻿{
   "name": "ProcessOnBase",
-  "items": {
-    "704ccdf8-cac0-414e-a2b2-95099b3f70dd": {
-      "fields": {
-        "externalId": "704ccdf8-cac0-414e-a2b2-95099b3f70dd",
-        "description": "",
-        "startTime": "2025-03-29T18:53:05.4408864+07:00",
-        "endTime": "2025-03-29T18:53:25.4408864+07:00",
-        "objectOnBaseId": "c83180db-f3ca-4889-9151-5ea1eb7b22ef",
-        "processType": "Component",
-        "source": {
-          "type": "Contract",
-          "id": "7a837319-57a3-457f-9fab-bd6d8bf35021"
-        },
-        "name": "Contract"
-      }
-    }
-  }
+  "items": {}
 }

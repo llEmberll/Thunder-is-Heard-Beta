@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,8 +8,16 @@ public class UnitProductions : ItemList
     public string _unitProductionType;
     public string _sourceObjectId;
 
-    public override void Start()
+    public ISubsituableUnitProductionsBehaviour _behaviour;
+
+    public override void Awake()
     {
+        ChangeBehaviour();
+        base.Awake();
+    }
+
+    public override void Start()
+    {   
         InitContent();
     }
 
@@ -81,6 +88,23 @@ public class UnitProductions : ItemList
             description, 
             icon
             );
+        unitProductionComponent.SetConductor(this);
         return unitProductionComponent;
+    }
+
+    public void ChangeBehaviour(string name = "Base")
+    {
+        _behaviour = SubsituableUnitProductionsFactory.GetBehaviourById(name);
+        _behaviour.Init();
+    }
+
+    public bool IsAvailableToBuy(UnitProductionItem item)
+    {
+        return _behaviour.IsAvailableToBuy(item);
+    }
+
+    public void OnBuy(UnitProductionItem item)
+    {
+        _behaviour.OnBuy(item);
     }
 }

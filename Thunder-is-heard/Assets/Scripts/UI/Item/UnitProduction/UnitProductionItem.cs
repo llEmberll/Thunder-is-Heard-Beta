@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
 
 public class UnitProductionItem: Item
 {
@@ -23,12 +20,8 @@ public class UnitProductionItem: Item
 
     public int _duration;
 
-    public ResourcesProcessor resourcesProcessor;
+    public UnitProductions conductor;
 
-    public override void Awake()
-    {
-        resourcesProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
-    }
 
     public void Init(
         string productionId,
@@ -57,6 +50,11 @@ public class UnitProductionItem: Item
         UpdateUI();
     }
 
+    public void SetConductor(UnitProductions value)
+    {
+        conductor = value;
+    }
+
     public override void UpdateUI()
     {
         TmpHealth.text = health.ToString();
@@ -80,23 +78,11 @@ public class UnitProductionItem: Item
 
     public bool IsAvailableToBuy()
     {
-        return resourcesProcessor.IsAvailableToBuy(costData);
+        return conductor.IsAvailableToBuy(this);
     }
 
     public void OnBuy()
     {
-        DateTime startTime = DateTime.Now;
-        DateTime endTime = startTime.AddSeconds(_duration);
-
-        ProcessWorker.CreateProcess(
-            Type,
-            ProcessTypes.component,
-            _sourceObjectId,
-            startTime,
-            endTime,
-            new ProcessSource(Type, _id)
-            );
-        resourcesProcessor.SubstractResources(costData);
-        resourcesProcessor.Save();
+        conductor.OnBuy(this);
     }
 }

@@ -54,7 +54,7 @@
         "externalId": "c83180db-f3ca-4889-9151-5ea1eb7b22ef",
         "description": "",
         "rotation": 0,
-        "workStatus": "Working",
+        "workStatus": "Idle",
         "coreId": "64a4568c-bfaf-408e-9537-8e489ccaca56",
         "name": "Нефтевышка",
         "position": [
@@ -73,6 +73,42 @@
           {
             "x": 10,
             "y": 6
+          }
+        ]
+      }
+    },
+    "315f6df1-e6cc-4216-8659-d96d61a9584e": {
+      "fields": {
+        "externalId": "315f6df1-e6cc-4216-8659-d96d61a9584e",
+        "description": "",
+        "rotation": 90,
+        "workStatus": "Idle",
+        "coreId": "065a4f61-5b0e-450e-b89b-299651f90b4d",
+        "name": "Тренировочный центр",
+        "position": [
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 7
+          },
+          {
+            "x": 5,
+            "y": 5
+          },
+          {
+            "x": 5,
+            "y": 6
+          },
+          {
+            "x": 5,
+            "y": 7
           }
         ]
       }

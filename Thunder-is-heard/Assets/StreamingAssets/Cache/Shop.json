@@ -37,15 +37,6 @@
         "description": ""
       }
     },
-    "eeafde71-f9d2-4e61-97fd-cb3ce1f9e3e0": {
-      "fields": {
-        "coreId": "065a4f61-5b0e-450e-b89b-299651f90b4d",
-        "type": "Build",
-        "count": 1,
-        "externalId": "eeafde71-f9d2-4e61-97fd-cb3ce1f9e3e0",
-        "description": ""
-      }
-    },
     "fa913483-5e42-4148-9ced-da32fd9f45f6": {
       "fields": {
         "coreId": "ba290dde-968d-46ab-868b-b0f7598a7787",

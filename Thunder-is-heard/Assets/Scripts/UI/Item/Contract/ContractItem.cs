@@ -9,8 +9,6 @@ public class ContractItem : Item
     public string _contractType;
     public string _sourceObjectId;
 
-    public ResourcesProcessor resourcesProcessor;
-
     public int _duration;
     public TMP_Text TmpDuration;
 
@@ -49,11 +47,6 @@ public class ContractItem : Item
     public void SetConductor(Contracts value)
     {
         conductor = value;
-    }
-
-    public override void Awake()
-    {
-        resourcesProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
     }
 
     public override void UpdateUI()
