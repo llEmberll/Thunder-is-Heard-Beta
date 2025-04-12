@@ -261,6 +261,18 @@ public class EventMaster: MonoBehaviour
         ProductsNotificationCreated?.Invoke(createdProductsNotification);
     }
 
+    public event Action<ProductsNotificationCacheItem> ProductsCollected;
+    public void OnCollectProducts(ProductsNotificationCacheItem collected)
+    {
+        ProductsCollected?.Invoke(collected);
+    }
+
+    public event Action<ProductsNotificationCacheItem> UnitCollected;
+    public void OnCollectUnit(ProductsNotificationCacheItem collected)
+    {
+        UnitCollected?.Invoke(collected);
+    }
+
     public event Action<Obstacle> ObstacleDemolitionInitiated;
     public void OnInitiateObstacleDemolition(Obstacle obstacle)
     {
@@ -368,5 +380,29 @@ public class EventMaster: MonoBehaviour
     public void OnUpdateScenario()
     {
         ScenarioUpdated?.Invoke();
+    }
+
+    public event Action<FocusData> ObjectFocused;
+    public void OnObjectFocused(FocusData focusData)
+    {
+        ObjectFocused?.Invoke(focusData);
+    }
+
+    public event Action ClearObjectFocused;
+    public void OnClearObjectFocus()
+    {
+        ClearObjectFocused?.Invoke();
+    }
+
+    public event Action<string, string> ComponentBehaviourChanged;
+    public void OnChangeComponentBehaviour(string componentName, string behaviourName)
+    {
+        ComponentBehaviourChanged?.Invoke(componentName, behaviourName);
+    }
+
+    public event Action ComponentsBehaviourReset;
+    public void OnResetComponentsBehaviour()
+    {
+        ComponentsBehaviourReset?.Invoke();
     }
 }

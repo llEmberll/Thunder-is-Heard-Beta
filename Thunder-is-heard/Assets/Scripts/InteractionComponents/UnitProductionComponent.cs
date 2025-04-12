@@ -26,8 +26,8 @@ public class UnitProductionComponent : InteractionComponent
         ObjectProcessor.AddUnitToInventory(productsCollectionData.GetUnitId());
         ObjectProcessor.DeleteProductsNotificationByItemId(productsCollectionData.GetExternalId());
         ObjectProcessor.CreateProductsNotification(id, ProductsNotificationTypes.idle);
+        EventMaster.current.OnCollectUnit(productsCollectionData);
         EventMaster.current.OnChangeObjectOnBaseWorkStatus(id, WorkStatuses.idle);
-        
     }
 
     public override void HandleFinishedProcess(ProcessOnBaseCacheItem processCacheItem)

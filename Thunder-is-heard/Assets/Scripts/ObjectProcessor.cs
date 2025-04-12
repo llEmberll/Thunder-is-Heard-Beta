@@ -660,6 +660,9 @@ public class ObjectProcessor : MonoBehaviour
         component.SetAttributes(health, currentHealth, damage, distance, 0);
         component.SetDoctrine(doctrine);
         component.SetSide(side);
+
+        component.ChangeBehaviour();
+            
         component.coreId = coreId;
         component.childId = childId;
 
@@ -706,6 +709,7 @@ public class ObjectProcessor : MonoBehaviour
         component.SetUnitType(unitType);
         component.SetDoctrine(doctrine);
         component.SetMovementSpeed(movementSpeed);
+        component.ChangeBehaviour();
 
         if (skillIds == null || skillIds.Length < 1) return;
         Skill[] skillComponents = new Skill[skillIds.Length];
@@ -775,6 +779,9 @@ public class ObjectProcessor : MonoBehaviour
         component.SetModel(model);
         component.SetOccypation(new List<Vector2Int>(occypation));
         component.SetSide(side);
+
+        component.ChangeBehaviour();
+
         component.coreId = coreId;
         component.childId = childId;
     }

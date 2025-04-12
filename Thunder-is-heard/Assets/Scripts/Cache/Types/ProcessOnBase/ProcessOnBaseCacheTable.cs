@@ -21,4 +21,18 @@ public class ProcessOnBaseCacheTable : CacheTable
 
         return null;
     }
+
+    public ProcessOnBaseCacheItem FindBySourceId(string sourceId)
+    {
+        foreach (var keyValuePair in this.Items)
+        {
+            ProcessOnBaseCacheItem currentItem = new ProcessOnBaseCacheItem(keyValuePair.Value.Fields);
+            if (currentItem.GetSource().id == sourceId)
+            {
+                return currentItem;
+            }
+        }
+
+        return null;
+    }
 }

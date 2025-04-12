@@ -1,10 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Threading;
 using UnityEngine;
-using System;
-using TMPro;
 using System.Linq;
 using Unity.VisualScripting;
 
@@ -35,6 +30,7 @@ public class ContractComponent : InteractionComponent
             resourceProcessor.Save();
             ObjectProcessor.DeleteProductsNotificationByItemId(productsCollectionData.GetExternalId());
             ObjectProcessor.CreateProductsNotification(id, ProductsNotificationTypes.idle);
+            EventMaster.current.OnCollectProducts(productsCollectionData);
             EventMaster.current.OnChangeObjectOnBaseWorkStatus(id, WorkStatuses.idle);
         }
 

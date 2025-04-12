@@ -6,6 +6,7 @@ public static class SubsituableContractsFactory
     public static Dictionary<string, Type> behaviours = new Dictionary<string, Type>()
     {
         { "Base", typeof(BaseSubsituableContractsBehaviour) },
+        { "OnlyTutorialContracts", typeof (OnlyTutorialContractContractsBehaviour) },
     };
 
     public static ISubsituableContractsBehaviour GetBehaviourById(string id)

@@ -3,23 +3,32 @@ using UnityEngine;
 
 public class Inventory : ItemList
 {
+    public string ComponentType
+    {
+        get { return "Inventory"; }
+    }
+
     public List<InventoryItem> items;
 
     public ISubsituableInventoryBehaviour _behaviour;
 
-    public override void Awake()
-    {
-        ChangeBehaviour();
-        base.Awake();
-    }
-
     public override void Start()
     {
-        EventMaster.current.InventoryChanged += UpdateContent;
-
         InitContent();
-        
-        base.Start();
+
+        ChangeBehaviour();
+
+        InitListeners();
+
+        Hide();
+    }
+
+    public override void InitListeners()
+    {
+        base.InitListeners();
+        EventMaster.current.InventoryChanged += UpdateContent;
+        EventMaster.current.ComponentBehaviourChanged += OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset += OnResetBehaviour;
     }
 
     public void IncreaseItem(string id, string type, int count)
@@ -34,39 +43,14 @@ public class Inventory : ItemList
         }
     }
 
+    public override void Toggle()
+    {
+        _behaviour.Toggle(this);
+    }
+
     public override void FillContent()
     {
-        ClearItems();
-        items = new List<InventoryItem>();
-
-        InventoryCacheTable inventoryTable = Cache.LoadByType<InventoryCacheTable>();
-        foreach (var keyValuePair in inventoryTable.Items)
-        {
-            InventoryCacheItem inventoryItemData = new InventoryCacheItem(keyValuePair.Value.Fields);
-            string type = inventoryItemData.GetType();
-
-            CacheTable itemTable = Cache.LoadByName(type);
-            CacheItem item = itemTable.GetById(inventoryItemData.GetCoreId());
-
-            switch (type)
-            {
-                case "Build":
-                    BuildCacheItem buildData = new BuildCacheItem(item.Fields);
-                    BuildInventoryItem build = CreateBuild(inventoryItemData, buildData);
-                    items.Add(build);
-                    break;
-                case "Unit":
-                    UnitCacheItem unitData = new UnitCacheItem(item.Fields);
-                    UnitInventoryItem unit = CreateUnit(inventoryItemData, unitData);
-                    items.Add(unit);
-                    break;
-                case "Material":
-                    MaterialCacheItem materialData = new MaterialCacheItem(item.Fields);
-                    MaterialInventoryItem material = CreateMaterial(inventoryItemData, materialData);
-                    items.Add(material);
-                    break;
-            }
-        }
+        _behaviour.FillContent(this);
     }
 
     public void UpdateContent()
@@ -160,10 +144,21 @@ public class Inventory : ItemList
         content = GameObject.FindGameObjectWithTag(Tags.inventoryItems).transform;
     }
 
+    public void OnSomeComponentChangeBehaviour(string componentName, string behaviourName)
+    {
+        if (componentName != ComponentType) return;
+        ChangeBehaviour(behaviourName);
+    }
+
+    public void OnResetBehaviour()
+    {
+        ChangeBehaviour();
+    }
+
     public void ChangeBehaviour(string name = "Base")
     {
         _behaviour = SubsituableInventoryFactory.GetBehaviourById(name);
-        _behaviour.Init();
+        _behaviour.Init(this);
     }
 
     public void OnUse(InventoryItem item)

@@ -3,24 +3,33 @@ using UnityEngine;
 
 public class Shop : ItemList
 {
+    public string ComponentType
+    {
+        get { return "Shop"; }
+    }
+
     public List<ShopItem> items;
 
     public ISubsituableShopBehaviour _behaviour;
 
 
-    public override void Awake()
-    {
-        ChangeBehaviour();
-        base.Awake();
-    }
-
     public override void Start()
     {
-        EventMaster.current.ShopChanged += UpdateContent;
-
         InitContent();
 
-        base.Start();
+        ChangeBehaviour();
+
+        InitListeners();
+
+        Hide();
+    }
+
+    public override void InitListeners()
+    {
+        base.InitListeners();
+        EventMaster.current.ShopChanged += UpdateContent;
+        EventMaster.current.ComponentBehaviourChanged += OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset += OnResetBehaviour;
     }
 
     public void IncreaseItem(string id, string type, int count)
@@ -35,42 +44,14 @@ public class Shop : ItemList
         }
     }
 
-    // Придумать обход реальной таблицы с подменой
+    public override void Toggle()
+    {
+        _behaviour.Toggle(this);
+    }
+
     public override void FillContent()
     {
-        ClearItems();
-        items = new List<ShopItem>();
-
-        //Согласно рангу, проверить лимиты купленных объектов и сделать нужное количество
-
-        ShopCacheTable shopTable = Cache.LoadByType<ShopCacheTable>();
-        foreach (var keyValuePair in shopTable.Items)
-        {
-            ShopCacheItem shopItemData = new ShopCacheItem(keyValuePair.Value.Fields);
-            string type = shopItemData.GetType();
-
-            CacheTable itemTable = Cache.LoadByName(type);
-            CacheItem item = itemTable.GetById(shopItemData.GetCoreId());
-
-            switch (type)
-            {
-                case "Build":
-                    BuildCacheItem buildData = new BuildCacheItem(item.Fields);
-                    BuildShopItem build = CreateBuild(shopItemData, buildData);
-                    items.Add(build);
-                    break;
-                case "Unit":
-                    UnitCacheItem unitData = new UnitCacheItem(item.Fields);
-                    UnitShopItem unit = CreateUnit(shopItemData, unitData);
-                    items.Add(unit);
-                    break;
-                case "Material":
-                    MaterialCacheItem materialData = new MaterialCacheItem(item.Fields);
-                    MaterialShopItem material = CreateMaterial(shopItemData, materialData);
-                    items.Add(material);
-                    break;
-            }
-        }
+        _behaviour.FillContent(this);
     }
 
     public void UpdateContent()
@@ -171,10 +152,21 @@ public class Shop : ItemList
         content = GameObject.FindGameObjectWithTag(Tags.shopItems).transform;
     }
 
+    public void OnSomeComponentChangeBehaviour(string componentName, string behaviourName)
+    {
+        if (componentName != ComponentType) return;
+        ChangeBehaviour(behaviourName);
+    }
+
+    public void OnResetBehaviour()
+    {
+        ChangeBehaviour();
+    }
+
     public void ChangeBehaviour(string name = "Base")
     {
         _behaviour = SubsituableShopFactory.GetBehaviourById(name);
-        _behaviour.Init();
+        _behaviour.Init(this);
     }
 
     public bool IsAvailableToBuy(ShopItem item)

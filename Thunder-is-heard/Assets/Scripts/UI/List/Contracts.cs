@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class Contracts : ItemList
 {
+    public string ComponentType
+    {
+        get { return "Contracts"; }
+    }
+
     public List<ContractItem> items;
 
     public string _contractType;
@@ -11,15 +16,22 @@ public class Contracts : ItemList
     public ISubsituableContractsBehaviour _behaviour;
 
 
-    public override void Awake()
-    {
-        ChangeBehaviour();
-        base.Awake();
-    }
-
     public override void Start()
     {
         InitContent();
+
+        ChangeBehaviour();
+
+        InitListeners();
+
+        Hide();
+    }
+
+    public override void InitListeners()
+    {
+        base.InitListeners();
+        EventMaster.current.ComponentBehaviourChanged += OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset += OnResetBehaviour;
     }
 
     public void Init(string contractType, string sourceObjectId)
@@ -34,22 +46,14 @@ public class Contracts : ItemList
         content = GameObject.FindGameObjectWithTag(Tags.contractItems).transform;
     }
 
+    public override void Toggle()
+    {
+        _behaviour.Toggle(this);
+    }
+
     public override void FillContent()
     {
-        ClearItems();
-        items = new List<ContractItem>();
-
-        ContractCacheTable contractTable = Cache.LoadByType<ContractCacheTable>();
-        foreach (var keyValuePair in contractTable.Items)
-        {
-            ContractCacheItem contractData = new ContractCacheItem(keyValuePair.Value.Fields);
-            if (contractData.GetType() != _contractType)
-            {
-                continue;
-            }
-
-            items.Add(CreateContractItem(contractData));
-        }
+        _behaviour.FillContent(this);
     }
 
     public ContractItem CreateContractItem(ContractCacheItem contractCacheData)
@@ -82,10 +86,21 @@ public class Contracts : ItemList
         return contractComponent;
     }
 
+    public void OnSomeComponentChangeBehaviour(string componentName, string behaviourName)
+    {
+        if (componentName != ComponentType) return;
+        ChangeBehaviour(behaviourName);
+    }
+
+    public void OnResetBehaviour()
+    {
+        ChangeBehaviour();
+    }
+
     public void ChangeBehaviour(string name = "Base")
     {
         _behaviour = SubsituableContractsFactory.GetBehaviourById(name);
-        _behaviour.Init();
+        _behaviour.Init(this);
     }
 
     public bool IsAvailableToBuy(ContractItem item)

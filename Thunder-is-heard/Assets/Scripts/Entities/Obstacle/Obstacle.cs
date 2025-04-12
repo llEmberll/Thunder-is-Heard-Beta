@@ -5,13 +5,23 @@ public class Obstacle : Entity, ITransfer
 {
     public new string side = Sides.neutral;
 
+    public ISubsituableObstacleBehaviour _behaviour;
+
     public override string Type {
         get
         {
             return "Obstacle";
         }
     }
-    
+
+    public override void Awake()
+    {
+        EventMaster.current.ComponentBehaviourChanged += OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset += OnResetBehaviour;
+
+        base.Awake();
+    }
+
     public void Rotate()
     {
         Debug.Log("Obstacle rotated!");
@@ -24,18 +34,33 @@ public class Obstacle : Entity, ITransfer
 
     public override void OnFocus()
     {
-        stateMachine.currentState.OnObstacleMouseEnter(this);
+        _behaviour.OnFocus(this);
     }
 
     public override void OnDefocus()
     {
-        stateMachine.currentState.OnObstacleMouseExit(this);
+        _behaviour.OnDefocus(this);
     }
 
     public override void OnClick()
     {
-        Debug.Log("Click On Obstacle");
+        _behaviour.OnClick(this);
+    }
 
-        stateMachine.currentState.OnObstacleClick(this);
+    public void OnSomeComponentChangeBehaviour(string componentName, string behaviourName)
+    {
+        if (componentName != Type) return;
+        ChangeBehaviour(behaviourName);
+    }
+
+    public void OnResetBehaviour()
+    {
+        ChangeBehaviour();
+    }
+
+    public void ChangeBehaviour(string name = "Base")
+    {
+        _behaviour = SubsituableObstacleFactory.GetBehaviourById(name);
+        _behaviour.Init(this);
     }
 }

@@ -2,7 +2,6 @@ using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 
 public class MissionDetalization: UIElement
@@ -15,6 +14,14 @@ public class MissionDetalization: UIElement
 
     public Image noReserveWarning;
     public Image finishCurrentFightWarning;
+
+    public Campany conductor;
+
+
+    public void SetConductor(Campany value)
+    {
+        conductor = value;
+    }
 
     public bool IsClickedOutside()
     {
@@ -70,36 +77,7 @@ public class MissionDetalization: UIElement
 
     public void Load(string missionId)
     {
-        if (HaveCurrentFightNow())
-        {
-            finishCurrentFightWarning.gameObject.SetActive(true);
-            return;
-        }
-
-        if (!HaveReserve())
-        {
-            noReserveWarning.gameObject.SetActive(true);
-            return;
-        }
-
-        MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
-        CacheItem cacheItemMission = missionTable.GetById(missionId);
-        MissionCacheItem missionData = new MissionCacheItem(cacheItemMission.Fields);
-
-        ScenarioCacheTable scenarioTable = Cache.LoadByType<ScenarioCacheTable>();
-        CacheItem cacheItemScenario = scenarioTable.GetById(missionData.GetScenarioId());
-        ScenarioCacheItem scenarioData = new ScenarioCacheItem(cacheItemScenario.Fields);
-
-        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
-        BattleCacheItem battleData = new BattleCacheItem(new Dictionary<string, object>());
-        battleData.SetMissionId(missionId);
-        battleData.SetUnits(scenarioData.GetUnits());
-        battleData.SetBuilds(scenarioData.GetBuilds());
-        battleData.SetObstacles(scenarioData.GetObstacles());
-        battleTable.AddOne(battleData);
-        Cache.Save(battleTable);
-
-        SceneLoader.LoadFight(new FightSceneParameters(battleData.GetExternalId()));
+        conductor.Load(this);
     }
 
     public static bool HaveReserve()

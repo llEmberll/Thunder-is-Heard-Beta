@@ -6,6 +6,7 @@ public static class SubsituableUnitProductionsFactory
     public static Dictionary<string, Type> behaviours = new Dictionary<string, Type>()
     {
         { "Base", typeof(BaseSubsituableUnitProductionsBehaviour) },
+        { "OnlyTutorialProductions", typeof(OnlyTutorialProductionsUnitProductionsBehaviour) },
     };
 
     public static ISubsituableUnitProductionsBehaviour GetBehaviourById(string id)

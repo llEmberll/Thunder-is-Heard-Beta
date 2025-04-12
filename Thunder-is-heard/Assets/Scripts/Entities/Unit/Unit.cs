@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,6 +15,8 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
 
     public float _movementSpeed;
 
+    public ISubsituableUnitBehaviour _behaviour;
+
     public override string Type {
 	get
         {
@@ -23,6 +24,13 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
         }
 	}
 
+    public override void Awake()
+    {
+        EventMaster.current.ComponentBehaviourChanged += OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset += OnResetBehaviour;
+
+        base.Awake();
+    }
 
     public void SetSkills(Skill[] skills)
     {
@@ -152,20 +160,17 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
 
     public override void OnFocus()
     {
-        base.OnFocus();
-        stateMachine.currentState.OnUnitMouseEnter(this);
+        _behaviour.OnFocus(this);
     }
 
     public override void OnDefocus()
     {
-        base.OnDefocus();
-        stateMachine.currentState.OnUnitMouseExit(this);
+        _behaviour.OnDefocus(this);
     }
 
     public override void OnClick()
     {
-        base.OnClick();
-        stateMachine.currentState.OnUnitClick(this);
+        _behaviour.OnClick(this);
     }
 
     public static int GetStaffByUnit(Unit unit) // Перенести куда-то
@@ -175,5 +180,22 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
         UnitCacheItem unitCacheItem = new UnitCacheItem(cacheItem.Fields);
         ResourcesData gives = unitCacheItem.GetGives();
         return gives.staff;
+    }
+
+    public void OnSomeComponentChangeBehaviour(string componentName, string behaviourName)
+    {
+        if (componentName != Type) return;
+        ChangeBehaviour(behaviourName);
+    }
+
+    public void OnResetBehaviour()
+    {
+        ChangeBehaviour();
+    }
+
+    public void ChangeBehaviour(string name = "Base")
+    {
+        _behaviour = SubsituableUnitFactory.GetBehaviourById(name);
+        _behaviour.Init(this);
     }
 }

@@ -1,4 +1,5 @@
 ﻿{
+  "name": "PlayerUnit",
   "items": {
     "182f03c4-0acc-464f-bd35-64f63c4d166d": {
       "fields": {
@@ -14,7 +15,21 @@
           }
         ]
       }
+    },
+    "53f31e8c-0e54-41da-82b1-2c946ce11d14": {
+      "fields": {
+        "externalId": "53f31e8c-0e54-41da-82b1-2c946ce11d14",
+        "description": "",
+        "rotation": 180,
+        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "name": "Штурмовики",
+        "position": [
+          {
+            "x": 6,
+            "y": 4
+          }
+        ]
+      }
     }
-  },
-  "name": "PlayerUnit"
+  }
 }

@@ -48,6 +48,7 @@ TagManager:
   - Scenario
   - FightProcessor
   - Stages
+  - FocusController
   layers:
   - Default
   - TransparentFX

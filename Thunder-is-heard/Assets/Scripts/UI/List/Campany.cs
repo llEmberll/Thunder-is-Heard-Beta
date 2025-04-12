@@ -1,51 +1,75 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Campany : ItemList
 {
+    public string ComponentType
+    {
+        get { return "Campany"; }
+    }
+
     public List<MissionItem> items;
     public GameObject missionPrefab;
     public MissionDetalization _missionDetalization;
 
+    public ISubsituableCampanyBehaviour _behaviour;
+
+    public override void Awake()
+    {
+        _missionDetalization.SetConductor(this);
+        base.Awake();
+    }
+
     public override void Start()
     {
         missionPrefab = Resources.Load<GameObject>(Config.resources["UIMissionItemPrefab"]);
-        base.Start();
+
+        ChangeBehaviour();
+
+        InitListeners();
+    }
+
+    public override void InitListeners()
+    {
+        base.InitListeners();
+        EventMaster.current.ComponentBehaviourChanged += OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset += OnResetBehaviour;
+    }
+
+    public override void Toggle()
+    {
+        _behaviour.Toggle(this);
     }
 
     public override void FillContent()
     {
-        items = new List<MissionItem>();
+        _behaviour.FillContent(this);
+    }
 
-        MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
-
-        //TODO фильтровать по доступности миссии
-        foreach (var m in missionTable.Items)
-        {
-            GameObject missionObject = GameObject.Instantiate(missionPrefab);
-            missionObject.transform.SetParent(content, false);
-
-            MissionItem mission = missionObject.GetComponent<MissionItem>();
-
-            MissionCacheItem missionData = new MissionCacheItem(m.Value.Fields);
-            mission.Init(
-                _missionDetalization,
-                missionData.GetExternalId(),
-                missionData.GetName(), 
-                missionData.GetExternalId(), 
-                missionData.GetPassed(),
-                missionData.GetPoseOnMap().ToVector2Int(), 
-                missionData.GetGives(), 
-                missionData.GetDescription()                
-                );
-
-            items.Add(mission);
-        }
+    public void Load(MissionDetalization missionData)
+    {
+        _behaviour.Load(this, missionData);
     }
 
     public override void OnClickOutside()
     {
         
+    }
+
+    public void OnSomeComponentChangeBehaviour(string componentName, string behaviourName)
+    {
+        if (componentName != ComponentType) return;
+        ChangeBehaviour(behaviourName);
+    }
+
+    public void OnResetBehaviour()
+    {
+        ChangeBehaviour();
+    }
+
+    public void ChangeBehaviour(string name = "Base")
+    {
+        _behaviour = SubsituableCampanyFactory.GetBehaviourById(name);
+        _behaviour.Init(this);
     }
 }

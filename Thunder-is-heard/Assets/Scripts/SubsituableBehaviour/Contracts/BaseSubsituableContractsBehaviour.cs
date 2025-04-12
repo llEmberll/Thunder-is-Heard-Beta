@@ -8,9 +8,10 @@ public class BaseSubsituableContractsBehaviour : ISubsituableContractsBehaviour
 
 
 
-    public void Init()
+    public virtual void Init(Contracts conductor)
     {
         resourcesProcessor = GameObject.FindGameObjectWithTag(Tags.resourcesProcessor).GetComponent<ResourcesProcessor>();
+        FillContent(conductor);
     }
 
 
@@ -39,5 +40,35 @@ public class BaseSubsituableContractsBehaviour : ISubsituableContractsBehaviour
             );
         resourcesProcessor.SubstractResources(item.costData);
         resourcesProcessor.Save();
+    }
+
+    public virtual void Toggle(Contracts conductor)
+    {
+        if (conductor.gameObject.activeSelf)
+        {
+            conductor.Hide();
+        }
+        else
+        {
+            conductor.Show();
+        }
+    }
+
+    public virtual void FillContent(Contracts conductor)
+    {
+        conductor.ClearItems();
+        conductor.items = new List<ContractItem>();
+
+        ContractCacheTable contractTable = Cache.LoadByType<ContractCacheTable>();
+        foreach (var keyValuePair in contractTable.Items)
+        {
+            ContractCacheItem contractData = new ContractCacheItem(keyValuePair.Value.Fields);
+            if (contractData.GetType() != conductor._contractType)
+            {
+                continue;
+            }
+
+            conductor.items.Add(conductor.CreateContractItem(contractData));
+        }
     }
 }

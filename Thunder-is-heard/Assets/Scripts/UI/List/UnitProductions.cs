@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class UnitProductions : ItemList
 {
+    public string ComponentType
+    {
+        get { return "UnitProductions"; }
+    }
+
     public List<UnitProductionItem> items;
 
     public string _unitProductionType;
@@ -10,15 +15,23 @@ public class UnitProductions : ItemList
 
     public ISubsituableUnitProductionsBehaviour _behaviour;
 
-    public override void Awake()
-    {
-        ChangeBehaviour();
-        base.Awake();
-    }
 
     public override void Start()
     {   
         InitContent();
+
+        ChangeBehaviour();
+
+        InitListeners();
+
+        Hide();
+    }
+
+    public override void InitListeners()
+    {
+        base.InitListeners();
+        EventMaster.current.ComponentBehaviourChanged += OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset += OnResetBehaviour;
     }
 
     public void Init(string contractType, string sourceObjectId)
@@ -32,22 +45,14 @@ public class UnitProductions : ItemList
         content = GameObject.FindGameObjectWithTag(Tags.unitProductionItems).transform;
     }
 
+    public override void Toggle()
+    {
+        _behaviour.Toggle(this);
+    }
+
     public override void FillContent()
     {
-        ClearItems();
-        items = new List<UnitProductionItem>();
-
-        UnitProductionCacheTable unitProductionTable = Cache.LoadByType<UnitProductionCacheTable>();
-        foreach (var keyValuePair in unitProductionTable.Items)
-        {
-            UnitProductionCacheItem unitProductionData = new UnitProductionCacheItem(keyValuePair.Value.Fields);
-            if (unitProductionData.GetType() != _unitProductionType)
-            {
-                continue;
-            }
-
-            items.Add(CreateUnitProductionItem(unitProductionData));
-        }
+        _behaviour.FillContent(this);
     }
 
     public UnitProductionItem CreateUnitProductionItem(UnitProductionCacheItem unitProductionData)
@@ -92,10 +97,21 @@ public class UnitProductions : ItemList
         return unitProductionComponent;
     }
 
+    public void OnSomeComponentChangeBehaviour(string componentName, string behaviourName)
+    {
+        if (componentName != ComponentType) return;
+        ChangeBehaviour(behaviourName);
+    }
+
+    public void OnResetBehaviour()
+    {
+        ChangeBehaviour();
+    }
+
     public void ChangeBehaviour(string name = "Base")
     {
         _behaviour = SubsituableUnitProductionsFactory.GetBehaviourById(name);
-        _behaviour.Init();
+        _behaviour.Init(this);
     }
 
     public bool IsAvailableToBuy(UnitProductionItem item)
