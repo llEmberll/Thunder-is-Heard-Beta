@@ -14,7 +14,7 @@ public class TutorialController : MonoBehaviour
     private bool _waitingForUpdateStage = false;
 
 
-    private void Awake()
+    public void Start()
     {
         if (_instance != null)
         {
@@ -116,6 +116,10 @@ public class TutorialController : MonoBehaviour
         _currentStage = stage;
         _currentConditionForPass = stage.ConditionsForPass;
 
+        EnableListenerForUpdateStage();
+        _currentStage.OnStart();
+        yield return new WaitUntil(() => !_waitingForUpdateStage);
+
         // Установка фокуса
         if (_currentStage.FocusData != null)
         {
@@ -129,11 +133,7 @@ public class TutorialController : MonoBehaviour
             {
                 EventMaster.current.OnChangeComponentBehaviour(behaviour.Key, behaviour.Value);
             }
-        }
-
-        EnableListenerForUpdateStage();
-        _currentStage.OnStart();
-        yield return new WaitUntil(() => !_waitingForUpdateStage);
+        }   
     }
 
     public void SaveTutorialProgress()
@@ -187,6 +187,11 @@ public class TutorialController : MonoBehaviour
 
     private IEnumerator ProcessStageCompletion()
     {
+        EventMaster.current.OnClearObjectFocus();
+
+        // Восстановление стандартных поведений компонентов
+        EventMaster.current.OnResetComponentsBehaviour();
+
         EnableListenerForUpdateStage();
         _currentStage.OnPass();
         yield return new WaitUntil(() => !_waitingForUpdateStage);
@@ -209,12 +214,6 @@ public class TutorialController : MonoBehaviour
 
     private void CompleteTutorial()
     {
-        // Очистка фокуса
-        EventMaster.current.OnClearObjectFocus();
-
-        // Восстановление стандартных поведений компонентов
-        EventMaster.current.OnResetComponentsBehaviour();
-
         // Сохранение прогресса
         ActiveTutorialCacheTable activeTutorialsTable = Cache.LoadByType<ActiveTutorialCacheTable>();
         activeTutorialsTable.DeleteAll();

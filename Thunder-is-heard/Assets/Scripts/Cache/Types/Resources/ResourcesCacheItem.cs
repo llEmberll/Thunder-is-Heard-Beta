@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using System.Collections;
 using System.Collections.Generic;
 
 
@@ -24,6 +23,16 @@ public class ResourcesCacheItem : CacheItem
     public void SetResources(ResourcesData resources)
     {
         SetField("resources", resources);
+    }
+
+    public string GetBaseName()
+    {
+        return (string?)GetField("baseName");
+    }
+
+    public void SetBaseName(string value)
+    {
+        SetField("baseName", value);
     }
 
     public override CacheItem Clone()

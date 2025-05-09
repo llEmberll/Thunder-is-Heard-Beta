@@ -7,6 +7,7 @@ public static class SubsituableContractsFactory
     {
         { "Base", typeof(BaseSubsituableContractsBehaviour) },
         { "OnlyTutorialContracts", typeof (OnlyTutorialContractContractsBehaviour) },
+        { "Disabled", typeof (DisabledContractsBehaviour) },
     };
 
     public static ISubsituableContractsBehaviour GetBehaviourById(string id)

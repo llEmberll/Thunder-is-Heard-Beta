@@ -11,7 +11,1033 @@ public class BaseMap : Map
 
     public void Start()
     {
+        //CreateTutorialOnBase();
+    }
 
+    public void CreateTutorialOnBase()
+    {
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueForStage1 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РљРѕРјР°РЅРґРёСЂ! РџРѕРєР° Р·Р°С…РІР°С‚С‡РёРєРё РѕСЃС‚Р°РІРёР»Рё РЅР°СЃ РІ РїРѕРєРѕРµ, РЅРµ Р±СѓРґРµРј С‚РµСЂСЏС‚СЊ РІСЂРµРјСЏ Р·СЂСЏ! РќР°С€Сѓ Р±Р°Р·Сѓ РЅРµР»СЊР·СЏ РґР°Р¶Рµ В«Р»Р°РіРµСЂРµРјВ» РЅР°Р·РІР°С‚СЊ. РќСѓР¶РЅРѕ СЌС‚Рѕ РёСЃРїСЂР°РІРёС‚СЊ!"
+                ),
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РќР°С‡РЅС‘Рј СЃ СЃРѕР»РґР°С‚. РћРЅРё РЅР°Рј РѕС‡РµРЅСЊ РїСЂРёРіРѕРґСЏС‚СЃСЏ. РџРѕСЃС‚СЂРѕР№С‚Рµ РѕРґРёРЅ РўСЂРµРЅРёСЂРѕРІРѕС‡РЅС‹Р№ С†РµРЅС‚СЂ"
+                ),
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage1 = new Dictionary<string, object>() { { "tag", Tags.shop} };
+        ConditionData conditionForPassStage1 = new ConditionData(type: "PanelOpened", dataForConditionForPassStage1);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage1 = new FocusData(type: "Button", data: new Dictionary<string, object>() { { "tag", "ToShopButton" } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForBuildTrainingCenter = new Dictionary<string, string>()
+        {
+            { "Shop", "OnlyTrainingCenter" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "Disabled" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" },
+        };
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        string trainingCenterId = "065a4f61-5b0e-450e-b89b-299651f90b4d";
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage2 = new Dictionary<string, object>() { { "targetObjectId", trainingCenterId } };
+        ConditionData conditionForPassStage2 = new ConditionData(type: "ExistObject", dataForConditionForPassStage2);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage2 = new FocusData(type: "UIItem", data: new Dictionary<string, object>() { { "UIType", Shop.ComponentType }, { "coreId", trainingCenterId } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueForStage3 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РћС‚Р»РёС‡РЅРѕ! РўРµРїРµСЂСЊ РѕР±СѓС‡РёС‚Рµ РЅРѕРІРѕР±СЂР°РЅС†РµРІ"
+                ),
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage3 = new Dictionary<string, object>() { { "tag", Tags.unitProductions } };
+        ConditionData conditionForPassStage3 = new ConditionData(type: "PanelOpened", dataForConditionForPassStage3);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage3 = new FocusData(type: "Build", data: new Dictionary<string, object>() { { "coreId", trainingCenterId } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForProductAssaulters = new Dictionary<string, string>()
+        {
+            { "Shop", "Disabled" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "Disabled" },
+            { "UnitProductions", "OnlyTutorialProductions" },
+            { "Obstacle", "Disabled" },
+        };
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage4 = new Dictionary<string, object>() { { "targetUnitProductionId", "f4b60bee-1dda-4377-9fab-5092f48b3e60" } };
+        ConditionData conditionForPassStage4 = new ConditionData(type: "UnitProductionInProcess", dataForConditionForPassStage4);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage4 = new FocusData(type: "UIItem", data: new Dictionary<string, object>() { { "UIType", UnitProductions.ComponentType }, { "unitId", "bd1b7986-cf1a-4d76-8b14-c68bf10f363f" } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage5 = new Dictionary<string, object>() { { "targetUnitProductionId", "f4b60bee-1dda-4377-9fab-5092f48b3e60" } };
+        ConditionData conditionForPassStage5 = new ConditionData(type: "UnitProductionFinished", dataForConditionForPassStage5);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForFinishProductAssaulters = new Dictionary<string, string>()
+        {
+            { "Shop", "Disabled" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "Disabled" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" },
+        };
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueOnPassForStage6 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РќРѕРІР°СЏ СЃРёР»Р°, РєРѕС‚РѕСЂРѕР№ РІСЃРµРіРґР° РЅРµ С…РІР°С‚Р°РµС‚вЂ¦"
+                ),
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        ConditionData conditionForPassStage6 = new ConditionData(type: "AllUnitsCollected", null);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage6 = new FocusData(type: "ProductsNotification", data: new Dictionary<string, object>() { { "type", ProductsNotificationTypes.waitingUnitCollection } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForCollectAssaulters = new Dictionary<string, string>()
+        {
+            { "Shop", "Disabled" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "Disabled" },
+            { "UnitProductions", "OnlyTutorialProductions" },
+            { "Obstacle", "Disabled" }
+        };
+
+        //// пїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueForStage7 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Р Р°Р·РѕР±СЂР°РІС€РёСЃСЊ СЃ СЃРѕР»РґР°С‚Р°РјРё, С‚РµРїРµСЂСЊ РјС‹ РјРѕР¶РµРј РїСЂРёСЃС‚СѓРїРёС‚СЊ Рє РЅР°С€РµР№ СЌРєРѕРЅРѕРјРёРєРµ. РџРѕСЃС‚СЂРѕРёРј РѕС„РёСЃ"
+                ),
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage7 = new Dictionary<string, object>() { { "tag", Tags.shop } };
+        ConditionData conditionForPassStage7 = new ConditionData(type: "PanelOpened", dataForConditionForPassStage7);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage7 = new FocusData(type: "Button", data: new Dictionary<string, object>() { { "tag", "ToShopButton" } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForBuildOffice = new Dictionary<string, string>()
+        {
+            { "Shop", "OnlyOffice" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "Disabled" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" },
+        };
+
+
+        //// пїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        string officeId = "8878498b-a4bc-4dc8-8f39-bc9e987a689f";
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage8 = new Dictionary<string, object>() { { "targetObjectId", officeId } };
+        ConditionData conditionForPassStage8 = new ConditionData(type: "ExistObject", dataForConditionForPassStage8);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage8 = new FocusData(type: "UIItem", data: new Dictionary<string, object>() { { "UIType", Shop.ComponentType }, { "coreId", officeId } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+
+        //// пїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueForStage9 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РҐРѕСЂРѕС€Рѕ. РўРµРїРµСЂСЊ РїРµСЂРµР№РґС‘Рј Рє Р·Р°СЂР°Р±РѕС‚РєСѓ РґРµРЅРµРі!"
+                ),
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage9 = new Dictionary<string, object>() { { "tag", Tags.contracts } };
+        ConditionData conditionForPassStage9 = new ConditionData(type: "PanelOpened", dataForConditionForPassStage9);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage9 = new FocusData(type: "Build", data: new Dictionary<string, object>() { { "coreId", officeId } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForProductsInOffice = new Dictionary<string, string>()
+        {
+            { "Shop", "Disabled" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "OnlyTutorialContracts" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" },
+        };
+
+
+        //// пїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage10 = new Dictionary<string, object>() { { "targetContractId", "897d1863-f964-4809-8fc5-62f8ab4ecd9d" } };
+        ConditionData conditionForPassStage10 = new ConditionData(type: "ContractInProcess", dataForConditionForPassStage10);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage10 = new FocusData(type: "UIItem", data: new Dictionary<string, object>() { { "UIType", Contracts.ComponentType }, { "contractType", InteractionComponentTypes.rubContract } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+
+        //// пїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage11 = new Dictionary<string, object>() { { "targetContractId", "897d1863-f964-4809-8fc5-62f8ab4ecd9d" } };
+        ConditionData conditionForPassStage11 = new ConditionData(type: "ContractFinished", dataForConditionForPassStage11);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForFinishProductInOffice = new Dictionary<string, string>()
+        {
+            { "Shop", "Disabled" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "Disabled" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" },
+        };
+
+
+        //// пїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueOnPassForStage12 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РћС‚Р»РёС‡РЅР°СЏ СЂР°Р±РѕС‚Р°. Р’РµСЂРЅС‘РјСЃСЏ Рє РїРѕСЃС‚СЂРѕР№РєР°РјвЂ¦ Р§С‚Рѕ Сѓ РЅР°СЃ С‚Р°Рј РґР°Р»СЊС€Рµ РїРѕ РїР»Р°РЅСѓ?"
+                ),
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        ConditionData conditionForPassStage12 = new ConditionData(type: "AllResourcesCollected", null);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage12 = new FocusData(type: "ProductsNotification", data: new Dictionary<string, object>() { { "type", ProductsNotificationTypes.waitingResourceCollection } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForCollectRub = new Dictionary<string, string>()
+        {
+            { "Shop", "Disabled" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "OnlyTutorialContracts" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" }
+        };
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅ
+        MediaEventData eventOnStartStage13 = new MediaEventData(audioEventId: "MachinegunQueue", new Bector2Int(4, 3));
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueForStage13 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Р§С‚Рѕ?! РЈР¶Рµ Р°С‚Р°РєСѓСЋС‚?!"
+                ),
+            new Replic(
+                charName: Chars.tankGirl,
+                charSide: Sides.federation,
+                text: "Р‘С‹С‚СЊ РЅРµ РјРѕР¶РµС‚! РљР°Рє С‚Р°Рє Р±С‹СЃС‚СЂРѕ?!"
+                ),
+            new Replic(
+                charName: Chars.scientist,
+                charSide: Sides.empire,
+                text: "Р­Р№! РќРµ СЃС‚СЂРµР»СЏР№С‚Рµ! РЎРІРѕРё!"
+                ),
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Р§С‚Рѕ СЌС‚Рѕ Сѓ РЅРµРіРѕ Р·Р° С„РѕСЂРјР°?"
+                ),
+            new Replic(
+                charName: Chars.tankGirl,
+                charSide: Sides.federation,
+                text: "РџРѕС…РѕР¶Рµ РЅР° С…Р°Р»Р°С‚ РІСЂР°С‡Р° РёР»Рё СѓС‡С‘РЅРѕРіРѕвЂ¦ РџРѕРґС…РѕРґРё СЃ РїРѕРґРЅСЏС‚С‹РјРё СЂСѓРєР°РјРё!"
+                ),
+            new Replic(
+                charName: Chars.scientist,
+                charSide: Sides.empire,
+                text: "РўРѕР»СЊРєРѕ РЅРµ СЃС‚СЂРµР»СЏР№С‚Рµ! РЈР¶Рµ РёРґСѓ!"
+                ),
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Р“СЂР°Р¶РґР°РЅРёРЅ! РРјСЏ, Р¤Р°РјРёР»РёСЏ, РћС‚С‡РµСЃС‚РІРѕ, РњРµСЃС‚Рѕ СЂР°Р±РѕС‚С‹ РёвЂ¦",
+                focus: new Bector2Int(6, 5)
+                ),
+            new Replic(
+                charName: Chars.scientist,
+                charSide: Sides.empire,
+                text: "РЇ РІРµРґСѓС‰РёР№ РёРЅР¶РµРЅРµСЂ-РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃРµРєСЂРµС‚РЅРѕРіРѕ РІРѕРµРЅРЅРѕРіРѕ РїСЂРѕРµРєС‚Р°. РҐРѕС‚СЏ, РЅР°Р·РІР°С‚СЊ РµРіРѕ СЃРµРєСЂРµС‚РЅС‹Рј РЅС‹РЅС‡Рµ СЃР»РѕР¶РЅРѕвЂ¦ Р—РѕРІСѓС‚ РјРµРЅСЏ Р Р°Р№Р°РЅ, Р° С„Р°РјРёР»РёСЋ Рё РѕС‚С‡РµСЃС‚РІРѕ РІР°Рј Р·РЅР°С‚СЊ РЅРµ РїРѕР»РѕР¶РµРЅРѕ. РџСЂРѕСЃС‚РёС‚Рµ С‡С‚Рѕ РїРµСЂРµР±РёР»"
+                ),
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Р Р°Р№Р°РЅвЂ¦ РљР°Р¶РµС‚СЃСЏ СЏ Рѕ РІР°СЃ РіРґРµ-С‚Рѕ СЃР»С‹С€Р°Р»Р°. РџР°СЃРїРѕСЂС‚ РёР»Рё РєР°РєРѕР№-С‚Рѕ РґРѕРєСѓРјРµРЅС‚ Сѓ РІР°СЃ РµСЃС‚СЊ?!"
+                ),
+            new Replic(
+                charName: Chars.scientist,
+                charSide: Sides.empire,
+                text: "РљРѕРЅРµС‡РЅРѕ СЃР»С‹С€Р°Р»Рё! Р’СЃСЏ СЃС‚СЂР°РЅР° СЃР»С‹С€Р°Р»Р° РѕР±Рѕ РјРЅРµ! Р–Р°Р»СЊ, С‡С‚Рѕ СЏ РЅР°СЃС‚РѕР»СЊРєРѕ РёР·РІРµСЃС‚РµРЅ, С‡С‚Рѕ РґР°Р¶Рµ РІСЂР°Р¶РµСЃРєРёР№ РѕС„РёС†РµСЂ РїСЂРѕСЃС‚Рѕ РјРµС‡С‚Р°РµС‚ РјРµРЅСЏ РїРѕР»СѓС‡РёС‚СЊ РІ СЃРІРѕРё СЂСѓРєРёвЂ¦"
+                ),
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РЇ РІСЃС‘ РµС‰С‘ Р¶РґСѓ РїР°СЃРїРѕСЂС‚"
+                ),
+            new Replic(
+                charName: Chars.scientist,
+                charSide: Sides.empire,
+                text: "РЈ РјРµРЅСЏ СЃ СЃРѕР±РѕР№ РЅРёС‡РµРіРѕ РЅРµС‚! РЇ СЃР±РµР¶Р°Р» РёР· РёСЃСЃР»РµРґРѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РєРѕРјРїР»РµРєСЃР°, С‡С‚Рѕ РѕС‚СЃСЋРґР° РІ 10 РєРёР»РѕРјРµС‚СЂР°С…. Р’СЃС‘ РѕСЃС‚Р°Р»РѕСЃСЊ С‚Р°Рј. Р›СѓС‡С€РµРµ С‡С‚Рѕ СЏ РјРѕРіСѓ РІР°Рј РїРѕРєР°Р·Р°С‚СЊ, СЌС‚Рѕ РјРѕР№ Р±РµР№РґР¶РёРє"
+                ),
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РЈР¶Рµ РµРіРѕ СЂР°СЃСЃРјРѕС‚СЂРµР»Р°, РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕ. Р§С‚Рѕ Р¶, РµСЃР»Рё РІС‹ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ СЏРІР»СЏРµС‚РµСЃСЊ С†РµР»СЊСЋ РІСЂР°Р¶РµСЃРєРѕРіРѕ РєРѕРјР°РЅРґРѕРІР°РЅРёСЏ, РЅР°РІРµСЂРЅСЏРєР° РІС‹ РІР»Р°РґРµРµС‚Рµ РєСѓС‡РµР№ РІРѕРµРЅРЅС‹С… С‚Р°Р№РЅ. Р›Р°РґРЅРѕ, РїСЂРёСЋС‚РёРј РІР°СЃ Р·РґРµСЃСЊ РїРѕРєР°. Р”Р°Р»СЊС€Рµ СЂРµС€РёРј"
+                ),
+            new Replic(
+                charName: Chars.scientist,
+                charSide: Sides.empire,
+                text: "РЎР»СѓС€Р°Р№С‚Рµ, СЏ Р±СѓРєРІР°Р»СЊРЅРѕ РЅРµСЃРєРѕР»СЊРєРѕ С‡Р°СЃРѕРІ РЅР°Р·Р°Рґ СЃР±РµР¶Р°Р» РёР· В«877 РСЃСЃР»РµРґРѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РєРѕРјРїР»РµРєСЃР°В»! РўР°Рј РѕС‡РµРЅСЊ РјРЅРѕРіРѕ РІР°Р¶РЅРѕР№ РґРѕРєСѓРјРµРЅС‚Р°С†РёРё, РєРѕС‚РѕСЂСѓСЋ РїСЂРѕС‚РёРІРЅРёРє СѓР¶Рµ РёР·СѓС‡Р°РµС‚. РЇ С…РѕС‚СЊ Рё РіР»Р°РІРЅС‹Р№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ, РЅРѕ РїР°РјСЏС‚СЊ Сѓ РјРµРЅСЏ РЅРµ Р¶РµР»РµР·РЅР°СЏ. РњРЅРµ РЅСѓР¶РЅРѕ С…РѕС‚СЊ РєР°РєРѕРµ-С‚Рѕ Р·РґР°РЅРёРµ, РіРґРµ СЏ Р±С‹ РјРѕРі РІРѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ РїРѕС‚РµСЂСЏРЅРЅС‹Рµ РґР°РЅРЅС‹Рµ, РїРѕРєР° СЏ РЅРµ Р·Р°Р±С‹Р» С‚Рѕ, С‡С‚Рѕ РЅР°С€Рё СѓС‡С‘РЅС‹Рµ РёР·СѓС‡Р°Р»Рё"
+                ),
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Р’С‹ С…РѕС‚РёС‚Рµ С‡С‚РѕР±С‹ РјС‹ РїРѕСЃС‚СЂРѕРёР»Рё РќРР Сѓ СЃРµР±СЏ РЅР° РІРѕРµРЅРЅРѕР№ Р±Р°Р·Рµ? Р’С‹ РІ СЃРІРѕС‘Рј СѓРјРµ?!"
+                ),
+            new Replic(
+                charName: Chars.scientist,
+                charSide: Sides.empire,
+                text: "РРјРµРЅРЅРѕ. РќРµ РїРµСЂРµР¶РёРІР°Р№С‚Рµ, РјРµСЃС‚РЅРѕРµ РќРР РІР°Рј С‚РѕР»СЊРєРѕ РїРѕРјРѕР¶РµС‚. РќР°РїСЂРёРјРµСЂ Р±СЂРѕРЅРµР¶РёР»РµС‚С‹ РєРѕС‚РѕСЂС‹Рµ РЅРѕСЃСЏС‚ РІР°С€Рё СЃРѕР»РґР°С‚С‹, СѓСЃС‚Р°СЂРµР»Рё СѓР¶Рµ РєР°Рє РЅРµСЃРєРѕР»СЊРєРѕ РґРµСЃСЏС‚РєРѕРІ Р»РµС‚ РЅР°Р·Р°Рґ! РњС‹ Р±С‹ РјРѕРіР»Рё СЌС‚Рѕ РёСЃРїСЂР°РІРёС‚СЊ РїСѓС‚С‘Рј СЃРѕРІСЃРµРј РЅРµ С…РёС‚СЂС‹С… РјР°РЅРёРїСѓР»СЏС†РёР№"
+                ),
+            new Replic(
+                charName: Chars.tankGirl,
+                charSide: Sides.federation,
+                text: "Р”СѓРјР°СЋ РІ РµРіРѕ СЃР»РѕРІР°С… РµСЃС‚СЊ СЃРјС‹СЃР». Р’ РєРѕРЅС†Рµ РєРѕРЅС†РѕРІ, РµСЃР»Рё РѕРЅ РЅРµ Р±СѓРґРµС‚ СЂР°Р±РѕС‚Р°С‚СЊ, РјС‹ РІ Р»СЋР±РѕР№ РјРѕРјРµРЅС‚ РјРѕР¶РµРј СЃРЅРµСЃС‚Рё РќРР, РІРµРґСЊ С‚Р°Рє Р Р°Р№Р°РЅ?"
+                ),
+            new Replic(
+                charName: Chars.scientist,
+                charSide: Sides.empire,
+                text: "РҐРµ-С…Рµ. РќРµ РїРµСЂРµР¶РёРІР°Р№С‚Рµ! РќР°СѓРєР° Р»РёС€РЅРµР№ РЅРµ Р±С‹РІР°РµС‚!"
+                ),
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        ConditionData conditionForPassStage13 = new ConditionData(type: "AlwaysTrue", null);
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage14 = new Dictionary<string, object>() { { "tag", Tags.shop } };
+        ConditionData conditionForPassStage14 = new ConditionData(type: "PanelOpened", dataForConditionForPassStage14);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage14 = new FocusData(type: "Button", data: new Dictionary<string, object>() { { "tag", "ToShopButton" } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForBuildLaboratory = new Dictionary<string, string>()
+        {
+            { "Shop", "OnlyLaboratory" }, 
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "Disabled" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" },
+        };
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        string laboratoryId = "f4465aab-c10e-4d7a-a1f7-78d419c50f24";
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage15 = new Dictionary<string, object>() { { "targetObjectId", laboratoryId } };
+        ConditionData conditionForPassStage15 = new ConditionData(type: "ExistObject", dataForConditionForPassStage15);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage15 = new FocusData(type: "UIItem", data: new Dictionary<string, object>() { { "UIType", Shop.ComponentType }, { "coreId", laboratoryId } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueForStage16 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.scientist,
+                charSide: Sides.federation,
+                text: "Р’РѕС‚ СЌС‚Рѕ РґР°! Р’РѕС‚ СЌС‚Рѕ РѕР±РѕСЂСѓРґРѕРІР°РЅРёРµ! Р—Р°С…РѕРґРёС‚Рµ РІ РќРР! РќРµ СЃС‚РµСЃРЅСЏР№С‚РµСЃСЊ"
+                ),
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Р Р°Р№Р°РЅ! РЇ РїРѕРєР° Р·Р°Р±РµСЂСѓ Сѓ С‚РµР±СЏ РєРѕРјР°РЅРґРёСЂР°. РњС‹ СЃ РЅРёРј РµС‰С‘ РЅРµ Р·Р°РєРѕРЅС‡РёР»Рё СЃ Р±Р°Р·РѕР№. РћСЃРІР°РёРІР°Р№СЃСЏ РїРѕРєР°. Р’РµС‡РµСЂРѕРј РїРѕРґСЂРѕР±РЅРµРµ Рѕ СЃРµР±Рµ СЂР°СЃСЃРєР°Р¶РµС€СЊвЂ¦"
+                ),
+            new Replic(
+                charName: Chars.tankGirl,
+                charSide: Sides.federation,
+                text: "Р•СЃР»Рё Р±СѓРґРµС‚ С‡Р°Р№, РїРѕР·РѕРІРёС‚Рµ Рё РјРµРЅСЏ!"
+                ),
+
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        ConditionData conditionForPassStage16 = new ConditionData(type: "AlwaysTrue", null);
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueForStage17 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.tankGirl,
+                charSide: Sides.federation,
+                text: "РљРѕРјР°РЅРґРёСЂ! Р’СЃРµ СЃРѕР»РґР°С‚С‹ Р¶Р°Р»СѓСЋС‚СЃСЏ РЅР° С‚Рѕ С‡С‚Рѕ РІ РѕРґРЅРѕР№ РїР°Р»Р°С‚РєРµ С‚РµСЃРЅРѕРІР°С‚Рѕ. Р—Р°Р№РґСЏ Рє РЅРёРј, СЏ РІ СЌС‚РѕРј СѓР±РµРґРёР»Р°СЃСЊ. РќР°Рј РЅСѓР¶РЅРѕ РµС‰С‘ РѕРґРЅРѕ Р·РґР°РЅРёРµ, РіРґРµ РјС‹ РјРѕРіР»Рё Р±С‹ СЂР°СЃРїРѕР»РѕР¶РёС‚СЊ РІРѕРµРЅРЅРѕСЃР»СѓР¶Р°С‰РёС…"
+                ),
+
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage17 = new Dictionary<string, object>() { { "tag", Tags.shop } };
+        ConditionData conditionForPassStage17 = new ConditionData(type: "PanelOpened", dataForConditionForPassStage17);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage17 = new FocusData(type: "Button", data: new Dictionary<string, object>() { { "tag", "ToShopButton" } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForBuildTent = new Dictionary<string, string>()
+        {
+            { "Shop", "OnlyTent" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "Disabled" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" },
+        };
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueOnPassForStage18 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.tankGirl,
+                charSide: Sides.federation,
+                text: "РЎРѕР»РґР°С‚С‹ РїСЂРѕСЃРёР»Рё РїРµСЂРµРґР°С‚СЊ РІР°Рј Р±Р»Р°РіРѕРґР°СЂРЅРѕСЃС‚СЊ Р·Р° РЅРѕРІСѓСЋ РєР°Р·Р°СЂРјСѓ. РќСѓ Рё РѕС‚ РјРµРЅСЏ РІР°Рј С‚РѕР¶Рµ СЃРїР°СЃРёР±Рѕ"
+                ),
+        };
+
+        string tentId = "ba290dde-968d-46ab-868b-b0f7598a7787";
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage18 = new Dictionary<string, object>() { { "targetObjectId", tentId } };
+        ConditionData conditionForPassStage18 = new ConditionData(type: "ExistObject", dataForConditionForPassStage18);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage18 = new FocusData(type: "UIItem", data: new Dictionary<string, object>() { { "UIType", Shop.ComponentType }, { "coreId", tentId } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+
+
+        //// пїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueForStage19 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Р РµСЃСѓСЂСЃС‹ С‚РѕР¶Рµ РЅР°РґРѕ РіРґРµ-С‚Рѕ С…СЂР°РЅРёС‚СЊ, РїРѕСЌС‚РѕРјСѓ РїСЂРµРґР»Р°РіР°СЋ СЃРѕРѕР±СЂР°Р·РёС‚СЊ СЃРєР»Р°Рґ"
+                ),
+
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage19 = new Dictionary<string, object>() { { "tag", Tags.shop } };
+        ConditionData conditionForPassStage19 = new ConditionData(type: "PanelOpened", dataForConditionForPassStage19);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage19 = new FocusData(type: "Button", data: new Dictionary<string, object>() { { "tag", "ToShopButton" } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForBuildWarehouse = new Dictionary<string, string>()
+        {
+            { "Shop", "OnlyWarehouse" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "Disabled" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" },
+        };
+
+
+
+        //// пїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        string warehouseId = "3d9f0f22-409e-40d7-8511-f4584b583dc0";
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage20 = new Dictionary<string, object>() { { "targetObjectId", warehouseId } };
+        ConditionData conditionForPassStage20 = new ConditionData(type: "ExistObject", dataForConditionForPassStage20);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage20 = new FocusData(type: "UIItem", data: new Dictionary<string, object>() { { "UIType", Shop.ComponentType }, { "coreId", warehouseId } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueForStage21 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РћС‚Р»РёС‡РЅРѕ, С‚РµРїРµСЂСЊ РЅР°Рј РµСЃС‚СЊ РіРґРµ С…СЂР°РЅРёС‚СЊ РЅР°С€Рё СЂРµСЃСѓСЂСЃС‹. РћС… С‚РѕС‡РЅРѕ! РЎРѕРІСЃРµРј Р·Р°Р±С‹Р»Р°вЂ¦ РЈ РЅР°СЃ С‚РѕРїР»РёРІРѕ РІ С€С‚Р°Р±РЅРѕР№ РјР°С€РёРЅРµ РєРѕРЅС‡РёР»РѕСЃСЊ. РќСѓР¶РЅР° РЅРµС„С‚СЏРЅР°СЏ РІС‹С€РєР°. РџРѕСЃС‚СЂРѕР№С‚Рµ РµС‘"
+                ),
+
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage21 = new Dictionary<string, object>() { { "tag", Tags.shop } };
+        ConditionData conditionForPassStage21 = new ConditionData(type: "PanelOpened", dataForConditionForPassStage21);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage21 = new FocusData(type: "Button", data: new Dictionary<string, object>() { { "tag", "ToShopButton" } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForBuildOilStation = new Dictionary<string, string>()
+        {
+            { "Shop", "OnlyOilStation" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "Disabled" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" },
+        };
+
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        string oilStationId = "3d9f0f22-409e-40d7-8511-f4584b583dc0";
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage22 = new Dictionary<string, object>() { { "targetObjectId", oilStationId } };
+        ConditionData conditionForPassStage22 = new ConditionData(type: "ExistObject", dataForConditionForPassStage22);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage22 = new FocusData(type: "UIItem", data: new Dictionary<string, object>() { { "UIType", Shop.ComponentType }, { "coreId", oilStationId } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueForStage23 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РЇ СѓР¶Рµ С‡СѓРІСЃС‚РІСѓСЋ Р·Р°РїР°С… Р±РµРЅР·РёРЅР°. Р”Р°Р№С‚Рµ РїСЂРёРєР°Р· СЂР°Р±РѕС‡РёРј С‡С‚РѕР±С‹ РЅР°РєР°С‡Р°Р»Рё РЅР°Рј РєР°РЅРёСЃС‚СЂСѓ С‚РѕРїР»РёРІР°"
+                ),
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage23 = new Dictionary<string, object>() { { "tag", Tags.contracts } };
+        ConditionData conditionForPassStage23 = new ConditionData(type: "PanelOpened", dataForConditionForPassStage23);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage23 = new FocusData(type: "Build", data: new Dictionary<string, object>() { { "coreId", oilStationId } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForProductsInOilStation = new Dictionary<string, string>()
+        {
+            { "Shop", "Disabled" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "OnlyTutorialContracts" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" },
+        };
+
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage24 = new Dictionary<string, object>() { { "targetContractId", "453aa61c-ed38-449d-84bb-e79f96108bad" } };
+        ConditionData conditionForPassStage24 = new ConditionData(type: "ContractInProcess", dataForConditionForPassStage24);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage24 = new FocusData(type: "UIItem", data: new Dictionary<string, object>() { { "UIType", Contracts.ComponentType }, { "contractType", InteractionComponentTypes.oilContract } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, object> dataForConditionForPassStage25 = new Dictionary<string, object>() { { "targetContractId", "453aa61c-ed38-449d-84bb-e79f96108bad" } };
+        ConditionData conditionForPassStage25 = new ConditionData(type: "ContractFinished", dataForConditionForPassStage25);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForFinishProductInOilStation = new Dictionary<string, string>()
+        {
+            { "Shop", "Disabled" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "Disabled" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" },
+        };
+
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅ)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        ConditionData conditionForPassStage26 = new ConditionData(type: "AllResourcesCollected", null);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage26 = new FocusData(type: "ProductsNotification", data: new Dictionary<string, object>() { { "type", ProductsNotificationTypes.waitingResourceCollection } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForCollectOil = new Dictionary<string, string>()
+        {
+            { "Shop", "Disabled" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "OnlyTutorialContracts" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" }
+        };
+
+
+
+        //// пїЅпїЅпїЅпїЅ
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueForStage27 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РќР°РєРѕРЅРµС†-С‚Рѕ РЅР°С€ РґР¶РёРї Р·Р°РІРµРґС‘С‚СЃСЏвЂ¦"
+                ),
+            new Replic(
+                charName: Chars.tankGirl,
+                charSide: Sides.federation,
+                text: "РќРµ РЅР°РґРµР№СЃСЏ. РўР°Рј РѕРїСЏС‚СЊ С‡С‚Рѕ-С‚Рѕ СЃР»РѕРјР°Р»РѕСЃСЊ. РњР°С€РёРЅР° РІ Р±Р»РёР¶Р°Р№С€РµРµ РІСЂРµРјСЏ С‚РѕС‡РЅРѕ РЅРµ РїРѕРµРґРµС‚"
+                ),
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РћРїСЏС‚СЊ СЌС‚Рѕ РєРѕСЂС‹С‚Рѕ СЃР»РѕРјР°Р»РѕСЃСЊвЂ¦"
+                ),
+            new Replic(
+                charName: Chars.scientist,
+                charSide: Sides.federation,
+                text: "РЇ РІ РїСЂРѕС€Р»РѕРј СЂР°Р±РѕС‚Р°Р» РІ Р°РІС‚РѕРјР°СЃС‚РµСЂСЃРєРѕР№. Р”Р°Р№С‚Рµ-РєР° РІР·РіР»СЏРЅСѓС‚СЊ РЅР° РІР°С€Рµ В«РєРѕСЂС‹С‚РѕВ»"
+                ),
+             new Replic(
+                charName: Chars.tankGirl,
+                charSide: Sides.federation,
+                text: "Рђ РјРѕР¶РµС‚ Рё РІ Р±Р»РёР¶Р°Р№С€РµРµ РІСЂРµРјСЏ РїРѕРµРґРµС‚вЂ¦"
+                ),
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        ConditionData conditionForPassStage27 = new ConditionData(type: "AlwaysTrue", null);
+
+
+
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Replic[] dialogueForStage28 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Р’С‹ С‚РѕР»СЊРєРѕ РїРѕСЃРјРѕС‚СЂРёС‚Рµ РєР°Рє РїСЂРµРѕР±СЂР°Р·РёР»Р°СЃСЊ РЅР°С€Р° Р±Р°Р·Р°! РќР°РєРѕРЅРµС†, РјС‹ РјРѕР¶РµРј РіРѕСЂРґРѕ РЅР°Р·С‹РІР°С‚СЊСЃСЏ Р±Р°Р·РѕР№вЂ¦ РљСЃС‚Р°С‚Рё, РєР°Рє РјС‹ Р±СѓРґРµРј РЅР°Р·С‹РІР°С‚СЊСЃСЏ?"
+                )
+        };
+
+        Replic[] dialogueOnPassForStage28 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "РќРµРїР»РѕС…Рѕ Р·РІСѓС‡РёС‚, РєРѕРјР°РЅРґРёСЂ!"
+                ),
+        };
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        ConditionData conditionForPassStage28 = new ConditionData(type: "BaseNameChanged", null);
+
+        // пїЅпїЅпїЅпїЅпїЅ
+        FocusData focusDataForStage28 = new FocusData(type: "Text", data: new Dictionary<string, object>() { { "tag", "RenameBaseButton" } });
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Dictionary<string, string> behaviourIdByComponentNameForNamingBase = new Dictionary<string, string>()
+        {
+            { "Shop", "Disabled" },
+            { "Inventory", "Disabled" },
+            { "Campany", "Disabled" },
+            { "Contracts", "Disabled" },
+            { "UnitProductions", "Disabled" },
+            { "Obstacle", "Disabled" }
+        };
+
+        TutorialStageData stage28 = new TutorialStageData(
+            stageReplicsOnStart: dialogueForStage28,
+            stageReplicsOnPass: dialogueOnPassForStage28,
+            stageConditionsForPass: conditionForPassStage28,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForNamingBase,
+            stageFocusData: focusDataForStage28,
+            stageStageOnPass: null
+        );
+
+        TutorialStageData stage27 = new TutorialStageData(
+            stageReplicsOnStart: dialogueForStage27,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage27,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForFinishProductInOilStation,
+            stageFocusData: null,
+            stageStageOnPass: stage28
+        );
+
+        TutorialStageData stage26 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage26,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForCollectOil,
+            stageFocusData: focusDataForStage26,
+            stageStageOnPass: stage27
+        );
+
+        TutorialStageData stage25 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage25,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForFinishProductInOilStation,
+            stageFocusData: null,
+            stageStageOnPass: stage26
+        );
+
+        TutorialStageData stage24 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage24,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForProductsInOilStation,
+            stageFocusData: focusDataForStage24,
+            stageStageOnPass: stage25
+        );
+
+        TutorialStageData stage23 = new TutorialStageData(
+            stageReplicsOnStart: dialogueForStage23,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage23,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForProductsInOilStation,
+            stageFocusData: focusDataForStage23,
+            stageStageOnPass: stage24
+        );
+
+        TutorialStageData stage22 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage22,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildOilStation,
+            stageFocusData: focusDataForStage22,
+            stageStageOnPass: stage23
+        );
+
+        TutorialStageData stage21 = new TutorialStageData(
+            stageReplicsOnStart: dialogueForStage21,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage21,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildOilStation,
+            stageFocusData: focusDataForStage21,
+            stageStageOnPass: stage22
+        );
+
+        TutorialStageData stage20 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage20,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildWarehouse,
+            stageFocusData: focusDataForStage20,
+            stageStageOnPass: stage21
+        );
+
+        TutorialStageData stage19 = new TutorialStageData(
+            stageReplicsOnStart: dialogueForStage19,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage19,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildWarehouse,
+            stageFocusData: focusDataForStage19,
+            stageStageOnPass: stage20
+        );
+
+        TutorialStageData stage18 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: dialogueOnPassForStage18,
+            stageConditionsForPass: conditionForPassStage18,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildTent,
+            stageFocusData: focusDataForStage18,
+            stageStageOnPass: stage19
+        );
+
+        TutorialStageData stage17 = new TutorialStageData(
+            stageReplicsOnStart: dialogueForStage17,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage17,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildTent,
+            stageFocusData: focusDataForStage17,
+            stageStageOnPass: stage18
+        );
+
+        TutorialStageData stage16 = new TutorialStageData(
+            stageReplicsOnStart: dialogueForStage16,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage16,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildLaboratory,
+            stageFocusData: null,
+            stageStageOnPass: stage17
+        );
+
+        TutorialStageData stage15 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage15,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildLaboratory,
+            stageFocusData: focusDataForStage15,
+            stageStageOnPass: stage16
+        );
+
+        TutorialStageData stage14 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage14,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildLaboratory,
+            stageFocusData: focusDataForStage14,
+            stageStageOnPass: stage15
+        );
+
+        TutorialStageData stage13 = new TutorialStageData(
+            stageReplicsOnStart: dialogueForStage13,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage13,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForFinishProductInOffice,
+            stageFocusData: null,
+            stageStageOnPass: stage14,
+            stageMediaEventData: eventOnStartStage13
+        );
+
+        TutorialStageData stage12 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: dialogueOnPassForStage12,
+            stageConditionsForPass: conditionForPassStage12,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForCollectRub,
+            stageFocusData: focusDataForStage12,
+            stageStageOnPass: stage13
+        );
+
+        TutorialStageData stage11 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage11,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForFinishProductInOffice,
+            stageFocusData: null,
+            stageStageOnPass: stage12
+        );
+
+        TutorialStageData stage10 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage10,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForProductsInOffice,
+            stageFocusData: focusDataForStage10,
+            stageStageOnPass: stage11
+        );
+
+        TutorialStageData stage9 = new TutorialStageData(
+            stageReplicsOnStart: dialogueForStage9,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage9,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForProductsInOffice,
+            stageFocusData: focusDataForStage9,
+            stageStageOnPass: stage10
+        );
+
+        TutorialStageData stage8 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage8,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildOffice,
+            stageFocusData: focusDataForStage8,
+            stageStageOnPass: stage9
+        );
+
+        TutorialStageData stage7 = new TutorialStageData(
+            stageReplicsOnStart: dialogueForStage7,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage7,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildOffice,
+            stageFocusData: focusDataForStage7,
+            stageStageOnPass: stage8
+        );
+
+        TutorialStageData stage6 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: dialogueOnPassForStage6,
+            stageConditionsForPass: conditionForPassStage6,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForCollectAssaulters,
+            stageFocusData: focusDataForStage6,
+            stageStageOnPass: stage7
+        );
+
+        TutorialStageData stage5 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage5,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForFinishProductAssaulters,
+            stageFocusData: null,
+            stageStageOnPass: stage6
+        );
+
+        TutorialStageData stage4 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage4,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForProductAssaulters,
+            stageFocusData: focusDataForStage4,
+            stageStageOnPass: stage5
+        );
+
+        TutorialStageData stage3 = new TutorialStageData(
+            stageReplicsOnStart: dialogueForStage3,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage3,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForProductAssaulters,
+            stageFocusData: focusDataForStage3,
+            stageStageOnPass: stage4
+        );
+
+        TutorialStageData stage2 = new TutorialStageData(
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage2,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildTrainingCenter,
+            stageFocusData: focusDataForStage2,
+            stageStageOnPass: stage3
+        );
+
+        TutorialStageData stage1 = new TutorialStageData(
+            stageReplicsOnStart: dialogueForStage1,
+            stageReplicsOnPass: null,
+            stageConditionsForPass: conditionForPassStage1,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForBuildTrainingCenter,
+            stageFocusData: focusDataForStage1,
+            stageStageOnPass: stage2
+        );
+
+
+        TutorialCacheTable table = Cache.LoadByType<TutorialCacheTable>();
+
+        TutorialCacheItem tutorialData = new TutorialCacheItem(new Dictionary<string, object>());
+
+        tutorialData.SetExternalId("18434891-a067-4c0f-96ae-3061132c13a6");
+        tutorialData.SetName("РћР±СѓС‡РµРЅРёРµ РЅР° Р±Р°Р·Рµ");
+
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        ConditionData conditionForStartTutorialOnBase = new ConditionData(type: "AlwaysTrue", null);
+        tutorialData.SetConditionForStart(conditionForStartTutorialOnBase);
+
+        tutorialData.SetFirstStage(stage1);
+        table.AddOne(tutorialData);
+        Cache.Save(table);
     }
 
     public void CreateScenarioForEnemyOutpost()
@@ -21,7 +1047,7 @@ public class BaseMap : Map
         ScenarioCacheItem scenarioItem = new ScenarioCacheItem(new Dictionary<string, object>());
 
         scenarioItem.SetExternalId("aa815447-cdcd-464d-8f37-307f35a15ad6");
-        scenarioItem.SetName("Аванпост врага");
+        scenarioItem.SetName("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
 
         string terrainPath = Config.terrainsPath["mission"];
         terrainPath = terrainPath.Replace("{MissionName}", "EnemyOutpost");
@@ -41,7 +1067,7 @@ public class BaseMap : Map
 
         scenarioItem.SetLanding(landingData);
 
-        // Основные юниты
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         UnitOnBattle[] scenarioUnits = new UnitOnBattle[]
         {
             new UnitOnBattle(
@@ -117,9 +1143,9 @@ public class BaseMap : Map
         };
 
         scenarioItem.SetUnits(scenarioUnits);
-        // Основные юниты
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
-        // Основные здания
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         BuildOnBattle[] scenarioBuilds = new BuildOnBattle[]
         {
             new BuildOnBattle(
@@ -170,9 +1196,9 @@ public class BaseMap : Map
         };
 
         scenarioItem.SetBuilds(scenarioBuilds);
-        // Основные здания
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-        // Основные препятствия
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         float obstacleFillChance = 0.8f;
         string obstacleSide = Sides.neutral;
         int[] obstaclePossibleRotations = new int[] { 0, 90, -90, 180 };
@@ -203,22 +1229,22 @@ public class BaseMap : Map
             );
 
         scenarioItem.SetObstacles(scenarioObstacles);
-        // Основные препятствия
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        // Начальный диалог сценария
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] scenarioStartDialogue = new Replic[]
         {
             new Replic(
                 charName: Chars.officer, 
                 charSide: Sides.federation, 
-                text: "Командир! Согласно данным разведки, враг планирует укрепить аванпост неподалёку от нас. Похоже мы их цель. Нужно сорвать их планы и уничтожить плацдарм для наступления на нас! ")
+                text: "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ! ")
         };
         scenarioItem.SetStartDialogue(scenarioStartDialogue);
-        // Начальный диалог сценария
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        // Этапы
-        //// Этап 1
-        ///// ИИ
+        // пїЅпїЅпїЅпїЅпїЅ
+        //// пїЅпїЅпїЅпїЅ 1
+        ///// пїЅпїЅ
         AISettings AISettingsForEmpireSideInStage1 = new AISettings(
             "Frozen",
             Sides.empire,
@@ -231,9 +1257,9 @@ public class BaseMap : Map
             null,
             null
             );
-        ///// ИИ
+        ///// пїЅпїЅ
 
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         string sideForConditionsDataStage1 = Sides.federation;
         RectangleBector2Int rectangleForConditionDataStage1 = new RectangleBector2Int(new Bector2Int(0, 14), new Bector2Int(26, 35));
         Dictionary<string, object> dataForConditionData1Stage1 = new Dictionary<string, object>() { { "side", sideForConditionsDataStage1 }, { "positionRectangle", rectangleForConditionDataStage1 } };
@@ -246,28 +1272,28 @@ public class BaseMap : Map
         ConditionData victoryConditionDataForStage1 = new ConditionData(type: "Or", victoryDataForConditionDataStage1);
 
         ConditionData defeatConditionDataForStage1 = new ConditionData(type: "DestroyAllAllies", null);
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Стартовый диалог
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] startDialogueForStage1 = new Replic[]
         {
             new Replic(
                 charName: Chars.officer, 
                 charSide: Sides.federation, 
-                text: "Взгляните Командир! Позиции укреплены, однако малочисленны. По всей видимости, прошлое нападение исходило отсюда",
+                text: "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ",
                 focus: new Bector2Int(14, 25)
                 ),
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Обратите внимание на количество войск противника. Их немало, но, если мы их разобьём по частям, мы существенно облегчим себе задачу"),
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Снежана правду говорит. Рекомендую слушать её советы. Иногда они могут вам здорово помочь"),
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ"),
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ"),
         };
-        //// Cтартовый диалог
+        //// CпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] failDialogueForStage1 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Мы не справились с задачей, их гарнизоны были слишком сильны! Отступаем!")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!")
         };
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         StageData stage1 = new StageData(
                 stageUnits: null,
                 stageBuilds: null,
@@ -278,10 +1304,10 @@ public class BaseMap : Map
                 stageConditionsForFail: defeatConditionDataForStage1,
                 stageConditionsForPass: victoryConditionDataForStage1
                 );
-        //// Этап 1
+        //// пїЅпїЅпїЅпїЅ 1
 
-        //// Этап 2
-        ///// ИИ
+        //// пїЅпїЅпїЅпїЅ 2
+        ///// пїЅпїЅ
         AISettings AISettingsForEmpireSideInStage2 = new AISettings(
             "Frozen",
             Sides.empire,
@@ -294,9 +1320,9 @@ public class BaseMap : Map
             null,
             null
             );
-        ///// ИИ
+        ///// пїЅпїЅ
 
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         string[] targetObjectIdsToDestroyForStage1 = new string[] { "5168ce99-2415-4eb2-9cc4-530174d7ef4a" };
         Dictionary<string, object> dataForVictoryConditionDataWithDestroyHeadbuildStage2 = new Dictionary<string, object>() { { "targetObjectIds", targetObjectIdsToDestroyForStage1 } };
         ConditionData victoryConditionDataWithDestroyHeadbuildForStage2 = new ConditionData(type: "DestroyObjects", dataForVictoryConditionDataWithDestroyHeadbuildStage2);
@@ -305,21 +1331,21 @@ public class BaseMap : Map
         RectangleBector2Int rectangleForConditionDataStage2 = new RectangleBector2Int(new Bector2Int(0, 19), new Bector2Int(26, 35));
         Dictionary<string, object> dataForConditionDataStage2 = new Dictionary<string, object>() { { "side", sideForConditionDataStage2 }, { "positionRectangle", rectangleForConditionDataStage2 } };
         ConditionData defeatConditionDataForStage2 = new ConditionData(type: "SideReachPosition", dataForConditionDataStage2);
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Стартовый диалог
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] startDialogueForStage2 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Спешите атаковать штаб, пока они не запросили подкрепление!")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!")
         };
-        //// Cтартовый диалог
+        //// CпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] failDialogueForStage2 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Вражеские подкрепления на месте, нужно было уничтожить штаб пока была возможность! Нельзя допустить окружения, отступаем...")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ...")
         };
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         StageData stageOnPassStage1 = new StageData(
                 stageUnits: null,
                 stageBuilds: null,
@@ -330,10 +1356,10 @@ public class BaseMap : Map
                 stageConditionsForFail: defeatConditionDataForStage2,
                 stageConditionsForPass: victoryConditionDataWithDestroyHeadbuildForStage2
                 );
-        //// Этап 2
+        //// пїЅпїЅпїЅпїЅ 2
 
-        //// Этап 2.1
-        ///// ИИ
+        //// пїЅпїЅпїЅпїЅ 2.1
+        ///// пїЅпїЅ
         AISettings AISettingsForEmpireSideInStage21 = new AISettings(
             "Attacking",
             Sides.empire,
@@ -346,42 +1372,42 @@ public class BaseMap : Map
             null,
             null
             );
-        ///// ИИ
+        ///// пїЅпїЅ
 
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         ConditionData victoryConditionDataForStage21 = new ConditionData(type: "DestroyAllEnemies", null);
 
         ConditionData defeatConditionDataForStage21 = new ConditionData(type: "DestroyAllAllies", null);
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Стартовый диалог
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] startDialogueForStage21 = new Replic[]
         {
             new Replic(
                 charName: Chars.officer,
                 charSide: Sides.federation, 
-                text: "Вражеские подкрепления на месте, нужно было уничтожить штаб пока была возможность...",
+                text: "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ...",
                 focus: new Bector2Int(13, 25)
                 )
         };
-        //// Cтартовый диалог
+        //// CпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] failDialogueForStage21 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Мы не справились с задачей, их гарнизоны были слишком сильны! Отступаем!")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!")
         };
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         
-        //// Диалог в случае успеха
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] passDialogueForStage21 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Ура! Победа за нами! Враг разбит, и мы наконец возвращаем территории, пусть и небольшие"),
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Не забудьте трофейные винтовки! С патронами и оружием нынче очень туго")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "пїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"),
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ")
         };
-        //// Диалог в случае успеха
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Юниты
+        //// пїЅпїЅпїЅпїЅпїЅ
         UnitOnBattle[] stage21Units = new UnitOnBattle[]
         {
             new UnitOnBattle(
@@ -456,7 +1482,7 @@ public class BaseMap : Map
                     unitIdOnBattle: "103f5510-8b4a-4755-a56e-ae2fab4d1259"
                     ),
         };
-        //// Юниты
+        //// пїЅпїЅпїЅпїЅпїЅ
         StageData stageOnFailStage2 = new StageData(
                 stageUnits: stage21Units,
                 stageBuilds: null,
@@ -467,10 +1493,10 @@ public class BaseMap : Map
                 stageConditionsForFail: defeatConditionDataForStage21,
                 stageConditionsForPass: victoryConditionDataForStage21
                 );
-        //// Этап 2.1
+        //// пїЅпїЅпїЅпїЅ 2.1
 
-        //// Этап 3
-        ///// ИИ
+        //// пїЅпїЅпїЅпїЅ 3
+        ///// пїЅпїЅ
         AISettings AISettingsForEmpireSideInStage3 = new AISettings(
             "Attacking",
             Sides.empire,
@@ -483,34 +1509,34 @@ public class BaseMap : Map
             null,
             null
             );
-        ///// ИИ
+        ///// пїЅпїЅ
 
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         
         ConditionData victoryConditionDataForStage3 = new ConditionData(type: "DestroyAllEnemies", null);
 
         ConditionData defeatConditionDataForStage3 = new ConditionData(type: "DestroyAllAllies", null);
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Стартовый диалог
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] startDialogueForStage3 = new Replic[]
         {
             new Replic(
                 charName: Chars.fighter, 
                 charSide: Sides.empire, 
-                text: "Вы что, совсем страх потеряли?! Парни, немедленно принести мне головы тех наглецов!", 
+                text: "пїЅпїЅ пїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ?! пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!", 
                 focus: new Bector2Int(11, 17)
                 ),
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Не бойтесь! Неожиданность – наше преимущество! Подведите все войска и используйте перекрёстный огонь против наступающих солдат")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ")
         };
-        //// Cтартовый диалог
+        //// CпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] failDialogueForStage3 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Мы не справились с задачей, их гарнизоны были слишком сильны! Отступаем!")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!")
         };
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         StageData stageOnPassStage2 = new StageData(
                 stageUnits: null,
                 stageBuilds: null,
@@ -521,10 +1547,10 @@ public class BaseMap : Map
                 stageConditionsForFail: defeatConditionDataForStage3,
                 stageConditionsForPass: victoryConditionDataForStage3
                 );
-        //// Этап 3
+        //// пїЅпїЅпїЅпїЅ 3
 
-        //// Этап 4
-        ///// ИИ
+        //// пїЅпїЅпїЅпїЅ 4
+        ///// пїЅпїЅ
         AISettings AISettingsForEmpireSideInStage4 = new AISettings(
             "Attacking",
             Sides.empire,
@@ -537,9 +1563,9 @@ public class BaseMap : Map
             null,
             null
             );
-        ///// ИИ
+        ///// пїЅпїЅ
 
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         string[] targetObjectIdsToDestroy = new string[] { "88b65738-bacc-4455-9adf-d1daee3ebc24" };
         Dictionary<string, object> dataForVictoryConditionDataWithDestroyTentStage4 = new Dictionary<string, object>() { { "targetObjectIds", targetObjectIdsToDestroy } };
         ConditionData victoryConditionDataWithDestroyTentForStage4 = new ConditionData(type: "DestroyObjects", dataForVictoryConditionDataWithDestroyTentStage4);
@@ -548,14 +1574,14 @@ public class BaseMap : Map
         RectangleBector2Int rectangleForConditionDataStage4 = new RectangleBector2Int(new Bector2Int(0, 25), new Bector2Int(26, 35));
         Dictionary<string, object> dataForConditionDataStage4 = new Dictionary<string, object>() { { "side", sideForConditionDataStage4 }, { "positionRectangle", rectangleForConditionDataStage4 } };
         ConditionData defeatConditionDataForStage4 = new ConditionData(type: "SideReachPosition", dataForConditionDataStage4);
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Стартовый диалог
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] startDialogueForStage4 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Прекрасно! Гарнизон разбит! Уничтожьте их казарму и с ними будет покончено!", focus: new Bector2Int(17, 22))
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!", focus: new Bector2Int(17, 22))
         };
-        //// Cтартовый диалог
+        //// CпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
         StageData stageOnPassStage3 = new StageData(
                 stageUnits: null,
@@ -567,10 +1593,10 @@ public class BaseMap : Map
                 stageConditionsForFail: defeatConditionDataForStage4,
                 stageConditionsForPass: victoryConditionDataWithDestroyTentForStage4
                 );
-        //// Этап 4
+        //// пїЅпїЅпїЅпїЅ 4
         
-        //// Этап 4.1
-        ///// ИИ
+        //// пїЅпїЅпїЅпїЅ 4.1
+        ///// пїЅпїЅ
         AISettings AISettingsForEmpireSideInStage41 = new AISettings(
             "Attacking",
             Sides.empire,
@@ -583,42 +1609,42 @@ public class BaseMap : Map
             null,
             null
             );
-        ///// ИИ
+        ///// пїЅпїЅ
 
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         ConditionData victoryConditionDataForStage41 = new ConditionData(type: "DestroyAllEnemies", null);
 
         ConditionData defeatConditionDataForStage41 = new ConditionData(type: "DestroyAllAllies", null);
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Стартовый диалог
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] startDialogueForStage41 = new Replic[]
         {
             new Replic(
                 charName: Chars.officer, 
                 charSide: Sides.federation, 
-                text: "Вражеские подкрепления на месте, нужно было уничтожить казарму и отходить пока была возможность...",
+                text: "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ...",
                 focus: new Bector2Int(13, 25)
                 )
         };
-        //// Cтартовый диалог
+        //// CпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] failDialogueForStage41 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Мы не справились с задачей, их гарнизоны были слишком сильны! Отступаем!")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!")
         };
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Диалог в случае успеха
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] passDialogueForStage41 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Ура! Победа за нами! Враг разбит, и мы наконец возвращаем территории, пусть и небольшие"),
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Не забудьте трофейные винтовки! С патронами и оружием нынче очень туго")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "пїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"),
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ")
         };
-        //// Диалог в случае успеха
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Юниты
+        //// пїЅпїЅпїЅпїЅпїЅ
         UnitOnBattle[] stage41Units = new UnitOnBattle[]
         {
             new UnitOnBattle(
@@ -693,7 +1719,7 @@ public class BaseMap : Map
                     unitIdOnBattle: "103f5510-8b4a-4755-a56e-ae2fab4d1259"
                     ),
         };
-        //// Юниты
+        //// пїЅпїЅпїЅпїЅпїЅ
         StageData stageOnFailStage4 = new StageData(
                 stageUnits: stage41Units,
                 stageBuilds: null,
@@ -704,10 +1730,10 @@ public class BaseMap : Map
                 stageConditionsForFail: defeatConditionDataForStage41,
                 stageConditionsForPass: victoryConditionDataForStage41
                 );
-        //// Этап 4.1
+        //// пїЅпїЅпїЅпїЅ 4.1
 
-        //// Этап 5
-        ///// ИИ
+        //// пїЅпїЅпїЅпїЅ 5
+        ///// пїЅпїЅ
         AISettings AISettingsForEmpireSideInStage5 = new AISettings(
             "Attacking",
             Sides.empire,
@@ -720,29 +1746,29 @@ public class BaseMap : Map
             null,
             null
             );
-        ///// ИИ
+        ///// пїЅпїЅ
 
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         ConditionData victoryConditionDataForStage5 = new ConditionData(type: "DestroyAllEnemies", null);
 
         ConditionData defeatConditionDataForStage5 = new ConditionData(type: "DestroyAllAllies", null);
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Стартовый диалог
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] startDialogueForStage5 = new Replic[]
         {
-            new Replic(charName: Chars.fighter, charSide: Sides.empire, text: "Ну что вы встали, глупцы?! Атакуйте этих никчёмных бездарей!", focus: new Bector2Int(14, 25)),
+            new Replic(charName: Chars.fighter, charSide: Sides.empire, text: "пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ?! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!", focus: new Bector2Int(14, 25)),
         };
-        //// Cтартовый диалог
+        //// CпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] failDialogueForStage5 = new Replic[]
         {
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Их подкрепления испортили нам всю операцию. Отступаем, пока не стало ещё хуже!")
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ!")
         };
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Юниты
+        //// пїЅпїЅпїЅпїЅпїЅ
         UnitOnBattle[] stage5Units = new UnitOnBattle[]
         {
             new UnitOnBattle(
@@ -774,7 +1800,7 @@ public class BaseMap : Map
                     unitIdOnBattle: "bad369e3-4b71-430c-9d04-eb9a7b3fa9e0"
                     ),
         };
-        //// Юниты
+        //// пїЅпїЅпїЅпїЅпїЅ
         StageData stageOnPassStage4 = new StageData(
                 stageUnits: stage5Units,
                 stageBuilds: null,
@@ -785,10 +1811,10 @@ public class BaseMap : Map
                 stageConditionsForFail: defeatConditionDataForStage5,
                 stageConditionsForPass: victoryConditionDataForStage5
                 );
-        //// Этап 5
+        //// пїЅпїЅпїЅпїЅ 5
 
-        //// Этап 6
-        ///// ИИ
+        //// пїЅпїЅпїЅпїЅ 6
+        ///// пїЅпїЅ
         AISettings AISettingsForEmpireSideInStage6 = new AISettings(
             "Attacking",
             Sides.empire,
@@ -801,42 +1827,42 @@ public class BaseMap : Map
             null,
             null
             );
-        ///// ИИ
+        ///// пїЅпїЅ
 
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         ConditionData victoryConditionDataForStage6 = new ConditionData(type: "DestroyAllEnemies", null);
 
         ConditionData defeatConditionDataForStage6 = new ConditionData(type: "DestroyAllAllies", null);
-        //// Условия
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Стартовый диалог
+        //// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] startDialogueForStage6 = new Replic[]
         {
             new Replic(
                 charName: Chars.tankGirl, 
                 charSide: Sides.federation, 
-                text: "Командир, аккуратней! Неизвестно, сколько ещё подкреплений они могут вызвать. Хорошенько подумайте про оборону. Старайтесь не допускать потерь…",
+                text: "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
                 focus: new Bector2Int(13, 25)
                 )
         };
-        //// Cтартовый диалог
+        //// CпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] failDialogueForStage6 = new Replic[]
         {
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Их подкрепления испортили нам всю операцию. Отступаем, пока не стало ещё хуже!")
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ!")
         };
-        //// Диалог в случае провала
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Диалог в случае успеха
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Replic[] passDialogueForStage6 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Ура! Победа за нами! Враг разбит, и мы наконец возвращаем территории, пусть и небольшие"),
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Не забудьте трофейные винтовки! С патронами и оружием нынче очень туго")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "пїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"),
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ")
         };
-        //// Диалог в случае успеха
+        //// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
-        //// Юниты
+        //// пїЅпїЅпїЅпїЅпїЅ
         UnitOnBattle[] stage6Units = new UnitOnBattle[]
         {
             new UnitOnBattle(
@@ -868,7 +1894,7 @@ public class BaseMap : Map
                     unitIdOnBattle: "38e2b5e4-d82f-4c77-9635-34e58fa28dec"
                     ),
         };
-        //// Юниты
+        //// пїЅпїЅпїЅпїЅпїЅ
         StageData stageOnPassStage5 = new StageData(
                 stageUnits: stage6Units,
                 stageBuilds: null,
@@ -879,7 +1905,7 @@ public class BaseMap : Map
                 stageConditionsForFail: defeatConditionDataForStage6,
                 stageConditionsForPass: victoryConditionDataForStage6
                 );
-        //// Этап 6
+        //// пїЅпїЅпїЅпїЅ 6
 
         stage1.stageOnPass = stageOnPassStage1;
         stageOnPassStage1.stageOnPass = stageOnPassStage2;
@@ -888,7 +1914,7 @@ public class BaseMap : Map
         stageOnPassStage3.stageOnPass = stageOnPassStage4;
         stageOnPassStage3.stageOnFail = stageOnFailStage4;
         stageOnPassStage4.stageOnPass = stageOnPassStage5;
-        // Этапы
+        // пїЅпїЅпїЅпїЅпїЅ
 
         scenarioItem.SetStartStage(stage1);
         table.AddOne(scenarioItem);
@@ -1734,7 +2760,7 @@ public class BaseMap : Map
 
         SkillCacheItem moveWithAttack = new SkillCacheItem(new Dictionary<string, object>());
         moveWithAttack.SetExternalId("a60f271d-4aa1-41af-b6d1-c89ed667dad6");
-        moveWithAttack.SetName("Атака в движении");
+        moveWithAttack.SetName("пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
         moveWithAttack.SetRating(0);
         moveWithAttack.SetIconSection("UIAttributes");
         moveWithAttack.SetIconName("move_with_attack");

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -6,8 +5,6 @@ public class MissionItem : Item
 {
     public static string type = "Mission";
     public override string Type { get { return type; } }
-
-    public string _sourceObjectId;
 
     public Vector2Int _position;
     public bool _isPassed = false;
@@ -19,7 +16,6 @@ public class MissionItem : Item
         MissionDetalization missionDetalization,
         string missionId,
         string missionName,
-        string sourceObjectId,
         bool isPassed,
         Vector2Int position,
         ResourcesData missionGives, 
@@ -29,7 +25,6 @@ public class MissionItem : Item
         _detalization = missionDetalization;
 
         _id = missionId; _objName = missionName; _isPassed = isPassed; _itemImage.sprite = _icon;
-        _sourceObjectId = sourceObjectId;
         _position = position;
 
         InitPosition();

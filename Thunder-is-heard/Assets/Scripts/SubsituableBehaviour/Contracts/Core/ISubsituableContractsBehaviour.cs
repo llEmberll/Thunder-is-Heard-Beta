@@ -13,4 +13,8 @@ public interface ISubsituableContractsBehaviour
 
     public void FillContent(Contracts conductor);
 
+
+    public void OnInteractWithIdleComponent(ContractComponent component);
+    public void OnInteractWithWorkingComponent(ContractComponent component);
+    public void OnInteractWithFinishedComponent(ContractComponent component);
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UnitProductions : ItemList
 {
-    public string ComponentType
+    public static string ComponentType
     {
         get { return "UnitProductions"; }
     }
@@ -49,6 +49,23 @@ public class UnitProductions : ItemList
     {
         _behaviour.Toggle(this);
     }
+
+
+    public void Idle(UnitProductionComponent component)
+    {
+        _behaviour.OnInteractWithIdleComponent(component);
+    }
+
+    public void Working(UnitProductionComponent component)
+    {
+        _behaviour.OnInteractWithWorkingComponent(component);
+    }
+
+    public void Finished(UnitProductionComponent component)
+    {
+        _behaviour.OnInteractWithFinishedComponent(component);
+    }
+
 
     public override void FillContent()
     {
@@ -122,5 +139,32 @@ public class UnitProductions : ItemList
     public void OnBuy(UnitProductionItem item)
     {
         _behaviour.OnBuy(item);
+    }
+
+    public UnitProductionItem FindItemById(string id)
+    {
+        foreach (UnitProductionItem i in items)
+        {
+            if (i._id == id) return i;
+        }
+        return null;
+    }
+
+    public UnitProductionItem FindItemByUnitId(string id)
+    {
+        foreach (UnitProductionItem i in items)
+        {
+            if (i._unitId == id) return i;
+        }
+        return null;
+    }
+
+    public UnitProductionItem FindItemByUnitType(string type)
+    {
+        foreach (UnitProductionItem i in items)
+        {
+            if (i._unitProductionType == type) return i;
+        }
+        return null;
     }
 }

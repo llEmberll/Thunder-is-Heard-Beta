@@ -1545,7 +1545,6 @@ MonoBehaviour:
   _count: 0
   _id: 
   _objName: 
-  resourcesProcessor: {fileID: 0}
   coreId: 
   TmpCount: {fileID: 2027330335816403077}
   costData:
@@ -1576,6 +1575,8 @@ MonoBehaviour:
     exp: 0
     maxExp: 0
   gives: {fileID: 7606208007253006937}
+  resourcesProcessor: {fileID: 0}
+  conductor: {fileID: 0}
   health: 0
   damage: 0
   distance: 0

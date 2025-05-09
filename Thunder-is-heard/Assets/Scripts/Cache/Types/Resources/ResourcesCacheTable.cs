@@ -1,6 +1,4 @@
 
-
-
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,8 +32,41 @@ public class ResourcesCacheTable: CacheTable
 
     public void SetResources(ResourcesData resources)
     {
-        ResourcesCacheItem newResourcesData = new ResourcesCacheItem(new Dictionary<string, object>());
+        CacheItem data = Items.First().Value;
+        ResourcesCacheItem newResourcesData = new ResourcesCacheItem(data.Fields);
         newResourcesData.SetResources(resources);
+
+        Items.Clear();
+        AddOne(newResourcesData);
+    }
+
+
+    public string GetBaseName()
+    {
+        CacheItem data = null;
+        if (Items.Count > 0)
+        {
+            data = Items.First().Value;
+        }
+
+        ResourcesCacheItem resources = new ResourcesCacheItem(new Dictionary<string, object>());
+        if (data == null)
+        {
+            resources = new ResourcesCacheItem(new Dictionary<string, object>());
+        }
+        else
+        {
+            resources = new ResourcesCacheItem(data.Fields);
+        }
+
+        return resources.GetBaseName();
+    }
+
+    public void SetBaseName(string value)
+    {
+        CacheItem data = Items.First().Value;
+        ResourcesCacheItem newResourcesData = new ResourcesCacheItem(data.Fields);
+        newResourcesData.SetBaseName(value);
 
         Items.Clear();
         AddOne(newResourcesData);

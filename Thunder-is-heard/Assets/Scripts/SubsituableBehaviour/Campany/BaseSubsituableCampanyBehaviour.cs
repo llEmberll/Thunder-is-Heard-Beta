@@ -47,6 +47,11 @@ public class BaseSubsituableCampanyBehaviour : ISubsituableCampanyBehaviour
         SceneLoader.LoadFight(new FightSceneParameters(battleData.GetExternalId()));
     }
 
+    public virtual void BackToFight(string battleId)
+    {
+        SceneLoader.LoadFight(new FightSceneParameters(battleId));
+    }
+
     public virtual void Toggle(Campany conductor)
     {
         if (conductor.gameObject.activeSelf)
@@ -78,7 +83,6 @@ public class BaseSubsituableCampanyBehaviour : ISubsituableCampanyBehaviour
                 conductor._missionDetalization,
                 missionData.GetExternalId(),
                 missionData.GetName(),
-                missionData.GetExternalId(),
                 missionData.GetPassed(),
                 missionData.GetPoseOnMap().ToVector2Int(),
                 missionData.GetGives(),

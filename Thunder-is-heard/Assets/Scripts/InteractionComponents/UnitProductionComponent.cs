@@ -4,30 +4,18 @@ using UnityEngine;
 
 public class UnitProductionComponent : InteractionComponent
 {
-    public UnitProductions _unitProductionsUI;
+    public UnitProductions _conductor;
 
     public override void Init(string objectOnBaseId, string componentType)
     {
         base.Init(objectOnBaseId, componentType);
 
-        _unitProductionsUI = Resources.FindObjectsOfTypeAll(typeof(UnitProductions)).First().GetComponent<UnitProductions>();
+        _conductor = Resources.FindObjectsOfTypeAll(typeof(UnitProductions)).First().GetComponent<UnitProductions>();
     }
 
     public override void Finished()
     {
-        ProductsNotificationCacheTable productsNotificationCacheTable = Cache.LoadByType<ProductsNotificationCacheTable>();
-        ProductsNotificationCacheItem productsCollectionData = productsNotificationCacheTable.FindBySourceObjectId(id);
-        if (productsCollectionData == null)
-        {
-            throw new System.NotImplementedException("Unit production component waiting for collection, but collectionData not found");
-        }
-
-
-        ObjectProcessor.AddUnitToInventory(productsCollectionData.GetUnitId());
-        ObjectProcessor.DeleteProductsNotificationByItemId(productsCollectionData.GetExternalId());
-        ObjectProcessor.CreateProductsNotification(id, ProductsNotificationTypes.idle);
-        EventMaster.current.OnCollectUnit(productsCollectionData);
-        EventMaster.current.OnChangeObjectOnBaseWorkStatus(id, WorkStatuses.idle);
+        _conductor.Finished(this);
     }
 
     public override void HandleFinishedProcess(ProcessOnBaseCacheItem processCacheItem)
@@ -73,23 +61,21 @@ public class UnitProductionComponent : InteractionComponent
 
     public override void Idle()
     {
-        ToggleUI();
-        _unitProductionsUI.Init(type, id);
+        _conductor.Idle(this);
     }
 
     public override void Working()
     {
-        //Показать оставшееся время выполнения
-        Debug.Log("working...");
+        _conductor.Working(this);
     }
 
     public override void HideUI()
     {
-        _unitProductionsUI.Hide();
+        _conductor.Hide();
     }
 
     public override void ToggleUI()
     {
-        _unitProductionsUI.Toggle();
+        _conductor.Toggle();
     }
 }

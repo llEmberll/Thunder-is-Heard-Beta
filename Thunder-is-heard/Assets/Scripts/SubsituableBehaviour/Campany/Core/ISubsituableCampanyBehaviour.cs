@@ -8,6 +8,8 @@ public interface ISubsituableCampanyBehaviour
 
     public void Load(Campany conductor, MissionDetalization missionData);
 
+    public void BackToFight(string battleId);
+
     public void Toggle(Campany conductor);
 
     public void FillContent(Campany conductor);

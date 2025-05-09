@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class OnlyTutorialProductionsUnitProductionsBehaviour : BaseSubsituableUnitProductionsBehaviour
 {
@@ -26,7 +24,7 @@ public class OnlyTutorialProductionsUnitProductionsBehaviour : BaseSubsituableUn
     {
         UnitProductionCacheItem trainAssaultersUnitProduction = new UnitProductionCacheItem(new Dictionary<string, object>());
         trainAssaultersUnitProduction.SetExternalId("f4b60bee-1dda-4377-9fab-5092f48b3e60");
-        trainAssaultersUnitProduction.SetName("Обучить штурмовиков");
+        trainAssaultersUnitProduction.SetName("Обучить новобранцев");
         trainAssaultersUnitProduction.SetDuration(3);
         ResourcesData cost = new ResourcesData();
         cost.rub = 300;

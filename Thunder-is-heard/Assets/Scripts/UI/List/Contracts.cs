@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Contracts : ItemList
 {
-    public string ComponentType
+    public static string ComponentType
     {
         get { return "Contracts"; }
     }
@@ -55,6 +55,23 @@ public class Contracts : ItemList
     {
         _behaviour.FillContent(this);
     }
+
+
+    public void Idle(ContractComponent component)
+    {
+        _behaviour.OnInteractWithIdleComponent(component);
+    }
+
+    public void Working(ContractComponent component)
+    {
+        _behaviour.OnInteractWithWorkingComponent(component);
+    }
+
+    public void Finished(ContractComponent component)
+    {
+        _behaviour.OnInteractWithFinishedComponent(component);
+    }
+
 
     public ContractItem CreateContractItem(ContractCacheItem contractCacheData)
     {
@@ -111,5 +128,23 @@ public class Contracts : ItemList
     public void OnBuy(ContractItem item)
     {
         _behaviour.OnBuy(item);
+    }
+
+    public ContractItem FindItemById(string id)
+    {
+        foreach (ContractItem i in items)
+        {
+            if (i._id == id) return i;
+        }
+        return null;
+    }
+
+    public ContractItem FindItemByType(string type)
+    {
+        foreach (ContractItem i in items)
+        {
+            if (i.Type == type) return i;
+        }
+        return null;
     }
 }

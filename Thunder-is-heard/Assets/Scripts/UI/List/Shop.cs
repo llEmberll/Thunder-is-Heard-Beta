@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Shop : ItemList
 {
-    public string ComponentType
+    public static string ComponentType
     {
         get { return "Shop"; }
     }
@@ -177,5 +177,23 @@ public class Shop : ItemList
     public void OnBuy(ShopItem item)
     {
         _behaviour.OnBuy(item);
+    }
+
+    public ShopItem FindItemById(string id)
+    {
+        foreach (ShopItem i in items)
+        {
+            if (i._id == id) return i;
+        }
+        return null;
+    }
+
+    public ShopItem FindItemByCoreId(string id)
+    {
+        foreach (ShopItem i in items)
+        {
+            if (i.coreId == id) return i;
+        }
+        return null;
     }
 }

@@ -81,17 +81,19 @@ public class CameraController : MonoBehaviour
         transform.position = new Vector3(point.x - focusOffset , cameraHeight, point.y - focusOffset);
     }
 
-    public void SetSoftFocusOnPoint(Vector2Int point)
+    public void SetSoftFocusOnPoint(Vector2Int point, bool lockCamera)
     {
         Debug.Log("Set focus on " + point);
         focus = point;
         haveFocus = true;
+        _isMovable = !lockCamera;
     }
 
     public void CancelFocus()
     {
         Debug.Log("focus canceled");
         haveFocus = false;
+        _isMovable = true;
     }
 
     public void SoftMoveOnFocus()

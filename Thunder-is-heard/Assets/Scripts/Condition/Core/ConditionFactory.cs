@@ -10,6 +10,37 @@ public static class ConditionFactory
     {
         switch (conditionData.Type)
         {
+            case "AlwaysTrue":
+                return new AlwaysTrueCondition();
+            case "AlwaysFalse":
+                return new AlwaysFalseCondition();
+            case "BaseNameChanged":
+                return new BaseNameChangedCondition();
+            case "ExistObject":
+                string targetObjectIdForExisting = (string)conditionData.Data["targetObjectId"];
+                return new ExistObjectCondition(targetObjectIdForExisting);
+            case "AllUnitsCollected":
+                return new AllUnitsCollectedCondition();
+            case "AllResourcesCollected":
+                return new AllResourcesCollectedCondition();
+            case "ContractInProcess":
+                string targetContractIdInProcess = (string)conditionData.Data["targetContractId"];
+                return new ContractInProcessCondition(targetContractIdInProcess);
+            case "ContractFinished":
+                string targetContractIdForFinished = (string)conditionData.Data["targetContractId"];
+                return new ContractFinishedCondition(targetContractIdForFinished);
+            case "UnitProductionFinished":
+                string targetUnitProductionIdForFinished = (string)conditionData.Data["targetUnitProductionId"];
+                return new UnitProductionFinishedCondition(targetUnitProductionIdForFinished);
+            case "UnitProductionInProcess":
+                string targetUnitProductionIdInProcess = (string)conditionData.Data["targetUnitProductionId"];
+                return new UnitProductionInProcessCondition(targetUnitProductionIdInProcess);
+            case "PanelOpened":
+                string panelTag = (string)conditionData.Data["tag"];
+                return new PanelOpenedCondition(panelTag);
+            case "MissionPassed":
+                string missionNameForPass = (string)conditionData.Data["missionName"];
+                return new MissionPassedCondition(missionNameForPass);
             case "DestroyAllEnemies":
                 return new DestroyAllEnemiesCondition();
             case "DestroyAllAllies":

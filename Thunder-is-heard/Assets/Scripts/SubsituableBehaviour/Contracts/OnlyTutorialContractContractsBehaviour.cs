@@ -28,7 +28,7 @@ public class OnlyTutorialContractContractsBehaviour : BaseSubsituableContractsBe
         tutorialOilContractData.SetName("Канистра с топливом");
         tutorialOilContractData.SetDuration(3);
         ResourcesData tutorialOilContractGives = new ResourcesData();
-        tutorialOilContractGives.oil = 1;
+        tutorialOilContractGives.oil = 5;
         tutorialOilContractData.SetGives(tutorialOilContractGives);
 
         ResourcesData tutorialOilContractCost = new ResourcesData();
@@ -44,7 +44,7 @@ public class OnlyTutorialContractContractsBehaviour : BaseSubsituableContractsBe
         tutorialRubContractData.SetName("Бумажная волокита");
         tutorialRubContractData.SetDuration(3);
         ResourcesData tutorialRubContractGives = new ResourcesData();
-        tutorialRubContractGives.rub = 350;
+        tutorialRubContractGives.rub = 1000;
         tutorialRubContractData.SetGives(tutorialRubContractGives);
 
         ResourcesData tutorialRubContractCost = new ResourcesData();

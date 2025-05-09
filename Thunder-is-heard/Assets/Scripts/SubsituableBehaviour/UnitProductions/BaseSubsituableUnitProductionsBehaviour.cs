@@ -71,4 +71,32 @@ public class BaseSubsituableUnitProductionsBehaviour : ISubsituableUnitProductio
             conductor.items.Add(conductor.CreateUnitProductionItem(unitProductionData));
         }
     }
+
+    public virtual void OnInteractWithIdleComponent(UnitProductionComponent component)
+    {
+        component.ToggleUI();
+        component._conductor.Init(component.type, component.id);
+    }
+
+    public virtual void OnInteractWithWorkingComponent(UnitProductionComponent component)
+    {
+        //Показать оставшееся время выполнения
+        Debug.Log("working...");
+    }
+
+    public virtual void OnInteractWithFinishedComponent(UnitProductionComponent component)
+    {
+        ProductsNotificationCacheTable productsNotificationCacheTable = Cache.LoadByType<ProductsNotificationCacheTable>();
+        ProductsNotificationCacheItem productsCollectionData = productsNotificationCacheTable.FindBySourceObjectId(component.id);
+        if (productsCollectionData == null)
+        {
+            throw new System.NotImplementedException("Unit production component waiting for collection, but collectionData not found");
+        }
+
+        ObjectProcessor.AddUnitToInventory(productsCollectionData.GetUnitId());
+        ObjectProcessor.DeleteProductsNotificationByItemId(productsCollectionData.GetExternalId());
+        ObjectProcessor.CreateProductsNotification(component.id, ProductsNotificationTypes.idle);
+        EventMaster.current.OnCollectUnit(productsCollectionData);
+        EventMaster.current.OnChangeObjectOnBaseWorkStatus(component.id, WorkStatuses.idle);
+    }
 }

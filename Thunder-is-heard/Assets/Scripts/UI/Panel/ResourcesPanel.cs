@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class ResourcesPanel : Panel
 {
+    public TMP_Text baseName;
+
     public TMP_Text rubText;
     public TMP_Text framesText;
 
@@ -23,6 +25,7 @@ public class ResourcesPanel : Panel
     public void Start()
     {
         EventMaster.current.ResourcesChanged += UpdateAll;
+        EventMaster.current.ChangedBaseName += UpdateBaseName;
     }
 
     public void UpdateAll(ResourcesData readings)
@@ -55,6 +58,11 @@ public class ResourcesPanel : Panel
         staffSlider.maxValue = readings.maxStaff;
         staffSlider.value = readings.staff;
         staffText.text = readings.staff.ToString() + "/" + readings.maxStaff.ToString();
+    }
+
+    public void UpdateBaseName(string value)
+    {
+        baseName.text = value;
     }
 
     public Vector2Int FindRangeExpByExp(int exp)

@@ -5,40 +5,19 @@ using Unity.VisualScripting;
 
 public class ContractComponent : InteractionComponent
 {
-    public Contracts _contractsUI;
+    public Contracts _conductor;
 
     public override void Init(string objectOnBaseId, string componentType)
     {
         base.Init(objectOnBaseId, componentType);
 
-        _contractsUI = Resources.FindObjectsOfTypeAll(typeof(Contracts)).First().GetComponent<Contracts>();
+        _conductor = Resources.FindObjectsOfTypeAll(typeof(Contracts)).First().GetComponent<Contracts>();
     }
 
 
     public override void Finished()
     {
-        ProductsNotificationCacheTable productsNotificationCacheTable = Cache.LoadByType<ProductsNotificationCacheTable>();
-        ProductsNotificationCacheItem productsCollectionData = productsNotificationCacheTable.FindBySourceObjectId(id);
-        if (productsCollectionData == null )
-        {
-            throw new System.NotImplementedException("Contract component waiting for collection, but collectionData not found");
-        }
-
-        if (resourceProcessor.IsAvailableToAddResources(productsCollectionData.GetGives()))
-        {
-            resourceProcessor.AddResources(productsCollectionData.GetGives());
-            resourceProcessor.Save();
-            ObjectProcessor.DeleteProductsNotificationByItemId(productsCollectionData.GetExternalId());
-            ObjectProcessor.CreateProductsNotification(id, ProductsNotificationTypes.idle);
-            EventMaster.current.OnCollectProducts(productsCollectionData);
-            EventMaster.current.OnChangeObjectOnBaseWorkStatus(id, WorkStatuses.idle);
-        }
-
-        else
-        {
-            Debug.Log("Сбор невозможен");
-
-        }
+        _conductor.Finished(this);
     }
 
     public override void HandleFinishedProcess(ProcessOnBaseCacheItem processCacheItem)
@@ -78,23 +57,21 @@ public class ContractComponent : InteractionComponent
 
     public override void Idle()
     {
-        ToggleUI();
-        _contractsUI.Init(type, id);
+        _conductor.Idle(this);
     }
 
     public override void Working()
     {
-        //Показать оставшееся время выполнения
-        Debug.Log("working...");
+        _conductor.Working(this);
     }
 
     public override void ToggleUI()
     {
-        _contractsUI.Toggle();
+        _conductor.Toggle();
     }
 
     public override void HideUI()
     {
-        _contractsUI.Hide();
+        _conductor.Hide();
     }
 }

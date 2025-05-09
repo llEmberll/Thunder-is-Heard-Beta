@@ -49,6 +49,19 @@ TagManager:
   - FightProcessor
   - Stages
   - FocusController
+  - ToBuildModeButton
+  - ToMailButton
+  - ToShopButton
+  - ToInventoryButton
+  - ToCampaignButton
+  - ToPVPButton
+  - ToBattlefieldButton
+  - ToReportsButton
+  - Campany
+  - MediaEventController
+  - RenameBaseButton
+  - BaseNameChangeModal
+  - TutorialController
   layers:
   - Default
   - TransparentFX

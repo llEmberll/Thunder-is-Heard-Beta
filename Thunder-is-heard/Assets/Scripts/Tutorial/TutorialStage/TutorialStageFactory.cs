@@ -28,7 +28,8 @@ public static class TutorialStageFactory
             data.focusData,
             replicsOnStart, 
             replicsOnPass, 
-            stageOnPass
+            stageOnPass,
+            data.mediaEventData
             );
         return stage;
     }
@@ -61,6 +62,8 @@ public static class TutorialStageFactory
 
         ConditionData serializedConditionsForPass = ConditionFactory.SerializeCondition(stage.ConditionsForPass);
 
+        MediaEventData mediaEventData = stage.MediaEventData;
+
         return new TutorialStageData(
             stageId: stageId,
             stageReplicsOnStart: replicsOnStart,
@@ -68,7 +71,8 @@ public static class TutorialStageFactory
             stageConditionsForPass: serializedConditionsForPass,
             stageStageOnPass: stageOnPass,
             stageBehaviourIdByComponentName: behaviourIdByComponentName,
-            stageFocusData: focusData
+            stageFocusData: focusData,
+            stageMediaEventData: mediaEventData
             );
     }
 }

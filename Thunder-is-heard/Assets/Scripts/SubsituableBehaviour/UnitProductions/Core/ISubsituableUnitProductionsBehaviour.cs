@@ -12,4 +12,8 @@ public interface ISubsituableUnitProductionsBehaviour
     public void Toggle(UnitProductions conductor);
 
     public void FillContent(UnitProductions conductor);
+
+    public void OnInteractWithIdleComponent(UnitProductionComponent component);
+    public void OnInteractWithWorkingComponent(UnitProductionComponent component);
+    public void OnInteractWithFinishedComponent(UnitProductionComponent component);
 }

@@ -7,6 +7,7 @@ public static class SubsituableUnitProductionsFactory
     {
         { "Base", typeof(BaseSubsituableUnitProductionsBehaviour) },
         { "OnlyTutorialProductions", typeof(OnlyTutorialProductionsUnitProductionsBehaviour) },
+        { "Disabled", typeof(DisabledUnitProductionsBehaviour) },
     };
 
     public static ISubsituableUnitProductionsBehaviour GetBehaviourById(string id)

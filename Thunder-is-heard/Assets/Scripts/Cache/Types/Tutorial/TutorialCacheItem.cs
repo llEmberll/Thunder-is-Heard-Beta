@@ -8,16 +8,6 @@ public class TutorialCacheItem : CacheItem
 {
     public TutorialCacheItem(Dictionary<string, object> objFields) : base(objFields)
     {
-        if (!objFields.ContainsKey("firstStage"))
-        {
-            throw new ArgumentException("Tutorial cannot be empty");
-        }
-
-        if (!objFields.ContainsKey("startDialogue"))
-        {
-            SetStartDialogue(new Replic[] {});
-        }
-
         if (!objFields.ContainsKey("conditionForStart"))
         {
             SetConditionForStart(new ConditionData());
@@ -64,22 +54,6 @@ public class TutorialCacheItem : CacheItem
     public void SetFirstStage(TutorialStageData value)
     {
         SetField("firstStage", value);
-    }
-
-    public Replic[] GetStartDialogue()
-    {
-        object value = GetField("startDialogue");
-        if (value == null)
-        {
-            return new Replic[] {};
-        }
-
-        return JsonConvert.DeserializeObject<Replic[]>(value.ToString());
-    }
-
-    public void SetStartDialogue(Replic[] value)
-    {
-        SetField("startDialogue", value);
     }
 
     public override CacheItem Clone()

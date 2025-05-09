@@ -165,4 +165,22 @@ public class Inventory : ItemList
     {
         _behaviour.OnUse(item);
     }
+
+    public InventoryItem FindItemById(string id)
+    {
+        foreach (InventoryItem i in items)
+        {
+            if (i._id == id) return i;
+        }
+        return null;
+    }
+
+    public InventoryItem FindItemByCoreId(string id)
+    {
+        foreach (InventoryItem i in items)
+        {
+            if (i.coreId == id) return i;
+        }
+        return null;
+    }
 }

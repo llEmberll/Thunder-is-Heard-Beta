@@ -17,7 +17,9 @@ public class TutorialStageData
 
     public Dictionary<string, string> behaviourIdByComponentName;
 
-    public FocusData focusData;
+    public FocusData focusData = null;
+
+    public MediaEventData mediaEventData = null;
 
 
     public TutorialStageData() { }
@@ -27,9 +29,10 @@ public class TutorialStageData
         Replic[] stageReplicsOnPass,
         ConditionData stageConditionsForPass,
         Dictionary<string, string> stageBehaviourIdByComponentName,
-        FocusData stageFocusData,
+        FocusData stageFocusData = null,
         string stageId = "BasicTutorialStage",
-        TutorialStageData stageStageOnPass = null
+        TutorialStageData stageStageOnPass = null,
+        MediaEventData stageMediaEventData = null
         )
     {
         id = stageId;
@@ -39,5 +42,6 @@ public class TutorialStageData
         replicsOnPass = stageReplicsOnPass;
         conditionsForPass = stageConditionsForPass;
         stageOnPass = stageStageOnPass;
+        mediaEventData = stageMediaEventData;
     }
 }

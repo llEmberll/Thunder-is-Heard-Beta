@@ -1,6 +1,7 @@
 
 
 using System.Collections.Generic;
+using UnityEngine;
 
 public interface ITutorialStage
 {
@@ -17,6 +18,9 @@ public interface ITutorialStage
     public Dictionary<string, string> BehaviourIdByComponentName { get; }
     public FocusData FocusData { get; }
 
+    public MediaEventData MediaEventData { get; }
+
+
     public void Init(
         string stageId,
         ICondition conditionsForPass,
@@ -24,7 +28,8 @@ public interface ITutorialStage
         FocusData focusData,
         Replic[] replicsOnStart,
         Replic[] replicsOnPass,
-        ITutorialStage stageOnPass = null
+        ITutorialStage stageOnPass = null,
+        MediaEventData stageMediaEventData = null
         );
     public void SetConditionsForPass(ICondition conditions);
     public void SetReplics(Replic[] replicOnStart, Replic[] replicOnPass, Replic[] replicOnFail);

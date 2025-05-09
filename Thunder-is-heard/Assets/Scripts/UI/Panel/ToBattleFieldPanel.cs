@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class ToBattleFieldPanel : Panel
 {
     public string battleId = null;
+
+    public Campany conductor;
+
 
     public void Start()
     {
@@ -18,6 +18,11 @@ public class ToBattleFieldPanel : Panel
         {
             Hide();
         }
+    }
+
+    public void SetConductor(Campany value)
+    {
+        conductor = value;
     }
 
     public void UpdateBattleInfo()
@@ -46,6 +51,6 @@ public class ToBattleFieldPanel : Panel
 
     public void Load()
     {
-        SceneLoader.LoadFight(new FightSceneParameters(battleId));
+        conductor.BackToFight(battleId);
     }
 }

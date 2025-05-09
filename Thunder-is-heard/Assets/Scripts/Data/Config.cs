@@ -76,6 +76,8 @@ public static class Config
         { "productsCollectionBackgroundIconForbidden", "Textures/Interface/Icons/ProductsCollection/ProductsCollectionBackgroundForbidden" },
 
         { "missionIconsSection", "Textures/Interface/Icons/Campany/MissionIcons" },
+
+        {"audioEvents", "Audio/Events/" },
     };
 
     public static Dictionary<string, string> mapResources = new Dictionary<string, string>

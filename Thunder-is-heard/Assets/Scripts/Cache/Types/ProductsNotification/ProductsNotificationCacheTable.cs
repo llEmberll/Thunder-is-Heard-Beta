@@ -21,4 +21,18 @@ public class ProductsNotificationCacheTable : CacheTable
 
         return null;
     }
+
+    public ProductsNotificationCacheItem FindByType(string type)
+    {
+        foreach (var keyValuePair in this.Items)
+        {
+            ProductsNotificationCacheItem currentItem = new ProductsNotificationCacheItem(keyValuePair.Value.Fields);
+            if (currentItem.GetType() == type)
+            {
+                return currentItem;
+            }
+        }
+
+        return null;
+    }
 }

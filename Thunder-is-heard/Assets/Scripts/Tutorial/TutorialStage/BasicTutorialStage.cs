@@ -40,6 +40,14 @@ public class BasicTutorialStage: ITutorialStage
     public int replicIndex;
 
 
+    public bool isMediaEvent = false;
+
+    public MediaEventData _mediaEventData = null;
+    public MediaEventData MediaEventData { get { return _mediaEventData; } }
+
+    private bool _isStartSequenceComplete = false;
+    private Queue<System.Action> _startSequenceActions;
+
     public virtual void Init(
         string stageId,
         ICondition conditionsForPass,
@@ -47,7 +55,8 @@ public class BasicTutorialStage: ITutorialStage
         FocusData focusData,
         Replic[] replicsOnStart,
         Replic[] replicsOnPass,
-        ITutorialStage stageOnPass = null
+        ITutorialStage stageOnPass = null,
+        MediaEventData stageMediaEventData = null
         )
     {
         _stageId = stageId;
@@ -58,6 +67,8 @@ public class BasicTutorialStage: ITutorialStage
 
         _stageOnPass = stageOnPass;
         SetCustomProperties();
+
+        _mediaEventData = stageMediaEventData;
 
         InitObjectProcessor();
         InitDialogueController();
@@ -93,6 +104,16 @@ public class BasicTutorialStage: ITutorialStage
         EventMaster.current.DialogueEnd -= OnEndDialogue;
     }
 
+    public void EnableEndMediaEventListener()
+    {
+        EventMaster.current.MediaEventEnd += OnEndMediaEvent;
+    }
+
+    public void DisableEndMediaEventListener()
+    {
+        EventMaster.current.MediaEventEnd -= OnEndMediaEvent;
+    }
+
     public virtual void SetConditionsForPass(ICondition conditions)
     {
         _conditionsForPass = conditions;
@@ -106,19 +127,55 @@ public class BasicTutorialStage: ITutorialStage
 
     public virtual void SetCustomProperties()
     {
-
+        _startSequenceActions = new Queue<System.Action>();
     }
 
     public void OnStart()
     {
+        PrepareStartSequence();
+        ProcessNextStartAction();
+    }
+
+    protected virtual void PrepareStartSequence()
+    {
+        _startSequenceActions.Clear();
+        _isStartSequenceComplete = false;
+
+        if (_mediaEventData != null)
+        {
+            _startSequenceActions.Enqueue(() => BeginMediaEvent(_mediaEventData));
+        }
+
         if (ReplicsOnStart != null && ReplicsOnStart.Length > 0)
         {
-            BeginDialogue(ReplicsOnStart);
+            _startSequenceActions.Enqueue(() => BeginDialogue(ReplicsOnStart));
+        }
+    }
+
+    protected void ProcessNextStartAction()
+    {
+        if (_startSequenceActions.Count > 0)
+        {
+            var nextAction = _startSequenceActions.Dequeue();
+            nextAction.Invoke();
         }
         else
         {
-            EventMaster.current.OnUpdateStage();
+            CompleteStartSequence();
         }
+    }
+
+    protected void CompleteStartSequence()
+    {
+        _isStartSequenceComplete = true;
+        EventMaster.current.OnUpdateStage();
+    }
+
+    public void BeginMediaEvent(MediaEventData eventData)
+    {
+        isMediaEvent = true;
+        EventMaster.current.BeginMediaEvent(eventData);
+        EnableEndMediaEventListener();
     }
 
     public void BeginDialogue(Replic[] replics)
@@ -134,7 +191,17 @@ public class BasicTutorialStage: ITutorialStage
         {
             isDialogue = false;
             DisableEndDialogueListener();
-            EventMaster.current.OnUpdateStage();
+            ProcessNextStartAction();
+        }
+    }
+
+    public void OnEndMediaEvent()
+    {
+        if (isMediaEvent)
+        {
+            isMediaEvent = false;
+            DisableEndMediaEventListener();
+            ProcessNextStartAction();
         }
     }
 

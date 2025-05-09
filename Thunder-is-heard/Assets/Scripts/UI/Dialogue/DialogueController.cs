@@ -141,7 +141,7 @@ public class DialogueController : UIElement
         UpdateAmbient();
         if (focus != null)
         {
-            EventMaster.current.FocusCameraOnPosition(focus.ToVector2());
+            EventMaster.current.FocusCameraOnPosition(focus.ToVector2(), false);
         }
     }
 

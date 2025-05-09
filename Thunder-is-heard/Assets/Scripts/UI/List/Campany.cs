@@ -11,12 +11,16 @@ public class Campany : ItemList
     public List<MissionItem> items;
     public GameObject missionPrefab;
     public MissionDetalization _missionDetalization;
+    public ToBattleFieldPanel toBattleFieldPanel;
 
     public ISubsituableCampanyBehaviour _behaviour;
 
     public override void Awake()
     {
         _missionDetalization.SetConductor(this);
+        toBattleFieldPanel = GameObject.FindGameObjectWithTag(Tags.toBattlefieldButton).GetComponent<ToBattleFieldPanel>();
+        toBattleFieldPanel.SetConductor(this);
+
         base.Awake();
     }
 
@@ -27,6 +31,8 @@ public class Campany : ItemList
         ChangeBehaviour();
 
         InitListeners();
+
+        Hide();
     }
 
     public override void InitListeners()
@@ -51,6 +57,11 @@ public class Campany : ItemList
         _behaviour.Load(this, missionData);
     }
 
+    public void BackToFight(string battleId)
+    {
+        _behaviour.BackToFight(battleId);
+    }
+
     public override void OnClickOutside()
     {
         
@@ -71,5 +82,14 @@ public class Campany : ItemList
     {
         _behaviour = SubsituableCampanyFactory.GetBehaviourById(name);
         _behaviour.Init(this);
+    }
+
+    public MissionItem FindItemById(string id)
+    {
+        foreach (MissionItem i in items)
+        {
+            if (i._id == id) return i;
+        }
+        return null;
     }
 }

@@ -8,6 +8,7 @@ using System.Reflection;
 
 public class ResourcesProcessor : MonoBehaviour
 {
+    public ResourcesCacheItem resourcesData;
     public ResourcesData resources;
     public ResourcesPanel resourcesUI;
 
@@ -17,17 +18,34 @@ public class ResourcesProcessor : MonoBehaviour
         resources.Add(LoadResourcesFromObjectsOnBase());
 
         resourcesUI = GameObject.FindGameObjectWithTag("ResourcesPanel").GetComponent<ResourcesPanel>();
-        UpdateUI();
+        UpdateResourcesUI();
     }
 
     public void Start()
     {
+        UpdateBaseNameUI();
         EventMaster.current.BaseObjectsChanged += UpdateResourcesFromBaseObjects;
     }
 
-    public void UpdateUI()
+    public void UpdateResourcesUI()
     {
         resourcesUI.UpdateAll(resources);
+    }
+
+    public static void ChangeBaseName(string value)
+    {
+        ResourcesCacheTable resourcesTable = Cache.LoadByType<ResourcesCacheTable>();
+        resourcesTable.SetBaseName(value);
+        Cache.Save(resourcesTable);
+        EventMaster.current.OnChangeBaseName(value);
+    }
+
+
+    public void UpdateBaseNameUI()
+    {
+        ResourcesCacheTable resourcesTable = Cache.LoadByType<ResourcesCacheTable>();
+        string baseName = resourcesTable.GetBaseName();
+        EventMaster.current.OnChangeBaseName(baseName);
     }
 
     public ResourcesData LoadResourcesFromObjectsOnBase()
@@ -127,7 +145,8 @@ public class ResourcesProcessor : MonoBehaviour
     {
         resources = resources.GetResourcesWithoutLimits();
         resources.Add(LoadResourcesFromObjectsOnBase());
-        UpdateUI();
+        UpdateResourcesUI();
+
     }
 
     public static void UpdateResources(Transform resourcesParent, ResourcesData resourcesData)

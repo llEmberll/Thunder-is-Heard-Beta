@@ -165,6 +165,12 @@ public class EventMaster: MonoBehaviour
         ResourcesChanged?.Invoke(newResources);
     }
 
+    public event Action<string> ChangedBaseName;
+    public void OnChangeBaseName(string value)
+    {
+        ChangedBaseName?.Invoke(value);
+    }
+
     public event Action<Entity> BaseObjectRemoved;
     public void OnRemoveBaseObject(Entity obj)
     {
@@ -285,10 +291,10 @@ public class EventMaster: MonoBehaviour
         UIPanelToggled?.Invoke(isNowActive);
     }
 
-    public event Action<Vector2Int> CameraNeedFocusOnPosition;
-    public void FocusCameraOnPosition(Vector2Int position)
+    public event Action<Vector2Int, bool> CameraNeedFocusOnPosition;
+    public void FocusCameraOnPosition(Vector2Int position, bool lockCamera)
     {
-        CameraNeedFocusOnPosition?.Invoke(position);
+        CameraNeedFocusOnPosition?.Invoke(position, lockCamera);
     }
 
     public event Action CameraFocusCanceled;
@@ -368,6 +374,18 @@ public class EventMaster: MonoBehaviour
     public void OnPassReplic()
     {
         ReplicPassed?.Invoke();
+    }
+
+    public event Action<MediaEventData> BegunMediaEvent;
+    public void BeginMediaEvent(MediaEventData eventData)
+    {
+        BegunMediaEvent?.Invoke(eventData);
+    }
+
+    public event Action MediaEventEnd;
+    public void OnEndMediaEvent()
+    {
+        MediaEventEnd?.Invoke();
     }
 
     public event Action StageUpdated;

@@ -1,7 +1,11 @@
 
 
+using Palmmedia.ReportGenerator.Core.Reporting.Builders.Rendering;
+
 public static class Tags
 {
+    public static string mainCamera = "MainCamera";
+
     public static string map = "Map";
 
     public static string federation = "Federation";
@@ -12,6 +16,18 @@ public static class Tags
     public static string shop = "Shop";
     public static string contracts = "Contracts";
     public static string unitProductions = "UnitProductions";
+    public static string campany = "Campany";
+
+    public static string toInventoryButton = "ToInventoryButton";
+    public static string toShopButton = "ToShopButton";
+    public static string toCampaignButton = "ToCampaignButton";
+    public static string toBuildModeButton = "ToBuildModeButton";
+    public static string toMailButton = "ToMailButton";
+    public static string toPVPButton = "ToPVPButton";
+    public static string toBattlefieldButton = "ToBattlefieldButton";
+    public static string toReportsButton = "ToReportsButton";
+
+    public static string renameBaseButton = "RenameBaseButton";
 
     public static string mission = "Mission";
     public static string inventoryItems = "InventoryItems";
@@ -38,4 +54,6 @@ public static class Tags
     public static string scenario = "Scenario";
     public static string turnController = "TurnController";
     public static string dialogueController = "DialogueController";
+    public static string focusController = "FocusController";
+    public static string tutorialController = "TutorialController";
 }
