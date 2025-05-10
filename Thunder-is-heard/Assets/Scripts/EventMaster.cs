@@ -303,6 +303,12 @@ public class EventMaster: MonoBehaviour
         CameraFocusCanceled?.Invoke();
     }
 
+    public event Action<bool> CameraMovePermitToggled;
+    public void ToggleCameraMovePermit(bool lockCamera)
+    {
+        CameraMovePermitToggled?.Invoke(lockCamera);
+    }
+
     public event Action<LandableUnit> LandableUnitFocused;
     public void OnLandableUnitFocus(LandableUnit unit)
     {

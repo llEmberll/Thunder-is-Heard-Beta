@@ -8,7 +8,6 @@ using System.Reflection;
 
 public class ResourcesProcessor : MonoBehaviour
 {
-    public ResourcesCacheItem resourcesData;
     public ResourcesData resources;
     public ResourcesPanel resourcesUI;
 

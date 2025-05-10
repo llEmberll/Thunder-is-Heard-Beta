@@ -1,6 +1,8 @@
 
 public class ContractFinishedCondition: BasicCondition
 {
+    public bool firstCheck = true;
+
     public string _targetContractId;
     public bool finished = false;
 
@@ -8,6 +10,11 @@ public class ContractFinishedCondition: BasicCondition
     public ContractFinishedCondition(string targetContractId) 
     {
         _targetContractId = targetContractId;
+    }
+
+    public void FirstComplyCheck()
+    {
+        firstCheck = false;
 
         finished = IsTargetContractFinish();
 
@@ -46,6 +53,11 @@ public class ContractFinishedCondition: BasicCondition
 
     public override bool IsComply()
     {
+        if (firstCheck)
+        {
+            FirstComplyCheck();
+        }
+
         return finished;
     }
 }

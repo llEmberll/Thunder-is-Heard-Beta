@@ -32,6 +32,11 @@ public class CameraController : MonoBehaviour
 
     public Map map;
 
+    public void Awake()
+    {
+        EnableListeners();
+    }
+
     private void Start()
     {
         focusOffset = cameraHeight * 0.7f;
@@ -48,12 +53,11 @@ public class CameraController : MonoBehaviour
 		screenWidth = Screen.width;
         screenHeight = Screen.height;
         SetAspectRatio();
-
-        EnableListeners();
     }
 
     public void EnableListeners()
     {
+        EventMaster.current.CameraMovePermitToggled += SetIsMovable;
         EventMaster.current.UIPanelToggled += SetIsMovable;
         EventMaster.current.CameraNeedFocusOnPosition += SetSoftFocusOnPoint;
         EventMaster.current.CameraFocusCanceled += CancelFocus;
@@ -61,6 +65,7 @@ public class CameraController : MonoBehaviour
 
     public void DisableListeners()
     {
+        EventMaster.current.CameraMovePermitToggled -= SetIsMovable;
         EventMaster.current.UIPanelToggled -= SetIsMovable;
         EventMaster.current.CameraNeedFocusOnPosition -= SetSoftFocusOnPoint;
         EventMaster.current.CameraFocusCanceled -= CancelFocus;
@@ -68,7 +73,11 @@ public class CameraController : MonoBehaviour
 
     public void SetIsMovable(bool isMovementForbidden)
     {
+        Debug.Log("set is movable camera. isMovementForbidden = "+ isMovementForbidden);
+
         _isMovable = !isMovementForbidden;
+
+        Debug.Log("Can move = " +  _isMovable);
     }
 
     public void SetAspectRatio()

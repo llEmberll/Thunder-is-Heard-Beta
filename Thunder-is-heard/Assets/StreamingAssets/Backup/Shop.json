@@ -1,0 +1,77 @@
+﻿{
+  "name": "Shop",
+  "items": {
+    "17a0b5c7-8fb1-4f6f-958a-16cdda359b61": {
+      "fields": {
+        "coreId": "4b8a1805-3af8-4144-8bdb-62c93852b443",
+        "type": "Build",
+        "count": 1,
+        "externalId": "17a0b5c7-8fb1-4f6f-958a-16cdda359b61",
+        "description": ""
+      }
+    },
+    "990e22a0-8013-40a3-854e-a9df9de2f5ad": {
+      "fields": {
+        "coreId": "64a4568c-bfaf-408e-9537-8e489ccaca56",
+        "type": "Build",
+        "count": 1,
+        "externalId": "990e22a0-8013-40a3-854e-a9df9de2f5ad",
+        "description": ""
+      }
+    },
+    "043cb2aa-5b7c-49d5-afe0-db36e37170c5": {
+      "fields": {
+        "coreId": "7dfc9c80-ddac-45e9-bcdf-61166e068cad",
+        "type": "Build",
+        "count": 1,
+        "externalId": "043cb2aa-5b7c-49d5-afe0-db36e37170c5",
+        "description": ""
+      }
+    },
+    "99a932b7-f179-4087-9803-53dd41d59455": {
+      "fields": {
+        "coreId": "8878498b-a4bc-4dc8-8f39-bc9e987a689f",
+        "type": "Build",
+        "count": 1,
+        "externalId": "99a932b7-f179-4087-9803-53dd41d59455",
+        "description": ""
+      }
+    },
+    "fa913483-5e42-4148-9ced-da32fd9f45f6": {
+      "fields": {
+        "coreId": "ba290dde-968d-46ab-868b-b0f7598a7787",
+        "type": "Build",
+        "count": 1,
+        "externalId": "fa913483-5e42-4148-9ced-da32fd9f45f6",
+        "description": ""
+      }
+    },
+    "87d5676a-9026-4b5a-b043-de8a1314fa8f": {
+      "fields": {
+        "coreId": "f4465aab-c10e-4d7a-a1f7-78d419c50f24",
+        "type": "Build",
+        "count": 1,
+        "externalId": "87d5676a-9026-4b5a-b043-de8a1314fa8f",
+        "description": ""
+      }
+    },
+    "ae563172-3f86-40a2-9d33-64e281adf808": {
+      "fields": {
+        "coreId": "3d9f0f22-409e-40d7-8511-f4584b583dc0",
+        "type": "Build",
+        "count": 1,
+        "externalId": "ae563172-3f86-40a2-9d33-64e281adf808",
+        "description": ""
+      }
+    },
+    "55ec7f7d-a8bc-4d22-9884-0187affde0c8": {
+      "fields": {
+        "coreId": "ab0f64f0-5c33-4cbe-8cd1-79934d0d1741",
+        "type": "Unit",
+        "count": 2,
+        "externalId": "55ec7f7d-a8bc-4d22-9884-0187affde0c8",
+        "description": ""
+      }
+    }
+  }
+}

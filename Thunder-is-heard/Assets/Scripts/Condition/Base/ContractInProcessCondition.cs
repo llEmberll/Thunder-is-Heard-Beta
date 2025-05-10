@@ -1,6 +1,8 @@
 
 public class ContractInProcessCondition: BasicCondition
 {
+    public bool firstCheck = true;
+
     public string _targetContractId;
     public bool process = false;
 
@@ -8,6 +10,11 @@ public class ContractInProcessCondition: BasicCondition
     public ContractInProcessCondition(string targetContractId) 
     {
         _targetContractId = targetContractId;
+    }
+
+    public void FirstComplyCheck()
+    {
+        firstCheck = false;
 
         process = IsTargetContractInProcess();
 
@@ -46,6 +53,11 @@ public class ContractInProcessCondition: BasicCondition
 
     public override bool IsComply()
     {
+        if (firstCheck)
+        {
+            FirstComplyCheck();
+        }
+
         return process;
     }
 }

@@ -8,10 +8,9 @@ public abstract class ExposableShopItem : ShopItem
 
     public TMP_Text TmpHealth, TmpDamage, TmpDistance;
 
-    public virtual void Init(string objectId, string objectName, ResourcesData objectCost, ResourcesData objectGives, int objectHealth, int objectDamage, int objectDistance, int objectCount, string objectDescription = "", Sprite objectIcon = null)
+    public virtual void Init(string objectId, string objectCoreId, string objectName, ResourcesData objectCost, ResourcesData objectGives, int objectHealth, int objectDamage, int objectDistance, int objectCount, string objectDescription = "", Sprite objectIcon = null)
     {
-        _id = objectId; _objName = objectName; _icon = objectIcon; _itemImage.sprite = _icon;
-        InitCoreId();
+        _id = objectId; coreId = objectCoreId; _objName = objectName; _icon = objectIcon; _itemImage.sprite = _icon;
 
         costData = objectCost;
         givesData = objectGives;

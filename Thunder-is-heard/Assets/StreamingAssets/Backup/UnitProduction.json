@@ -1,0 +1,187 @@
+﻿{
+  "name": "UnitProduction",
+  "items": {
+    "7e940ae4-6d78-40a8-962b-0f1c154cf20d": {
+      "fields": {
+        "externalId": "7e940ae4-6d78-40a8-962b-0f1c154cf20d",
+        "description": "",
+        "type": "Infantry",
+        "cost": {
+          "rub": 300,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "duration": 50,
+        "iconSection": "Textures/Interface/Cards/Units/Base",
+        "name": "Тренировать штурмовиков",
+        "iconName": "assaulters"
+      }
+    },
+    "51112095-826c-4436-91e8-5684dc94ca84": {
+      "fields": {
+        "externalId": "51112095-826c-4436-91e8-5684dc94ca84",
+        "description": "",
+        "type": "Vehicle",
+        "cost": {
+          "rub": 1600,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 1,
+          "maxOil": 0,
+          "steel": 2,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
+        "duration": 280,
+        "iconSection": "UIUnitCards",
+        "name": "Произвести боевой джип",
+        "iconName": "vortex"
+      }
+    },
+    "c3f0b39a-7a55-4673-afc6-8352d5c4025c": {
+      "fields": {
+        "externalId": "c3f0b39a-7a55-4673-afc6-8352d5c4025c",
+        "description": "",
+        "type": "Vehicle",
+        "cost": {
+          "rub": 1200,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 1,
+          "maxOil": 0,
+          "steel": 3,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "1a82fa0c-1eb3-4e4d-bc63-43213b1bed28",
+        "duration": 200,
+        "iconSection": "UIUnitCards",
+        "name": "Произвести бтр",
+        "iconName": "beaver"
+      }
+    },
+    "957bb263-524a-4460-8375-234b86055d7c": {
+      "fields": {
+        "externalId": "957bb263-524a-4460-8375-234b86055d7c",
+        "description": "",
+        "type": "Vehicle",
+        "cost": {
+          "rub": 2000,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 2,
+          "maxOil": 0,
+          "steel": 4,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "035655f8-a347-4057-87cc-83385fa20660",
+        "duration": 360,
+        "iconSection": "UIUnitCards",
+        "name": "Произвести БМП",
+        "iconName": "osoka"
+      }
+    },
+    "c2bfc6ac-66c0-4322-a861-6c5420975b92": {
+      "fields": {
+        "externalId": "c2bfc6ac-66c0-4322-a861-6c5420975b92",
+        "description": "",
+        "type": "Vehicle",
+        "cost": {
+          "rub": 3000,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 4,
+          "maxOil": 0,
+          "steel": 8,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "c87ab088-db0b-4813-94da-929939248d76",
+        "duration": 600,
+        "iconSection": "UIUnitCards",
+        "name": "Произвести танк'",
+        "iconName": "obt"
+      }
+    },
+    "4265fe0d-845c-4d6e-9fdf-ad29abc0c374": {
+      "fields": {
+        "externalId": "4265fe0d-845c-4d6e-9fdf-ad29abc0c374",
+        "description": "",
+        "type": "Infantry",
+        "cost": {
+          "rub": 450,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "1db672c3-4207-4629-a1ee-ca054c83ba7c",
+        "duration": 60,
+        "iconSection": "Textures/Interface/Cards/Units/Base",
+        "name": "Тренировать разведку",
+        "iconName": "scout"
+      }
+    },
+    "3551681b-1f08-4937-96a8-d86ac6259bf0": {
+      "fields": {
+        "externalId": "3551681b-1f08-4937-96a8-d86ac6259bf0",
+        "description": "",
+        "type": "Infantry",
+        "cost": {
+          "rub": 550,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "91207015-36e5-4bf7-b16e-628e67935609",
+        "duration": 90,
+        "iconSection": "Textures/Interface/Cards/Units/Base",
+        "name": "Тренировать снайпера",
+        "iconName": "sniper"
+      }
+    }
+  }
+}

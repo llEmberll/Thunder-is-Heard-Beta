@@ -1,0 +1,109 @@
+﻿{
+  "name": "ProductsNotification",
+  "items": {
+    "8a0d0f80-ca85-496b-a725-e8d14f39c929": {
+      "fields": {
+        "externalId": "8a0d0f80-ca85-496b-a725-e8d14f39c929",
+        "description": "",
+        "sourceObjectId": "7b1b8938-8902-4344-9432-2e17b18ca83b",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "20e2ea05-1f5a-4f53-8614-ae748cf62629": {
+      "fields": {
+        "externalId": "20e2ea05-1f5a-4f53-8614-ae748cf62629",
+        "description": "",
+        "sourceObjectId": "86ec03bc-2969-4cf4-92ef-33f669df300c",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "ef4d9d0f-e56e-4977-a68a-735c396d11c8": {
+      "fields": {
+        "externalId": "ef4d9d0f-e56e-4977-a68a-735c396d11c8",
+        "description": "",
+        "sourceObjectId": "315f6df1-e6cc-4216-8659-d96d61a9584e",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "5210d8ad-d3cc-47a7-a427-81989673dfba": {
+      "fields": {
+        "externalId": "5210d8ad-d3cc-47a7-a427-81989673dfba",
+        "description": "",
+        "sourceObjectId": "c83180db-f3ca-4889-9151-5ea1eb7b22ef",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    }
+  }
+}

@@ -468,26 +468,17 @@ public class FocusController : MonoBehaviour
 
     public void ProcessImageTarget()
     {
+        Debug.Log("Image target processing");
+
         if (_targetImage == null) return;
 
-        // ����������� �������� �������
         _blinkProgress += Time.deltaTime / BLINK_DURATION;
-        _blinkProgress %= 1f; // �������� �������� ����� ���������� �����
+        _blinkProgress %= 1f;
 
-        // ������������ ����� ������������ � �������������� ������� ������������
-        float originalAlpha = _originalImageTransparent / 255f;
-        float targetAlpha = Mathf.Clamp01((_originalImageTransparent - _current_ChangeFromOriginalColorLevel) / 255f);
+        float minAlpha = _minImageTransparent / 255f;
+        float maxAlpha = _maxImageTransparent / 255f;
+        float newAlpha = Mathf.Lerp(minAlpha, maxAlpha, Mathf.PingPong(_blinkProgress, 1f));
 
-        float newAlpha = Mathf.Lerp(
-            originalAlpha,
-            targetAlpha,
-            Mathf.PingPong(_blinkProgress, 1f) // PingPong ������������ ����������� ��������
-        );
-
-        // ������������ �������� ����� �������
-        newAlpha = Mathf.Clamp(newAlpha, _minImageTransparent / 255f, _maxImageTransparent / 255f);
-
-        // ��������� ����� ������������
         _targetImage.color = new Color(
             _targetImage.color.r,
             _targetImage.color.g,

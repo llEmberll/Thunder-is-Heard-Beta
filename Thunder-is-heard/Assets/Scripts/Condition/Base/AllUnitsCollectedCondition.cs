@@ -1,11 +1,19 @@
 
 public class AllUnitsCollectedCondition : BasicCondition
 {
+    public bool firstCheck = true;
+
     public bool collected = false;
 
 
     public AllUnitsCollectedCondition()
     {
+    }
+
+    public void FirstComplyCheck()
+    {
+        firstCheck = false;
+
         collected = IsAllUnitsCollected();
 
         if (!collected)
@@ -49,6 +57,11 @@ public class AllUnitsCollectedCondition : BasicCondition
 
     public override bool IsComply()
     {
+        if (firstCheck)
+        {
+            FirstComplyCheck();
+        }
+
         return collected;
     }
 }

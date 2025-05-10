@@ -83,12 +83,5 @@ public abstract class ShopItem : Item
 
         UpdateCount(_count - number);
     }
-
-    public void InitCoreId()
-    {
-        ShopCacheTable shop = Cache.LoadByType<ShopCacheTable>();
-        ShopCacheItem shopItem = new ShopCacheItem(shop.GetById(_id).Fields);
-        coreId = shopItem.GetCoreId();
-    }
 }
 

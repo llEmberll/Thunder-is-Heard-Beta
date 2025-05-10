@@ -1,0 +1,20 @@
+﻿{
+  "name": "Skill",
+  "items": {
+    "a60f271d-4aa1-41af-b6d1-c89ed667dad6": {
+      "fields": {
+        "externalId": "a60f271d-4aa1-41af-b6d1-c89ed667dad6",
+        "description": "",
+        "iconSection": "UIAttributes",
+        "iconName": "move_with_attack",
+        "conditionsForUse": [],
+        "cooldown": 0,
+        "targetType": "",
+        "targetUnitType": "",
+        "targetUnitDoctrine": "",
+        "rating": 0.0,
+        "name": "Атака в движении"
+      }
+    }
+  }
+}

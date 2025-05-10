@@ -1,6 +1,8 @@
 
 public class UnitProductionInProcessCondition: BasicCondition
 {
+    public bool firstCheck = true;
+
     public string _targetUnitProductionId;
     public bool process = false;
 
@@ -8,6 +10,11 @@ public class UnitProductionInProcessCondition: BasicCondition
     public UnitProductionInProcessCondition(string targetUnitProductionId) 
     {
         _targetUnitProductionId = targetUnitProductionId;
+    }
+
+    public void FirstComplyCheck()
+    {
+        firstCheck = false;
 
         process = IsTargetUnitProductionInProcess();
 
@@ -46,6 +53,11 @@ public class UnitProductionInProcessCondition: BasicCondition
 
     public override bool IsComply()
     {
+        if (firstCheck)
+        {
+            FirstComplyCheck();
+        }
+
         return process;
     }
 }

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PanelOpenedCondition : BasicCondition
 {
+    public bool firstCheck = true;
+
     public string _tag;
     public bool opened = false;
 
@@ -9,6 +11,11 @@ public class PanelOpenedCondition : BasicCondition
     public PanelOpenedCondition(string tag)
     {
         _tag = tag;
+    }
+
+    public void FirstComplyCheck()
+    {
+        firstCheck = false;
 
         opened = IsPanelOpened();
         EnableListeners();
@@ -39,6 +46,11 @@ public class PanelOpenedCondition : BasicCondition
 
     public override bool IsComply()
     {
+        if (firstCheck)
+        {
+            FirstComplyCheck();
+        }
+
         return opened;
     }
 }

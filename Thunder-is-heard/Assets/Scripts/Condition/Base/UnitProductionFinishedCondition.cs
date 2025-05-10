@@ -1,6 +1,8 @@
 
 public class UnitProductionFinishedCondition: BasicCondition
 {
+    public bool firstCheck = true;
+
     public string _targetUnitProductionId;
     public bool finished = false;
 
@@ -8,6 +10,11 @@ public class UnitProductionFinishedCondition: BasicCondition
     public UnitProductionFinishedCondition(string targetUnitProductionId) 
     {
         _targetUnitProductionId = targetUnitProductionId;
+    }
+
+    public void FirstComplyCheck()
+    {
+        firstCheck = false;
 
         finished = IsTargetUnitProductionFinish();
 
@@ -46,6 +53,11 @@ public class UnitProductionFinishedCondition: BasicCondition
 
     public override bool IsComply()
     {
+        if (firstCheck)
+        {
+            FirstComplyCheck();
+        }
+
         return finished;
     }
 }

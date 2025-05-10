@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 
 
@@ -8,15 +7,6 @@ public class ActiveTutorialCacheItem : CacheItem
 {
     public ActiveTutorialCacheItem(Dictionary<string, object> objFields) : base(objFields)
     {
-        if (!objFields.ContainsKey("tutorialId"))
-        {
-            throw new ArgumentException("Tutorial id cannot be empty");
-        }
-
-        if (!objFields.ContainsKey("stage"))
-        {
-            throw new ArgumentException("Stage cannot be empty");
-        }
     }
 
     public string GetTutorialId()

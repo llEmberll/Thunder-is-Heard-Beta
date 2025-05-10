@@ -62,6 +62,7 @@ public class Shop : ItemList
     public BuildShopItem CreateBuild(ShopCacheItem shopItemData, BuildCacheItem buildData)
     {
         string id = shopItemData.GetExternalId();
+        string coreId = shopItemData.GetCoreId();
         string name = buildData.GetName();
         ResourcesData cost = buildData.GetCost();
         ResourcesData gives = buildData.GetGives();
@@ -78,6 +79,7 @@ public class Shop : ItemList
 
         buildComponent.Init(
             id, 
+            coreId,
             name, 
             cost, 
             gives, 
@@ -95,6 +97,7 @@ public class Shop : ItemList
     public UnitShopItem CreateUnit(ShopCacheItem ShopItemData, UnitCacheItem unitData)
     {
         string id = ShopItemData.GetExternalId();
+        string coreId = ShopItemData.GetCoreId();
         string name = unitData.GetName();
         ResourcesData cost = unitData.GetCost();
         ResourcesData gives = unitData.GetGives();
@@ -112,6 +115,7 @@ public class Shop : ItemList
 
         unitComponent.Init(
             id, 
+            coreId,
             name, 
             cost,
             gives, 
@@ -130,6 +134,7 @@ public class Shop : ItemList
     public MaterialShopItem CreateMaterial(ShopCacheItem ShopItemData, MaterialCacheItem materialData)
     {
         string id = ShopItemData.GetExternalId();
+        string coreId = ShopItemData.GetCoreId();
         string name = materialData.GetName();
         ResourcesData cost = materialData.GetCost();
         int count = ShopItemData.GetCount();
@@ -140,7 +145,7 @@ public class Shop : ItemList
         itemObject.name = name;
         MaterialShopItem materialComponent = itemObject.GetComponent<MaterialShopItem>();
 
-        materialComponent.Init(id, name, cost, count, description, icon);
+        materialComponent.Init(id, coreId, name, cost, count, description, icon);
         materialComponent.SetConductor(this);
         return materialComponent;
     }

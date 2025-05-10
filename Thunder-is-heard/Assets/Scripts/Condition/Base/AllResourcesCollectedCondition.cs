@@ -1,11 +1,19 @@
 
 public class AllResourcesCollectedCondition : BasicCondition
 {
+    public bool firstCheck = true;
+
     public bool collected = false;
 
 
     public AllResourcesCollectedCondition()
     {
+    }
+
+    public void FirstComplyCheck()
+    {
+        firstCheck = false;
+
         collected = IsAllResourcesCollected();
 
         if (!collected)
@@ -49,6 +57,10 @@ public class AllResourcesCollectedCondition : BasicCondition
 
     public override bool IsComply()
     {
+        if (firstCheck)
+        {
+            FirstComplyCheck();
+        }
         return collected;
     }
 }

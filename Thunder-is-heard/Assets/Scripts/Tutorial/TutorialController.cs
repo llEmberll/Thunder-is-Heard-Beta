@@ -101,22 +101,25 @@ public class TutorialController : MonoBehaviour
         _activeTutorial = tutorial;
         if (stage == null)
         {
-            SetStage(TutorialStageFactory.GetAndInitStageByStageData(tutorial.GetFirstStage()));
+           StartCoroutine(SetStage(TutorialStageFactory.GetAndInitStageByStageData(tutorial.GetFirstStage())));
         }
         else
         {
-            SetStage(TutorialStageFactory.GetAndInitStageByStageData(stage));
+            StartCoroutine(SetStage(TutorialStageFactory.GetAndInitStageByStageData(stage)));
         }
     }
 
     private IEnumerator SetStage(ITutorialStage stage)
     {
-        SaveTutorialProgress();
-
         _currentStage = stage;
         _currentConditionForPass = stage.ConditionsForPass;
+        SaveTutorialProgress();
+
 
         EnableListenerForUpdateStage();
+
+        Debug.Log("Listen enabled, On stage start...");
+
         _currentStage.OnStart();
         yield return new WaitUntil(() => !_waitingForUpdateStage);
 

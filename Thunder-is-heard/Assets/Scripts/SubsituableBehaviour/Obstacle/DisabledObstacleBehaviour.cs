@@ -2,17 +2,17 @@
 public class DisabledObstacleBehaviour : BaseSubsituableObstacleBehaviour
 {
 
-    public virtual void OnClick(Obstacle conductor) 
+    public override void OnClick(Obstacle conductor) 
     {
         
     }
 
-    public virtual void OnFocus(Obstacle conductor)
+    public override void OnFocus(Obstacle conductor)
     {
         conductor.stateMachine.currentState.OnObstacleMouseEnter(conductor);
     }
 
-    public virtual void OnDefocus(Obstacle conductor)
+    public override void OnDefocus(Obstacle conductor)
     {
         conductor.stateMachine.currentState.OnObstacleMouseExit(conductor);
     }

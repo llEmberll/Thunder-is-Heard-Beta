@@ -11,11 +11,14 @@ public class ChangeBaseNameModal : UIElement
     public Button confirmButton;
     public bool isCurrentNameValid = false;
 
+    public string oldName;
+
 
     public void Start()
     {
         InitListeners();
-        Hide();
+        InitOldName();
+        base.Hide();
     }
 
     public virtual void InitListeners()
@@ -26,11 +29,20 @@ public class ChangeBaseNameModal : UIElement
     public virtual void EnableListeners()
     {
         EventMaster.current.ToggledToBuildMode += Hide;
+        EventMaster.current.ChangedBaseName += OnChangeBaseName;
     }
 
     public virtual void DisableListeners()
     {
         EventMaster.current.ToggledToBuildMode -= Hide;
+        EventMaster.current.ChangedBaseName -= OnChangeBaseName;
+    }
+
+    public void InitOldName()
+    {
+        ResourcesCacheTable resourcesTable = Cache.LoadByType<ResourcesCacheTable>();
+        string baseName = resourcesTable.GetBaseName();
+        oldName = baseName;
     }
 
     public virtual void Update()
@@ -39,6 +51,11 @@ public class ChangeBaseNameModal : UIElement
         {
             OnClickOutside();
         }
+    }
+
+    public void OnChangeBaseName(string value)
+    {
+        oldName = value;
     }
 
     public virtual void OnClickOutside()
@@ -89,6 +106,13 @@ public class ChangeBaseNameModal : UIElement
     public void ValidateName()
     {
         string name = nameInput.text;
+
+        // Проверка изменений
+        if (name == oldName)
+        {
+            isCurrentNameValid = false;
+            return;
+        }
 
         // Проверка длины
         if (name.Length < 3 || name.Length > 23)

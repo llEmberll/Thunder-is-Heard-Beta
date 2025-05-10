@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
@@ -141,7 +140,17 @@ public class DialogueController : UIElement
         UpdateAmbient();
         if (focus != null)
         {
-            EventMaster.current.FocusCameraOnPosition(focus.ToVector2(), false);
+
+            Debug.Log("Focus. blocked = " + true);
+
+            EventMaster.current.FocusCameraOnPosition(focus.ToVector2(), true);
+        }
+        else
+        {
+
+            Debug.Log("Block. blocked = " + true);
+
+            EventMaster.current.ToggleCameraMovePermit(lockCamera: true);
         }
     }
 

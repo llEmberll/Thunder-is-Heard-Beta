@@ -66,7 +66,7 @@ public static class ConditionFactory
                 ConditionData[] orConditionsData = JsonConvert.DeserializeObject<ConditionData[]>(conditionData.Data["conditions"].ToString());
                 return new OrCondition(CreateConditions(orConditionsData));
             default:
-                throw new ArgumentException("Неизвестный тип условия: " + conditionData.Type);
+                throw new ArgumentException("РќРµРёР·РІРµСЃС‚РЅС‹Р№ С‚РёРї СѓСЃР»РѕРІРёСЏ: " + conditionData.Type);
         }
     }
 
@@ -82,31 +82,96 @@ public static class ConditionFactory
 
     public static ConditionData SerializeCondition(ICondition condition)
     {
-        if (condition is DestroyAllEnemiesCondition)
+        if (condition is AlwaysTrueCondition)
+        {
+            return new ConditionData { Type = "AlwaysTrue", Data = new Dictionary<string, object>() };
+        }
+        else if (condition is AlwaysFalseCondition)
+        {
+            return new ConditionData { Type = "AlwaysFalse", Data = new Dictionary<string, object>() };
+        }
+        else if (condition is BaseNameChangedCondition)
+        {
+            return new ConditionData { Type = "BaseNameChanged", Data = new Dictionary<string, object>() };
+        }
+        else if (condition is ExistObjectCondition existObjectCondition)
         {
             return new ConditionData
             {
-                Type = "DestroyAllEnemies",
-                Data = new Dictionary<string, object>()
+                Type = "ExistObject",
+                Data = new Dictionary<string, object> { { "targetObjectId", existObjectCondition._targetObjectId } }
             };
+        }
+        else if (condition is AllUnitsCollectedCondition)
+        {
+            return new ConditionData { Type = "AllUnitsCollected", Data = new Dictionary<string, object>() };
+        }
+        else if (condition is AllResourcesCollectedCondition)
+        {
+            return new ConditionData { Type = "AllResourcesCollected", Data = new Dictionary<string, object>() };
+        }
+        else if (condition is ContractInProcessCondition contractInProcessCondition)
+        {
+            return new ConditionData
+            {
+                Type = "ContractInProcess",
+                Data = new Dictionary<string, object> { { "targetContractId", contractInProcessCondition._targetContractId } }
+            };
+        }
+        else if (condition is ContractFinishedCondition contractFinishedCondition)
+        {
+            return new ConditionData
+            {
+                Type = "ContractFinished",
+                Data = new Dictionary<string, object> { { "targetContractId", contractFinishedCondition._targetContractId } }
+            };
+        }
+        else if (condition is UnitProductionFinishedCondition unitProductionFinishedCondition)
+        {
+            return new ConditionData
+            {
+                Type = "UnitProductionFinished",
+                Data = new Dictionary<string, object> { { "targetUnitProductionId", unitProductionFinishedCondition._targetUnitProductionId } }
+            };
+        }
+        else if (condition is UnitProductionInProcessCondition unitProductionInProcessCondition)
+        {
+            return new ConditionData
+            {
+                Type = "UnitProductionInProcess",
+                Data = new Dictionary<string, object> { { "targetUnitProductionId", unitProductionInProcessCondition._targetUnitProductionId } }
+            };
+        }
+        else if (condition is PanelOpenedCondition panelOpenedCondition)
+        {
+            return new ConditionData
+            {
+                Type = "PanelOpened",
+                Data = new Dictionary<string, object> { { "tag", panelOpenedCondition._tag } }
+            };
+        }
+        else if (condition is MissionPassedCondition missionPassedCondition)
+        {
+            return new ConditionData
+            {
+                Type = "MissionPassed",
+                Data = new Dictionary<string, object> { { "missionName", missionPassedCondition._missionName } }
+            };
+        }
+        else if (condition is DestroyAllEnemiesCondition)
+        {
+            return new ConditionData { Type = "DestroyAllEnemies", Data = new Dictionary<string, object>() };
         }
         else if (condition is DestroyAllAlliesCondition)
         {
-            return new ConditionData
-            {
-                Type = "DestroyAllAllies",
-                Data = new Dictionary<string, object>()
-            };
+            return new ConditionData { Type = "DestroyAllAllies", Data = new Dictionary<string, object>() };
         }
         else if (condition is AttackObjectCondition attackObjectCondition)
         {
             return new ConditionData
             {
                 Type = "AttackObject",
-                Data = new Dictionary<string, object>
-                {
-                    { "targetObjectId", attackObjectCondition._targetObjectId }
-                }
+                Data = new Dictionary<string, object> { { "targetObjectId", attackObjectCondition._targetObjectId } }
             };
         }
         else if (condition is ReachToAttackObjectCondition reachToAttackObjectCondition)
@@ -126,10 +191,7 @@ public static class ConditionFactory
             return new ConditionData
             {
                 Type = "DestroyObjects",
-                Data = new Dictionary<string, object>
-                {
-                    { "targetObjectIds", JsonConvert.SerializeObject(destroyObjectsCondition._targetObjectIds) }
-                }
+                Data = new Dictionary<string, object> { { "targetObjectIds", JsonConvert.SerializeObject(destroyObjectsCondition._targetObjectIds) } }
             };
         }
         else if (condition is SideReachPositionCondition sideReachPositionCondition)
@@ -150,10 +212,7 @@ public static class ConditionFactory
             return new ConditionData
             {
                 Type = "And",
-                Data = new Dictionary<string, object>
-                {
-                    { "conditions", JsonConvert.SerializeObject(conditionsData) }
-                }
+                Data = new Dictionary<string, object> { { "conditions", JsonConvert.SerializeObject(conditionsData) } }
             };
         }
         else if (condition is OrCondition orCondition)
@@ -162,13 +221,9 @@ public static class ConditionFactory
             return new ConditionData
             {
                 Type = "Or",
-                Data = new Dictionary<string, object>
-                {
-                    { "conditions", JsonConvert.SerializeObject(conditionsData) }
-                }
+                Data = new Dictionary<string, object> { { "conditions", JsonConvert.SerializeObject(conditionsData) } }
             };
         }
-
-        throw new ArgumentException("Неизвестный тип условия: " + condition.GetType().Name);
+        throw new ArgumentException("РќРµРёР·РІРµСЃС‚РЅС‹Р№ С‚РёРї СѓСЃР»РѕРІРёСЏ: " + condition.GetType().Name);
     }
 }

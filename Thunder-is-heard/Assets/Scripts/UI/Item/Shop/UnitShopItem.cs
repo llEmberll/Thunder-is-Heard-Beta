@@ -12,10 +12,9 @@ public class UnitShopItem: ExposableShopItem
     public TMP_Text TmpMobility;
 
 
-    public void Init(string objectId, string objectName, ResourcesData objectCost, ResourcesData objectGives, int objectHealth, int objectDamage, int objectDistance, int objectMobility, int objectCount, string objectDescription = "", Sprite objectIcon = null)
+    public void Init(string objectId, string objectCoreId, string objectName, ResourcesData objectCost, ResourcesData objectGives, int objectHealth, int objectDamage, int objectDistance, int objectMobility, int objectCount, string objectDescription = "", Sprite objectIcon = null)
     {
-        _id = objectId; _objName = objectName; _icon = objectIcon; _itemImage.sprite = _icon;
-        InitCoreId();
+        _id = objectId; coreId = objectCoreId; _objName = objectName; _icon = objectIcon; _itemImage.sprite = _icon;
 
         costData = objectCost;
         givesData = objectGives;
