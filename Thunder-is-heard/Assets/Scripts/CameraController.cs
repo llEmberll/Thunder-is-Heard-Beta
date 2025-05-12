@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public bool isUIPanel = false;
+
     public bool _isMovable = true;
 
     public bool _isDragging = false;
@@ -57,27 +59,46 @@ public class CameraController : MonoBehaviour
 
     public void EnableListeners()
     {
-        EventMaster.current.CameraMovePermitToggled += SetIsMovable;
-        EventMaster.current.UIPanelToggled += SetIsMovable;
+        EventMaster.current.CameraMovePermitToggled += OnCameraMovePermitToggle;
+        EventMaster.current.UIPanelToggled += OnUIPanelToggle;
         EventMaster.current.CameraNeedFocusOnPosition += SetSoftFocusOnPoint;
         EventMaster.current.CameraFocusCanceled += CancelFocus;
     }
 
     public void DisableListeners()
     {
-        EventMaster.current.CameraMovePermitToggled -= SetIsMovable;
-        EventMaster.current.UIPanelToggled -= SetIsMovable;
+        EventMaster.current.CameraMovePermitToggled -= OnCameraMovePermitToggle;
+        EventMaster.current.UIPanelToggled -= OnUIPanelToggle;
         EventMaster.current.CameraNeedFocusOnPosition -= SetSoftFocusOnPoint;
         EventMaster.current.CameraFocusCanceled -= CancelFocus;
     }
 
     public void SetIsMovable(bool isMovementForbidden)
     {
-        Debug.Log("set is movable camera. isMovementForbidden = "+ isMovementForbidden);
+        Debug.Log("Set is movable, isMovementForbidden = " + isMovementForbidden);
 
         _isMovable = !isMovementForbidden;
 
-        Debug.Log("Can move = " +  _isMovable);
+    }
+
+    public void OnUIPanelToggle(bool isOpen)
+    {
+        if (isOpen)
+        {
+            isUIPanel = true;
+            SetIsMovable(true);
+        }
+        else
+        {
+            isUIPanel = false;
+            SetIsMovable(false);
+        }
+    }
+
+    public void OnCameraMovePermitToggle(bool isMovementForbidden)
+    {
+        if (isUIPanel) return;
+        SetIsMovable(isMovementForbidden);
     }
 
     public void SetAspectRatio()
@@ -100,15 +121,17 @@ public class CameraController : MonoBehaviour
 
     public void CancelFocus()
     {
-        Debug.Log("focus canceled");
         haveFocus = false;
-        _isMovable = true;
+        if (isUIPanel) return;
+
+        Debug.Log("focus canceled");
+
+        SetIsMovable(false);
+        
     }
 
     public void SoftMoveOnFocus()
     {
-        Debug.Log("In SoftMove");
-
         Vector3 focusVector3 = new Vector3(focus.x -focusOffset, cameraHeight, focus.y - focusOffset);
 
         Vector3 direction = (focusVector3 - transform.position).normalized;

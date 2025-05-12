@@ -1,4 +1,5 @@
 ﻿{
+  "name": "PlayerObstacle",
   "items": {
     "88199bd8-0f5e-43bb-807e-253f7b94abd3": {
       "fields": {
@@ -180,6 +181,20 @@
           }
         ],
         "coreId": "fccb430b-9ab1-4073-a334-6183a40ad0f2"
+      }
+    },
+    "2a9b6754-47a1-4719-af56-75a2a55667d8": {
+      "fields": {
+        "externalId": "2a9b6754-47a1-4719-af56-75a2a55667d8",
+        "description": "",
+        "rotation": 90,
+        "position": [
+          {
+            "x": 7,
+            "y": 1
+          }
+        ],
+        "coreId": "1dc74e29-35f1-4fc5-a3f0-d2c6c39d558b"
       }
     },
     "43fb8f3a-9fd1-4e2b-9e2e-7761c87d439a": {
@@ -392,6 +407,5 @@
         "coreId": "bb9da51e-303d-4aed-951d-0248490f76b6"
       }
     }
-  },
-  "name": "PlayerObstacle"
+  }
 }

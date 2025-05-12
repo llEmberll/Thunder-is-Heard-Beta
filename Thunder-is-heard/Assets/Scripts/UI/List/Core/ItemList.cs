@@ -45,12 +45,16 @@ public class ItemList : UIElement, IFillable
 
     public override void Hide()
     {
+        Debug.Log(gameObject.name + " hide, camera ON");
+
         base.Hide();
         EventMaster.current.OnUIPanelToggle(false);
     }
 
     public override void Show()
     {
+        Debug.Log(gameObject.name + " show, camera OFF");
+
         base.Show();
         EventMaster.current.OnUIPanelToggle(true);
     }

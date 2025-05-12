@@ -140,15 +140,12 @@ public class DialogueController : UIElement
         UpdateAmbient();
         if (focus != null)
         {
-
-            Debug.Log("Focus. blocked = " + true);
-
             EventMaster.current.FocusCameraOnPosition(focus.ToVector2(), true);
         }
         else
         {
 
-            Debug.Log("Block. blocked = " + true);
+            Debug.Log("Dialogue controller lock camera, camera OFF");
 
             EventMaster.current.ToggleCameraMovePermit(lockCamera: true);
         }
@@ -227,12 +224,17 @@ public class DialogueController : UIElement
 
     public override void Hide()
     {
+
+        Debug.Log("Dialogue Controller hide, camera ON");
+
         base.Hide();
         EventMaster.current.OnUIPanelToggle(false);
     }
 
     public override void Show()
     {
+        Debug.Log("Dialogue Controller show, camera OFF");
+
         base.Show();
         EventMaster.current.OnUIPanelToggle(true);
     }

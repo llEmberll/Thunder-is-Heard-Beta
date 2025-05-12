@@ -115,10 +115,16 @@ public class TutorialController : MonoBehaviour
         _currentConditionForPass = stage.ConditionsForPass;
         SaveTutorialProgress();
 
+        // Замена поведений компонентов
+        if (_currentStage.BehaviourIdByComponentName != null)
+        {
+            foreach (var behaviour in _currentStage.BehaviourIdByComponentName)
+            {
+                EventMaster.current.OnChangeComponentBehaviour(behaviour.Key, behaviour.Value);
+            }
+        }
 
         EnableListenerForUpdateStage();
-
-        Debug.Log("Listen enabled, On stage start...");
 
         _currentStage.OnStart();
         yield return new WaitUntil(() => !_waitingForUpdateStage);
@@ -128,15 +134,6 @@ public class TutorialController : MonoBehaviour
         {
             EventMaster.current.OnObjectFocused(_currentStage.FocusData);
         }
-
-        // Замена поведений компонентов
-        if (_currentStage.BehaviourIdByComponentName != null)
-        {
-            foreach (var behaviour in _currentStage.BehaviourIdByComponentName)
-            {
-                EventMaster.current.OnChangeComponentBehaviour(behaviour.Key, behaviour.Value);
-            }
-        }   
     }
 
     public void SaveTutorialProgress()
@@ -169,7 +166,9 @@ public class TutorialController : MonoBehaviour
         // Постоянная проверка условий для перехода к следующему этапу
         if (_currentConditionForPass.IsComply())
         {
-             StartCoroutine(ProcessStageCompletion());
+            _currentConditionForPass = null;
+
+            StartCoroutine(ProcessStageCompletion());
         }
     }
 

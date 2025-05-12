@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 public class OnlyTutorialContractContractsBehaviour : BaseSubsituableContractsBehaviour
 {
@@ -8,11 +10,10 @@ public class OnlyTutorialContractContractsBehaviour : BaseSubsituableContractsBe
         conductor.ClearItems();
         conductor.items = new List<ContractItem>();
 
-        List<ContractCacheItem> tutorialContracts = GenerateContractItems();
-
-        foreach (ContractCacheItem contractData in tutorialContracts)
+        List<ContractCacheItem> contracts = GenerateTutorialContracts();
+        foreach (ContractCacheItem contractData in contracts)
         {
-            if (contractData.GetType() != conductor._contractType)
+            if (!IsContractTypeMatch(contractData.GetType(), conductor._contractType))
             {
                 continue;
             }
@@ -21,18 +22,21 @@ public class OnlyTutorialContractContractsBehaviour : BaseSubsituableContractsBe
         }
     }
 
-    public List<ContractCacheItem> GenerateContractItems()
+    private bool IsContractTypeMatch(string contractType, string targetType)
+    {
+        return string.Equals(contractType, targetType, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public List<ContractCacheItem> GenerateTutorialContracts()
     {
         ContractCacheItem tutorialOilContractData = new ContractCacheItem(new Dictionary<string, object>());
         tutorialOilContractData.SetExternalId("453aa61c-ed38-449d-84bb-e79f96108bad");
-        tutorialOilContractData.SetName("Канистра с топливом");
+        tutorialOilContractData.SetName("РљР°РЅРёСЃС‚СЂР° СЃ С‚РѕРїР»РёРІРѕРј");
         tutorialOilContractData.SetDuration(3);
-        ResourcesData tutorialOilContractGives = new ResourcesData();
-        tutorialOilContractGives.oil = 5;
+        ResourcesData tutorialOilContractGives = new ResourcesData(oilCount: 5);
         tutorialOilContractData.SetGives(tutorialOilContractGives);
 
-        ResourcesData tutorialOilContractCost = new ResourcesData();
-        tutorialOilContractCost.rub = 250;
+        ResourcesData tutorialOilContractCost = new ResourcesData(rubCount: 250);
         tutorialOilContractData.SetCost(tutorialOilContractCost);
 
         tutorialOilContractData.SetIconSection("UIBuildCards");
@@ -41,14 +45,12 @@ public class OnlyTutorialContractContractsBehaviour : BaseSubsituableContractsBe
 
         ContractCacheItem tutorialRubContractData = new ContractCacheItem(new Dictionary<string, object>());
         tutorialRubContractData.SetExternalId("897d1863-f964-4809-8fc5-62f8ab4ecd9d");
-        tutorialRubContractData.SetName("Бумажная волокита");
+        tutorialRubContractData.SetName("Р‘СѓРјР°Р¶РЅР°СЏ РІРѕР»РѕРєРёС‚Р°");
         tutorialRubContractData.SetDuration(3);
-        ResourcesData tutorialRubContractGives = new ResourcesData();
-        tutorialRubContractGives.rub = 1000;
+        ResourcesData tutorialRubContractGives = new ResourcesData(rubCount: 1000);
         tutorialRubContractData.SetGives(tutorialRubContractGives);
 
-        ResourcesData tutorialRubContractCost = new ResourcesData();
-        tutorialRubContractCost.oil = 1;
+        ResourcesData tutorialRubContractCost = new ResourcesData(oilCount: 1);
         tutorialRubContractData.SetCost(tutorialRubContractCost);
 
         tutorialRubContractData.SetIconSection("UIBuildCards");

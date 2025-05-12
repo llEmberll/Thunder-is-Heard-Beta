@@ -85,9 +85,9 @@ public class UnitProductionCacheItem : CacheItem
         SetField("cost", value);
     }
 
-    public string GetUnitId()
+    public string? GetUnitId()
     {
-        return (string)GetField("unitId");
+        return (string?)GetField("unitId");
     }
 
     public void SetUnitId(string value)
@@ -108,7 +108,7 @@ public class UnitProductionCacheItem : CacheItem
 
     public override CacheItem Clone()
     {
-        UnitCacheItem clone = new UnitCacheItem(fields);
+        UnitProductionCacheItem clone = new UnitProductionCacheItem(fields);
         clone.SetCost(clone.GetCost().Clone());
         return clone;
     }

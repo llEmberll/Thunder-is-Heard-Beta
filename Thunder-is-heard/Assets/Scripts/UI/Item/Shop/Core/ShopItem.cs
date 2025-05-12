@@ -68,20 +68,27 @@ public abstract class ShopItem : Item
     {
         ShopCacheTable shopItemsTable = Cache.LoadByType<ShopCacheTable>();
         CacheItem cacheItem = shopItemsTable.GetById(_id);
-        ShopCacheItem shopItem = new ShopCacheItem(cacheItem.Fields);
-        shopItem.SetCount(shopItem.GetCount() - 1);
-        if (shopItem.GetCount() < 1)
+        try
         {
-            shopItemsTable.Delete(new CacheItem[1] { cacheItem});
+            ShopCacheItem shopItem = new ShopCacheItem(cacheItem.Fields);
+            shopItem.SetCount(shopItem.GetCount() - 1);
+            if (shopItem.GetCount() < 1)
+            {
+                shopItemsTable.Delete(new CacheItem[1] { cacheItem });
+            }
+            else
+            {
+                cacheItem.fields = shopItem.Fields;
+            }
+
+            Cache.Save(shopItemsTable);
+
+            UpdateCount(_count - number);
         }
-        else
+        catch
         {
-            cacheItem.fields = shopItem.Fields;
+            Debug.Log("Can't find shopItem with itemId = " +  _id);
         }
-
-        Cache.Save(shopItemsTable);
-
-        UpdateCount(_count - number);
     }
 }
 

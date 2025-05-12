@@ -143,11 +143,13 @@ public class FocusController : MonoBehaviour
 
     public void OnDefocus()
     {
+        Debug.Log("Focus controller  unlock camera, camera ON");
+
+        EventMaster.current.CancelFocus();
+
         ResetMaterials();
         ResetImage();
         ResetText();
-
-        EventMaster.current.CancelFocus();
 
         _blinkProgress = 0;
         _current_ChangeFromOriginalColorLevel = 0;
@@ -175,7 +177,14 @@ public class FocusController : MonoBehaviour
 
 
         EventMaster.current.FocusCameraOnPosition(build.center, true);
-        SaveMaterialsRecursive(build.gameObject);
+
+        SaveMaterials(build.gameObject);
+    }
+
+    public void SaveMaterials(GameObject obj)
+    {
+        _targetObjectMaterials = new Dictionary<string, Material>();
+        SaveMaterialsRecursive(obj);
     }
 
     public void SaveMaterialsRecursive(GameObject obj)
@@ -196,7 +205,6 @@ public class FocusController : MonoBehaviour
                     _defaultMaterialColorLevelByName[mat.name] = (int)(mat.color.grayscale * 255);
                 }
             }
-           
         }
 
         else
@@ -412,7 +420,8 @@ public class FocusController : MonoBehaviour
 
         Build sourceBuild = builds.FindObjectByChildId(productsNotificationData.GetSourceObjectId()) as Build;
         EventMaster.current.FocusCameraOnPosition(sourceBuild.center, true);
-        SaveMaterialsRecursive(sourceBuild.gameObject);
+
+        SaveMaterials(sourceBuild.gameObject);
     }
 
     public void OnTextFocus(Dictionary<string, object> data)
@@ -430,46 +439,29 @@ public class FocusController : MonoBehaviour
     {
         if (_targetObjectMaterials == null || _targetObjectMaterials.Count == 0) return;
 
-        // ����������� �������� �������
         _blinkProgress += Time.deltaTime / BLINK_DURATION;
-        _blinkProgress %= 1f; // �������� �������� ����� ���������� �����
+        _blinkProgress %= 1f;
+
+        float minBrightness = _minMaterialColorLevel / 255f;
+        float maxBrightness = _maxMaterialColorLevel / 255f;
+        float newBrightness = Mathf.Lerp(minBrightness, maxBrightness, Mathf.PingPong(_blinkProgress, 1f));
 
         foreach (var materialPair in _targetObjectMaterials)
         {
             Material material = materialPair.Value;
-            if (!_defaultMaterialColorLevelByName.ContainsKey(material.name))
-            {
-                // ��������� �������� ���� ���������, ���� ��� ��� �� �������
-                _defaultMaterialColorLevelByName[material.name] = (int)(material.color.grayscale * 255);
-            }
-
-            int originalColorLevel = _defaultMaterialColorLevelByName[material.name];
-            int targetColorLevel = Mathf.Clamp(originalColorLevel - _current_ChangeFromOriginalColorLevel, _minMaterialColorLevel, _maxMaterialColorLevel);
-
-            // ������ ������������� ����� �������� � ������� ������
-            int newColorLevel = Mathf.RoundToInt(Mathf.Lerp(
-                originalColorLevel,
-                targetColorLevel,
-                Mathf.PingPong(_blinkProgress, 1f) // PingPong ������������ ����������� ��������
-            ));
-
-            // ������������ �������� ����� �������
-            newColorLevel = Mathf.Clamp(newColorLevel, _minMaterialColorLevel, _maxMaterialColorLevel);
-
-            // ��������� ����� ����
+            Color originalColor = material.color;
+            
             material.color = new Color(
-                newColorLevel / 255f,
-                newColorLevel / 255f,
-                newColorLevel / 255f,
-                material.color.a
+                newBrightness,
+                newBrightness,
+                newBrightness,
+                originalColor.a
             );
         }
     }
 
     public void ProcessImageTarget()
     {
-        Debug.Log("Image target processing");
-
         if (_targetImage == null) return;
 
         _blinkProgress += Time.deltaTime / BLINK_DURATION;

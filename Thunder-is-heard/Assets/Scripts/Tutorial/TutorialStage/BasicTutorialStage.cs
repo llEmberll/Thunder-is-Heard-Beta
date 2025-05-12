@@ -152,8 +152,6 @@ public class BasicTutorialStage: ITutorialStage
 
     protected virtual void PrepareStartSequence()
     {
-        Debug.Log("Prepare start sequence...");
-
         _startSequenceActions.Clear();
         _isStartSequenceComplete = false;
 
@@ -162,31 +160,18 @@ public class BasicTutorialStage: ITutorialStage
             _startSequenceActions.Enqueue(() => BeginMediaEvent(_mediaEventData));
         }
 
-        Debug.Log("Media event prepared");
-
         if (ReplicsOnStart != null && ReplicsOnStart.Length > 0)
         {
             _startSequenceActions.Enqueue(() => BeginDialogue(ReplicsOnStart));
         }
-
-        Debug.Log("Dialogue prepared");
     }
 
     protected void ProcessNextStartAction()
     {
-        Debug.Log("Next action!");
         if (_startSequenceActions.Count > 0)
         {
-            Debug.Log("actions exists");
-
             var nextAction = _startSequenceActions.Dequeue();
-
-            Debug.Log("next action: " + nextAction);
-
-
             nextAction.Invoke();
-
-            Debug.Log("invoked");
         }
         else
         {
@@ -196,8 +181,6 @@ public class BasicTutorialStage: ITutorialStage
 
     protected void CompleteStartSequence()
     {
-        Debug.Log("Sequence completed");
-
         _isStartSequenceComplete = true;
         EventMaster.current.OnUpdateStage();
     }
@@ -211,8 +194,6 @@ public class BasicTutorialStage: ITutorialStage
 
     public void BeginDialogue(Replic[] replics)
     {
-        Debug.Log("Begin dialogue");
-
         isDialogue = true;
         EventMaster.current.BeginDialogue(replics);
         EnableEndDialogueListener();

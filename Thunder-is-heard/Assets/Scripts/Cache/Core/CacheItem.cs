@@ -89,6 +89,20 @@ public class CacheItem: ICacheItem
 
     public void SetField(string fieldName, object value)
     {
-        fields[fieldName] = value;
+        if (value == null)
+        {
+            fields[fieldName] = null;
+            return;
+        }
+
+        // Автоматическая сериализация для сложных объектов
+        if (value.GetType().IsClass && value.GetType() != typeof(string))
+        {
+            fields[fieldName] = JsonConvert.SerializeObject(value);
+        }
+        else
+        {
+            fields[fieldName] = value;
+        }
     }
 }

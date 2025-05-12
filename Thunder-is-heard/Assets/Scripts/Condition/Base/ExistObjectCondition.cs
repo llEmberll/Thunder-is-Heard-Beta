@@ -11,9 +11,7 @@ public class ExistObjectCondition: BasicCondition
     public BuildsOnBase buildsOnBase = GameObject.FindGameObjectWithTag(Tags.buildsOnScene).GetComponent<BuildsOnBase>();
 
     public ExistObjectCondition(string targetObjectId) 
-    { 
-        Debug.Log("condition target id = " + targetObjectId);
-
+    {
         _targetObjectId = targetObjectId;
     }
 
@@ -75,8 +73,6 @@ public class ExistObjectCondition: BasicCondition
 
     public override bool IsComply()
     {
-        Debug.Log("is comply = " + exist);
-
         if (firstCheck)
         {
             FirstComplyCheck();

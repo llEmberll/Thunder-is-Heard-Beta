@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 public class OnlyTutorialProductionsUnitProductionsBehaviour : BaseSubsituableUnitProductionsBehaviour
 {
@@ -11,7 +13,7 @@ public class OnlyTutorialProductionsUnitProductionsBehaviour : BaseSubsituableUn
         List<UnitProductionCacheItem> unitProductions = GenerateTutorialUnitProductions();
         foreach (UnitProductionCacheItem unitProductionData in unitProductions)
         {
-            if (unitProductionData.GetType() != conductor._unitProductionType)
+            if (!IsUnitTypeMatch(unitProductionData.GetType(), conductor._unitProductionType))
             {
                 continue;
             }
@@ -20,14 +22,18 @@ public class OnlyTutorialProductionsUnitProductionsBehaviour : BaseSubsituableUn
         }
     }
 
+    private bool IsUnitTypeMatch(string unitType, string targetType)
+    {
+        return string.Equals(unitType, targetType, StringComparison.OrdinalIgnoreCase);
+    }
+
     public List<UnitProductionCacheItem> GenerateTutorialUnitProductions()
     {
         UnitProductionCacheItem trainAssaultersUnitProduction = new UnitProductionCacheItem(new Dictionary<string, object>());
         trainAssaultersUnitProduction.SetExternalId("f4b60bee-1dda-4377-9fab-5092f48b3e60");
-        trainAssaultersUnitProduction.SetName("Обучить новобранцев");
+        trainAssaultersUnitProduction.SetName("РћР±СѓС‡РёС‚СЊ РЅРѕРІРѕР±СЂР°РЅС†РµРІ");
         trainAssaultersUnitProduction.SetDuration(3);
-        ResourcesData cost = new ResourcesData();
-        cost.rub = 300;
+        ResourcesData cost = new ResourcesData(rubCount: 300);
         trainAssaultersUnitProduction.SetCost(cost);
         trainAssaultersUnitProduction.SetType(UnitTypes.infantry);
         trainAssaultersUnitProduction.SetUnitId("bd1b7986-cf1a-4d76-8b14-c68bf10f363f");
