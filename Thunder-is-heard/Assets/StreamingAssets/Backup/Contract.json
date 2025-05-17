@@ -118,6 +118,45 @@
         "iconName": "mine"
       }
     },
+    "453aa61c-ed38-449d-84bb-e79f96108bad": {
+      "fields": {
+        "externalId": "453aa61c-ed38-449d-84bb-e79f96108bad",
+        "description": "",
+        "type": "Oil",
+        "cost": {
+          "rub": 250,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 5,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "duration": 3,
+        "iconSection": "UIBuildCards",
+        "name": "Канистра с топливом",
+        "iconName": "oil_station"
+      }
+    },
     "7a837319-57a3-457f-9fab-bd6d8bf35021": {
       "fields": {
         "externalId": "7a837319-57a3-457f-9fab-bd6d8bf35021",
@@ -233,6 +272,45 @@
         "iconSection": "UIBuildCards",
         "name": "Полная смена",
         "iconName": "oil_station"
+      }
+    },
+    "897d1863-f964-4809-8fc5-62f8ab4ecd9d": {
+      "fields": {
+        "externalId": "897d1863-f964-4809-8fc5-62f8ab4ecd9d",
+        "description": "",
+        "type": "Rub",
+        "cost": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 1,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 1000,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "duration": 3,
+        "iconSection": "UIBuildCards",
+        "name": "Бумажная волокита",
+        "iconName": "office"
       }
     },
     "4a9f0fb4-51fe-452f-9159-6368e00d9b1f": {

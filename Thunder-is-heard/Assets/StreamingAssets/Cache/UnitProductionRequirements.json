@@ -1,0 +1,93 @@
+﻿{
+  "name": "UnitProductionRequirements",
+  "items": {
+    "f4b60bee-1dda-4377-9fab-5092f48b3e60": {
+      "fields": {
+        "description": "",
+        "externalId": "f4b60bee-1dda-4377-9fab-5092f48b3e60",
+        "unitProductionId": "f4b60bee-1dda-4377-9fab-5092f48b3e60",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": ["tutorial"]
+        }
+      }
+    },
+    "7e940ae4-6d78-40a8-962b-0f1c154cf20d": {
+      "fields": {
+        "description": "",
+        "externalId": "7e940ae4-6d78-40a8-962b-0f1c154cf20d",
+        "unitProductionId": "7e940ae4-6d78-40a8-962b-0f1c154cf20d",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "51112095-826c-4436-91e8-5684dc94ca84": {
+      "fields": {
+        "description": "",
+        "externalId": "51112095-826c-4436-91e8-5684dc94ca84",
+        "unitProductionId": "51112095-826c-4436-91e8-5684dc94ca84",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "c3f0b39a-7a55-4673-afc6-8352d5c4025c": {
+      "fields": {
+        "description": "",
+        "externalId": "c3f0b39a-7a55-4673-afc6-8352d5c4025c",
+        "unitProductionId": "c3f0b39a-7a55-4673-afc6-8352d5c4025c",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "957bb263-524a-4460-8375-234b86055d7c": {
+      "fields": {
+        "description": "",
+        "externalId": "957bb263-524a-4460-8375-234b86055d7c",
+        "unitProductionId": "957bb263-524a-4460-8375-234b86055d7c",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "c2bfc6ac-66c0-4322-a861-6c5420975b92": {
+      "fields": {
+        "description": "",
+        "externalId": "c2bfc6ac-66c0-4322-a861-6c5420975b92",
+        "unitProductionId": "c2bfc6ac-66c0-4322-a861-6c5420975b92",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "4265fe0d-845c-4d6e-9fdf-ad29abc0c374": {
+      "fields": {
+        "description": "",
+        "externalId": "4265fe0d-845c-4d6e-9fdf-ad29abc0c374",
+        "unitProductionId": "4265fe0d-845c-4d6e-9fdf-ad29abc0c374",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "3551681b-1f08-4937-96a8-d86ac6259bf0": {
+      "fields": {
+        "description": "",
+        "externalId": "3551681b-1f08-4937-96a8-d86ac6259bf0",
+        "unitProductionId": "3551681b-1f08-4937-96a8-d86ac6259bf0",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    }
+  }
+}

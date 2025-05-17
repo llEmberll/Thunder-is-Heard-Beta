@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BaseSubsituableContractsBehaviour : ISubsituableContractsBehaviour
@@ -63,13 +64,38 @@ public class BaseSubsituableContractsBehaviour : ISubsituableContractsBehaviour
         foreach (var keyValuePair in contractTable.Items)
         {
             ContractCacheItem contractData = new ContractCacheItem(keyValuePair.Value.Fields);
-            if (contractData.GetType() != conductor._contractType)
+            if (!IsContractTypeMatch(contractData.GetType(), conductor._contractType) || !CheckContractRequirements(contractData))
             {
                 continue;
             }
 
             conductor.items.Add(conductor.CreateContractItem(contractData));
         }
+    }
+
+    public bool IsContractTypeMatch(string contractType, string targetType)
+    {
+        return string.Equals(contractType, targetType, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public virtual bool CheckContractRequirements(ContractCacheItem contractData)
+    {
+        ContractRequirementsCacheTable requirementsTable = Cache.LoadByType<ContractRequirementsCacheTable>();
+        CacheItem cacheItem = requirementsTable.GetById(contractData.GetExternalId());
+        if (cacheItem == null)
+        {
+            Debug.Log("Can't find requirements for contract: " +  contractData.GetExternalId());
+            return false;
+        }
+
+        ContractRequirementsCacheItem requirementsData = new ContractRequirementsCacheItem(cacheItem.Fields);
+        string[] circumstances = requirementsData.GetData().Circumstances;
+        return CheckContractCircumstancesRequirements(circumstances);
+    }
+
+    public virtual bool CheckContractCircumstancesRequirements(string[] circumstances)
+    {
+        return circumstances.Length == 0;
     }
 
     public virtual void OnInteractWithIdleComponent(ContractComponent component)

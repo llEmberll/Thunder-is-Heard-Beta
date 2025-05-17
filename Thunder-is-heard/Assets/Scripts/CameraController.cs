@@ -75,8 +75,6 @@ public class CameraController : MonoBehaviour
 
     public void SetIsMovable(bool isMovementForbidden)
     {
-        Debug.Log("Set is movable, isMovementForbidden = " + isMovementForbidden);
-
         _isMovable = !isMovementForbidden;
 
     }

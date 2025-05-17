@@ -1,6 +1,32 @@
 ﻿{
   "name": "UnitProduction",
   "items": {
+    "f4b60bee-1dda-4377-9fab-5092f48b3e60": {
+      "fields": {
+        "externalId": "f4b60bee-1dda-4377-9fab-5092f48b3e60",
+        "description": "",
+        "type": "Infantry",
+        "cost": {
+          "rub": 300,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "unitId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "duration": 3,
+        "iconSection": "Textures/Interface/Cards/Units/Base",
+        "name": "Обучить новобранцев",
+        "iconName": "assaulters"
+      }
+    },
     "7e940ae4-6d78-40a8-962b-0f1c154cf20d": {
       "fields": {
         "externalId": "7e940ae4-6d78-40a8-962b-0f1c154cf20d",

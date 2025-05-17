@@ -166,6 +166,7 @@ public class TutorialController : MonoBehaviour
         // Постоянная проверка условий для перехода к следующему этапу
         if (_currentConditionForPass.IsComply())
         {
+            Debug.Log($"[Tutorial] Условие выполнено: {_currentConditionForPass.GetType().Name}");
             _currentConditionForPass = null;
 
             StartCoroutine(ProcessStageCompletion());

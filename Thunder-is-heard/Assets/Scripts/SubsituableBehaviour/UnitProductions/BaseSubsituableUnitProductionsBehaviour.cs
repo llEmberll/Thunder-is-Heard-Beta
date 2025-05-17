@@ -63,13 +63,38 @@ public class BaseSubsituableUnitProductionsBehaviour : ISubsituableUnitProductio
         foreach (var keyValuePair in unitProductionTable.Items)
         {
             UnitProductionCacheItem unitProductionData = new UnitProductionCacheItem(keyValuePair.Value.Fields);
-            if (unitProductionData.GetType() != conductor._unitProductionType)
+            if (!IsUnitTypeMatch(unitProductionData.GetType(), conductor._unitProductionType) || !CheckUnitProductionRequirements(unitProductionData))
             {
                 continue;
             }
 
             conductor.items.Add(conductor.CreateUnitProductionItem(unitProductionData));
         }
+    }
+
+    public bool IsUnitTypeMatch(string unitType, string targetType)
+    {
+        return string.Equals(unitType, targetType, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public virtual bool CheckUnitProductionRequirements(UnitProductionCacheItem contractData)
+    {
+        UnitProductionRequirementsCacheTable requirementsTable = Cache.LoadByType<UnitProductionRequirementsCacheTable>();
+        CacheItem cacheItem = requirementsTable.GetById(contractData.GetExternalId());
+        if (cacheItem == null)
+        {
+            Debug.Log("Can't find requirements for contract: " + contractData.GetExternalId());
+            return false;
+        }
+
+        UnitProductionRequirementsCacheItem requirementsData = new UnitProductionRequirementsCacheItem(cacheItem.Fields);
+        string[] circumstances = requirementsData.GetData().Circumstances;
+        return CheckUnitProductionCircumstancesRequirements(circumstances);
+    }
+
+    public virtual bool CheckUnitProductionCircumstancesRequirements(string[] circumstances)
+    {
+        return circumstances.Length == 0;
     }
 
     public virtual void OnInteractWithIdleComponent(UnitProductionComponent component)

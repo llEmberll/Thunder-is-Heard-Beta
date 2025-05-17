@@ -1,3 +1,4 @@
+using System;
 
 public class ContractInProcessCondition: BasicCondition
 {
@@ -41,9 +42,14 @@ public class ContractInProcessCondition: BasicCondition
         EventMaster.current.ProcessOnBaseStarted -= SomeProcessOnBaseStarted;
     }
 
+    private bool CheckProcessType(string processType)
+    {
+        return string.Equals(processType, ContractItem.type, StringComparison.OrdinalIgnoreCase);
+    }
+
     public void SomeProcessOnBaseStarted(ProcessOnBaseCacheItem processData)
     {
-        if (processData.GetProcessType() != ContractItem.type) return;
+        if (!CheckProcessType(processData.GetProcessType())) return;
         if (processData.GetSource().id != _targetContractId) return;
 
         process = true;

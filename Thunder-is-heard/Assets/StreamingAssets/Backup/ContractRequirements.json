@@ -1,0 +1,126 @@
+﻿{
+  "name": "ContractRequirements",
+  "items": {
+    "93970dfe-6f4a-4b5c-8d6d-115dad61423e": {
+      "fields": {
+        "description": "",
+        "externalId": "93970dfe-6f4a-4b5c-8d6d-115dad61423e",
+        "contractId": "93970dfe-6f4a-4b5c-8d6d-115dad61423e",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "4766fc0c-db3e-46f8-853a-06dfa7f62d29": {
+      "fields": {
+        "description": "",
+        "externalId": "4766fc0c-db3e-46f8-853a-06dfa7f62d29",
+        "contractId": "4766fc0c-db3e-46f8-853a-06dfa7f62d29",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "e5215c51-f22f-4655-9d32-6f49fc0510fc": {
+      "fields": {
+        "description": "",
+        "externalId": "e5215c51-f22f-4655-9d32-6f49fc0510fc",
+        "contractId": "e5215c51-f22f-4655-9d32-6f49fc0510fc",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "453aa61c-ed38-449d-84bb-e79f96108bad": {
+      "fields": {
+        "description": "",
+        "externalId": "453aa61c-ed38-449d-84bb-e79f96108bad",
+        "contractId": "453aa61c-ed38-449d-84bb-e79f96108bad",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": ["tutorial"]
+        }
+      }
+    },
+    "7a837319-57a3-457f-9fab-bd6d8bf35021": {
+      "fields": {
+        "description": "",
+        "externalId": "7a837319-57a3-457f-9fab-bd6d8bf35021",
+        "contractId": "7a837319-57a3-457f-9fab-bd6d8bf35021",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "6c6b3001-cfa9-4761-8e40-ae26e88f6ca5": {
+      "fields": {
+        "description": "",
+        "externalId": "6c6b3001-cfa9-4761-8e40-ae26e88f6ca5",
+        "contractId": "6c6b3001-cfa9-4761-8e40-ae26e88f6ca5",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "522a3c5c-ce58-42b5-b237-80ac15845b6a": {
+      "fields": {
+        "description": "",
+        "externalId": "522a3c5c-ce58-42b5-b237-80ac15845b6a",
+        "contractId": "522a3c5c-ce58-42b5-b237-80ac15845b6a",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "897d1863-f964-4809-8fc5-62f8ab4ecd9d": {
+      "fields": {
+        "description": "",
+        "externalId": "897d1863-f964-4809-8fc5-62f8ab4ecd9d",
+        "contractId": "897d1863-f964-4809-8fc5-62f8ab4ecd9d",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": ["tutorial"]
+        }
+      }
+    },
+    "4a9f0fb4-51fe-452f-9159-6368e00d9b1f": {
+      "fields": {
+        "description": "",
+        "externalId": "4a9f0fb4-51fe-452f-9159-6368e00d9b1f",
+        "contractId": "4a9f0fb4-51fe-452f-9159-6368e00d9b1f",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "fc4c6678-2349-4927-a222-3fa0a54b8459": {
+      "fields": {
+        "description": "",
+        "externalId": "fc4c6678-2349-4927-a222-3fa0a54b8459",
+        "contractId": "fc4c6678-2349-4927-a222-3fa0a54b8459",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    },
+    "c5f7ec2d-db3a-48a2-8845-51607d342e9c": {
+      "fields": {
+        "description": "",
+        "externalId": "c5f7ec2d-db3a-48a2-8845-51607d342e9c",
+        "contractId": "c5f7ec2d-db3a-48a2-8845-51607d342e9c",
+        "data": {
+          "sourceBuildLevel": null,
+          "circumstances": []
+        }
+      }
+    }
+  }
+}
