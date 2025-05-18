@@ -1,4 +1,6 @@
 
+using System;
+
 public class UnitProductionInProcessCondition: BasicCondition
 {
     public bool firstCheck = true;
@@ -10,6 +12,7 @@ public class UnitProductionInProcessCondition: BasicCondition
     public UnitProductionInProcessCondition(string targetUnitProductionId) 
     {
         _targetUnitProductionId = targetUnitProductionId;
+        EnableListeners();
     }
 
     public void FirstComplyCheck()
@@ -18,9 +21,9 @@ public class UnitProductionInProcessCondition: BasicCondition
 
         process = IsTargetUnitProductionInProcess();
 
-        if (!process)
+        if (process)
         {
-            EnableListeners();
+            DisableListeners();
         }
     }
 
@@ -41,9 +44,14 @@ public class UnitProductionInProcessCondition: BasicCondition
         EventMaster.current.ProcessOnBaseStarted -= SomeProcessOnBaseStarted;
     }
 
+    private bool CheckProcessSourceType(string processType)
+    {
+        return string.Equals(processType, UnitProductionItem.type, StringComparison.OrdinalIgnoreCase);
+    }
+
     public void SomeProcessOnBaseStarted(ProcessOnBaseCacheItem processData)
     {
-        if (processData.GetProcessType() != UnitProductionItem.type) return;
+        if (!CheckProcessSourceType(processData.GetSource().type)) return;
         if (processData.GetSource().id != _targetUnitProductionId) return;
 
         process = true;

@@ -11,6 +11,7 @@ public class ContractInProcessCondition: BasicCondition
     public ContractInProcessCondition(string targetContractId) 
     {
         _targetContractId = targetContractId;
+        EnableListeners();
     }
 
     public void FirstComplyCheck()
@@ -18,10 +19,9 @@ public class ContractInProcessCondition: BasicCondition
         firstCheck = false;
 
         process = IsTargetContractInProcess();
-
-        if (!process)
+        if (process)
         {
-            EnableListeners();
+            DisableListeners();
         }
     }
 
@@ -42,14 +42,14 @@ public class ContractInProcessCondition: BasicCondition
         EventMaster.current.ProcessOnBaseStarted -= SomeProcessOnBaseStarted;
     }
 
-    private bool CheckProcessType(string processType)
+    private bool CheckProcessSourceType(string processType)
     {
         return string.Equals(processType, ContractItem.type, StringComparison.OrdinalIgnoreCase);
     }
 
     public void SomeProcessOnBaseStarted(ProcessOnBaseCacheItem processData)
     {
-        if (!CheckProcessType(processData.GetProcessType())) return;
+        if (!CheckProcessSourceType(processData.GetSource().type)) return;
         if (processData.GetSource().id != _targetContractId) return;
 
         process = true;

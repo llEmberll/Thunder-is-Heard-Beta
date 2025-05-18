@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class TutorialController : MonoBehaviour
 {
@@ -112,7 +113,7 @@ public class TutorialController : MonoBehaviour
     private IEnumerator SetStage(ITutorialStage stage)
     {
         _currentStage = stage;
-        _currentConditionForPass = stage.ConditionsForPass;
+        
         SaveTutorialProgress();
 
         // Замена поведений компонентов
@@ -124,16 +125,27 @@ public class TutorialController : MonoBehaviour
             }
         }
 
+        Debug.Log("Поведения компонентов этапа установлены");
+
         EnableListenerForUpdateStage();
 
         _currentStage.OnStart();
         yield return new WaitUntil(() => !_waitingForUpdateStage);
 
+        Debug.Log("Стартовая логика этапа завершена");
+
         // Установка фокуса
+        Debug.Log("Установка фокуса");
+
+
         if (_currentStage.FocusData != null)
         {
             EventMaster.current.OnObjectFocused(_currentStage.FocusData);
         }
+
+        Debug.Log("Новое условие для прохождения - " + stage.ConditionsForPass.GetType().Name);
+
+        _currentConditionForPass = stage.ConditionsForPass;
     }
 
     public void SaveTutorialProgress()
@@ -148,10 +160,14 @@ public class TutorialController : MonoBehaviour
         }
         else
         {
-            ActiveTutorialCacheItem activeTutorialData = new ActiveTutorialCacheItem(new System.Collections.Generic.Dictionary<string, object>());
-            activeTutorialData.SetName(_activeTutorial.GetName());
-            activeTutorialData.SetTutorialId(_activeTutorial.GetExternalId());
-            activeTutorialData.SetStage(TutorialStageFactory.SerializeStage(_currentStage));
+            Dictionary<string, object> activeTutorialFields = new Dictionary<string, object>()
+            {
+                { "name", _activeTutorial.GetName() },
+                { "tutorialId", _activeTutorial.GetExternalId() },
+                { "stage", TutorialStageFactory.SerializeStage(_currentStage) }
+            };
+
+            ActiveTutorialCacheItem activeTutorialData = new ActiveTutorialCacheItem(activeTutorialFields);
             activeTutorialsTable.AddOne(activeTutorialData);
         }
 

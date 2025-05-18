@@ -4,13 +4,13 @@
     "18434891-a067-4c0f-96ae-3061132c13a6": {
       "fields": {
         "externalId": "18434891-a067-4c0f-96ae-3061132c13a6",
+        "name": "Обучение на базе",
         "description": "",
         "conditionForStart": {
           "Type": "AlwaysTrue",
           "Data": null
         },
         "passed": false,
-        "name": "Обучение на базе",
         "firstStage": {
           "id": "BasicTutorialStage",
           "replicsOnStart": [
@@ -427,7 +427,7 @@
                                                     "conditionsForPass": {
                                                       "Type": "ExistObject",
                                                       "Data": {
-                                                        "targetObjectId": "3d9f0f22-409e-40d7-8511-f4584b583dc0"
+                                                        "targetObjectId": "64a4568c-bfaf-408e-9537-8e489ccaca56"
                                                       }
                                                     },
                                                     "stageOnPass": {
@@ -543,7 +543,9 @@
                                                                   "Campany": "Disabled",
                                                                   "Contracts": "Disabled",
                                                                   "UnitProductions": "Disabled",
-                                                                  "Obstacle": "Disabled"
+                                                                  "Obstacle": "Disabled",
+                                                                  "BuildingPanel": "OnlyRotateAndCancel",
+                                                                  "BaseSettingsPanel": "Base"
                                                                 },
                                                                 "focusData": {
                                                                   "Type": "Text",
@@ -559,7 +561,9 @@
                                                                 "Campany": "Disabled",
                                                                 "Contracts": "Disabled",
                                                                 "UnitProductions": "Disabled",
-                                                                "Obstacle": "Disabled"
+                                                                "Obstacle": "Disabled",
+                                                                "BuildingPanel": "OnlyRotateAndCancel",
+                                                                "BaseSettingsPanel": "Disabled"
                                                               },
                                                               "focusData": null,
                                                               "mediaEventData": null
@@ -570,7 +574,9 @@
                                                               "Campany": "Disabled",
                                                               "Contracts": "OnlyTutorialContracts",
                                                               "UnitProductions": "Disabled",
-                                                              "Obstacle": "Disabled"
+                                                              "Obstacle": "Disabled",
+                                                              "BuildingPanel": "OnlyRotateAndCancel",
+                                                              "BaseSettingsPanel": "Disabled"
                                                             },
                                                             "focusData": {
                                                               "Type": "ProductsNotification",
@@ -586,7 +592,9 @@
                                                             "Campany": "Disabled",
                                                             "Contracts": "Disabled",
                                                             "UnitProductions": "Disabled",
-                                                            "Obstacle": "Disabled"
+                                                            "Obstacle": "Disabled",
+                                                            "BuildingPanel": "OnlyRotateAndCancel",
+                                                            "BaseSettingsPanel": "Disabled"
                                                           },
                                                           "focusData": null,
                                                           "mediaEventData": null
@@ -597,7 +605,9 @@
                                                           "Campany": "Disabled",
                                                           "Contracts": "OnlyTutorialContracts",
                                                           "UnitProductions": "Disabled",
-                                                          "Obstacle": "Disabled"
+                                                          "Obstacle": "Disabled",
+                                                          "BuildingPanel": "OnlyRotateAndCancel",
+                                                          "BaseSettingsPanel": "Disabled"
                                                         },
                                                         "focusData": {
                                                           "Type": "UIItem",
@@ -614,12 +624,14 @@
                                                         "Campany": "Disabled",
                                                         "Contracts": "OnlyTutorialContracts",
                                                         "UnitProductions": "Disabled",
-                                                        "Obstacle": "Disabled"
+                                                        "Obstacle": "Disabled",
+                                                        "BuildingPanel": "OnlyRotateAndCancel",
+                                                        "BaseSettingsPanel": "Disabled"
                                                       },
                                                       "focusData": {
                                                         "Type": "Build",
                                                         "Data": {
-                                                          "coreId": "3d9f0f22-409e-40d7-8511-f4584b583dc0"
+                                                          "coreId": "64a4568c-bfaf-408e-9537-8e489ccaca56"
                                                         }
                                                       },
                                                       "mediaEventData": null
@@ -630,13 +642,15 @@
                                                       "Campany": "Disabled",
                                                       "Contracts": "Disabled",
                                                       "UnitProductions": "Disabled",
-                                                      "Obstacle": "Disabled"
+                                                      "Obstacle": "Disabled",
+                                                      "BuildingPanel": "OnlyRotateAndCancel",
+                                                      "BaseSettingsPanel": "Disabled"
                                                     },
                                                     "focusData": {
                                                       "Type": "UIItem",
                                                       "Data": {
                                                         "UIType": "Shop",
-                                                        "coreId": "3d9f0f22-409e-40d7-8511-f4584b583dc0"
+                                                        "coreId": "64a4568c-bfaf-408e-9537-8e489ccaca56"
                                                       }
                                                     },
                                                     "mediaEventData": null
@@ -647,7 +661,9 @@
                                                     "Campany": "Disabled",
                                                     "Contracts": "Disabled",
                                                     "UnitProductions": "Disabled",
-                                                    "Obstacle": "Disabled"
+                                                    "Obstacle": "Disabled",
+                                                    "BuildingPanel": "OnlyRotateAndCancel",
+                                                    "BaseSettingsPanel": "Disabled"
                                                   },
                                                   "focusData": {
                                                     "Type": "Button",
@@ -663,7 +679,9 @@
                                                   "Campany": "Disabled",
                                                   "Contracts": "Disabled",
                                                   "UnitProductions": "Disabled",
-                                                  "Obstacle": "Disabled"
+                                                  "Obstacle": "Disabled",
+                                                  "BuildingPanel": "OnlyRotateAndCancel",
+                                                  "BaseSettingsPanel": "Disabled"
                                                 },
                                                 "focusData": {
                                                   "Type": "UIItem",
@@ -680,7 +698,9 @@
                                                 "Campany": "Disabled",
                                                 "Contracts": "Disabled",
                                                 "UnitProductions": "Disabled",
-                                                "Obstacle": "Disabled"
+                                                "Obstacle": "Disabled",
+                                                "BuildingPanel": "OnlyRotateAndCancel",
+                                                "BaseSettingsPanel": "Disabled"
                                               },
                                               "focusData": {
                                                 "Type": "Button",
@@ -696,7 +716,9 @@
                                               "Campany": "Disabled",
                                               "Contracts": "Disabled",
                                               "UnitProductions": "Disabled",
-                                              "Obstacle": "Disabled"
+                                              "Obstacle": "Disabled",
+                                              "BuildingPanel": "OnlyRotateAndCancel",
+                                              "BaseSettingsPanel": "Disabled"
                                             },
                                             "focusData": {
                                               "Type": "UIItem",
@@ -713,7 +735,9 @@
                                             "Campany": "Disabled",
                                             "Contracts": "Disabled",
                                             "UnitProductions": "Disabled",
-                                            "Obstacle": "Disabled"
+                                            "Obstacle": "Disabled",
+                                            "BuildingPanel": "OnlyRotateAndCancel",
+                                            "BaseSettingsPanel": "Disabled"
                                           },
                                           "focusData": {
                                             "Type": "Button",
@@ -729,7 +753,9 @@
                                           "Campany": "Disabled",
                                           "Contracts": "Disabled",
                                           "UnitProductions": "Disabled",
-                                          "Obstacle": "Disabled"
+                                          "Obstacle": "Disabled",
+                                          "BuildingPanel": "OnlyRotateAndCancel",
+                                          "BaseSettingsPanel": "Disabled"
                                         },
                                         "focusData": null,
                                         "mediaEventData": null
@@ -740,7 +766,9 @@
                                         "Campany": "Disabled",
                                         "Contracts": "Disabled",
                                         "UnitProductions": "Disabled",
-                                        "Obstacle": "Disabled"
+                                        "Obstacle": "Disabled",
+                                        "BuildingPanel": "OnlyRotateAndCancel",
+                                        "BaseSettingsPanel": "Disabled"
                                       },
                                       "focusData": {
                                         "Type": "UIItem",
@@ -757,7 +785,9 @@
                                       "Campany": "Disabled",
                                       "Contracts": "Disabled",
                                       "UnitProductions": "Disabled",
-                                      "Obstacle": "Disabled"
+                                      "Obstacle": "Disabled",
+                                      "BuildingPanel": "OnlyRotateAndCancel",
+                                      "BaseSettingsPanel": "Disabled"
                                     },
                                     "focusData": {
                                       "Type": "Button",
@@ -773,7 +803,9 @@
                                     "Campany": "Disabled",
                                     "Contracts": "Disabled",
                                     "UnitProductions": "Disabled",
-                                    "Obstacle": "Disabled"
+                                    "Obstacle": "Disabled",
+                                    "BuildingPanel": "OnlyRotateAndCancel",
+                                    "BaseSettingsPanel": "Disabled"
                                   },
                                   "focusData": null,
                                   "mediaEventData": {
@@ -790,7 +822,9 @@
                                   "Campany": "Disabled",
                                   "Contracts": "OnlyTutorialContracts",
                                   "UnitProductions": "Disabled",
-                                  "Obstacle": "Disabled"
+                                  "Obstacle": "Disabled",
+                                  "BuildingPanel": "OnlyRotateAndCancel",
+                                  "BaseSettingsPanel": "Disabled"
                                 },
                                 "focusData": {
                                   "Type": "ProductsNotification",
@@ -806,7 +840,9 @@
                                 "Campany": "Disabled",
                                 "Contracts": "Disabled",
                                 "UnitProductions": "Disabled",
-                                "Obstacle": "Disabled"
+                                "Obstacle": "Disabled",
+                                "BuildingPanel": "OnlyRotateAndCancel",
+                                "BaseSettingsPanel": "Disabled"
                               },
                               "focusData": null,
                               "mediaEventData": null
@@ -817,7 +853,9 @@
                               "Campany": "Disabled",
                               "Contracts": "OnlyTutorialContracts",
                               "UnitProductions": "Disabled",
-                              "Obstacle": "Disabled"
+                              "Obstacle": "Disabled",
+                              "BuildingPanel": "OnlyRotateAndCancel",
+                              "BaseSettingsPanel": "Disabled"
                             },
                             "focusData": {
                               "Type": "UIItem",
@@ -834,7 +872,9 @@
                             "Campany": "Disabled",
                             "Contracts": "OnlyTutorialContracts",
                             "UnitProductions": "Disabled",
-                            "Obstacle": "Disabled"
+                            "Obstacle": "Disabled",
+                            "BuildingPanel": "OnlyRotateAndCancel",
+                            "BaseSettingsPanel": "Disabled"
                           },
                           "focusData": {
                             "Type": "Build",
@@ -850,7 +890,9 @@
                           "Campany": "Disabled",
                           "Contracts": "Disabled",
                           "UnitProductions": "Disabled",
-                          "Obstacle": "Disabled"
+                          "Obstacle": "Disabled",
+                          "BuildingPanel": "OnlyRotateAndCancel",
+                          "BaseSettingsPanel": "Disabled"
                         },
                         "focusData": {
                           "Type": "UIItem",
@@ -867,7 +909,9 @@
                         "Campany": "Disabled",
                         "Contracts": "Disabled",
                         "UnitProductions": "Disabled",
-                        "Obstacle": "Disabled"
+                        "Obstacle": "Disabled",
+                        "BuildingPanel": "OnlyRotateAndCancel",
+                        "BaseSettingsPanel": "Disabled"
                       },
                       "focusData": {
                         "Type": "Button",
@@ -883,7 +927,9 @@
                       "Campany": "Disabled",
                       "Contracts": "Disabled",
                       "UnitProductions": "OnlyTutorialProductions",
-                      "Obstacle": "Disabled"
+                      "Obstacle": "Disabled",
+                      "BuildingPanel": "OnlyRotateAndCancel",
+                      "BaseSettingsPanel": "Disabled"
                     },
                     "focusData": {
                       "Type": "ProductsNotification",
@@ -899,7 +945,9 @@
                     "Campany": "Disabled",
                     "Contracts": "Disabled",
                     "UnitProductions": "Disabled",
-                    "Obstacle": "Disabled"
+                    "Obstacle": "Disabled",
+                    "BuildingPanel": "OnlyRotateAndCancel",
+                    "BaseSettingsPanel": "Disabled"
                   },
                   "focusData": null,
                   "mediaEventData": null
@@ -910,7 +958,9 @@
                   "Campany": "Disabled",
                   "Contracts": "Disabled",
                   "UnitProductions": "OnlyTutorialProductions",
-                  "Obstacle": "Disabled"
+                  "Obstacle": "Disabled",
+                  "BuildingPanel": "OnlyRotateAndCancel",
+                  "BaseSettingsPanel": "Disabled"
                 },
                 "focusData": {
                   "Type": "UIItem",
@@ -927,7 +977,9 @@
                 "Campany": "Disabled",
                 "Contracts": "Disabled",
                 "UnitProductions": "OnlyTutorialProductions",
-                "Obstacle": "Disabled"
+                "Obstacle": "Disabled",
+                "BuildingPanel": "OnlyRotateAndCancel",
+                "BaseSettingsPanel": "Disabled"
               },
               "focusData": {
                 "Type": "Build",
@@ -943,7 +995,9 @@
               "Campany": "Disabled",
               "Contracts": "Disabled",
               "UnitProductions": "Disabled",
-              "Obstacle": "Disabled"
+              "Obstacle": "Disabled",
+              "BuildingPanel": "OnlyRotateAndCancel",
+              "BaseSettingsPanel": "Disabled"
             },
             "focusData": {
               "Type": "UIItem",
@@ -960,7 +1014,9 @@
             "Campany": "Disabled",
             "Contracts": "Disabled",
             "UnitProductions": "Disabled",
-            "Obstacle": "Disabled"
+            "Obstacle": "Disabled",
+            "BuildingPanel": "OnlyRotateAndCancel",
+            "BaseSettingsPanel": "Disabled"
           },
           "focusData": {
             "Type": "Button",

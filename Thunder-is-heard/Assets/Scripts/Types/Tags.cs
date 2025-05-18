@@ -4,6 +4,8 @@ using Palmmedia.ReportGenerator.Core.Reporting.Builders.Rendering;
 
 public static class Tags
 {
+    public static string state = "State";
+
     public static string mainCamera = "MainCamera";
 
     public static string map = "Map";
@@ -28,6 +30,7 @@ public static class Tags
     public static string toReportsButton = "ToReportsButton";
 
     public static string renameBaseButton = "RenameBaseButton";
+    public static string baseNameChangeModal = "BaseNameChange";
 
     public static string mission = "Mission";
     public static string inventoryItems = "InventoryItems";

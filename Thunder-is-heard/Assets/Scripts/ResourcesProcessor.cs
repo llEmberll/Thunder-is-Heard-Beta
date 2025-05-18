@@ -22,7 +22,7 @@ public class ResourcesProcessor : MonoBehaviour
 
     public void Start()
     {
-        UpdateBaseNameUI();
+        InitBaseNameUI();
         EventMaster.current.BaseObjectsChanged += UpdateResourcesFromBaseObjects;
     }
 
@@ -40,11 +40,11 @@ public class ResourcesProcessor : MonoBehaviour
     }
 
 
-    public void UpdateBaseNameUI()
+    public void InitBaseNameUI()
     {
         ResourcesCacheTable resourcesTable = Cache.LoadByType<ResourcesCacheTable>();
         string baseName = resourcesTable.GetBaseName();
-        EventMaster.current.OnChangeBaseName(baseName);
+        EventMaster.current.OnInitializeBaseName(baseName);
     }
 
     public ResourcesData LoadResourcesFromObjectsOnBase()

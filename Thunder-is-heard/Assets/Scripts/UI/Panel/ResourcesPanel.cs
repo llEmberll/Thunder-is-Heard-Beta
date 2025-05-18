@@ -25,6 +25,7 @@ public class ResourcesPanel : Panel
     public void Start()
     {
         EventMaster.current.ResourcesChanged += UpdateAll;
+        EventMaster.current.InitializedBaseName += UpdateBaseName;
         EventMaster.current.ChangedBaseName += UpdateBaseName;
     }
 

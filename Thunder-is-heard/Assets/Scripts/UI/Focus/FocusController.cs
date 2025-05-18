@@ -143,8 +143,6 @@ public class FocusController : MonoBehaviour
 
     public void OnDefocus()
     {
-        Debug.Log("Focus controller  unlock camera, camera ON");
-
         EventMaster.current.CancelFocus();
 
         ResetMaterials();
@@ -433,6 +431,7 @@ public class FocusController : MonoBehaviour
         string textTag = (string)data["tag"];
         TMP_Text text = textByTag[textTag];
         _targetText = text;
+        _originalTextColor = text.color;
     }
 
     public void ProcessTargetWithMaterials()
@@ -483,27 +482,12 @@ public class FocusController : MonoBehaviour
     {
         if (_targetText == null) return;
 
-        // Сохраняем исходный цвет, если ещё не сохранён
-        if (_originalTextColor == null)
-        {
-            _originalTextColor = _targetText.color;
-        }
-
-        // Логика мигания альфа-канала текста
         _blinkProgress += Time.deltaTime / BLINK_DURATION;
         _blinkProgress %= 1f;
 
-        float originalAlpha = ((Color)_originalTextColor).a;
         float minAlpha = _minTextAlpha / 255f;
         float maxAlpha = _maxTextAlpha / 255f;
-        float targetAlpha = Mathf.Clamp01(originalAlpha - _current_ChangeFromOriginalColorLevel / 255f);
-
-        float newAlpha = Mathf.Lerp(
-            originalAlpha,
-            targetAlpha,
-            Mathf.PingPong(_blinkProgress, 1f)
-        );
-        newAlpha = Mathf.Clamp(newAlpha, minAlpha, maxAlpha);
+        float newAlpha = Mathf.Lerp(minAlpha, maxAlpha, Mathf.PingPong(_blinkProgress, 1f));
 
         Color c = _targetText.color;
         c.a = newAlpha;

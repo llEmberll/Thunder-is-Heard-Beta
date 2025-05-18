@@ -36,7 +36,7 @@ public class Cell : Interactable
 
 	public void Start()
     {
-        sceneState = GameObject.FindWithTag("State").GetComponent<SceneState>();
+        sceneState = GameObject.FindWithTag(Tags.state).GetComponent<SceneState>();
         
         stateMachine.Initialize(sceneState.GetCurrentState());
         

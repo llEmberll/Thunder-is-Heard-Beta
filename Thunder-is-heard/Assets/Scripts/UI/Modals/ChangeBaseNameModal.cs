@@ -147,7 +147,7 @@ public class ChangeBaseNameModal : UIElement
 
     public void OnRename()
     {
-        ResourcesProcessor.ChangeBaseName(nameInput.ToString());
+        ResourcesProcessor.ChangeBaseName(nameInput.text);
     }
 
     public override void OnPointerEnter(PointerEventData data)

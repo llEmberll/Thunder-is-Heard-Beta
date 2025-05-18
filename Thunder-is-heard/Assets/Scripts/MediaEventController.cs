@@ -19,6 +19,8 @@ public class MediaEventController : MonoBehaviour
 
     public void OnBeginMediaEvent(MediaEventData eventData)
     {
+        Debug.Log("Media event catched");
+
         StartCoroutine(PlayMediaEvent(eventData));
     }
 

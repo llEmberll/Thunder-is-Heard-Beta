@@ -157,6 +157,9 @@ public class BasicTutorialStage: ITutorialStage
 
         if (_mediaEventData != null)
         {
+
+            Debug.Log("Media event not null. Set up...");
+
             _startSequenceActions.Enqueue(() => BeginMediaEvent(_mediaEventData));
         }
 
@@ -187,6 +190,8 @@ public class BasicTutorialStage: ITutorialStage
 
     public void BeginMediaEvent(MediaEventData eventData)
     {
+        Debug.Log("Begin media event!");
+
         isMediaEvent = true;
         EventMaster.current.BeginMediaEvent(eventData);
         EnableEndMediaEventListener();
@@ -211,6 +216,8 @@ public class BasicTutorialStage: ITutorialStage
 
     public void OnEndMediaEvent()
     {
+        Debug.Log("End media event");
+
         if (isMediaEvent)
         {
             isMediaEvent = false;

@@ -42,14 +42,14 @@ public class ContractFinishedCondition: BasicCondition
         EventMaster.current.ProcessOnBaseFinished -= SomeProcessOnBaseFinished;
     }
 
-    private bool CheckProcessType(string processType)
+    private bool CheckProcessSourceType(string processType)
     {
         return string.Equals(processType, ContractItem.type, StringComparison.OrdinalIgnoreCase);
     }
 
     public void SomeProcessOnBaseFinished(ProcessOnBaseCacheItem processData)
     {
-        if (!CheckProcessType(processData.GetProcessType())) return;
+        if (!CheckProcessSourceType(processData.GetSource().type)) return;
         if (processData.GetSource().id != _targetContractId) return;
 
         finished = true;

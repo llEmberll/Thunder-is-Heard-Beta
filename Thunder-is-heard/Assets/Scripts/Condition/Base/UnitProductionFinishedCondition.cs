@@ -1,4 +1,6 @@
 
+using System;
+
 public class UnitProductionFinishedCondition: BasicCondition
 {
     public bool firstCheck = true;
@@ -41,9 +43,14 @@ public class UnitProductionFinishedCondition: BasicCondition
         EventMaster.current.ProcessOnBaseFinished -= SomeProcessOnBaseFinished;
     }
 
+    private bool CheckProcessSourceType(string processType)
+    {
+        return string.Equals(processType, UnitProductionItem.type, StringComparison.OrdinalIgnoreCase);
+    }
+
     public void SomeProcessOnBaseFinished(ProcessOnBaseCacheItem processData)
     {
-        if (processData.GetProcessType() != UnitProductionItem.type) return;
+        if (!CheckProcessSourceType(processData.GetSource().type)) return;
         if (processData.GetSource().id != _targetUnitProductionId) return;
 
         finished = true;

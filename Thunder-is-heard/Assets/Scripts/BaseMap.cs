@@ -11,7 +11,7 @@ public class BaseMap : Map
 
     public void Start()
     {
-        //CreateTutorialOnBase();
+        CreateTutorialOnBase();
     }
 
     public void CreateTutorialOnBase()
@@ -48,7 +48,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "Disabled" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" },
+            { "Obstacle", "Disabled" }, { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
         //// ������������� �����(���������)
@@ -92,7 +92,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "Disabled" },
             { "UnitProductions", "OnlyTutorialProductions" },
-            { "Obstacle", "Disabled" },
+            { "Obstacle", "Disabled" }, { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
         //// ������������� �����(��������� ������������ ������)
@@ -125,7 +125,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "Disabled" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" },
+            { "Obstacle", "Disabled" }, { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
         //// ������������� �����(����)
@@ -153,7 +153,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "Disabled" },
             { "UnitProductions", "OnlyTutorialProductions" },
-            { "Obstacle", "Disabled" }
+            { "Obstacle", "Disabled" },  { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
         //// ����(�������� ��������)
@@ -182,7 +182,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "Disabled" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" },
+            { "Obstacle", "Disabled" }, { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
 
@@ -227,7 +227,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "OnlyTutorialContracts" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" },
+            { "Obstacle", "Disabled" }, { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
 
@@ -261,7 +261,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "Disabled" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" },
+            { "Obstacle", "Disabled" }, { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
 
@@ -290,7 +290,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "OnlyTutorialContracts" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" }
+            { "Obstacle", "Disabled" },  { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
 
@@ -414,7 +414,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "Disabled" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" },
+            { "Obstacle", "Disabled" }, { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
         //// �����������(�������������)
@@ -485,7 +485,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "Disabled" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" },
+            { "Obstacle", "Disabled" }, { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
 
@@ -540,7 +540,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "Disabled" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" },
+            { "Obstacle", "Disabled" }, { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
 
@@ -588,7 +588,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "Disabled" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" },
+            { "Obstacle", "Disabled" }, { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
 
@@ -596,7 +596,7 @@ public class BaseMap : Map
         //// ����������(�������������)
         // �������
 
-        string oilStationId = "3d9f0f22-409e-40d7-8511-f4584b583dc0";
+        string oilStationId = "64a4568c-bfaf-408e-9537-8e489ccaca56";
 
         // ������� ��� �����������
         Dictionary<string, object> dataForConditionForPassStage22 = new Dictionary<string, object>() { { "targetObjectId", oilStationId } };
@@ -635,7 +635,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "OnlyTutorialContracts" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" },
+            { "Obstacle", "Disabled" }, { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
 
@@ -670,7 +670,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "Disabled" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" },
+            { "Obstacle", "Disabled" }, { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
 
@@ -692,7 +692,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "OnlyTutorialContracts" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" }
+            { "Obstacle", "Disabled" },  { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Disabled" }
         };
 
 
@@ -767,7 +767,7 @@ public class BaseMap : Map
             { "Campany", "Disabled" },
             { "Contracts", "Disabled" },
             { "UnitProductions", "Disabled" },
-            { "Obstacle", "Disabled" }
+            { "Obstacle", "Disabled" },  { "BuildingPanel", "OnlyRotateAndCancel" }, { "BaseSettingsPanel", "Base" }
         };
 
         TutorialStageData stage28 = new TutorialStageData(
@@ -1026,16 +1026,17 @@ public class BaseMap : Map
 
         TutorialCacheTable table = Cache.LoadByType<TutorialCacheTable>();
 
-        TutorialCacheItem tutorialData = new TutorialCacheItem(new Dictionary<string, object>());
+        Dictionary<string, object> tutorialFields = new Dictionary<string, object>()
+        {
+            { "externalId", "18434891-a067-4c0f-96ae-3061132c13a6" },
+            { "name", "Обучение на базе" },
+            { "description", "" },
+            { "conditionForStart", new ConditionData(type: "AlwaysTrue", null) },
+            { "passed", false },
+            { "firstStage", stage1 }
+        };
 
-        tutorialData.SetExternalId("18434891-a067-4c0f-96ae-3061132c13a6");
-        tutorialData.SetName("Обучение на базе");
-
-        // ����� ���������� ������� �������� �������� �� ����������� ��������� ������
-        ConditionData conditionForStartTutorialOnBase = new ConditionData(type: "AlwaysTrue", null);
-        tutorialData.SetConditionForStart(conditionForStartTutorialOnBase);
-
-        tutorialData.SetFirstStage(stage1);
+        TutorialCacheItem tutorialData = new TutorialCacheItem(tutorialFields);
         table.AddOne(tutorialData);
         Cache.Save(table);
     }

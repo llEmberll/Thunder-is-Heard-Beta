@@ -377,6 +377,7 @@ public class ObjectPreview: MonoBehaviour
 
         model.transform.parent = buildedObjectOnScene.transform;
         SetMaterialsRecursive(model.gameObject, modelMaterials);
+        ToggleModelBoxColliders(true);
     }
 
     public void Cancel()

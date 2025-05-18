@@ -171,6 +171,12 @@ public class EventMaster: MonoBehaviour
         ChangedBaseName?.Invoke(value);
     }
 
+    public event Action<string> InitializedBaseName;
+    public void OnInitializeBaseName(string value)
+    {
+        InitializedBaseName?.Invoke(value);
+    }
+
     public event Action<Entity> BaseObjectRemoved;
     public void OnRemoveBaseObject(Entity obj)
     {

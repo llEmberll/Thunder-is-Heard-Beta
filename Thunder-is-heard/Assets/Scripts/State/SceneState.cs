@@ -38,7 +38,7 @@ public class SceneState : MonoBehaviour
 
     public void OnExitBuildMode()
     {
-
+        Debug.Log("On exit build mode!");
         SetBaseState();
     }
 

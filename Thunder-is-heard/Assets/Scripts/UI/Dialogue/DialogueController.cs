@@ -225,16 +225,12 @@ public class DialogueController : UIElement
     public override void Hide()
     {
 
-        Debug.Log("Dialogue Controller hide, camera ON");
-
         base.Hide();
         EventMaster.current.OnUIPanelToggle(false);
     }
 
     public override void Show()
     {
-        Debug.Log("Dialogue Controller show, camera OFF");
-
         base.Show();
         EventMaster.current.OnUIPanelToggle(true);
     }
