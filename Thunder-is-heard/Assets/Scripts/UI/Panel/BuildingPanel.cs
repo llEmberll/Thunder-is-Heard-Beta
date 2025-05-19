@@ -1,14 +1,14 @@
-using UnityEngine.UI;
+using UnityEngine;
 
 
 public class BuildingPanel : Panel
 {
-    public Image turnOnBuildingOption;
-    public Image turnOffBuildingOption;
-    public Image cancelOption;
-    public Image rotateOption;
-    public Image toInventoryOption;
-    public Image sellOption;
+    public GameObject turnOnBuildingOption = null;
+    public GameObject turnOffBuildingOption = null;
+    public GameObject cancelOption = null;
+    public GameObject rotateOption = null;
+    public GameObject toInventoryOption = null;
+    public GameObject sellOption = null;
 
 
     public static string ComponentType
@@ -36,6 +36,7 @@ public class BuildingPanel : Panel
         EventMaster.current.ToggledToBuildMode += OnBuildMode;
         EventMaster.current.ToggledOffBuildMode += OnExitBuildMode;
         EventMaster.current.ComponentBehaviourChanged += OnSomeComponentChangeBehaviour;
+        EventMaster.current.FightIsStarted += OnStartFight;
     }
 
     public virtual void DisableListeners()
@@ -43,6 +44,37 @@ public class BuildingPanel : Panel
         EventMaster.current.ToggledToBuildMode -= OnBuildMode;
         EventMaster.current.ToggledOffBuildMode -= OnExitBuildMode;
         EventMaster.current.ComponentBehaviourChanged -= OnSomeComponentChangeBehaviour;
+        EventMaster.current.FightIsStarted -= OnStartFight;
+    }
+
+    public void TurnOffBuilding()
+    {
+        _behaviour.TurnOffBuilding(this);
+    }
+
+    public virtual void TurnOnBuilding()
+    {
+        _behaviour.TurnOnBuilding(this);
+    }
+
+    public virtual void Cancel()
+    {
+        _behaviour.Cancel(this);
+    }
+
+    public virtual void Rotate()
+    {
+        _behaviour.Rotate(this);
+    }
+
+    public virtual void ToInventory()
+    {
+        _behaviour.ToInventory(this);
+    }
+
+    public virtual void Sell()
+    {
+        _behaviour.Sell(this);
     }
 
     public void OnExitBuildMode()
@@ -55,42 +87,81 @@ public class BuildingPanel : Panel
         _behaviour.OnBuildMode(this);
     }
 
+
+
     public void TurnOnAllOptionsExceptTurnOnBuilding()
     {
-        turnOnBuildingOption.gameObject.SetActive(false);
+        ToggleObjects(
+            objs: new GameObject[] { turnOnBuildingOption }, 
+            active: false
+        );
 
-        turnOffBuildingOption.gameObject.SetActive(true);
-        cancelOption.gameObject.SetActive(true);
-        rotateOption.gameObject.SetActive(true);
-        toInventoryOption.gameObject.SetActive(true);
-        sellOption.gameObject.SetActive(true);
+        ToggleObjects(
+            objs: new GameObject[] {
+                turnOffBuildingOption,
+                cancelOption,
+                rotateOption,
+                toInventoryOption,
+                sellOption
+            },
+            active: true
+        );
     }
 
     public void TurnOffAllOptionsExceptTurnOnBuilding()
     {
-        turnOnBuildingOption.gameObject.SetActive(true);
+        ToggleObjects(
+            objs: new GameObject[] { turnOnBuildingOption },
+            active: true
+        );
 
-        turnOffBuildingOption.gameObject.SetActive(false);
-        cancelOption.gameObject.SetActive(false);
-        rotateOption.gameObject.SetActive(false);
-        toInventoryOption.gameObject.SetActive(false);
-        sellOption.gameObject.SetActive(false);
+        ToggleObjects(
+            objs: new GameObject[] {
+                turnOffBuildingOption,
+                cancelOption,
+                rotateOption,
+                toInventoryOption,
+                sellOption
+            },
+            active: false
+        );
     }
 
-    public void TurnOffOptions()
+    public void TurnOffAllOptions()
     {
-        turnOnBuildingOption.gameObject.SetActive(false);
-        turnOffBuildingOption.gameObject.SetActive(false);
-        cancelOption.gameObject.SetActive(false);
-        rotateOption.gameObject.SetActive(false);
-        toInventoryOption.gameObject.SetActive(false);
-        sellOption.gameObject.SetActive(false);
+        ToggleObjects(
+            objs: new GameObject[] {
+                turnOnBuildingOption,
+                turnOffBuildingOption,
+                cancelOption,
+                rotateOption,
+                toInventoryOption,
+                sellOption
+            },
+            active: false
+        );
+    }
+
+    public void ToggleObjects(GameObject[] objs, bool active)
+    {
+        foreach (GameObject obj in objs)
+        {
+            if (obj != null)
+            {
+                obj.SetActive(active);
+            }
+        }
     }
 
     public void OnSomeComponentChangeBehaviour(string componentName, string behaviourName)
     {
         if (componentName != ComponentType) return;
         ChangeBehaviour(behaviourName);
+    }
+
+    public void OnStartFight()
+    {
+        ChangeBehaviour("Disabled");
     }
 
     public void OnResetBehaviour()

@@ -154,6 +154,7 @@ public class FocusController : MonoBehaviour
         _defaultMaterialColorLevelByName = new Dictionary<string, int>();
         _targetObjectMaterials = null;
         _targetImage = null;
+        _targetText = null;
     }
 
     public void OnBuildFocus(Dictionary<string, object> data)

@@ -11,7 +11,7 @@ public class BaseMap : Map
 
     public void Start()
     {
-        CreateTutorialOnBase();
+        //CreateTutorialOnBase();
     }
 
     public void CreateTutorialOnBase()

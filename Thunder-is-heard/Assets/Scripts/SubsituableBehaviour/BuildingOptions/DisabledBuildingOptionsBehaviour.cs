@@ -3,7 +3,7 @@ public class DisabledBuildingOptionsBehaviour : BaseSubsituableBuildingOptionsBe
 {
     public override void Init(BuildingPanel conductor)
     {
-        conductor.TurnOffOptions();   
+        conductor.TurnOffAllOptions();   
     }
 
     public override void OnBuildMode(BuildingPanel conductor)

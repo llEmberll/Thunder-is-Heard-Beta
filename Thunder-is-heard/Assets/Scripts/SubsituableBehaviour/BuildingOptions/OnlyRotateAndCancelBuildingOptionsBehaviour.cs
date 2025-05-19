@@ -15,7 +15,7 @@ public class OnlyRotateAndCancelBuildingOptionsBehaviour : BaseSubsituableBuildi
 
     public override void OnExitBuildMode(BuildingPanel conductor)
     {
-        conductor.TurnOffOptions();
+        conductor.TurnOffAllOptions();
     }
 
     public override void TurnOnBuilding(BuildingPanel conductor)

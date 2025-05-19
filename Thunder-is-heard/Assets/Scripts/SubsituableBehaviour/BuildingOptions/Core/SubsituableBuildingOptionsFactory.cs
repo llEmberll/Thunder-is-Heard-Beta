@@ -7,6 +7,7 @@ public static class SubsituableBuildingOptionsFactory
     {
         { "Base", typeof(BaseSubsituableBuildingOptionsBehaviour) },
         { "OnlyRotateAndCancel", typeof(OnlyRotateAndCancelBuildingOptionsBehaviour) },
+        { "Landing", typeof (LandingBuildingOptionsBehaviour) },
         { "Disabled", typeof(DisabledBuildingOptionsBehaviour) },
     };
 

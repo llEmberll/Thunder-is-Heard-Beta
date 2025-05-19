@@ -8,12 +8,7 @@
         "rotation": 180,
         "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
         "name": "Штурмовики",
-        "position": [
-          {
-            "x": 7,
-            "y": 4
-          }
-        ]
+        "position": "[{\"x\":7,\"y\":4}]"
       }
     },
     "53f31e8c-0e54-41da-82b1-2c946ce11d14": {
@@ -29,6 +24,16 @@
             "y": 4
           }
         ]
+      }
+    },
+    "8712a06a-5137-4c8d-a088-495bfa6d0018": {
+      "fields": {
+        "externalId": "8712a06a-5137-4c8d-a088-495bfa6d0018",
+        "description": "",
+        "rotation": 180,
+        "coreId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "name": "Штурмовики",
+        "position": "[{\"x\":5,\"y\":4}]"
       }
     }
   }

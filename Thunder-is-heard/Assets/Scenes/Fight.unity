@@ -1259,6 +1259,7 @@ RectTransform:
   - {fileID: 762051406}
   - {fileID: 1395061542}
   - {fileID: 1800927798}
+  - {fileID: 1674481005}
   m_Father: {fileID: 1568384784}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1279,6 +1280,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efc410c6fb57c094797057e3dc6baab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turnOnBuildingOption: {fileID: 1674481004}
+  turnOffBuildingOption: {fileID: 0}
+  cancelOption: {fileID: 762051405}
+  rotateOption: {fileID: 1395061541}
+  toInventoryOption: {fileID: 1800927797}
+  sellOption: {fileID: 0}
 --- !u!114 &416643560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2138,6 +2145,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1568384784}
     m_Modifications:
+    - target: {fileID: 2685734571591748654, guid: ba2efd00455811c43afe6bc13a0c7ad9, type: 3}
+      propertyPath: baseName
+      value: 
+      objectReference: {fileID: 717038490}
     - target: {fileID: 3458774841095838835, guid: ba2efd00455811c43afe6bc13a0c7ad9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2268,6 +2279,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3458774841095838835, guid: ba2efd00455811c43afe6bc13a0c7ad9, type: 3}
   m_PrefabInstance: {fileID: 717038488}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &717038490 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6244745130451705884, guid: ba2efd00455811c43afe6bc13a0c7ad9, type: 3}
+  m_PrefabInstance: {fileID: 717038488}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &744457418
 GameObject:
   m_ObjectHideFlags: 0
@@ -2580,9 +2602,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2410590379133309894}
-        m_TargetAssemblyTypeName: EventMaster, Assembly-CSharp
-        m_MethodName: OnExitBuildMode
+      - m_Target: {fileID: 416643559}
+        m_TargetAssemblyTypeName: BuildingPanel, Assembly-CSharp
+        m_MethodName: Cancel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2590,7 +2612,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &762051408
 MonoBehaviour:
@@ -4096,9 +4118,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2410590379133309894}
-        m_TargetAssemblyTypeName: EventMaster, Assembly-CSharp
-        m_MethodName: OnRotatePreview
+      - m_Target: {fileID: 416643559}
+        m_TargetAssemblyTypeName: BuildingPanel, Assembly-CSharp
+        m_MethodName: Rotate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4713,7 +4735,6 @@ RectTransform:
   - {fileID: 4065941096456814878}
   - {fileID: 416643558}
   - {fileID: 1817112351}
-  - {fileID: 1674481005}
   - {fileID: 844036642}
   - {fileID: 767649636}
   - {fileID: 1608809591}
@@ -5343,17 +5364,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674481004}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000799, y: 1.0000799, z: 1.0000799}
+  m_LocalPosition: {x: 0, y: 0, z: 0.000055381788}
+  m_LocalScale: {x: 1.0754937, y: 1.0754937, z: 1.0754937}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1517199442}
-  m_Father: {fileID: 1568384784}
+  m_Father: {fileID: 416643558}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -128.2002, y: -209.7}
+  m_AnchoredPosition: {x: -43.125626, y: 0.00012207031}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1674481006
@@ -5400,9 +5421,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2410590379133309894}
-        m_TargetAssemblyTypeName: EventMaster, Assembly-CSharp
-        m_MethodName: OnBuildMode
+      - m_Target: {fileID: 416643559}
+        m_TargetAssemblyTypeName: BuildingPanel, Assembly-CSharp
+        m_MethodName: TurnOnBuilding
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5652,9 +5673,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 92603215369345354}
-        m_TargetAssemblyTypeName: ObjectProcessor, Assembly-CSharp
-        m_MethodName: PutSelectedObjectOnBattleToInventory
+      - m_Target: {fileID: 416643559}
+        m_TargetAssemblyTypeName: BuildingPanel, Assembly-CSharp
+        m_MethodName: ToInventory
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10995,6 +11016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93203e72b59c3c956ba71305c1acd39f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isUIPanel: 0
   _isMovable: 1
   _isDragging: 0
   _lastMousePosition: {x: 0, y: 0}
