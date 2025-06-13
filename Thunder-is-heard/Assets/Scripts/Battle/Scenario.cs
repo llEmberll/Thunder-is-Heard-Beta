@@ -25,25 +25,17 @@ public class Scenario : MonoBehaviour
     public bool waitingForEndDialogue = false;
 
 
-    public bool _isLanded = false;
-
-
     public ObjectProcessor _objectProcessor;
 
     public bool waitingForUpdateStage = false;
 
 
-    public void Init(Map scenarioMap, List<Vector2Int> scenarioLandableCells, int landingMaxStaff, IStage currentStage, Replic[] startDialogue, bool isLanded)
+    public void Init(Map scenarioMap, IStage currentStage, Replic[] startDialogue)
     {
         map = scenarioMap;
-        _landableCells = scenarioLandableCells;
-        _landingMaxStaff = landingMaxStaff;
-
         _currentStage = currentStage;
 
         _initialDialogue = startDialogue;
-
-        _isLanded = isLanded;
 
         InitObjectProcessor();
         EnableListenerForUpdateStage();
@@ -64,6 +56,11 @@ public class Scenario : MonoBehaviour
     {
         EventMaster.current.StageUpdated -= OnUpdateStage;
         waitingForUpdateStage = false;
+    }
+
+    public bool IsStageProcessing()
+    {
+        return (waitingForUpdateStage || waitingForEndDialogue);
     }
 
     public void OnUpdateStage()
@@ -90,7 +87,7 @@ public class Scenario : MonoBehaviour
 
     public IEnumerator ToNextStage(IStage nextStage)
     {
-        Debug.Log("Çàâåðøåíèå ïðåäûäóùåãî ýòàïà");
+        Debug.Log("To next stage");
         EnableListenerForUpdateStage();
         CurrentStage.OnFinish();
         yield return new WaitUntil(() => !waitingForUpdateStage);
@@ -99,7 +96,7 @@ public class Scenario : MonoBehaviour
         EventMaster.current.OnCurrentStageChange(CurrentStage);
         EventMaster.current.OnNextStage(_currentStage);
 
-        Debug.Log("Íà÷àëî íîâîãî ýòàïà");
+        Debug.Log("Changed stage");
 
         EnableListenerForUpdateStage();
         CurrentStage.OnStart();
@@ -125,11 +122,6 @@ public class Scenario : MonoBehaviour
         }
     }
 
-    public void StartLanding()
-    {
-        EventMaster.current.Landing(LandableCells, LandingMaxStaff);
-    }
-
     public IEnumerator Begin()
     {
         EventMaster.current.OnStageBegin(CurrentStage);
@@ -140,6 +132,11 @@ public class Scenario : MonoBehaviour
     }
 
     public IEnumerator OnNextTurn()
+    {
+        yield return CheckConditionAndRunNextIfNeed();
+    }
+
+    public IEnumerator CheckConditionAndRunNextIfNeed()
     {
         if (CurrentStage.IsFailed())
         {

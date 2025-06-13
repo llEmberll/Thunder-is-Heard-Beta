@@ -53,6 +53,11 @@ public class MissionCacheItem : CacheItem
             return new RewardData[] { };
         }
 
+        if (value is RewardData[] typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<RewardData[]>(value.ToString());
     }
 
@@ -62,6 +67,11 @@ public class MissionCacheItem : CacheItem
         if (value == null)
         {
             return new ResourcesData();
+        }
+
+        if (value is ResourcesData typedValue)
+        {
+            return typedValue;
         }
 
         return JsonConvert.DeserializeObject<ResourcesData>(value.ToString());
@@ -93,6 +103,11 @@ public class MissionCacheItem : CacheItem
         if (value == null)
         {
             return null;
+        }
+
+        if (value is Bector2Int typedValue)
+        {
+            return typedValue;
         }
 
         return JsonConvert.DeserializeObject<Bector2Int>(value.ToString());

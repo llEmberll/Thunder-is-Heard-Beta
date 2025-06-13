@@ -22,6 +22,12 @@ public class ActiveTutorialCacheItem : CacheItem
     public TutorialStageData GetStage()
     {
         object value = GetField("stage");
+
+        if (value is TutorialStageData typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<TutorialStageData>(value.ToString());
     }
 

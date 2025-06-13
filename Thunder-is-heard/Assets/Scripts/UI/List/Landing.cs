@@ -2,10 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-
-public class Landing : ItemList
+public class Landing : ItemList, IItemConductor
 {
+    public string ComponentType
+    {
+        get { return "Landing"; }
+    }
+
     public List<LandableUnit> items;
 
     public TMP_Text TmpHealth;
@@ -21,6 +26,8 @@ public class Landing : ItemList
     public UnitsOnFight _unitsOnScene;
 
     public Image notLandedStaffForFightWarning;
+
+    public ISubsituableLandingBehaviour _behaviour;
 
 
     public override void Awake()
@@ -56,7 +63,7 @@ public class Landing : ItemList
 
     public override void Start()
     {
-        Debug.Log("Landing: awake");
+        Debug.Log("Landing: start");
 
         InitContent();
         InitMap();
@@ -64,9 +71,10 @@ public class Landing : ItemList
 
         InitReadings();
         InitStaffIndicator();
-        
 
-        base.Start();
+        ChangeBehaviour("Disabled");
+
+        InitListeners();
 
         Hide();
     }
@@ -97,17 +105,12 @@ public class Landing : ItemList
 
     public void OnObjectRemoved(Entity entity)
     {
-        if (!IsProperType(entity.Type)) return;
-        ChangeLandedStaff(_landedStaff - Unit.GetStaffByUnit(entity.gameObject.GetComponent<Unit>()));
-        UpdateStaffText();
+        _behaviour.OnObjectRemoved(this, entity);
     }
 
     public void OnObjectLanded(Entity entity)
     {
-        if (!IsProperType(entity.Type)) return;
-        if (entity.side != Sides.federation) return;
-        ChangeLandedStaff(_landedStaff + Unit.GetStaffByUnit(entity.gameObject.GetComponent<Unit>()));
-        UpdateStaffText();
+        _behaviour.OnObjectLanded(this, entity);
     }
 
     public bool IsProperType(string text)
@@ -143,58 +146,29 @@ public class Landing : ItemList
         }
     }
 
-    public void StartLanding(List<Vector2Int> landableZone, int maxStaff)
+    public void StartLanding(LandingData landingData)
     {
-        Debug.Log("Landing: start landing");
-
-        _maxStaff = maxStaff;
-        UpdateLandedStaff();
-        UpdateStaffText();
-
-        _map.SetInactiveAll();
-        _map.SetActive(landableZone);
-        _map.Display(landableZone);
-
-        Show();
+        _behaviour.StartLanding(this, landingData);
     }
 
     public void OnPressedToBattleButton()
     {
-        if (_landedStaff > 0)
-        {
-            EventMaster.current.StartFight();
-            FinishLanding();
-        }
-        else
-        {
-            notLandedStaffForFightWarning.gameObject.SetActive(true);
-        }
+        _behaviour.OnPressedToBattleButton(this);
     }
 
     public void FinishLanding()
     {
-        Debug.Log("Landing: finish landing");
-
-        DisableListeners();
-
-        notLandedStaffForFightWarning.gameObject.SetActive(false);
-        _map.SetActiveAll();
-        _map.HideAll();
-
-        Destroy(this.gameObject);
+        _behaviour.FinishLanding(this);
     }
 
     public void OnLandableUnitFocus(LandableUnit target)
     {
-        TmpHealth.text = target.health.ToString();
-        TmpDamage.text = target.damage.ToString();
-        TmpDistance.text = target.distance.ToString();
-        TmpMobility.text = target.mobility.ToString();
+        _behaviour.OnLandableUnitFocus(this, target);
     }
 
     public void OnLandableUnitDefocus(LandableUnit target)
     {
-        InitReadings();
+        _behaviour.OnLandableUnitDefocus(this, target);
     }
 
     public override void Update()
@@ -209,57 +183,7 @@ public class Landing : ItemList
 
     public override void FillContent()
     {
-        ClearItems();
-        items = new List<LandableUnit>();
-
-        InventoryCacheTable inventoryTable = Cache.LoadByType<InventoryCacheTable>();
-        foreach (var keyValuePair in inventoryTable.Items)
-        {
-            InventoryCacheItem inventoryItemData = new InventoryCacheItem(keyValuePair.Value.Fields);
-            string type = inventoryItemData.GetType();
-
-            CacheTable itemTable = Cache.LoadByName(type);
-            CacheItem item = itemTable.GetById(inventoryItemData.GetCoreId());
-
-            switch (type)
-            {
-                case "Unit":
-                    UnitCacheItem unitData = new UnitCacheItem(item.Fields);
-                    LandableUnit unit = CreateUnit(inventoryItemData, unitData);
-                    items.Add(unit);
-                    break;
-            }
-        }
-    }
-
-    public LandableUnit CreateUnit(InventoryCacheItem inventoryItemData, UnitCacheItem unitData)
-    {
-        string id = inventoryItemData.GetExternalId();
-        string name = unitData.GetName();
-        int staff = unitData.GetGives().staff;
-        int health = unitData.GetHealth();
-        int damage = unitData.GetDamage();
-        int distance = unitData.GetDistance();
-        int mobility = unitData.GetMobility();
-        int count = inventoryItemData.GetCount();
-        Sprite icon = ResourcesUtils.LoadIcon(unitData.GetLandingIconSection(), unitData.GetLandingIconName());
-
-        GameObject itemObject = CreateObject(Config.resources["UI" + "Unit" + "LandablePrefab"], content);
-        itemObject.name = name;
-        LandableUnit unitComponent = itemObject.GetComponent<LandableUnit>();
-
-        unitComponent.Init(
-            id,
-            name,
-            staff,
-            health,
-            damage,
-            distance,
-            mobility,
-            count,
-            icon
-            );
-        return unitComponent;
+        _behaviour.FillContent(this);
     }
 
     public void InitContent()
@@ -275,5 +199,71 @@ public class Landing : ItemList
     public override void Hide()
     {
         this.gameObject.SetActive(false);
+    }
+
+    public void DestroyThis()
+    {
+        Destroy(this.gameObject);
+    }
+
+    public void OnSomeComponentChangeBehaviour(string componentName, string behaviourName)
+    {
+        if (componentName != ComponentType) return;
+        ChangeBehaviour(behaviourName);
+    }
+
+    public void OnResetBehaviour()
+    {
+        ChangeBehaviour();
+    }
+
+    public void ChangeBehaviour(string name = "Base")
+    {
+        _behaviour = SubsituableLandingFactory.GetBehaviourById(name);
+        _behaviour.Init(this);
+    }
+
+    public void OnPointerEnter(InventoryItem item, PointerEventData eventData)
+    {
+        if (item is LandableUnit landableUnit)
+        {
+            if (!landableUnit.focusOn)
+            {
+                landableUnit.focusOn = true;
+                EventMaster.current.OnLandableUnitFocus(landableUnit);
+            }
+        }
+    }
+
+    public void OnPointerExit(InventoryItem item, PointerEventData eventData)
+    {
+        if (item is LandableUnit landableUnit)
+        {
+            if (landableUnit.focusOn)
+            {
+                landableUnit.focusOn = false;
+                EventMaster.current.OnLandableUnitDefocus(landableUnit);
+            }
+        }
+    }
+
+    public void OnUse(InventoryItem item)
+    {
+        _behaviour.OnUse(this, item);
+    }
+
+    public void CreatePreview(ExposableInventoryItem item)
+    {
+        _behaviour.CreatePreview(this, item);
+    }
+
+    public void OnObjectExposed(ExposableInventoryItem item, Entity obj)
+    {
+        _behaviour.OnObjectExposed(this, item, obj);
+    }
+
+    public void Substract(InventoryItem item, int number = 1)
+    {
+        _behaviour.Substract(this, item, number);
     }
 }

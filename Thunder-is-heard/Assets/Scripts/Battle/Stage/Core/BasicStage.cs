@@ -54,6 +54,30 @@ public class BasicStage: IStage
     public int replicIndex;
 
 
+    public Dictionary<string, string> _behaviourIdByComponentName;
+    public Dictionary<string, string> BehaviourIdByComponentName { get { return _behaviourIdByComponentName; } }
+
+
+    public FocusData _focusData;
+    public FocusData FocusData { get { return _focusData; } }
+
+
+    public bool isMediaEvent = false;
+    public MediaEventData _mediaEventData = null;
+    public MediaEventData MediaEventData { get { return _mediaEventData; } }
+
+
+    public bool isLanding = false;
+    public LandingData _landingData = null;
+    public LandingData LandingData { get { return  _landingData; } }
+
+    public string _hintText;
+    public string HintText { get { return _hintText; } }
+
+
+    private bool _isStartSequenceComplete = false;
+    private Queue<System.Action> _startSequenceActions;
+
     public virtual void Init(
         string stageId,
         Scenario stageScenario,
@@ -66,7 +90,12 @@ public class BasicStage: IStage
         Replic[] replicsOnPass,
         Replic[] replicsOnFail,
         IStage stageOnPass = null,
-        IStage stageOnFail = null
+        IStage stageOnFail = null,
+        Dictionary<string, string> behaviourIdByComponentName = null,
+        FocusData focusData = null,
+        MediaEventData stageMediaEventData = null,
+        LandingData stageLandingData = null,
+        string stageHintText = null
         )
     {
         _stageId = stageId;
@@ -79,6 +108,14 @@ public class BasicStage: IStage
         SetReplics(replicsOnStart, replicsOnPass, replicsOnFail);
         _stageOnPass = stageOnPass;
         _stageOnFail = stageOnFail;
+        _behaviourIdByComponentName = behaviourIdByComponentName;
+        _focusData = focusData;
+        _mediaEventData = stageMediaEventData;
+
+        _landingData = stageLandingData;
+
+        _hintText = stageHintText;
+
         SetCustomProperties();
 
         InitObjectProcessor();
@@ -113,6 +150,26 @@ public class BasicStage: IStage
     public void DisableEndDialogueListener()
     {
         EventMaster.current.DialogueEnd -= OnEndDialogue;
+    }
+
+    public void EnableEndMediaEventListener()
+    {
+        EventMaster.current.MediaEventEnd += OnEndMediaEvent;
+    }
+
+    public void DisableEndMediaEventListener()
+    {
+        EventMaster.current.MediaEventEnd -= OnEndMediaEvent;
+    }
+
+    public void EnableEndLandingListener()
+    {
+        EventMaster.current.FightIsContinued += OnEndLanding;
+    }
+
+    public void DisableEndLandingListener()
+    {
+        EventMaster.current.FightIsContinued -= OnEndLanding;
     }
 
     public void SetScenario(Scenario value)
@@ -159,21 +216,66 @@ public class BasicStage: IStage
 
     public virtual void SetCustomProperties()
     {
-
+        _startSequenceActions = new Queue<System.Action>();
     }
 
     public void OnStart()
     {
         CreateObjects();
+        PrepareStartSequence();
+        ProcessNextStartAction();
+    }
+
+    protected virtual void PrepareStartSequence()
+    {
+        _startSequenceActions.Clear();
+        _isStartSequenceComplete = false;
+
+        if (_mediaEventData != null)
+        {
+            _startSequenceActions.Enqueue(() => BeginMediaEvent(_mediaEventData));
+        }
 
         if (ReplicsOnStart != null && ReplicsOnStart.Length > 0)
         {
-            BeginDialogue(ReplicsOnStart);
+            _startSequenceActions.Enqueue(() => BeginDialogue(ReplicsOnStart));
+        }
+
+        if (_hintText != null)
+        {
+            _startSequenceActions.Enqueue(() => SetHint(_hintText));
+        }
+
+        if (LandingData != null)
+        {
+            _startSequenceActions.Enqueue(() => BeginLanding(LandingData));
+        }
+    }
+
+    protected void ProcessNextStartAction()
+    {
+        if (_startSequenceActions.Count > 0)
+        {
+            var nextAction = _startSequenceActions.Dequeue();
+            nextAction.Invoke();
         }
         else
         {
-            EventMaster.current.OnUpdateStage();
+            CompleteStartSequence();
         }
+    }
+
+    protected void CompleteStartSequence()
+    {
+        _isStartSequenceComplete = true;
+        EventMaster.current.OnUpdateStage();
+    }
+
+    public void BeginMediaEvent(MediaEventData eventData)
+    {
+        isMediaEvent = true;
+        EventMaster.current.BeginMediaEvent(eventData);
+        EnableEndMediaEventListener();
     }
 
     public void BeginDialogue(Replic[] replics)
@@ -183,16 +285,53 @@ public class BasicStage: IStage
         EnableEndDialogueListener();
     }
 
+    public void BeginLanding(LandingData landingData)
+    {
+        isLanding = true;
+        EventMaster.current.Landing(landingData);
+        EnableEndLandingListener();
+    }
+
+    public void SetHint(string text)
+    {
+        EventMaster.current.OnSetHint(text);
+        ProcessNextStartAction();
+    }
+
+    public void HideHint()
+    {
+        EventMaster.current.OnHideHint();
+    }
+
+    public void OnEndMediaEvent()
+    {
+        if (isMediaEvent)
+        {
+            isMediaEvent = false;
+            DisableEndMediaEventListener();
+            ProcessNextStartAction();
+        }
+    }
+
     public void OnEndDialogue()
     {
         if (isDialogue)
         {
             isDialogue = false;
             DisableEndDialogueListener();
-            EventMaster.current.OnUpdateStage();
+            ProcessNextStartAction();
         }
     }
 
+    public void OnEndLanding()
+    {
+        if (isLanding)
+        {
+            isDialogue = false;
+            DisableEndLandingListener();
+            ProcessNextStartAction();
+        }
+    }
 
     public void OnProcess()
     {
@@ -202,12 +341,18 @@ public class BasicStage: IStage
     public void OnFinish()
     {
         EventMaster.current.OnUpdateStage();
-
     }
 
     public bool IsPassed()
     {
-        return IsAllConditionsForPassComply();
+        Debug.Log("passed?");
+
+        bool passed = IsAllConditionsForPassComply();
+
+        Debug.Log(passed);
+
+        return passed;
+
     }
 
     public bool IsFailed()
@@ -217,6 +362,7 @@ public class BasicStage: IStage
 
     public void OnPass()
     {
+        HideHint();
         if (ReplicsOnPass != null && ReplicsOnPass.Length > 0)
         {
             BeginDialogue(ReplicsOnPass);
@@ -229,6 +375,7 @@ public class BasicStage: IStage
 
     public void OnFail()
     {
+        HideHint();
         if (ReplicsOnFail != null && ReplicsOnFail.Length > 0)
         {
             BeginDialogue(ReplicsOnFail);

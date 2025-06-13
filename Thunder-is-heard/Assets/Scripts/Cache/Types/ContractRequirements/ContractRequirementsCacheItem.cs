@@ -32,6 +32,11 @@ public class ContractRequirementsCacheItem : CacheItem
             return new ContractRequirementsData();
         }
 
+        if (value is ContractRequirementsData typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<ContractRequirementsData>(value.ToString());
     }
 

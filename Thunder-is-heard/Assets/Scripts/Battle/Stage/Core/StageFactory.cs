@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-
 public static class StageFactory
 {
     public static Dictionary<string, Type> stages = new Dictionary<string, Type>()
@@ -25,8 +24,30 @@ public static class StageFactory
         Replic[] replicsOnStart = data.replicsOnStart;
         Replic[] replicsOnPass = data.replicsOnPass;
         Replic[] replicsOnFail = data.replicsOnFail;
+        Dictionary<string, string> behaviourIdByComponentName = data.behaviourIdByComponentName;
+        FocusData focusData = data.focusData;
+        MediaEventData mediaEventData = data.mediaEventData;
+        LandingData landingData = data.landingData;
+        string hintText = data.hintText;
 
-        stage.Init(data.id, scenario, data.AISettings, conditionsForPass, conditionsForFail, units, builds, replicsOnStart, replicsOnPass, replicsOnFail, stageOnPass, stageOnFail);
+        stage.Init(
+            data.id, 
+            scenario, 
+            data.AISettings, 
+            conditionsForPass, 
+            conditionsForFail, 
+            units, builds, 
+            replicsOnStart,
+            replicsOnPass, 
+            replicsOnFail, 
+            stageOnPass, 
+            stageOnFail, 
+            behaviourIdByComponentName,
+            focusData,
+            mediaEventData,
+            landingData,
+            hintText
+            );
         return stage;
     }
 
@@ -59,6 +80,11 @@ public static class StageFactory
         AISettings[] aISettings = stage.AISettings;
         ConditionData serializedConditionsForPass = ConditionFactory.SerializeCondition(stage.ConditionsForPass);
         ConditionData serializedConditionsForFail = ConditionFactory.SerializeCondition(stage.ConditionsForFail);
+        Dictionary<string, string> behaviourIdByCompoentName = stage.BehaviourIdByComponentName;
+        FocusData focusData = stage.FocusData;
+        MediaEventData mediaEventData = stage.MediaEventData;
+        LandingData landingData = stage.LandingData;
+        string hintText = stage.HintText;
 
         return new StageData(
             stageId: stageId,
@@ -71,7 +97,12 @@ public static class StageFactory
             stageConditionsForPass: serializedConditionsForPass,
             stageConditionsForFail: serializedConditionsForFail,
             stageStageOnPass: stageOnPass,
-            stageStageOnFail: stageOnFail
+            stageStageOnFail: stageOnFail,
+            stageBehaviourIdByComponentName: behaviourIdByCompoentName,
+            stageFocusData: focusData,
+            stageMediaEventData: mediaEventData,
+            stageLandingData: landingData,
+            stageHintText: hintText
             );
     }
 }

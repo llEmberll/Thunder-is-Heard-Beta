@@ -1007,7 +1007,7 @@ public class BattleSituation
     {
         List<ObjectOnBattle> attackers = new List<ObjectOnBattle>();
 
-        if (!attackersByObjectId.ContainsKey(target.IdOnBattle)) return attackers;
+        if (target == null || !attackersByObjectId.ContainsKey(target.IdOnBattle)) return attackers;
 
         return attackersByObjectId[target.IdOnBattle];
     }

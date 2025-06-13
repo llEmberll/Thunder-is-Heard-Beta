@@ -89,6 +89,11 @@ public class ProcessOnBaseCacheItem : CacheItem
             return null;
         }
 
+        if (value is ProcessSource typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<ProcessSource>(value.ToString());
     }
 

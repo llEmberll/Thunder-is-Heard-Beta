@@ -32,6 +32,11 @@ public class UnitProductionRequirementsCacheItem : CacheItem
             return new UnitProductionRequirementsData();
         }
 
+        if (value is UnitProductionRequirementsData typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<UnitProductionRequirementsData>(value.ToString());
     }
 

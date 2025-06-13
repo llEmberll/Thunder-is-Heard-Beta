@@ -59,4 +59,6 @@ public static class Tags
     public static string dialogueController = "DialogueController";
     public static string focusController = "FocusController";
     public static string tutorialController = "TutorialController";
+
+    public static string hintBoard = "HintBoard";
 }

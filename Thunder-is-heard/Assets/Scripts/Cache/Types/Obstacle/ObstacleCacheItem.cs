@@ -71,6 +71,11 @@ public class ObstacleCacheItem : CacheItem
             return null;
         }
 
+        if (value is Bector2Int typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<Bector2Int>(value.ToString());
     }
 
@@ -85,6 +90,11 @@ public class ObstacleCacheItem : CacheItem
         if (value == null)
         {
             return new ResourcesData();
+        }
+
+        if (value is ResourcesData typedValue)
+        {
+            return typedValue;
         }
 
         return JsonConvert.DeserializeObject<ResourcesData>(value.ToString());

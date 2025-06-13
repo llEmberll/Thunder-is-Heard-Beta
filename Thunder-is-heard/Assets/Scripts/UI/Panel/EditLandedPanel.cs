@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class EditLandedPanel : Panel
 {
@@ -19,6 +16,7 @@ public class EditLandedPanel : Panel
     {
         EventMaster.current.StartLanding += OnStartLanding;
         EventMaster.current.FightIsStarted += OnFinishLanding;
+        EventMaster.current.FightIsContinued += OnFinishLanding;
         EventMaster.current.ToggledToBuildMode += Hide;
         EventMaster.current.ToggledOffBuildMode += Show;
     }
@@ -28,9 +26,10 @@ public class EditLandedPanel : Panel
         EventMaster.current.ToggledToBuildMode -= Hide;
         EventMaster.current.ToggledOffBuildMode -= Show;
         EventMaster.current.FightIsStarted -= OnFinishLanding;
+        EventMaster.current.FightIsContinued -= OnFinishLanding;
     }
 
-    public void OnStartLanding(List<Vector2Int> landableZone, int maxStaff)
+    public void OnStartLanding(LandingData landingData)
     {
         Show();
     }

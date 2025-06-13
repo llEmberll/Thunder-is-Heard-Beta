@@ -25,6 +25,15 @@ public interface IStage
     public IStage StageOnPass { get; }
     public IStage StageOnFail { get; }
 
+    public Dictionary<string, string> BehaviourIdByComponentName { get; }
+    public FocusData FocusData { get; }
+
+    public MediaEventData MediaEventData { get; }
+
+    public LandingData LandingData { get; }
+
+    public string HintText { get; }
+
     public void Init(
         string stageId,
         Scenario stageScenario,
@@ -37,7 +46,12 @@ public interface IStage
         Replic[] replicsOnPass,
         Replic[] replicOnFail,
         IStage stageOnPass,
-        IStage stageOnFail
+        IStage stageOnFail,
+        Dictionary<string, string> behaviourIdByComponentName = null,
+        FocusData focusData = null,
+        MediaEventData stageMediaEventData = null,
+        LandingData stageLandingData = null,
+        string stageHintText = null
         );
     public void SetScenario(Scenario value);
     public void SetConditionsForPass(ICondition conditions);

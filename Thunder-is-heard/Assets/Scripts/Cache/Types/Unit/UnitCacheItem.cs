@@ -150,6 +150,11 @@ public class UnitCacheItem : CacheItem
             return null;
         }
 
+        if (value is Bector2Int typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<Bector2Int>(value.ToString());
     }
 
@@ -166,6 +171,11 @@ public class UnitCacheItem : CacheItem
             return new ResourcesData();
         }
 
+        if (value is ResourcesData typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<ResourcesData>(value.ToString());
     }
 
@@ -180,6 +190,11 @@ public class UnitCacheItem : CacheItem
         if (value == null)
         {
             return new ResourcesData();
+        }
+
+        if (value is ResourcesData typedValue)
+        {
+            return typedValue;
         }
 
         return JsonConvert.DeserializeObject<ResourcesData>(value.ToString());
@@ -251,6 +266,11 @@ public class UnitCacheItem : CacheItem
         if (value == null)
         {
             return new string[] { };
+        }
+
+        if (value is string[] typedValue)
+        {
+            return typedValue;
         }
 
         return JsonConvert.DeserializeObject<string[]>(value.ToString());

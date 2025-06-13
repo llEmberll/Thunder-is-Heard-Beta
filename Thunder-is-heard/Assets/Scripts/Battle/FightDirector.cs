@@ -26,6 +26,9 @@ public class FightDirector : MonoBehaviour
 
     public DialogueController _dialogueController;
 
+    public bool _isNextTurnProcessing = false;
+    public bool _isFightStarted = false;
+
 
     public void Awake()
     {
@@ -53,7 +56,6 @@ public class FightDirector : MonoBehaviour
     {
         EventMaster.current.FightLost += Defeat;
         EventMaster.current.FightWon += Victory;
-        EventMaster.current.FightIsStarted += StartFight;
         EventMaster.current.BattleObjectsChanged += ReloadBattleData;
 
         EventMaster.current.TurnExecuted += ExecuteTurn;
@@ -64,23 +66,32 @@ public class FightDirector : MonoBehaviour
     {
         EventMaster.current.FightLost -= Defeat;
         EventMaster.current.FightWon -= Victory;
-        EventMaster.current.FightIsStarted -= StartFight;
         EventMaster.current.BattleObjectsChanged -= ReloadBattleData;
 
         EventMaster.current.TurnExecuted -= ExecuteTurn;
         EventMaster.current.CurrentStageChanged -= ChangeCurrentStage;
     }
 
+    public void EnableStartFightListener()
+    {
+        EventMaster.current.ToBattleButtonPressed += OnPressToBattleButton;
+    }
+
+    public void DisableStartFightListener()
+    {
+        EventMaster.current.ToBattleButtonPressed -= OnPressToBattleButton;
+    }
+
 
     public void Start()
     {
-        if (Scenario._isLanded)
+        if (_battleData.GetCurrentStage() == null)
         {
-            ContinueFight();
+            StartFight();
         }
         else
         {
-            StartCoroutine(BeforeScenarioBegin());
+            ContinueFight();
         }
     }
 
@@ -125,11 +136,6 @@ public class FightDirector : MonoBehaviour
         BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
         CacheItem cacheItem = battleTable.GetById(battleId);
         _battleData = new BattleCacheItem(cacheItem.Fields);
-    }
-
-    public void SetLandedInBattleData()
-    {
-        _battleData.SetIsLanded(true);
     }
 
     public void SaveBattleData()
@@ -178,6 +184,21 @@ public class FightDirector : MonoBehaviour
         StageData serializedStage = StageFactory.SerializeStage(stage);
         _battleData.SetCurrentStage(serializedStage);
         SaveBattleData();
+
+        // РџСЂРёРјРµРЅСЏРµРј РЅРѕРІС‹Рµ РїРѕРІРµРґРµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ
+        if (stage.BehaviourIdByComponentName != null)
+        {
+            foreach (var behaviour in stage.BehaviourIdByComponentName)
+            {
+                EventMaster.current.OnChangeComponentBehaviour(behaviour.Key, behaviour.Value);
+            }
+        }
+
+        // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј С„РѕРєСѓСЃ РµСЃР»Рё РµСЃС‚СЊ
+        if (stage.FocusData != null)
+        {
+            EventMaster.current.OnObjectFocused(stage.FocusData);
+        }
     }
 
     public void InitScenario()
@@ -191,8 +212,6 @@ public class FightDirector : MonoBehaviour
         ScenarioCacheTable scenarioTable = Cache.LoadByType<ScenarioCacheTable>();
         CacheItem cacheItemScenario = scenarioTable.GetById(missionData.GetScenarioId());
         ScenarioCacheItem scenarioData = new ScenarioCacheItem(cacheItemScenario.Fields);
-
-        bool isLanded = _battleData.GetIsLanded();
 
         IStage currentStage;
         if (_battleData.GetCurrentStage() != null)
@@ -209,16 +228,12 @@ public class FightDirector : MonoBehaviour
         ObstacleOnBattle[] scenarioObstacles = scenarioData.GetObstacles();
         Replic[] scenarioStartDialogue = scenarioData.GetStartDialogue();
 
-        LandingData landingData = scenarioData.GetLanding();
-        List<Vector2Int> landingCells = Bector2Int.MassiveToVector2Int(landingData.zone).ToList();
-        int landingMaxStaff = landingData.maxStaff;
-
         Vector2Int mapSize = scenarioData.GetMapSize().ToVector2Int();
         string terrainPath = scenarioData.GetTerrainPath();
         Map map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
         map.Init(mapSize, terrainPath);
 
-        Scenario.Init(map, landingCells, landingMaxStaff, currentStage, scenarioStartDialogue, isLanded);
+        Scenario.Init(map, currentStage, scenarioStartDialogue);
         
     }
 
@@ -232,29 +247,29 @@ public class FightDirector : MonoBehaviour
         return _battleId;
     }
 
-    public IEnumerator BeforeScenarioBegin()
+    public IEnumerator BeginScenarioFromStart()
     {
         yield return StartCoroutine(Scenario.StartInitialDialogue());
-        StartLanding();
-    }
-
-    public void StartLanding()
-    {
-        Scenario.StartLanding();
-    }
-
-    public void ContinueFight()
-    {
-        EventMaster.current.ContinueFight();
-        EventMaster.current.OnBaseMode();
-        _scenario.map.HideAll();
-        _turnController.OnNextTurn(_battleData.GetTurn());
+        EnableStartFightListener();
     }
 
     public void StartFight()
     {
-        EventMaster.current.OnExitBuildMode();
+        StartCoroutine(BeginScenarioFromStart());
+    }
+
+    public void ContinueFight()
+    {
         StartCoroutine(WaitForScenarioBegin());
+    }
+
+    public void OnPressToBattleButton()
+    {
+        DisableStartFightListener();
+        EventMaster.current.ContinueFight();
+        ContinueFight();
+
+        _isFightStarted=true;
     }
 
     public IEnumerator WaitForScenarioBegin()
@@ -262,45 +277,68 @@ public class FightDirector : MonoBehaviour
         EventMaster.current.OnBaseMode();
         _scenario.map.HideAll();
 
-        SetLandedInBattleData();
-        SaveBattleData();
-        Scenario._isLanded = true;
         yield return StartCoroutine(Scenario.Begin());
 
         _turnController.OnNextTurn(_battleData.GetTurn());
+
+        _isFightStarted = true;
     }
 
     public void OnScenarioUpdated()
     {
-        Debug.Log("Сценарий обновлен");
-
+        Debug.Log("РЎС†РµРЅР°СЂРёР№ РѕР±РЅРѕРІР»РµРЅ");
 
         SyncBattleDataToCurrentBattleSituation();
 
-        Debug.Log("Битва синхронизирована");
+        Debug.Log("Р”Р°РЅРЅС‹Рµ СЃРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°РЅС‹");
+
+        // РЎР±СЂР°СЃС‹РІР°РµРј С„РѕРєСѓСЃ РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё СЃС†РµРЅР°СЂРёСЏ
+        EventMaster.current.OnClearObjectFocus();
+
+        // Р’РѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј СЃС‚Р°РЅРґР°СЂС‚РЅС‹Рµ РїРѕРІРµРґРµРЅРёСЏ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ
+        EventMaster.current.OnResetComponentsBehaviour();
 
         EventMaster.current.OnNextTurn(_battleData.GetTurn());
         _turnController.OnNextTurn(_battleData.GetTurn());
     }
 
+    public void Update()
+    {
+        if (_isNextTurnProcessing || !_isFightStarted || Scenario.IsStageProcessing())
+        {
+            return;
+        }
+
+        if (Scenario.CurrentStage.IsFailed() || Scenario.CurrentStage.IsPassed())
+        {
+            Debug.Log("Next turn by Update!");
+
+            StartCoroutine(NextTurn());
+        }
+    }
+
     public IEnumerator NextTurn()
     {
-        Debug.Log("Следующий ход");
+        _isNextTurnProcessing = true;
+
+        Debug.Log("РќР°С‡РёРЅР°РµРј РЅРѕРІС‹Р№ С…РѕРґ");
 
         UpdateEffects();
-        Debug.Log("Эффекты  обновлены");
+        Debug.Log("РћР±РЅРѕРІР»СЏРµРј СЌС„С„РµРєС‚С‹");
 
         UpdateSkills();
-        Debug.Log("Умения  обновлены");
+        Debug.Log("РћР±РЅРѕРІР»СЏРµРј СѓРјРµРЅРёСЏ");
 
         ChangeSideTurn();
 
         IncrementTurnIndex();
 
-        Debug.Log("Данные по очередерности обновлены");
+        Debug.Log("Р§РµСЂРµРґ С…РѕРґР° РїРµСЂРµРґР°РЅ");
 
         yield return StartCoroutine(Scenario.OnNextTurn());
         OnScenarioUpdated();
+
+        _isNextTurnProcessing = false;
     }
 
     public void ExecuteTurn(TurnData turnData)
@@ -315,7 +353,7 @@ public class FightDirector : MonoBehaviour
             bool isTurnContainsMovement = IsTurnContainsMovement(turnData);
             if (isTurnContainsMovement)
             {
-                Debug.Log("Ход с передвижением");
+                Debug.Log("РќР°С‡РёРЅР°РµРј РґРІРёР¶РµРЅРёРµ");
 
                 Unit activeUnit = _unitsOnFightManager.FindObjectByChildId(turnData._activeUnitIdOnBattle) as Unit;
 
@@ -323,13 +361,10 @@ public class FightDirector : MonoBehaviour
 
                 ChangeUnitOccypation(activeUnit, _scenario.map.Cells[turnData._route.Last().ToVector2()]);
 
-                Debug.Log(activeUnit.name + "движется к позиции " + turnData._route.Last());
+                Debug.Log(activeUnit.name + " РїРµСЂРµРјРµС‰Р°РµРјСЃСЏ РЅР° " + turnData._route.Last());
 
                 activeUnit.Move(_battleEngine.GetCellsByBector2IntPositions(turnData._route));
                 yield return new WaitUntil(() => !activeUnit._onMove);
-
-                // Подождать прибытия юнита
-                //Время ожидания в секундах = скорость юнита * длина маршрута * 0.5
             }
 
             if (IsTurnContainsTarget(turnData))
@@ -340,7 +375,7 @@ public class FightDirector : MonoBehaviour
                     target = _buildsOnFightManager.FindObjectByChildId(turnData._targetIdOnBattle);
                 }
 
-                Debug.Log("Ход с атакой по " + target.name);
+                Debug.Log("РќР°С‡РёРЅР°РµРј Р°С‚Р°РєСѓ РЅР° " + target.name);
 
                 List<UnitOnBattle> attackersData = _battleEngine.currentBattleSituation.GetAttackersByTargetId(target.ChildId).ToArray().OfType<UnitOnBattle>().ToList();
 
@@ -355,20 +390,19 @@ public class FightDirector : MonoBehaviour
                 if (attackersData != null && attackersData.Count > 0)
                 {
 
-                    Debug.Log(attackersData.Count() + "атакующих");
+                    Debug.Log(attackersData.Count() + " Р°С‚Р°РєСѓСЋС‰РёС…");
 
                     List<Unit> attackers = _unitsOnFightManager.GetUnitsByBattleUnitsData(attackersData.ToArray());
-                    int damage = BattleEngine.CalculateDamageToEntity(_battleEngine.currentBattleSituation, attackersData.ToArray(), target); // Нужно учесть модификаторы от скилов + эффекты
+                    int damage = BattleEngine.CalculateDamageToEntity(_battleEngine.currentBattleSituation, attackersData.ToArray(), target); // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-                    Debug.Log("Урон " + damage);
+                    Debug.Log("РЈСЂРѕРЅ " + damage);
 
                     foreach (Unit attacker in attackers)
                     {
                         attacker.Attack(target);
                     }
 
-                    // Подождать конца атаки и ранения цели = 1 с
-                    Debug.Log("Цель сейчас получит");
+                    Debug.Log("РђС‚Р°РєР° Р·Р°РІРµСЂС€РµРЅР°");
                     BattleEngine.OnAttackTarget(_battleEngine.currentBattleSituation, target, damage);
 
                     target.GetDamage(damage);
@@ -422,14 +456,14 @@ public class FightDirector : MonoBehaviour
 
     public void ExecuteSkill()
     {
-        //Логика использования скила
-        //Обновить _battleData
+        //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ _battleData
     }
 
     public void UpdateEffects()
     {
-        // Обновить все эффекты на юнитах(например от скиллов) согласно кд и условиям прекращения или продолжения эффекта.
-        // Наложить заново эффект от пассивных скиллов если условия соблюдаются
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     }
 
     public void UpdateSkills()
@@ -445,7 +479,6 @@ public class FightDirector : MonoBehaviour
 
     public void ReturnToBase()
     {
-        Debug.Log("Return to base!");
         SceneLoader.LoadHome();
     }
 

@@ -24,6 +24,11 @@ public class PlayerObstacleCacheItem : CacheItem
             throw new Exception("Undefined obstacle position");
         }
 
+        if (value is Bector2Int[] typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<Bector2Int[]>(value.ToString());
     }
 

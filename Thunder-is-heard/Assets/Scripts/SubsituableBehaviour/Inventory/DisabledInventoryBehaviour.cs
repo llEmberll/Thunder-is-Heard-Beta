@@ -17,4 +17,16 @@ public class DisabledInventoryBehaviour : BaseSubsituableInventoryBehaviour
     {
 
     }
+
+    public override void CreatePreview(Inventory conductor, ExposableInventoryItem item)
+    {
+    }
+
+    public override void OnObjectExposed(Inventory conductor, ExposableInventoryItem item, Entity obj)
+    {
+    }
+
+    public override void Substract(Inventory conductor, InventoryItem item, int number = 1)
+    {
+    }
 }

@@ -11,7 +11,7 @@ public class BaseMap : Map
 
     public void Start()
     {
-        //CreateTutorialOnBase();
+        //CreateScenarioForEnemyOutpost();
     }
 
     public void CreateTutorialOnBase()
@@ -1048,7 +1048,7 @@ public class BaseMap : Map
         ScenarioCacheItem scenarioItem = new ScenarioCacheItem(new Dictionary<string, object>());
 
         scenarioItem.SetExternalId("aa815447-cdcd-464d-8f37-307f35a15ad6");
-        scenarioItem.SetName("�������� �����");
+        scenarioItem.SetName("Аванпост врага");
 
         string terrainPath = Config.terrainsPath["mission"];
         terrainPath = terrainPath.Replace("{MissionName}", "EnemyOutpost");
@@ -1066,7 +1066,6 @@ public class BaseMap : Map
             10
             );
 
-        scenarioItem.SetLanding(landingData);
 
         // �������� �����
         UnitOnBattle[] scenarioUnits = new UnitOnBattle[]
@@ -1238,12 +1237,48 @@ public class BaseMap : Map
             new Replic(
                 charName: Chars.officer, 
                 charSide: Sides.federation, 
-                text: "��������! �������� ������ ��������, ���� ��������� �������� �������� ��������� �� ���. ������ �� �� ����. ����� ������� �� ����� � ���������� �������� ��� ����������� �� ���! ")
+                text: "Командир! Согласно данным разведки, враг планирует укрепить аванпост неподалёку от нас. Похоже мы их цель. Нужно сорвать их планы и уничтожить плацдарм для наступления на нас!")
         };
         scenarioItem.SetStartDialogue(scenarioStartDialogue);
         // ��������� ������ ��������
 
+
         // �����
+        //// Этап 0: высадка
+        //// �������
+        ConditionData defeatConditionDataForStage0 = new ConditionData(type: "AlwaysFalse", null);
+        ConditionData victoryConditionDataForStage0 = new ConditionData(type: "AlwaysTrue", null);
+        //// �������
+
+        ///// ��
+        AISettings AISettingsForEmpireSideInStage0 = new AISettings(
+            "Frozen",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage0 = new AISettings(
+            "Frozen",
+            Sides.neutral,
+            null,
+            null
+            );
+        ///// ��
+
+        StageData stage0 = new StageData(
+                stageUnits: null,
+                stageBuilds: null,
+                stageReplicsOnStart: null,
+                stageReplicsOnPass: null,
+                stageReplicsOnFail: null,
+                stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage0, AISettingsForNeutralSideInStage0 },
+                stageConditionsForFail: defeatConditionDataForStage0,
+                stageConditionsForPass: victoryConditionDataForStage0,
+                stageLandingData: landingData
+                );
+        //// Этап 0: высадка
+
+
         //// ���� 1
         ///// ��
         AISettings AISettingsForEmpireSideInStage1 = new AISettings(
@@ -1281,18 +1316,18 @@ public class BaseMap : Map
             new Replic(
                 charName: Chars.officer, 
                 charSide: Sides.federation, 
-                text: "��������� ��������! ������� ���������, ������ ������������. �� ���� ���������, ������� ��������� �������� ������",
+                text: "Взгляните Командир! Позиции укреплены, однако малочисленны. По всей видимости, прошлое нападение исходило отсюда",
                 focus: new Bector2Int(14, 25)
                 ),
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "�������� �������� �� ���������� ����� ����������. �� ������, ��, ���� �� �� �������� �� ������, �� ����������� �������� ���� ������"),
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "������� ������ �������. ���������� ������� � ������. ������ ��� ����� ��� ������� ������"),
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Обратите внимание на количество войск противника. Их немало, но, если мы их разобьём по частям, мы существенно облегчим себе задачу"),
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Снежана правду говорит. Рекомендую слушать её советы. Иногда они могут вам здорово помочь"),
         };
         //// C�������� ������
 
         //// ������ � ������ �������
         Replic[] failDialogueForStage1 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "�� �� ���������� � �������, �� ��������� ���� ������� ������! ���������!")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Мы не справились с задачей, их гарнизоны были слишком сильны! Отступаем!")
         };
         //// ������ � ������ �������
         StageData stage1 = new StageData(
@@ -1337,14 +1372,14 @@ public class BaseMap : Map
         //// ��������� ������
         Replic[] startDialogueForStage2 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "������� ��������� ����, ���� ��� �� ��������� ������������!")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Спешите атаковать штаб, пока они не запросили подкрепление!")
         };
         //// C�������� ������
 
         //// ������ � ������ �������
         Replic[] failDialogueForStage2 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "��������� ������������ �� �����, ����� ���� ���������� ���� ���� ���� �����������! ������ ��������� ���������, ���������...")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Вражеские подкрепления на месте, нужно было уничтожить штаб пока была возможность...")
         };
         //// ������ � ������ �������
         StageData stageOnPassStage1 = new StageData(
@@ -1387,7 +1422,7 @@ public class BaseMap : Map
             new Replic(
                 charName: Chars.officer,
                 charSide: Sides.federation, 
-                text: "��������� ������������ �� �����, ����� ���� ���������� ���� ���� ���� �����������...",
+                text: "Вражеские подкрепления на месте, нужно было уничтожить штаб пока была возможность...",
                 focus: new Bector2Int(13, 25)
                 )
         };
@@ -1396,15 +1431,15 @@ public class BaseMap : Map
         //// ������ � ������ �������
         Replic[] failDialogueForStage21 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "�� �� ���������� � �������, �� ��������� ���� ������� ������! ���������!")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Мы не справились с задачей, их гарнизоны были слишком сильны! Отступаем!")
         };
         //// ������ � ������ �������
         
         //// ������ � ������ ������
         Replic[] passDialogueForStage21 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "���! ������ �� ����! ���� ������, � �� ������� ���������� ����������, ����� � ���������"),
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "�� �������� ��������� ��������! � ��������� � ������� ����� ����� ����")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Ура! Победа за нами! Враг разбит, и мы наконец возвращаем территории, пусть и небольшие"),
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Не забудьте трофейные винтовки! С патронами и оружием нынче очень туго")
         };
         //// ������ � ������ ������
 
@@ -1525,17 +1560,17 @@ public class BaseMap : Map
             new Replic(
                 charName: Chars.fighter, 
                 charSide: Sides.empire, 
-                text: "�� ���, ������ ����� ��������?! �����, ���������� �������� ��� ������ ��� ��������!", 
+                text: "Вы что, совсем страх потеряли?! Парни, немедленно принести мне головы тех наглецов!", 
                 focus: new Bector2Int(11, 17)
                 ),
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "�� �������! ������������� � ���� ������������! ��������� ��� ������ � ����������� ����������� ����� ������ ����������� ������")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Не бойтесь! Неожиданность – наше преимущество! Подведите все войска и используйте перекрёстный огонь против наступающих солдат")
         };
         //// C�������� ������
 
         //// ������ � ������ �������
         Replic[] failDialogueForStage3 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "�� �� ���������� � �������, �� ��������� ���� ������� ������! ���������!")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Мы не справились с задачей, их гарнизоны были слишком сильны! Отступаем!")
         };
         //// ������ � ������ �������
         StageData stageOnPassStage2 = new StageData(
@@ -1580,7 +1615,7 @@ public class BaseMap : Map
         //// ��������� ������
         Replic[] startDialogueForStage4 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "���������! �������� ������! ���������� �� ������� � � ���� ����� ���������!", focus: new Bector2Int(17, 22))
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Прекрасно! Гарнизон разбит! Уничтожьте их казарму и с ними будет покончено!", focus: new Bector2Int(17, 22))
         };
         //// C�������� ������
 
@@ -1624,7 +1659,7 @@ public class BaseMap : Map
             new Replic(
                 charName: Chars.officer, 
                 charSide: Sides.federation, 
-                text: "��������� ������������ �� �����, ����� ���� ���������� ������� � �������� ���� ���� �����������...",
+                text: "Вражеские подкрепления на месте, нужно было уничтожить казарму и отходить пока была возможность...",
                 focus: new Bector2Int(13, 25)
                 )
         };
@@ -1633,15 +1668,15 @@ public class BaseMap : Map
         //// ������ � ������ �������
         Replic[] failDialogueForStage41 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "�� �� ���������� � �������, �� ��������� ���� ������� ������! ���������!")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Мы не справились с задачей, их гарнизоны были слишком сильны! Отступаем!")
         };
         //// ������ � ������ �������
 
         //// ������ � ������ ������
         Replic[] passDialogueForStage41 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "���! ������ �� ����! ���� ������, � �� ������� ���������� ����������, ����� � ���������"),
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "�� �������� ��������� ��������! � ��������� � ������� ����� ����� ����")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Ура! Победа за нами! Враг разбит, и мы наконец возвращаем территории, пусть и небольшие"),
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Не забудьте трофейные винтовки! С патронами и оружием нынче очень туго")
         };
         //// ������ � ������ ������
 
@@ -1758,14 +1793,14 @@ public class BaseMap : Map
         //// ��������� ������
         Replic[] startDialogueForStage5 = new Replic[]
         {
-            new Replic(charName: Chars.fighter, charSide: Sides.empire, text: "�� ��� �� ������, ������?! �������� ���� ��������� ��������!", focus: new Bector2Int(14, 25)),
+            new Replic(charName: Chars.fighter, charSide: Sides.empire, text: "Ну что вы встали, глупцы?! Атакуйте этих никчёмных бездарей!", focus: new Bector2Int(14, 25)),
         };
         //// C�������� ������
 
         //// ������ � ������ �������
         Replic[] failDialogueForStage5 = new Replic[]
         {
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "�� ������������ ��������� ��� ��� ��������. ���������, ���� �� ����� ��� ����!")
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Их подкрепления испортили нам всю операцию. Отступаем, пока не стало ещё хуже!")
         };
         //// ������ � ������ �������
 
@@ -1842,7 +1877,7 @@ public class BaseMap : Map
             new Replic(
                 charName: Chars.tankGirl, 
                 charSide: Sides.federation, 
-                text: "��������, ����������! ����������, ������� ��� ������������ ��� ����� �������. ���������� ��������� ��� �������. ���������� �� ��������� �������",
+                text: "Командир, аккуратней! Неизвестно, сколько ещё подкреплений они могут вызвать. Хорошенько подумайте про оборону. Старайтесь не допускать потерь…",
                 focus: new Bector2Int(13, 25)
                 )
         };
@@ -1851,15 +1886,15 @@ public class BaseMap : Map
         //// ������ � ������ �������
         Replic[] failDialogueForStage6 = new Replic[]
         {
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "�� ������������ ��������� ��� ��� ��������. ���������, ���� �� ����� ��� ����!")
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Их подкрепления испортили нам всю операцию. Отступаем, пока не стало ещё хуже!")
         };
         //// ������ � ������ �������
 
         //// ������ � ������ ������
         Replic[] passDialogueForStage6 = new Replic[]
         {
-            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "���! ������ �� ����! ���� ������, � �� ������� ���������� ����������, ����� � ���������"),
-            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "�� �������� ��������� ��������! � ��������� � ������� ����� ����� ����")
+            new Replic(charName: Chars.officer, charSide: Sides.federation, text: "Ура! Победа за нами! Враг разбит, и мы наконец возвращаем территории, пусть и небольшие"),
+            new Replic(charName: Chars.tankGirl, charSide: Sides.federation, text: "Не забудьте трофейные винтовки! С патронами и оружием нынче очень туго")
         };
         //// ������ � ������ ������
 
@@ -1908,6 +1943,7 @@ public class BaseMap : Map
                 );
         //// ���� 6
 
+        stage0.stageOnPass = stage1;
         stage1.stageOnPass = stageOnPassStage1;
         stageOnPassStage1.stageOnPass = stageOnPassStage2;
         stageOnPassStage1.stageOnFail = stageOnFailStage2;
@@ -1917,7 +1953,7 @@ public class BaseMap : Map
         stageOnPassStage4.stageOnPass = stageOnPassStage5;
         // �����
 
-        scenarioItem.SetStartStage(stage1);
+        scenarioItem.SetStartStage(stage0);
         table.AddOne(scenarioItem);
         Cache.Save(table);
     }

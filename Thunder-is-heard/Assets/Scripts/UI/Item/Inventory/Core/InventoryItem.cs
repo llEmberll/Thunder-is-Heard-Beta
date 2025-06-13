@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine.EventSystems;
 
 public abstract class InventoryItem : Item
 {
@@ -6,9 +7,9 @@ public abstract class InventoryItem : Item
 
     public TMP_Text TmpCount;
 
-    public Inventory conductor;
+    public IItemConductor conductor;
 
-    public void SetConductor(Inventory value)
+    public void SetConductor(IItemConductor value)
     {
         conductor = value;
     }
@@ -56,22 +57,7 @@ public abstract class InventoryItem : Item
 
     public void Substract(int number = 1)
     {
-        InventoryCacheTable inventoryItemsTable = Cache.LoadByType<InventoryCacheTable>();
-        CacheItem cacheItem = inventoryItemsTable.GetById(_id);
-        InventoryCacheItem inventoryItem = new InventoryCacheItem(cacheItem.Fields);
-        inventoryItem.SetCount(inventoryItem.GetCount() - 1);
-        if (inventoryItem.GetCount() < 1)
-        {
-            inventoryItemsTable.Delete(new CacheItem[1] { cacheItem});
-        }
-        else
-        {
-            cacheItem.fields = inventoryItem.Fields;
-        }
-
-        Cache.Save(inventoryItemsTable);
-
-        UpdateCount(_count - number);
+        conductor.Substract(this, number);
     }
 
     public void InitCoreId()
@@ -79,6 +65,16 @@ public abstract class InventoryItem : Item
         InventoryCacheTable inventory = Cache.LoadByType<InventoryCacheTable>();
         InventoryCacheItem inventoryItem = new InventoryCacheItem(inventory.GetById(_id).Fields);
         coreId = inventoryItem.GetCoreId();
+    }
+
+    public override void OnPointerEnter(PointerEventData data)
+    {
+        conductor.OnPointerEnter(this, data);
+    }
+
+    public override void OnPointerExit(PointerEventData eventData)
+    {
+        conductor.OnPointerExit(this, eventData);
     }
 }
 

@@ -50,10 +50,10 @@ public class EventMaster: MonoBehaviour
         StateChanged?.Invoke(newState);
     }
 
-    public event Action<List<Vector2Int>, int> StartLanding;
-    public void Landing(List<Vector2Int> landableCells, int landingMaxStaff)
+    public event Action<LandingData> StartLanding;
+    public void Landing(LandingData landingData)
     {
-        StartLanding?.Invoke(landableCells, landingMaxStaff);
+        StartLanding?.Invoke(landingData);
     }
 
     public event Action ToBattleButtonPressed;
@@ -434,5 +434,17 @@ public class EventMaster: MonoBehaviour
     public void OnResetComponentsBehaviour()
     {
         ComponentsBehaviourReset?.Invoke();
+    }
+
+    public event Action<string> HintSetup;
+    public void OnSetHint(string text)
+    {
+        HintSetup?.Invoke(text);
+    }
+
+    public event Action HintHidden;
+    public void OnHideHint()
+    {
+        HintHidden?.Invoke();
     }
 }

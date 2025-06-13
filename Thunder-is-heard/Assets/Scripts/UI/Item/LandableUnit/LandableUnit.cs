@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.EventSystems;
 
 public class LandableUnit: ExposableInventoryItem
 {
@@ -14,7 +13,6 @@ public class LandableUnit: ExposableInventoryItem
 
     public int staff;
     public TMP_Text TmpStaff;
-
 
     public void Init(string inventoryItemId, string objectName, int objectStaff, int objectHealth, int objectDamage, int objectDistance, int objectMobility, int objectCount, Sprite objectIcon = null)
     {
@@ -32,25 +30,5 @@ public class LandableUnit: ExposableInventoryItem
         TmpName.text = _objName;
         TmpCount.text = "x" + _count.ToString();
         TmpStaff.text = staff.ToString();
-    }
-
-    public override void OnPointerEnter(PointerEventData data)
-    {
-        if (!focusOn)
-        {
-            EventMaster.current.OnLandableUnitFocus(this);
-        }
-
-        focusOn = true;
-    }
-
-    public override void OnPointerExit(PointerEventData eventData)
-    {
-        if (focusOn)
-        {
-            EventMaster.current.OnLandableUnitDefocus(this);
-        }
-
-        focusOn = false;
     }
 }

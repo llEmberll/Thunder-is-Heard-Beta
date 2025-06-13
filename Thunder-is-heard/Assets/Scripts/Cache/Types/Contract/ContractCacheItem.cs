@@ -77,6 +77,11 @@ public class ContractCacheItem : CacheItem
             return new ResourcesData();
         }
 
+        if (value is ResourcesData typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<ResourcesData>(value.ToString());
     }
 
@@ -92,6 +97,11 @@ public class ContractCacheItem : CacheItem
         {
             return new ResourcesData();
         }
+
+        if (value is ResourcesData typedValue)
+        {
+            return typedValue;
+        }   
 
         return JsonConvert.DeserializeObject<ResourcesData>(value.ToString());
     }

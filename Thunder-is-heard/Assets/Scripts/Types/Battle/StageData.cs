@@ -1,5 +1,7 @@
 
 
+using System.Collections.Generic;
+
 [System.Serializable]
 public class StageData
 {
@@ -20,7 +22,18 @@ public class StageData
     public StageData stageOnPass = null;
     public StageData stageOnFail = null;
 
-    
+
+    public Dictionary<string, string> behaviourIdByComponentName = null;
+
+    public FocusData focusData = null;
+
+    public MediaEventData mediaEventData = null;
+
+    public LandingData landingData = null;
+
+    public string hintText = null;
+
+
     public StageData() { }
 
     public StageData(
@@ -34,7 +47,12 @@ public class StageData
         ConditionData stageConditionsForPass,
         string stageId = "BasicStage",
         StageData stageStageOnPass = null,
-        StageData stageStageOnFail = null
+        StageData stageStageOnFail = null,
+        Dictionary<string, string> stageBehaviourIdByComponentName = null,
+        FocusData stageFocusData = null,
+        MediaEventData stageMediaEventData = null,
+        LandingData stageLandingData = null,
+        string stageHintText = null
         )
     {
         id = stageId;
@@ -48,5 +66,10 @@ public class StageData
         conditionsForPass = stageConditionsForPass;
         stageOnPass = stageStageOnPass;
         stageOnFail = stageStageOnFail;
+        behaviourIdByComponentName = stageBehaviourIdByComponentName;
+        focusData = stageFocusData;
+        mediaEventData = stageMediaEventData;
+        landingData = stageLandingData;
+        hintText = stageHintText;
     }
 }

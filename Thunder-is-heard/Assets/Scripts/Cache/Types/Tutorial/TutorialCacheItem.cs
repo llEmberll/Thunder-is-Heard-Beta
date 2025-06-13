@@ -37,6 +37,11 @@ public class TutorialCacheItem : CacheItem
             return new ConditionData();
         }
 
+        if (value is ConditionData typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<ConditionData>(value.ToString());
     }
 
@@ -48,6 +53,12 @@ public class TutorialCacheItem : CacheItem
     public TutorialStageData GetFirstStage()
     {
         object value = GetField("firstStage");
+
+        if (value is TutorialStageData typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<TutorialStageData>(value.ToString());
     }
 

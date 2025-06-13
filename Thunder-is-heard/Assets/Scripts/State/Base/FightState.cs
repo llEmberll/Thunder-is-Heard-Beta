@@ -121,16 +121,10 @@ public class FightState: State
         CacheItem cacheItem = battleTable.GetById(battleId);
         BattleCacheItem battleData = new BattleCacheItem(cacheItem.Fields);
 
-        MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
-        CacheItem cacheItemMission = missionTable.GetById(battleData.GetMissionId());
-        MissionCacheItem missionData = new MissionCacheItem(cacheItemMission.Fields);
-
-        ScenarioCacheTable scenarioTable = Cache.LoadByType<ScenarioCacheTable>();
-        CacheItem cacheItemScenario = scenarioTable.GetById(missionData.GetScenarioId());
-        ScenarioCacheItem scenarioData = new ScenarioCacheItem(cacheItemScenario.Fields);
-
-        LandingData landingData = scenarioData.GetLanding();
-        return landingData.maxStaff;
+        StageData currentStage = battleData.GetCurrentStage();
+        if (currentStage == null) return 100;
+        if (currentStage.landingData == null) return 100;
+        return currentStage.landingData.maxStaff;
     }
 
     public override int GetStaff()

@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Inventory : ItemList
+public class Inventory : ItemList, IItemConductor
 {
     public string ComponentType
     {
@@ -58,87 +59,6 @@ public class Inventory : ItemList
         FillContent();
     }
 
-    public BuildInventoryItem CreateBuild(InventoryCacheItem inventoryItemData, BuildCacheItem buildData)
-    {
-        string id = inventoryItemData.GetExternalId();
-        string name = buildData.GetName();
-        ResourcesData gives = buildData.GetGives();
-        int health = buildData.GetHealth();
-        int damage = buildData.GetDamage();
-        int distance = buildData.GetDistance();
-        int count = inventoryItemData.GetCount();
-        string description = buildData.GetDescription();
-        Sprite icon = ResourcesUtils.LoadIcon(buildData.GetIconSection(), buildData.GetIconName());
-
-        GameObject itemObject = CreateObject(Config.resources["UI" + "Build" + "InventoryItemPrefab"], content);
-        itemObject.name = name;
-        BuildInventoryItem buildComponent = itemObject.GetComponent<BuildInventoryItem>();
-
-        buildComponent.Init(
-            id, 
-            name, 
-            gives,
-            health, 
-            damage, 
-            distance, 
-            count, 
-            description,
-            icon
-            );
-        buildComponent.SetConductor(this);
-        return buildComponent;
-    }
-
-    public UnitInventoryItem CreateUnit(InventoryCacheItem inventoryItemData, UnitCacheItem unitData)
-    {
-        string id = inventoryItemData.GetExternalId();
-        string name = unitData.GetName();
-        ResourcesData gives = unitData.GetGives();
-        int health = unitData.GetHealth();
-        int damage = unitData.GetDamage();
-        int distance = unitData.GetDistance();
-        int mobility = unitData.GetMobility();
-        int count = inventoryItemData.GetCount();
-        string description = unitData.GetDescription();
-        Sprite icon = ResourcesUtils.LoadIcon(unitData.GetIconSection(), unitData.GetIconName());
-
-        GameObject itemObject = CreateObject(Config.resources["UI" + "Unit" + "InventoryItemPrefab"], content);
-        itemObject.name = name;
-        UnitInventoryItem unitComponent = itemObject.GetComponent<UnitInventoryItem>();
-
-        unitComponent.Init(
-            id, 
-            name, 
-            gives, 
-            health, 
-            damage, 
-            distance, 
-            mobility, 
-            count, 
-            description,
-            icon
-            );
-        unitComponent.SetConductor(this);
-        return unitComponent;
-    }
-
-    public MaterialInventoryItem CreateMaterial(InventoryCacheItem inventoryItemData, MaterialCacheItem materialData)
-    {
-        string id = inventoryItemData.GetExternalId();
-        string name = materialData.GetName();
-        int count = inventoryItemData.GetCount();
-        string description = materialData.GetDescription();
-        Sprite icon = ResourcesUtils.LoadIcon(materialData.GetIconSection(), materialData.GetIconName());
-
-        GameObject itemObject = CreateObject(Config.resources["UI" + "Material" + "InventoryItemPrefab"], content);
-        itemObject.name = name;
-        MaterialInventoryItem materialComponent = itemObject.GetComponent<MaterialInventoryItem>();
-
-        materialComponent.Init(id, name, count, description, icon);
-        materialComponent.SetConductor(this);
-        return materialComponent;
-    }
-
     public void InitContent()
     {
         content = GameObject.FindGameObjectWithTag(Tags.inventoryItems).transform;
@@ -166,6 +86,21 @@ public class Inventory : ItemList
         _behaviour.OnUse(item);
     }
 
+    public void CreatePreview(ExposableInventoryItem item)
+    {
+        _behaviour.CreatePreview(this, item);
+    }
+
+    public void OnObjectExposed(ExposableInventoryItem item, Entity obj)
+    {
+        _behaviour.OnObjectExposed(this, item, obj);
+    }
+
+    public void Substract(InventoryItem item, int number = 1)
+    {
+        _behaviour.Substract(this, item, number);
+    }
+
     public InventoryItem FindItemById(string id)
     {
         foreach (InventoryItem i in items)
@@ -182,5 +117,29 @@ public class Inventory : ItemList
             if (i.coreId == id) return i;
         }
         return null;
+    }
+
+    public void OnPointerEnter(InventoryItem item, PointerEventData eventData)
+    {
+        if (item is LandableUnit landableUnit)
+        {
+            if (!landableUnit.focusOn)
+            {
+                landableUnit.focusOn = true;
+                // Здесь можно добавить специфичную логику для Inventory
+            }
+        }
+    }
+
+    public void OnPointerExit(InventoryItem item, PointerEventData eventData)
+    {
+        if (item is LandableUnit landableUnit)
+        {
+            if (landableUnit.focusOn)
+            {
+                landableUnit.focusOn = false;
+                // Здесь можно добавить специфичную логику для Inventory
+            }
+        }
     }
 }

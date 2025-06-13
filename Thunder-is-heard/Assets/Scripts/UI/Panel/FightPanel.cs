@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class FightPanel : Panel
@@ -26,7 +24,7 @@ public class FightPanel : Panel
         EventMaster.current.FightIsContinued -= ToggleToFight;
     }
 
-    public void ToggleToLanding(List<Vector2Int> landableZone, int maxStaff)
+    public void ToggleToLanding(LandingData landingData)
     {
         fightButtons.gameObject.SetActive(false);
         prepareButtons.gameObject.SetActive(true);
@@ -37,6 +35,5 @@ public class FightPanel : Panel
     {
         fightButtons.gameObject.SetActive(true);
         prepareButtons.gameObject.SetActive(false);
-        DisableListeners();
     }
 }

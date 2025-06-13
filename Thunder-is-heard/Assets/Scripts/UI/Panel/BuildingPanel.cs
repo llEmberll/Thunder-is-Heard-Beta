@@ -21,7 +21,7 @@ public class BuildingPanel : Panel
 
     public void Start()
     {
-        ChangeBehaviour();
+        ChangeBehaviour("Disabled");
 
         InitListeners();
     }
@@ -33,18 +33,22 @@ public class BuildingPanel : Panel
 
     public virtual void EnableListeners()
     {
+        EventMaster.current.StartLanding += OnToggleToLanding;
         EventMaster.current.ToggledToBuildMode += OnBuildMode;
         EventMaster.current.ToggledOffBuildMode += OnExitBuildMode;
         EventMaster.current.ComponentBehaviourChanged += OnSomeComponentChangeBehaviour;
         EventMaster.current.FightIsStarted += OnStartFight;
+        EventMaster.current.FightIsContinued += OnStartFight;
     }
 
     public virtual void DisableListeners()
     {
+        EventMaster.current.StartLanding -= OnToggleToLanding;
         EventMaster.current.ToggledToBuildMode -= OnBuildMode;
         EventMaster.current.ToggledOffBuildMode -= OnExitBuildMode;
         EventMaster.current.ComponentBehaviourChanged -= OnSomeComponentChangeBehaviour;
         EventMaster.current.FightIsStarted -= OnStartFight;
+        EventMaster.current.FightIsContinued -= OnStartFight;
     }
 
     public void TurnOffBuilding()
@@ -159,10 +163,17 @@ public class BuildingPanel : Panel
         ChangeBehaviour(behaviourName);
     }
 
+    public void OnToggleToLanding(LandingData landingData)
+    {
+        ChangeBehaviour();
+    }
+
     public void OnStartFight()
     {
         ChangeBehaviour("Disabled");
     }
+
+
 
     public void OnResetBehaviour()
     {

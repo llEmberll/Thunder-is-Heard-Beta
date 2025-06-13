@@ -1,4 +1,4 @@
-using System.Linq;
+
 using UnityEngine;
 
 public abstract class ObjectsOnFight : ItemList, IObjectsOnScene
@@ -7,7 +7,7 @@ public abstract class ObjectsOnFight : ItemList, IObjectsOnScene
 
     public override void Start()
     {
-        map = GameObject.FindWithTag("Map").GetComponent<Map>();
+        map = GameObject.FindWithTag(Tags.map).GetComponent<Map>();
         base.Start();
     }
 

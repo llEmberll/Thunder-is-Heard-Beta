@@ -37,11 +37,6 @@ public class ScenarioCacheItem : CacheItem
             SetObstacles(new ObstacleOnBattle[] { });
         }
 
-        if (!objFields.ContainsKey("landing"))
-        {
-            SetLanding(new LandingData(new Bector2Int[] {}, 0));
-        }
-
         if (!objFields.ContainsKey("startStage"))
         {
             SetStartStage(new StageData());
@@ -61,6 +56,10 @@ public class ScenarioCacheItem : CacheItem
     public Bector2Int GetMapSize()
     {
         object value = GetField("mapSize");
+        if (value is Bector2Int typedValue)
+        {
+            return typedValue;
+        }
         return JsonConvert.DeserializeObject<Bector2Int>(value.ToString());
     }
 
@@ -75,6 +74,11 @@ public class ScenarioCacheItem : CacheItem
         if (value == null)
         {
             return new UnitOnBattle[] { };
+        }
+
+        if (value is UnitOnBattle[] typedValue)
+        {
+            return typedValue;
         }
 
         return JsonConvert.DeserializeObject<UnitOnBattle[]>(value.ToString());
@@ -93,6 +97,11 @@ public class ScenarioCacheItem : CacheItem
             return new BuildOnBattle[] { };
         }
 
+        if (value is BuildOnBattle[] typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<BuildOnBattle[]>(value.ToString());
     }
 
@@ -107,6 +116,11 @@ public class ScenarioCacheItem : CacheItem
         if (value == null)
         {
             return new Replic[] { };
+        }
+
+        if (value is Replic[] typedValue)
+        {
+            return typedValue;
         }
 
         return JsonConvert.DeserializeObject<Replic[]>(value.ToString());
@@ -125,6 +139,11 @@ public class ScenarioCacheItem : CacheItem
             return new ObstacleOnBattle[] { };
         }
 
+        if (value is ObstacleOnBattle[] typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<ObstacleOnBattle[]>(value.ToString());
     }
 
@@ -133,28 +152,17 @@ public class ScenarioCacheItem : CacheItem
         SetField("obstacles", value);
     }
 
-    public LandingData GetLanding()
-    {
-        object value = GetField("landing");
-        if (value == null)
-        {
-            return new LandingData(new Bector2Int[] { }, 0);
-        }
-
-        return JsonConvert.DeserializeObject<LandingData>(value.ToString());
-    }
-
-    public void SetLanding(LandingData value)
-    {
-        SetField("landing", value);
-    }
-
     public StageData GetStartStage()
     {
         object value = GetField("startStage");
         if (value == null)
         {
             return new StageData();
+        }
+
+        if (value is StageData typedValue)
+        {
+            return typedValue;
         }
 
         return JsonConvert.DeserializeObject<StageData>(value.ToString());

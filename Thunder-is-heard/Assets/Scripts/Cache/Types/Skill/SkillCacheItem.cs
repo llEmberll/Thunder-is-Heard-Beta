@@ -83,6 +83,11 @@ public class SkillCacheItem : CacheItem
             return new string[] { };
         }
 
+        if (value is string[] typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<string[]>(value.ToString());
     }
 

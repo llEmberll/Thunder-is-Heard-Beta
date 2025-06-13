@@ -67,6 +67,12 @@ public abstract class ExposableShopItem : ShopItem
         }
 
         object value = item.GetField("size");
+
+        if (value is Bector2Int typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<Bector2Int>(value.ToString());
     }
 

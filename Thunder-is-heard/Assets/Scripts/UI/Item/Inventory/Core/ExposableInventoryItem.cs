@@ -43,22 +43,7 @@ public abstract class ExposableInventoryItem : InventoryItem
 
     public void CreatePreview()
     {
-        CacheTable itemsTable = Cache.LoadByName(Type);
-
-        CacheItem needleItemData = itemsTable.GetById(coreId);
-        if (needleItemData == null)
-        {
-            Debug.Log("CreatePreview | Can't find item by id: " + coreId);
-            Finish();
-            return;
-        }
-
-        string modelPath = (string)needleItemData.GetField("modelPath") + "/" + Tags.federation;
-        Vector2Int size = GetSize(needleItemData).ToVector2Int();
-        Transform model = ObjectProcessor.CreateModel(modelPath, 0).transform;
-
-        ObjectPreview preview = ObjectPreview.Create();
-        preview.Init(_objName, Type, coreId, size, model);
+        conductor.CreatePreview(this);
     }
 
     public virtual Bector2Int GetSize(CacheItem item)
@@ -69,6 +54,12 @@ public abstract class ExposableInventoryItem : InventoryItem
         }
 
         object value = item.GetField("size");
+
+        if (value is Bector2Int typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<Bector2Int>(value.ToString());
     }
 
@@ -96,20 +87,7 @@ public abstract class ExposableInventoryItem : InventoryItem
 
     public void OnObjectExposed(Entity obj)
     {
-        if (obj.CoreId == coreId && obj.Type.Contains(Type))
-        {
-            if (_count < 2)
-            {
-                Finish();
-            }
-
-            Substract();
-        }
-
-        else
-        {
-            Continue();
-        }
+        conductor.OnObjectExposed(this, obj);
     }
 }
 

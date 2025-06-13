@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class BaseSubsituableInventoryBehaviour : ISubsituableInventoryBehaviour
 {
@@ -60,20 +61,159 @@ public class BaseSubsituableInventoryBehaviour : ISubsituableInventoryBehaviour
             {
                 case "Build":
                     BuildCacheItem buildData = new BuildCacheItem(item.Fields);
-                    BuildInventoryItem build = conductor.CreateBuild(inventoryItemData, buildData);
+                    BuildInventoryItem build = CreateBuild(conductor, inventoryItemData, buildData);
                     conductor.items.Add(build);
                     break;
                 case "Unit":
                     UnitCacheItem unitData = new UnitCacheItem(item.Fields);
-                    UnitInventoryItem unit = conductor.CreateUnit(inventoryItemData, unitData);
+                    UnitInventoryItem unit = CreateUnit(conductor, inventoryItemData, unitData);
                     conductor.items.Add(unit);
                     break;
                 case "Material":
                     MaterialCacheItem materialData = new MaterialCacheItem(item.Fields);
-                    MaterialInventoryItem material = conductor.CreateMaterial(inventoryItemData, materialData);
+                    MaterialInventoryItem material = CreateMaterial(conductor, inventoryItemData, materialData);
                     conductor.items.Add(material);
                     break;
             }
         }
+    }
+
+    public virtual BuildInventoryItem CreateBuild(Inventory conductor, InventoryCacheItem inventoryItemData, BuildCacheItem buildData)
+    {
+        string id = inventoryItemData.GetExternalId();
+        string name = buildData.GetName();
+        ResourcesData gives = buildData.GetGives();
+        int health = buildData.GetHealth();
+        int damage = buildData.GetDamage();
+        int distance = buildData.GetDistance();
+        int count = inventoryItemData.GetCount();
+        string description = buildData.GetDescription();
+        Sprite icon = ResourcesUtils.LoadIcon(buildData.GetIconSection(), buildData.GetIconName());
+
+        GameObject itemObject = Inventory.CreateObject(Config.resources["UI" + "Build" + "InventoryItemPrefab"], conductor.content);
+        itemObject.name = name;
+        BuildInventoryItem buildComponent = itemObject.GetComponent<BuildInventoryItem>();
+
+        buildComponent.Init(
+            id, 
+            name, 
+            gives,
+            health, 
+            damage, 
+            distance, 
+            count, 
+            description,
+            icon
+            );
+        buildComponent.SetConductor(conductor);
+        return buildComponent;
+    }
+
+    public virtual UnitInventoryItem CreateUnit(Inventory conductor, InventoryCacheItem inventoryItemData, UnitCacheItem unitData)
+    {
+        string id = inventoryItemData.GetExternalId();
+        string name = unitData.GetName();
+        ResourcesData gives = unitData.GetGives();
+        int health = unitData.GetHealth();
+        int damage = unitData.GetDamage();
+        int distance = unitData.GetDistance();
+        int mobility = unitData.GetMobility();
+        int count = inventoryItemData.GetCount();
+        string description = unitData.GetDescription();
+        Sprite icon = ResourcesUtils.LoadIcon(unitData.GetIconSection(), unitData.GetIconName());
+
+        GameObject itemObject = Inventory.CreateObject(Config.resources["UI" + "Unit" + "InventoryItemPrefab"], conductor.content);
+        itemObject.name = name;
+        UnitInventoryItem unitComponent = itemObject.GetComponent<UnitInventoryItem>();
+
+        unitComponent.Init(
+            id, 
+            name, 
+            gives, 
+            health, 
+            damage, 
+            distance, 
+            mobility, 
+            count, 
+            description,
+            icon
+            );
+        unitComponent.SetConductor(conductor);
+        return unitComponent;
+    }
+
+    public virtual MaterialInventoryItem CreateMaterial(Inventory conductor, InventoryCacheItem inventoryItemData, MaterialCacheItem materialData)
+    {
+        string id = inventoryItemData.GetExternalId();
+        string name = materialData.GetName();
+        int count = inventoryItemData.GetCount();
+        string description = materialData.GetDescription();
+        Sprite icon = ResourcesUtils.LoadIcon(materialData.GetIconSection(), materialData.GetIconName());
+
+        GameObject itemObject = Inventory.CreateObject(Config.resources["UI" + "Material" + "InventoryItemPrefab"], conductor.content);
+        itemObject.name = name;
+        MaterialInventoryItem materialComponent = itemObject.GetComponent<MaterialInventoryItem>();
+
+        materialComponent.Init(id, name, count, description, icon);
+        materialComponent.SetConductor(conductor);
+        return materialComponent;
+    }
+
+    public virtual void CreatePreview(Inventory conductor, ExposableInventoryItem item)
+    {
+        CacheTable itemsTable = Cache.LoadByName(item.Type);
+
+        CacheItem needleItemData = itemsTable.GetById(item.coreId);
+        if (needleItemData == null)
+        {
+            Debug.Log("CreatePreview | Can't find item by id: " + item.coreId);
+            item.Finish();
+            return;
+        }
+
+        string modelPath = (string)needleItemData.GetField("modelPath") + "/" + Tags.federation;
+        Vector2Int size = item.GetSize(needleItemData).ToVector2Int();
+        Transform model = ObjectProcessor.CreateModel(modelPath, 0).transform;
+
+        ObjectPreview preview = ObjectPreview.Create();
+        preview.Init(item._objName, item.Type, item.coreId, size, model);
+    }
+
+    public virtual void OnObjectExposed(Inventory conductor, ExposableInventoryItem item, Entity obj)
+    {
+        if (obj.CoreId == item.coreId && obj.Type.Contains(item.Type))
+        {
+            if (item._count < 2)
+            {
+                item.Finish();
+            }
+
+            item.Substract();
+        }
+
+        else
+        {
+            item.Continue();
+        }
+    }
+
+    public virtual void Substract(Inventory conductor, InventoryItem item, int number = 1)
+    {
+        InventoryCacheTable inventoryItemsTable = Cache.LoadByType<InventoryCacheTable>();
+        CacheItem cacheItem = inventoryItemsTable.GetById(item._id);
+        InventoryCacheItem inventoryItem = new InventoryCacheItem(cacheItem.Fields);
+        inventoryItem.SetCount(inventoryItem.GetCount() - 1);
+        if (inventoryItem.GetCount() < 1)
+        {
+            inventoryItemsTable.Delete(new CacheItem[1] { cacheItem });
+        }
+        else
+        {
+            cacheItem.fields = inventoryItem.Fields;
+        }
+
+        Cache.Save(inventoryItemsTable);
+
+        item.UpdateCount(item._count - number);
     }
 }

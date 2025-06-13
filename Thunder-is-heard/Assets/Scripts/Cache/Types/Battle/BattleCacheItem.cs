@@ -18,11 +18,6 @@ public class BattleCacheItem : CacheItem
             SetCurrentStage(null);
         }
 
-        if (!objFields.ContainsKey("isLanded"))
-        {
-            SetIsLanded(false);
-        }
-
         if (!objFields.ContainsKey("units"))
         {
             SetUnits(new UnitOnBattle[] { });
@@ -68,6 +63,11 @@ public class BattleCacheItem : CacheItem
             return null;
         }
 
+        if (value is StageData typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<StageData>(value.ToString());
     }
 
@@ -76,22 +76,17 @@ public class BattleCacheItem : CacheItem
         SetField("currentStage", value);
     }
 
-    public bool GetIsLanded()
-    {
-        return (bool)GetField("isLanded");
-    }
-
-    public void SetIsLanded(bool value)
-    {
-        SetField("isLanded", value);
-    }
-
     public UnitOnBattle[] GetUnits()
     {
         object value = GetField("units");
         if (value == null)
         {
             return new UnitOnBattle[] { };
+        }
+
+        if (value is UnitOnBattle[] typedValue)
+        {
+            return typedValue;
         }
 
         return JsonConvert.DeserializeObject<UnitOnBattle[]>(value.ToString());
@@ -110,6 +105,11 @@ public class BattleCacheItem : CacheItem
             return new BuildOnBattle[] { };
         }
 
+        if (value is BuildOnBattle[] typedValue)
+        {
+            return typedValue;
+        }
+
         return JsonConvert.DeserializeObject<BuildOnBattle[]>(value.ToString());
     }
 
@@ -124,6 +124,11 @@ public class BattleCacheItem : CacheItem
         if (value == null)
         {
             return new ObstacleOnBattle[] { };
+        }
+
+        if (value is ObstacleOnBattle[] typedValue)
+        {
+            return typedValue;
         }
 
         return JsonConvert.DeserializeObject<ObstacleOnBattle[]>(value.ToString());
