@@ -21,6 +21,8 @@ public class Cell : Interactable
     public Material basicMaterial;
     public Material selectMaterial;
 
+    public ISubsituableCellBehaviour _behaviour;
+
     public void Awake()
     {
         Free();
@@ -43,6 +45,8 @@ public class Cell : Interactable
         EventMaster.current.StateChanged += OnChangeState;
 
         RenderSwitch(stateMachine.currentState.IsCellMustBeVisible(this));
+
+        ChangeBehaviour();
     }
 
 
@@ -75,19 +79,20 @@ public class Cell : Interactable
         _meshRenderer.enabled = render;
         visible = _meshRenderer.enabled;
     }
+
     public override void OnFocus()
     {
-        stateMachine.currentState.OnCellMouseEnter(this);
+        _behaviour.OnFocus(this);
     }
 
     public override void OnDefocus()
     {
-        stateMachine.currentState.OnCellMouseExit(this);
+        _behaviour.OnDefocus(this);
     }
 
     public override void OnClick()
     {
-        stateMachine.currentState.OnCellClick(this);
+        _behaviour.OnClick(this);
     }
 
     public override bool Equals(object obj)
@@ -109,5 +114,22 @@ public class Cell : Interactable
             hash = hash * 23 + position.GetHashCode();
             return hash;
         }
+    }
+
+    public void OnSomeComponentChangeBehaviour(string componentName, string behaviourName)
+    {
+        if (componentName != Type) return;
+        ChangeBehaviour(behaviourName);
+    }
+
+    public void OnResetBehaviour()
+    {
+        ChangeBehaviour();
+    }
+
+    public void ChangeBehaviour(string name = "Base")
+    {
+        _behaviour = SubsituableCellFactory.GetBehaviourById(name);
+        _behaviour.Init(this);
     }
 }

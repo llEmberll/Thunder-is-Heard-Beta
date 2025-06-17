@@ -32,6 +32,12 @@ public class Unit : Entity, IMovable, IAttack, ITransfer
         base.Awake();
     }
 
+    public override void Start()
+    {
+        base.Start();
+        ChangeBehaviour();
+    }
+
     public void SetSkills(Skill[] skills)
     {
         _skills = skills;

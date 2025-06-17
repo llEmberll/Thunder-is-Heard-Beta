@@ -477,7 +477,7 @@ public class FightDirector : MonoBehaviour
         }
     }
 
-    public void ReturnToBase()
+    public static void ReturnToBase()
     {
         SceneLoader.LoadHome();
     }

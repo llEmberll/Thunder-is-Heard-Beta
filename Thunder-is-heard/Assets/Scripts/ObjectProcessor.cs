@@ -709,7 +709,6 @@ public class ObjectProcessor : MonoBehaviour
         component.SetUnitType(unitType);
         component.SetDoctrine(doctrine);
         component.SetMovementSpeed(movementSpeed);
-        component.ChangeBehaviour();
 
         if (skillIds == null || skillIds.Length < 1) return;
         Skill[] skillComponents = new Skill[skillIds.Length];

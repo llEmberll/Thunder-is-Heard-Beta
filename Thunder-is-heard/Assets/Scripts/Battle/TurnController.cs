@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -25,12 +24,16 @@ public class TurnController : MonoBehaviour
     {
         EventMaster.current.FightIsStarted += OnStartFight;
         EventMaster.current.FightIsContinued += OnStartFight;
+
+        EventMaster.current.PassedTurn += Pass;
     }
 
     public void DisableStartListeners()
     {
         EventMaster.current.FightIsStarted -= OnStartFight;
         EventMaster.current.FightIsContinued -= OnStartFight;
+
+        EventMaster.current.PassedTurn -= Pass;
     }
 
     public void EnableObjectClickListeners()

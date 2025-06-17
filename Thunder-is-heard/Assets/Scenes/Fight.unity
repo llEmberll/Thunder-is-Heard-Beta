@@ -567,9 +567,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8593287592968246159}
-        m_TargetAssemblyTypeName: FightDirector, Assembly-CSharp
-        m_MethodName: ReturnToBase
+      - m_Target: {fileID: 4065941096456814880}
+        m_TargetAssemblyTypeName: FightPanel, Assembly-CSharp
+        m_MethodName: OnPressToBaseButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4129,7 +4129,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1149240398}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4065941096456814880}
+        m_TargetAssemblyTypeName: FightPanel, Assembly-CSharp
+        m_MethodName: OnPressCleanLandingButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1149240398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4251,9 +4263,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8593287592968246159}
-        m_TargetAssemblyTypeName: FightDirector, Assembly-CSharp
-        m_MethodName: ReturnToBase
+      - m_Target: {fileID: 4065941096456814880}
+        m_TargetAssemblyTypeName: FightPanel, Assembly-CSharp
+        m_MethodName: OnPressToBaseButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6110,7 +6122,7 @@ GameObject:
   - component: {fileID: 1814214051}
   - component: {fileID: 1814214050}
   m_Layer: 5
-  m_Name: CleanLandingButton (1)
+  m_Name: ChangeBaseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6179,7 +6191,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1814214051}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4065941096456814880}
+        m_TargetAssemblyTypeName: FightPanel, Assembly-CSharp
+        m_MethodName: OnPressChangeBaseButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1814214051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9351,7 +9375,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4065941096361045060}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4065941096456814880}
+        m_TargetAssemblyTypeName: FightPanel, Assembly-CSharp
+        m_MethodName: OnPressSurrenderButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4065941096456814873
 GameObject:
   m_ObjectHideFlags: 0
@@ -9576,7 +9612,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4065941097307372643}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4065941096456814880}
+        m_TargetAssemblyTypeName: FightPanel, Assembly-CSharp
+        m_MethodName: OnPressSupportButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4065941097307372643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9768,8 +9816,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2410590379133309894}
-        m_TargetAssemblyTypeName: EventMaster, Assembly-CSharp
+      - m_Target: {fileID: 4065941096456814880}
+        m_TargetAssemblyTypeName: FightPanel, Assembly-CSharp
         m_MethodName: OnPressToBattleButton
         m_Mode: 1
         m_Arguments:
@@ -9901,9 +9949,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 983476472}
-        m_TargetAssemblyTypeName: TurnController, Assembly-CSharp
-        m_MethodName: Pass
+      - m_Target: {fileID: 4065941096456814880}
+        m_TargetAssemblyTypeName: FightPanel, Assembly-CSharp
+        m_MethodName: OnPressPassButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11763,6 +11811,8 @@ MonoBehaviour:
   _turnController: {fileID: 0}
   _resourceProcessor: {fileID: 0}
   _dialogueController: {fileID: 0}
+  _isNextTurnProcessing: 0
+  _isFightStarted: 0
 --- !u!114 &8599123744949763661
 MonoBehaviour:
   m_ObjectHideFlags: 0
