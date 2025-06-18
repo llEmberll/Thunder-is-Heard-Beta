@@ -1,11 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public class AttackingAI : AbstractAI
 {
-    /// Агрессивное поведение. Атакует аккуратно при возможности, иначе подтгивает остальные силы к фронту. При тупике отчаянно атакует
+    /// Агрессивное поведение. Атакует аккуратно при возможности, иначе подтягивает остальные силы к фронту. При тупике отчаянно атакует
 
     public override TurnData GetTurn()
     {

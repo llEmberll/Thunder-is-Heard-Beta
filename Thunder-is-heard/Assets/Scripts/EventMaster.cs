@@ -453,4 +453,10 @@ public class EventMaster: MonoBehaviour
     {
         HintHidden?.Invoke();
     }
+
+    public event Action CameraMoved;
+    public void OnCameraMoved()
+    {
+        CameraMoved?.Invoke();
+    }
 }

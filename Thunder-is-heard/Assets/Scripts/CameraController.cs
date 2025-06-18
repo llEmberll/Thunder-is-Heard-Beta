@@ -146,11 +146,11 @@ public class CameraController : MonoBehaviour
 
         Debug.Log("Camera moved");
 
+        // РћС‚РїСЂР°РІР»СЏРµРј СЃРѕР±С‹С‚РёРµ Рѕ РґРІРёР¶РµРЅРёРё РєР°РјРµСЂС‹ РїСЂРё С„РѕРєСѓСЃРёСЂРѕРІРєРµ
+        EventMaster.current.OnCameraMoved();
+
         if (Vector3.Distance(transform.position, focusVector3) < 0.1f)
         {
-            Debug.Log("focus достигнут!");
-            Debug.Log("Позиция камеры - " + transform.position);
-
             transform.position = focusVector3;
             haveFocus = false;
         }
@@ -162,7 +162,7 @@ public class CameraController : MonoBehaviour
         minX = transform.position.x - ((map.size.y + map.size.x) / 4);
         minZ = transform.position.z - ((map.size.y + map.size.x) / 4);
         maxZ = transform.position.z + ((map.size.y + map.size.x) / 4);
-        //TODO рассчитать min и max координаты камеры в зависимости от размера игрового поля
+        //TODO пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ min пїЅ max пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     }
 
     public void UpdateLastMousePosition()
@@ -172,14 +172,14 @@ public class CameraController : MonoBehaviour
 
     public void UpdateIsDraggingStatus()
     {
-        // Проверяем нажатие ЛКМ
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
         if (Input.GetMouseButtonDown(0))
         {
             _isDragging = true;
             UpdateLastMousePosition();
         }
 
-        // Проверяем отпускание ЛКМ
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
         if (Input.GetMouseButtonUp(0))
         {
             _isDragging = false;
@@ -198,6 +198,8 @@ public class CameraController : MonoBehaviour
         if (!_isMovable) return;
 
         UpdateIsDraggingStatus();
+        bool cameraMoved = false;
+        
         if (_isDragging)
         {
             Vector2 delta = new Vector2(Input.mousePosition.x, Input.mousePosition.y) - _lastMousePosition;
@@ -210,11 +212,13 @@ public class CameraController : MonoBehaviour
             if (delta.x != 0)
             {
                 cameraPosition += new Vector3(-delta.x * totalMovementMultiplier, 0, delta.x * totalMovementMultiplier);
+                cameraMoved = true;
             }
 
             if (delta.y != 0)
             {
                 cameraPosition += new Vector3(-delta.y * totalMovementMultiplier, 0, -delta.y * totalMovementMultiplier);
+                cameraMoved = true;
             }
 
             cameraPosition.x = Mathf.Clamp(cameraPosition.x, minX, maxX);
@@ -224,8 +228,18 @@ public class CameraController : MonoBehaviour
 
         // Zoom camera with mouse wheel
         float zoomAmount = Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
-        mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - zoomAmount, sizeLimit.x, sizeLimit.y);
+        if (zoomAmount != 0)
+        {
+            mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize - zoomAmount, sizeLimit.x, sizeLimit.y);
+        }
+        
         // Move camera to target position
         transform.position = Vector3.Lerp(transform.position, cameraPosition, 0.030f);
+        
+        // РћС‚РїСЂР°РІР»СЏРµРј СЃРѕР±С‹С‚РёРµ С‚РѕР»СЊРєРѕ РµСЃР»Рё РєР°РјРµСЂР° РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ РґРІРёРіР°Р»Р°СЃСЊ
+        if (cameraMoved)
+        {
+            EventMaster.current.OnCameraMoved();
+        }
     }
 }

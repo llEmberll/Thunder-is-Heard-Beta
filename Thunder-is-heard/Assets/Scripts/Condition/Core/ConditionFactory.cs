@@ -10,6 +10,9 @@ public static class ConditionFactory
     {
         switch (conditionData.Type)
         {
+            case "CameraMovementPractice":
+                float practiceDuration = Convert.ToSingle(conditionData.Data["duration"]);
+                return new CameraPracticeCondition(practiceDuration);
             case "AlwaysTrue":
                 return new AlwaysTrueCondition();
             case "AlwaysFalse":
@@ -222,6 +225,14 @@ public static class ConditionFactory
             {
                 Type = "Or",
                 Data = new Dictionary<string, object> { { "conditions", JsonConvert.SerializeObject(conditionsData) } }
+            };
+        }
+        else if (condition is CameraPracticeCondition cameraPracticeCondition)
+        {
+            return new ConditionData
+            {
+                Type = "CameraMovementPractice",
+                Data = new Dictionary<string, object> { { "duration", cameraPracticeCondition._practiceDuration } }
             };
         }
         throw new ArgumentException("Неизвестный тип условия: " + condition.GetType().Name);
