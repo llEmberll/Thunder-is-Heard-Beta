@@ -266,4 +266,13 @@ public class Landing : ItemList, IItemConductor
     {
         _behaviour.Substract(this, item, number);
     }
+
+    public LandableUnit FindItemByCoreId(string coreId)
+    {
+        foreach (LandableUnit item in items)
+        {
+            if (item.coreId == coreId) return item;
+        }
+        return null;
+    }
 }

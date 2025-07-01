@@ -22,6 +22,21 @@ public class FocusData
     /// {"Type": "Build", "Data": {"childId": "[some uuid4]", ...}}
     /// </summary>
 
+    // Example 2. ёнит, возможный дл€ атаки, по стороне
+    /// <summary>
+    /// {"Type": "Unit", "Data": {"side": "Empire", "underAttack": true}}
+    /// </summary>
+
+    // Example 2. ёнит по стороне
+    /// <summary>
+    /// {"Type": "Unit", "Data": {"side": "Federation"}}
+    /// </summary>
+
+    // Example 2. ёнит по id
+    /// <summary>
+    /// {"Type": "Unit", "Data": {"childId": "[some uuid4]"}}
+    /// </summary>
+
     // Example 3. ѕервый игровой объект по родительскому id
     /// <summary>
     /// {"Type": "Build", "Data": {"coreId": "[some uuid4]", ...}}
@@ -40,6 +55,11 @@ public class FocusData
     // Example 6. Ёлемент списка по типу списка и родительскому id элемента
     /// <summary>
     /// {"Type": "UIItem", "Data": {"UIType": "Contracts", "contractType": "Steel", ...}}
+    /// </summary>
+
+    // Example 6. ёнит дл€ высадки по родительскому id элемента
+    /// <summary>
+    /// {"Type": "UIItem", "Data": {"UIType": "Landing", "coreId": "some uuid4", ...}}
     /// </summary>
 
     // Example 7. Ёлемент списка по типу списка и родительскому id элемента

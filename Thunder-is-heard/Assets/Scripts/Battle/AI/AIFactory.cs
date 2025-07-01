@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class AIFactory
 {
@@ -10,6 +8,7 @@ public class AIFactory
         { "Waiting", typeof(WaitingAI) },
         { "Attacking", typeof(AttackingAI) },
         { "Frozen", typeof(FrozenAI) },
+        { "Pursuing", typeof (PursuingAI) },
     };
 
     public static AIInterface GetConfiguredAIByTypeAndSettings(AISettings settings)

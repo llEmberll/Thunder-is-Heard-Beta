@@ -2601,6 +2601,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1095990471}
     m_Modifications:
+    - target: {fileID: 2633136208501399004, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2637431771031853019, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2688,6 +2692,46 @@ PrefabInstance:
     - target: {fileID: 3611399260750323696, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
       propertyPath: m_Name
       value: LandableUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165921808588388651, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165921808588388651, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165921808588388651, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165921808588388651, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586803522517284380, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586803522517284380, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7586803522517284380, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130132270917659888, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130132270917659888, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130132270917659888, guid: 9625f216a1d97574baf3b228b2c5aa3f, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5383,7 +5427,7 @@ GameObject:
   - component: {fileID: 1651976388}
   m_Layer: 5
   m_Name: LandableUnits
-  m_TagString: LandingPanel
+  m_TagString: LandableUnits
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

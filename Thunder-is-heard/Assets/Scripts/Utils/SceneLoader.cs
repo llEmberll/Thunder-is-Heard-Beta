@@ -23,9 +23,11 @@ public static class FightSceneLoader
 public class FightSceneParameters
 {
     public string _battleId;
+    public bool _autoStartFight;
 
-    public FightSceneParameters(string battleId)
+    public FightSceneParameters(string battleId, bool autoStartFight = false)
     {
         _battleId = battleId;
+        _autoStartFight = autoStartFight;
     }
 } 

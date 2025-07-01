@@ -250,7 +250,14 @@ public class FightDirector : MonoBehaviour
     public IEnumerator BeginScenarioFromStart()
     {
         yield return StartCoroutine(Scenario.StartInitialDialogue());
-        EnableStartFightListener();
+        if (FightSceneLoader.parameters._autoStartFight)
+        {
+            OnPressToBattleButton();
+        }
+        else
+        {
+            EnableStartFightListener();
+        }
     }
 
     public void StartFight()

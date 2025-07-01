@@ -272,6 +272,7 @@ public class FocusBaseController : FocusController
         Build sourceBuild = builds.FindObjectByChildId(productsNotificationData.GetSourceObjectId()) as Build;
         EventMaster.current.FocusCameraOnPosition(sourceBuild.center, true);
 
+        _targetEntity = sourceBuild;
         SaveMaterials(sourceBuild.gameObject);
     }
 }

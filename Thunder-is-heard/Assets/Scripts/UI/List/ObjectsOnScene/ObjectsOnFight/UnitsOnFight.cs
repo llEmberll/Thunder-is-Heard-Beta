@@ -114,7 +114,7 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
 
         SkillOnBattle[] skillDatas = battleUnitData.SkillsData;
         string[] skillIds = SkillOnBattle.GetSkillIdsBySkillOnBattleDatas(skillDatas);
-        // ������� ids ������ � ��������� � ObjectProcessor
+        // ������� ids ������ � ��������� � ObjectProcessor
 
         Bector2Int[] position = new Bector2Int[1] { battleUnitData.position.First() };
         int rotation = battleUnitData.rotation;
@@ -201,6 +201,26 @@ public class UnitsOnFight : ObjectsOnFight, IObjectsOnScene
             if (items.ContainsKey(unitData.idOnBattle))
             {
                 units.Add(items[unitData.idOnBattle]);
+            }
+        }
+
+        return units;
+    }
+
+    /// <summary>
+    /// Получает список объектов Unit по их childId
+    /// </summary>
+    /// <param name="childIds">Список childId для поиска</param>
+    /// <returns>Список найденных объектов Unit</returns>
+    public List<Unit> GetUnitsByChildIds(List<string> childIds)
+    {
+        List<Unit> units = new List<Unit>();
+
+        foreach (var childId in childIds)
+        {
+            if (items.ContainsKey(childId))
+            {
+                units.Add(items[childId]);
             }
         }
 

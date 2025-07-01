@@ -6,6 +6,7 @@ public static class SubsituableFightOptionsFactory
     public static Dictionary<string, Type> behaviours = new Dictionary<string, Type>()
     {
         { "Base", typeof(BaseSubsituableFightOptionsBehaviour) },
+        { "NoBaseReturn", typeof(FightOptionsWithoutReturnToBaseBehaviour) },
         { "Disabled", typeof(DisabledFightOptionsBehaviour) },
     };
 

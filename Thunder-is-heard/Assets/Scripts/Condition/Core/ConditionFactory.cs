@@ -10,6 +10,16 @@ public static class ConditionFactory
     {
         switch (conditionData.Type)
         {
+            case "NewTargetForAttackCondition":
+                string targetSide = (string)conditionData.Data["targetSide"];
+                return new NewTargetForAttackCondition(targetSide);
+            case "EnterOnFederationObjectCondition":
+                int enterFederationtimes = Convert.ToInt32(conditionData.Data["times"]);
+                return new EnterOnFederationObjectCondition(enterFederationtimes);
+            case "EnterOnObjectCondition":
+                string targetObjectIdForEnter = (string)conditionData.Data["targetObjectId"];
+                int enterTimes = Convert.ToInt32(conditionData.Data["times"]);
+                return new EnterOnObjectCondition(targetObjectIdForEnter, enterTimes);
             case "CameraMovementPractice":
                 float practiceDuration = Convert.ToSingle(conditionData.Data["duration"]);
                 return new CameraPracticeCondition(practiceDuration);
@@ -235,6 +245,31 @@ public static class ConditionFactory
                 Data = new Dictionary<string, object> { { "duration", cameraPracticeCondition._practiceDuration } }
             };
         }
+        else if (condition is EnterOnObjectCondition enterOnObjectCondition)
+        {
+            return new ConditionData
+            {
+                Type = "EnterOnObjectCondition",
+                Data = new Dictionary<string, object> { { "targetObjectId", enterOnObjectCondition._targetObjectId }, { "times", enterOnObjectCondition._times } }
+            };
+        }
+        else if (condition is EnterOnFederationObjectCondition enterOnFederationObjectCondition)
+        {
+            return new ConditionData
+            {
+                Type = "EnterOnFederationObjectCondition",
+                Data = new Dictionary<string, object> { { "times", enterOnFederationObjectCondition._times } }
+            };
+        }
+        else if (condition is NewTargetForAttackCondition newTargetForAttackCondition)
+        {
+            return new ConditionData
+            {
+                Type = "NewTargetForAttackCondition",
+                Data = new Dictionary<string, object> { { "targetSide", newTargetForAttackCondition._targetSide } }
+            };
+        }
+
         throw new ArgumentException("Неизвестный тип условия: " + condition.GetType().Name);
     }
 }

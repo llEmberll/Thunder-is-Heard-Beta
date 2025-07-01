@@ -31,6 +31,9 @@ public abstract class FocusController : MonoBehaviour
     public int _minTextAlpha = 110;
     public int _maxTextAlpha = 255;
 
+    // Свойство для хранения целевой сущности (юнит или здание)
+    public Entity _targetEntity = null;
+
     public virtual void Awake()
     {
         InitButtons();
@@ -103,6 +106,7 @@ public abstract class FocusController : MonoBehaviour
         _targetObjectMaterials = null;
         _targetImage = null;
         _targetText = null;
+        _targetEntity = null;
     }
 
     public virtual void OnBuildFocus(Dictionary<string, object> data)
@@ -112,6 +116,7 @@ public abstract class FocusController : MonoBehaviour
 
         EventMaster.current.FocusCameraOnPosition(build.center, true);
 
+        _targetEntity = build;
         SaveMaterials(build.gameObject);
     }
 
