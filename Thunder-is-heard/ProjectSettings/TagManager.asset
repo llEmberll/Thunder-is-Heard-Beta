@@ -63,6 +63,15 @@ TagManager:
   - BaseNameChangeModal
   - TutorialController
   - Hint
+  - ToBattleButton
+  - ToBaseButton
+  - CleanLandingButton
+  - ChangeBaseButton
+  - PassButton
+  - SurrenderButton
+  - SupportButton
+  - ToBasePrepareButton
+  - ToBaseFightButton
   layers:
   - Default
   - TransparentFX

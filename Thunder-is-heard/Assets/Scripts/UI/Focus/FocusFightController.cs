@@ -23,9 +23,31 @@ public class FocusFightController : FocusController
 
     public override void InitButtons()
     {
-        // �����������
+        buttonImageByTag = new Dictionary<string, Image>();
 
-        добавить боевые кнопки
+        Image toBattleButtonImage = GameObject.FindGameObjectWithTag(Tags.toBattleButton).GetComponent<Image>();
+        buttonImageByTag.Add(Tags.toBattleButton, toBattleButtonImage);
+
+        Image toBasePrepareButtonImage = GameObject.FindGameObjectWithTag(Tags.toBasePrepareButton).GetComponent<Image>();
+        buttonImageByTag.Add(Tags.toBasePrepareButton, toBasePrepareButtonImage);
+
+        Image toBaseFightButtonImage = GameObject.FindGameObjectWithTag(Tags.toBaseFightButton).GetComponent<Image>();
+        buttonImageByTag.Add(Tags.toBaseFightButton, toBaseFightButtonImage);
+
+        Image cleanLandingButtonImage = GameObject.FindGameObjectWithTag(Tags.cleanLandingButton).GetComponent<Image>();
+        buttonImageByTag.Add(Tags.cleanLandingButton, cleanLandingButtonImage);
+
+        Image changeBaseButtonImage = GameObject.FindGameObjectWithTag(Tags.changeBaseButton).GetComponent<Image>();
+        buttonImageByTag.Add(Tags.changeBaseButton, changeBaseButtonImage);
+
+        Image passButtonImage = GameObject.FindGameObjectWithTag(Tags.passButton).GetComponent<Image>();
+        buttonImageByTag.Add(Tags.passButton, passButtonImage);
+
+        Image surrenderButtonImage = GameObject.FindGameObjectWithTag(Tags.surrenderButton).GetComponent<Image>();
+        buttonImageByTag.Add(Tags.surrenderButton, surrenderButtonImage);
+
+        Image supportButtonImage = GameObject.FindGameObjectWithTag(Tags.supportButton).GetComponent<Image>();
+        buttonImageByTag.Add(Tags.supportButton, supportButtonImage);
     }
 
     public override void InitUI()
@@ -48,6 +70,7 @@ public class FocusFightController : FocusController
             case "Unit":
                 OnUnitFocus(focusData.Data);
                 break;
+
             default:
                 Debug.Log("Unexpected focus type: " +  targetType);
                 break;

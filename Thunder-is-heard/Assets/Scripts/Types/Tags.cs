@@ -29,6 +29,15 @@ public static class Tags
     public static string toBattlefieldButton = "ToBattlefieldButton";
     public static string toReportsButton = "ToReportsButton";
 
+    public static string toBattleButton = "ToBattleButton";
+    public static string toBasePrepareButton = "ToBasePrepareButton";
+    public static string toBaseFightButton = "ToBaseFightButton";
+    public static string cleanLandingButton = "CleanLandingButton";
+    public static string changeBaseButton = "ChangeBaseButton";
+    public static string passButton = "PassButton";
+    public static string surrenderButton = "SurrenderButton";
+    public static string supportButton = "SupportButton";
+
     public static string renameBaseButton = "RenameBaseButton";
     public static string baseNameChangeModal = "BaseNameChange";
 

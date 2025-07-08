@@ -10,17 +10,20 @@ public static class ConditionFactory
     {
         switch (conditionData.Type)
         {
-            case "NewTargetForAttackCondition":
+            case "AttackSide":
+                string sideForAttack = (string)conditionData.Data["side"];
+                return new AttackSideCondition(sideForAttack);
+            case "NewTargetForAttack":
                 string targetSide = (string)conditionData.Data["targetSide"];
                 return new NewTargetForAttackCondition(targetSide);
-            case "EnterOnFederationObjectCondition":
+            case "EnterOnFederationObject":
                 int enterFederationtimes = Convert.ToInt32(conditionData.Data["times"]);
                 return new EnterOnFederationObjectCondition(enterFederationtimes);
-            case "EnterOnObjectCondition":
+            case "EnterOnObject":
                 string targetObjectIdForEnter = (string)conditionData.Data["targetObjectId"];
                 int enterTimes = Convert.ToInt32(conditionData.Data["times"]);
                 return new EnterOnObjectCondition(targetObjectIdForEnter, enterTimes);
-            case "CameraMovementPractice":
+            case "CameraMovement":
                 float practiceDuration = Convert.ToSingle(conditionData.Data["duration"]);
                 return new CameraPracticeCondition(practiceDuration);
             case "AlwaysTrue":
@@ -249,7 +252,7 @@ public static class ConditionFactory
         {
             return new ConditionData
             {
-                Type = "EnterOnObjectCondition",
+                Type = "EnterOnObject",
                 Data = new Dictionary<string, object> { { "targetObjectId", enterOnObjectCondition._targetObjectId }, { "times", enterOnObjectCondition._times } }
             };
         }
@@ -257,7 +260,7 @@ public static class ConditionFactory
         {
             return new ConditionData
             {
-                Type = "EnterOnFederationObjectCondition",
+                Type = "EnterOnFederationObject",
                 Data = new Dictionary<string, object> { { "times", enterOnFederationObjectCondition._times } }
             };
         }
@@ -265,8 +268,16 @@ public static class ConditionFactory
         {
             return new ConditionData
             {
-                Type = "NewTargetForAttackCondition",
+                Type = "NewTargetForAttack",
                 Data = new Dictionary<string, object> { { "targetSide", newTargetForAttackCondition._targetSide } }
+            };
+        }
+        else if (condition is AttackSideCondition attackSideCondition)
+        {
+            return new ConditionData
+            {
+                Type = "AttackSide",
+                Data = new Dictionary<string, object> { { "side", attackSideCondition._side } }
             };
         }
 

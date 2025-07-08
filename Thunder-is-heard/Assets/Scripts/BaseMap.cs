@@ -3195,7 +3195,7 @@ public class BaseMap : Map
             { "Unit", "Disabled" },
             { "Build", "Disabled" },
             { "BuildingPanel", "Disabled" },
-            { "FightPanel", "Disabled" },            
+            { "FightPanel", "Disabled" },
             { "BaseSettingsPanel", "Disabled" },
         };
 
@@ -3231,8 +3231,6 @@ public class BaseMap : Map
         ConditionData defeatConditionDataForStage2 = new ConditionData(type: "AlwaysFalse", null);
         ConditionData victoryConditionDataForStage2 = new ConditionData(type: "AlwaysTrue", null);
 
-        .// Придумать как заставить игрока высадить всех и нажать нужные кнопки, заблокировав лишние
-
         LandingData landingData = new LandingData(
                 landingMaxStaff: 20,
                 landingZone: new Bector2Int[]
@@ -3265,7 +3263,10 @@ public class BaseMap : Map
         {
             { "FightPanel", "Disabled" },
             { "BaseSettingsPanel", "Disabled" },
+            { "Landing", "WithFiveAssaulters" }
         };
+
+        FocusData focusDataForStage2 = new FocusData(type: "UIItem", data: new Dictionary<string, object>() { { "UIType", "Landing" }, { "coreId", "bd1b7986-cf1a-4d76-8b14-c68bf10f363f" } });
 
         // ИИ этапа 2
         AISettings AISettingsForEmpireSideInStage2 = new AISettings(
@@ -3291,7 +3292,7 @@ public class BaseMap : Map
             ),
         };
 
-        // Условие для перехода к следующему этапу - правильная расстановка юнитов
+        // Условие для перехода к следующему этапу (4)
         Dictionary<string, object> dataForConditionForPassStage3 = new Dictionary<string, object>()
         {
             { "times", "3" },
@@ -3299,8 +3300,9 @@ public class BaseMap : Map
         ConditionData conditionForPassStage3 = new ConditionData(type: "EnterOnFederationObjectCondition", dataForConditionForPassStage3);
 
 
-        Реализовать фокус по любому дружественному юниту и установить здесь его
-            Так же сделать поведение юнита активным если нет фокусов либо фокус на конкретном этом юните, аналогично про здания
+        FocusData focusDataForStage3 = new FocusData(type: "Unit", data: new Dictionary<string, object>() { { "side", Sides.federation } });
+
+         .//   Так же сделать поведение юнита активным если нет фокусов либо фокус на конкретном этом юните, аналогично про здания
 
 
         // ИИ этапа 3
@@ -3322,7 +3324,6 @@ public class BaseMap : Map
         {
             { "Cell", "Disabled" },
             { "Obstacle", "Disabled" },
-            { "Unit", "Disabled" },
             { "Build", "Disabled" },
             { "BuildingPanel", "Disabled" },
             { "FightPanel", "Disabled" },
@@ -3347,259 +3348,181 @@ public class BaseMap : Map
         ConditionData conditionForPassStage4 = new ConditionData(type: "NewTargetForAttackCondition", dataForConditionForPassStage4);
 
 
-
-        В фокус контроллере сделать поддержку нахождения первой цели для атаки и здесь установить её
-
-
-        // Фокус на вражеских юнитах
-        FocusData focusDataForStage4 = new FocusData(type: "Units", data: new Dictionary<string, object>()
-        {
-            { "side", Sides.empire }
-        });
+        // ИИ этапа 4
+        AISettings AISettingsForEmpireSideInStage4 = new AISettings(
+            "Attacking",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage4 = new AISettings(
+            "Attacking",
+            Sides.neutral,
+            null,
+            null
+            );
 
         // Поведения компонентов для этапа 4
         Dictionary<string, string> behaviourIdByComponentNameForStage4 = new Dictionary<string, string>()
         {
-            { "Shop", "Disabled" },
-            { "Inventory", "Disabled" },
-            { "Campany", "Disabled" },
-            { "Contracts", "Disabled" },
-            { "UnitProductions", "Disabled" },
+            { "Cell", "Disabled" },
             { "Obstacle", "Disabled" },
+            { "Build", "Disabled" },
+            { "Unit", "Disabled" },
             { "BuildingPanel", "Disabled" },
+            { "FightPanel", "OnlyPass" },
             { "BaseSettingsPanel", "Disabled" },
-            { "Units", "Combat" }
         };
 
-        // Этап 5 - Появление танкистки
+        FocusData focusDataForStage4 = new FocusData(type: "Button", data: new Dictionary<string, object>() { { "tag", Tags.passButton } });
+
+        // Этап 5 - Обучение атаке
         Replic[] dialogueForStage5 = new Replic[]
         {
             new Replic(
                 charName: Chars.officer,
                 charSide: Sides.federation,
-                text: "Отлично! Мы перехватили инициативу! В атаку!"
+                text: "Враг подошёл на расстояние выстрела. Прикажите открыть огонь!"
             ),
-            new Replic(
-                charName: Chars.officer,
-                charSide: Sides.federation,
-                text: "Теперь нам нужно отвоевать нашу казарму у врага. Солдат там немного, поэтому без проблемы справитесь с ними. Но и не забудьте про штаб! Оставьте там солдат для прикрытия и выдвигайтесь на захват казармы!"
-            ),
-            new Replic(
-                charName: Chars.officer,
-                charSide: Sides.federation,
-                text: "Мне доложили, что противник не атакует. Судя по всему, у них кончились силы для атаки. А если они не уходят, это говорит о том, что они ждут подкрепления! Нужно их немедленно уничтожить!"
-            ),
-            new Replic(
-                charName: Chars.officer,
-                charSide: Sides.federation,
-                text: "Согласно разведданным, остатки вражеских сил осели в ближайших лесных массивах. Нам стоит развить успех и разбить неприятеля. Но не исключено, что он от нас этого и ждёт."
-            )
         };
 
-        // Условие для перехода к следующему этапу - достижение лесного массива
+        // Условие для перехода к следующему этапу (6) - атака вражеского юнита
         Dictionary<string, object> dataForConditionForPassStage5 = new Dictionary<string, object>()
         {
-            { "type", "ReachedForest" },
-            { "unitCount", 3 }
+            { "side", Sides.empire }
         };
-        ConditionData conditionForPassStage5 = new ConditionData(type: "CustomCondition", dataForConditionForPassStage5);
+        ConditionData conditionForPassStage5 = new ConditionData(type: "AttackSideCondition", dataForConditionForPassStage5);
 
-        // Фокус на лесном массиве
-        FocusData focusDataForStage5 = new FocusData(type: "Area", data: new Dictionary<string, object>()
-        {
-            { "type", "Forest" }
-        });
+        // Фокус для этапа 5
+        FocusData focusDataForStage5 = new FocusData(
+            type: "Unit",
+            data: new Dictionary<string, object>() { { "side", Sides.empire }, { "underAttack", true } }
+            );
 
-        // Этап 6 - Появление танкистки
-        Replic[] dialogueForStage6 = new Replic[]
+        // ИИ этапа 5
+        AISettings AISettingsForEmpireSideInStage5 = new AISettings(
+            "Attacking",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage5 = new AISettings(
+            "Attacking",
+            Sides.neutral,
+            null,
+            null
+            );
+
+        // Поведения компонентов для этапа 5
+        Dictionary<string, string> behaviourIdByComponentNameForStage5 = new Dictionary<string, string>()
         {
-            new Replic(
-                charName: Chars.officer,
-                charSide: Sides.federation,
-                text: "Теперь понятно почему они перестали атаковать. Ладно, заканчивайте с ними поскорее! Вашу атаку будет поддерживать командир танка… Точнее…"
-            ),
-            new Replic(
-                charName: Chars.officer,
-                charSide: Sides.federation,
-                text: "Танка у нас нет, но под её командованием сейчас небольшая группа пехоты. Она вам поможет."
-            ),
-            new Replic(
-                charName: Chars.tankist,
-                charSide: Sides.federation,
-                text: "Здравия желаю, командир! Ну что, прошла голова? Отлично, тогда за дело. Позвольте им отвлечься на вас и подойти, пока они будут заняты вами, я нанесу им удар во фланг и тыл!"
-            )
+            { "Cell", "Disabled" },
+            { "Obstacle", "Disabled" },
+            { "Build", "Disabled" },
+            { "BuildingPanel", "Disabled" },
+            { "FightPanel", "Disabled" },
+            { "BaseSettingsPanel", "Disabled" },
         };
 
-        // Условие для перехода к следующему этапу - появление подкрепления
-        Dictionary<string, object> dataForConditionForPassStage6 = new Dictionary<string, object>()
+
+        // Этап 6 - Снятие окружения штаба
+
+        // Условие для перехода к следующему этапу(7) - уничтожить всех юнитов
+        ConditionData conditionForPassStage6 = new ConditionData(type: "DestroyAllEnemies", null);
+
+        // ИИ этапа 6
+        AISettings AISettingsForEmpireSideInStage6 = new AISettings(
+            "Attacking",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage6 = new AISettings(
+            "Attacking",
+            Sides.neutral,
+            null,
+            null
+            );
+
+        // Поведения компонентов для этапа 6
+        Dictionary<string, string> behaviourIdByComponentNameForStage6 = new Dictionary<string, string>()
         {
-            { "type", "ReinforcementsArrived" },
-            { "unitCount", 6 }
+            { "BaseSettingsPanel", "Disabled" },
         };
-        ConditionData conditionForPassStage6 = new ConditionData(type: "CustomCondition", dataForConditionForPassStage6);
 
-        // Фокус на подкреплении
-        FocusData focusDataForStage6 = new FocusData(type: "Units", data: new Dictionary<string, object>()
+
+        // Этап 7 - Отбить казарму
+
+        // Вражеские юниты у казармы
+        UnitOnBattle[] newUnitsForStage7 = new UnitOnBattle[]
         {
-            { "side", Sides.federation },
-            { "isReinforcement", true }
-        });
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(11, 0) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "1cce846a-8b8d-41e6-8de9-e8a8d9030a4f"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(11, 4) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "b7f3ff8f-87d6-4a61-97cf-3d5b9bb8edcc"
+                    ),
+        };
 
-        // Добавление новых этапов
-        scenarioItem.AddStage(new Stage(
-            dialogue: dialogueForStage1,
-            conditionForPass: conditionForPassStage1,
-            focus: focusDataForStage1,
-            behaviourIdByComponentName: behaviourIdByComponentNameForStage1
-        ));
 
-        scenarioItem.AddStage(new Stage(
-            dialogue: dialogueForStage2,
-            conditionForPass: conditionForPassStage2,
-            focus: focusDataForStage2
-        ));
-
-        scenarioItem.AddStage(new Stage(
-            dialogue: dialogueForStage3,
-            conditionForPass: conditionForPassStage3,
-            focus: focusDataForStage3,
-            behaviourIdByComponentName: behaviourIdByComponentNameForStage3
-        ));
-
-        scenarioItem.AddStage(new Stage(
-            dialogue: dialogueForStage4,
-            conditionForPass: conditionForPassStage4,
-            focus: focusDataForStage4,
-            behaviourIdByComponentName: behaviourIdByComponentNameForStage4
-        ));
-
-        scenarioItem.AddStage(new Stage(
-            dialogue: dialogueForStage5,
-            conditionForPass: conditionForPassStage5,
-            focus: focusDataForStage5
-        ));
-
-        scenarioItem.AddStage(new Stage(
-            dialogue: dialogueForStage6,
-            conditionForPass: conditionForPassStage6,
-            focus: focusDataForStage6
-        ));
-
-        // Этап 7 - Финальный бой
         Replic[] dialogueForStage7 = new Replic[]
         {
             new Replic(
-                charName: Chars.tankist,
+                charName: Chars.officer,
                 charSide: Sides.federation,
-                text: "Отлично! Противник уничтожен!"
-            )
+                text: "Теперь нам нужно отвоевать нашу казарму у врага. Солдат там немного, поэтому без проблемы справитесь с ними. Но и не забудьте про штаб! Оставьте там солдат для прикрытия и выдвигайтесь на захват казармы!",
+                focus: new Bector2Int(8, 6)
+                ),
         };
 
-        // Условие для перехода к следующему этапу - уничтожение всех вражеских юнитов
+        // ИИ этапа 7
+        AISettings AISettingsForEmpireSideInStage7 = new AISettings(
+            "Frozen",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage7 = new AISettings(
+            "Frozen",
+            Sides.neutral,
+            null,
+            null
+            );
+
+        // Поведения компонентов для этапа 7
+        Dictionary<string, string> behaviourIdByComponentNameForStage7 = new Dictionary<string, string>()
+        {
+            { "BaseSettingsPanel", "Disabled" },
+        };
+
+        // Условие для перехода к следующему этапу (8) - на расстоянии огня ИЛИ на расстоянии в 3 от казармы ИЛИ на расстоянии в 3 от любого врага
         Dictionary<string, object> dataForConditionForPassStage7 = new Dictionary<string, object>()
         {
-            { "type", "AllEnemyUnitsDestroyed" }
-        };
-        ConditionData conditionForPassStage7 = new ConditionData(type: "CustomCondition", dataForConditionForPassStage7);
-
-        // Этап 8 - Появление вражеского офицера
-        Replic[] dialogueForStage8 = new Replic[]
-        {
-            new Replic(
-                charName: Chars.officer,
-                charSide: Sides.federation,
-                text: "Похоже моя версия с подкреплением оказалась верной. Но я ожидала увидеть более многочисленную группировку."
-            ),
-            new Replic(
-                charName: Chars.officer,
-                charSide: Sides.federation,
-                text: "Самое время их остановить! Займитесь ими!"
-            ),
-            new Replic(
-                charName: Chars.enemyOfficer,
-                charSide: Sides.empire,
-                text: "Не ожидал от своих солдат услышать запрос о подкреплении. Всё ещё не угомонитесь? Ладно парни, разберитесь там с ними…"
-            )
-        };
-
-        // Условие для перехода к следующему этапу - уничтожение 6 вражеских юнитов
-        Dictionary<string, object> dataForConditionForPassStage8 = new Dictionary<string, object>()
-        {
-            { "type", "EnemyUnitsDestroyed" },
-            { "count", 6 }
-        };
-        ConditionData conditionForPassStage8 = new ConditionData(type: "CustomCondition", dataForConditionForPassStage8);
-
-        // Фокус на вражеских юнитах
-        FocusData focusDataForStage8 = new FocusData(type: "Units", data: new Dictionary<string, object>()
-        {
             { "side", Sides.empire }
-        });
-
-        // Этап 9 - Завершение миссии
-        Replic[] dialogueForStage9 = new Replic[]
-        {
-            new Replic(
-                charName: Chars.enemyOfficer,
-                charSide: Sides.empire,
-                text: "Я вас недооценил, но это ничего не решит. Ваш разгром лишь вопрос времени…"
-            ),
-            new Replic(
-                charName: Chars.officer,
-                charSide: Sides.federation,
-                text: "Ура! Мы отразили атаку! Враг надолго запомнит этот бой."
-            ),
-            new Replic(
-                charName: Chars.tankist,
-                charSide: Sides.federation,
-                text: "Это был славный бой. Теперь главное не терять хватку и продолжать бить неприятеля!"
-            )
-        };
-
-        // Условие для завершения миссии - уничтожение всех вражеских юнитов
-        Dictionary<string, object> dataForConditionForPassStage9 = new Dictionary<string, object>()
-        {
-            { "type", "AllEnemyUnitsDestroyed" }
-        };
-        ConditionData conditionForPassStage9 = new ConditionData(type: "CustomCondition", dataForConditionForPassStage9);
-
-        // Добавление финальных этапов
-        scenarioItem.AddStage(new Stage(
-            dialogue: dialogueForStage7,
-            conditionForPass: conditionForPassStage7
-        ));
-
-        scenarioItem.AddStage(new Stage(
-            dialogue: dialogueForStage8,
-            conditionForPass: conditionForPassStage8,
-            focus: focusDataForStage8
-        ));
-
-        scenarioItem.AddStage(new Stage(
-            dialogue: dialogueForStage9,
-            conditionForPass: conditionForPassStage9
-        ));
-
-        // Обработка провала миссии
-        Replic[] dialogueOnFail = new Replic[]
-        {
-            new Replic(
-                charName: Chars.officer,
-                charSide: Sides.federation,
-                text: "Командир! Рада что вы пришли в себя. Вы выглядите напугано: вам снился кошмар?"
-            )
-        };
-
-        // Условие провала - потеря всех юнитов
-        Dictionary<string, object> dataForConditionForFail = new Dictionary<string, object>()
-        {
-            { "type", "AllFriendlyUnitsDestroyed" }
-        };
-        ConditionData conditionForFail = new ConditionData(type: "CustomCondition", dataForConditionForFail);
-
-        // Добавление обработки провала
-        scenarioItem.SetFailDialogue(dialogueOnFail);
-        scenarioItem.SetFailCondition(conditionForFail);
+        }; .// Реализовать
+        ConditionData conditionForPassStage7 = new ConditionData(type: "AttackSideCondition", dataForConditionForPassStage5);
 
         // Сохранение сценария
         table.Add(scenarioItem);

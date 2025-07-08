@@ -8,6 +8,7 @@ public static class SubsituableFightOptionsFactory
         { "Base", typeof(BaseSubsituableFightOptionsBehaviour) },
         { "NoBaseReturn", typeof(FightOptionsWithoutReturnToBaseBehaviour) },
         { "Disabled", typeof(DisabledFightOptionsBehaviour) },
+        { "OnlyPass", typeof(FightOptionsWithOnlyPassBehaviour) }
     };
 
     public static ISubsituableFightOptionsBehaviour GetBehaviourById(string id)

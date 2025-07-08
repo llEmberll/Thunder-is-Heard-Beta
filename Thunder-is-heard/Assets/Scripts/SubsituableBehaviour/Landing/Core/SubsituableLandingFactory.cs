@@ -7,6 +7,7 @@ public static class SubsituableLandingFactory
     {
         { "Base", typeof(BaseSubsituableLandingBehaviour) },
         { "Disabled", typeof(DisabledLandingBehaviour) },
+        { "WithFiveAssaulters", typeof(LandingWithFiveAssaultersBehaviour) }
     };
 
     public static ISubsituableLandingBehaviour GetBehaviourById(string id)

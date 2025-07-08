@@ -497,8 +497,8 @@ GameObject:
   - component: {fileID: 156317733}
   - component: {fileID: 156317732}
   m_Layer: 5
-  m_Name: ToBaseButton
-  m_TagString: Untagged
+  m_Name: ToBasePrepareButton
+  m_TagString: ToBasePrepareButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4105,7 +4105,7 @@ GameObject:
   - component: {fileID: 1149240397}
   m_Layer: 5
   m_Name: CleanLandingButton
-  m_TagString: Untagged
+  m_TagString: CleanLandingButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4237,8 +4237,8 @@ GameObject:
   - component: {fileID: 1188549614}
   - component: {fileID: 1188549613}
   m_Layer: 5
-  m_Name: ToBaseButton
-  m_TagString: Untagged
+  m_Name: ToBaseFightButton
+  m_TagString: ToBaseFightButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6167,7 +6167,7 @@ GameObject:
   - component: {fileID: 1814214050}
   m_Layer: 5
   m_Name: ChangeBaseButton
-  m_TagString: Untagged
+  m_TagString: ChangeBaseButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9313,7 +9313,7 @@ GameObject:
   - component: {fileID: 4065941096361045063}
   m_Layer: 5
   m_Name: SurrenderButton
-  m_TagString: Untagged
+  m_TagString: SurrenderButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9713,7 +9713,7 @@ GameObject:
   - component: {fileID: 4065941097307372642}
   m_Layer: 5
   m_Name: SupportButton
-  m_TagString: Untagged
+  m_TagString: SupportButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9752,7 +9752,7 @@ GameObject:
   - component: {fileID: 4065941097787574523}
   m_Layer: 5
   m_Name: ToBattleButton
-  m_TagString: Untagged
+  m_TagString: ToBattleButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9886,7 +9886,7 @@ GameObject:
   - component: {fileID: 4065941097926431719}
   m_Layer: 5
   m_Name: PassButton
-  m_TagString: Untagged
+  m_TagString: PassButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
