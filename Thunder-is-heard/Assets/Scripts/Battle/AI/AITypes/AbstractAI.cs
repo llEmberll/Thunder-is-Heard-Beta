@@ -106,7 +106,7 @@ public abstract class AbstractAI : AIInterface
                 if (damageToActiveUnitInBestAttackInCurrentBattleSituation >= currentActiveUnit.Health) continue;
                 
                 int damageByBestAttackInCurrentBattleSituation = BattleEngine.CalculateDamageToTargetById(currentBattleSituationWhenNextSideTurn, attackersData.ToArray(), bestAttackInCurrentBattleSituation._targetIdOnBattle);
-                int currentDistanceToEnemy = currentBattleSituationWhenNextSideTurn.FindDistanceToNearestUnitBySide(currentActiveUnit.Position.First(), Sides.enemySideBySide[battleSituation._sideTurn]);
+                int currentDistanceToEnemy = currentBattleSituationWhenNextSideTurn.FindDistanceToMostAccessibleUnitBySide(currentActiveUnit.Position.First(), Sides.enemySideBySide[battleSituation._sideTurn]);
                 if (damageByBestAttackInCurrentBattleSituation > greaterDamageByAttackOnNextTurn)
                 {
                     bestMoveWithAttackOnNextTurn = currentMove;

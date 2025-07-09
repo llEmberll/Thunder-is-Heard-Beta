@@ -63,8 +63,8 @@ public class AttackingAI : AbstractAI
 
             if (currentBattleSituation.attackersByObjectId.ContainsKey(currentActiveUnit.IdOnBattle)) continue;
 
-            int currentUnitOldDistanceToEnemy = battleSituation.FindDistanceToNearestUnitBySide(currentActiveUnit.Position.First(), Sides.enemySideBySide[battleSituation._sideTurn]);
-            int currentUnitNewDistanceToEnemy = currentBattleSituation.FindDistanceToNearestUnitBySide(currentActiveUnit.Position.First(), Sides.enemySideBySide[battleSituation._sideTurn]);
+            int currentUnitOldDistanceToEnemy = battleSituation.FindDistanceToMostAccessibleUnitBySide(currentActiveUnit.Position.First(), Sides.enemySideBySide[battleSituation._sideTurn]);
+            int currentUnitNewDistanceToEnemy = currentBattleSituation.FindDistanceToMostAccessibleUnitBySide(currentActiveUnit.Position.First(), Sides.enemySideBySide[battleSituation._sideTurn]);
             if (currentUnitOldDistanceToEnemy <= currentUnitNewDistanceToEnemy) continue;
 
             int currentPassedDistance = currentUnitOldDistanceToEnemy - currentUnitNewDistanceToEnemy;

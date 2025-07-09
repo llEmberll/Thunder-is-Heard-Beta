@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -3297,13 +3298,10 @@ public class BaseMap : Map
         {
             { "times", "3" },
         };
-        ConditionData conditionForPassStage3 = new ConditionData(type: "EnterOnFederationObjectCondition", dataForConditionForPassStage3);
+        ConditionData conditionForPassStage3 = new ConditionData(type: "EnterOnFederationObject", dataForConditionForPassStage3);
 
 
         FocusData focusDataForStage3 = new FocusData(type: "Unit", data: new Dictionary<string, object>() { { "side", Sides.federation } });
-
-         .//   Так же сделать поведение юнита активным если нет фокусов либо фокус на конкретном этом юните, аналогично про здания
-
 
         // ИИ этапа 3
         AISettings AISettingsForEmpireSideInStage3 = new AISettings(
@@ -3345,7 +3343,7 @@ public class BaseMap : Map
         {
             { "targetSide", Sides.empire },
         };
-        ConditionData conditionForPassStage4 = new ConditionData(type: "NewTargetForAttackCondition", dataForConditionForPassStage4);
+        ConditionData conditionForPassStage4 = new ConditionData(type: "NewTargetForAttack", dataForConditionForPassStage4);
 
 
         // ИИ этапа 4
@@ -3391,7 +3389,7 @@ public class BaseMap : Map
         {
             { "side", Sides.empire }
         };
-        ConditionData conditionForPassStage5 = new ConditionData(type: "AttackSideCondition", dataForConditionForPassStage5);
+        ConditionData conditionForPassStage5 = new ConditionData(type: "AttackSide", dataForConditionForPassStage5);
 
         // Фокус для этапа 5
         FocusData focusDataForStage5 = new FocusData(
@@ -3518,11 +3516,167 @@ public class BaseMap : Map
         };
 
         // Условие для перехода к следующему этапу (8) - на расстоянии огня ИЛИ на расстоянии в 3 от казармы ИЛИ на расстоянии в 3 от любого врага
-        Dictionary<string, object> dataForConditionForPassStage7 = new Dictionary<string, object>()
+
+        Dictionary<string, object> dataForReachToAttackConditionDataForStage7 = new Dictionary<string, object>()
         {
-            { "side", Sides.empire }
-        }; .// Реализовать
-        ConditionData conditionForPassStage7 = new ConditionData(type: "AttackSideCondition", dataForConditionForPassStage5);
+            { "targetSide", Sides.empire },
+        };
+        ConditionData reachToAttackConditionDataForStage7 = new ConditionData(type: "NewTargetForAttack", data: dataForReachToAttackConditionDataForStage7);
+
+        Dictionary<string, object> dataForReachTentConditionDataForStage7 = new Dictionary<string, object>()
+        {
+            { "minDistance", 3 },
+            { "targetObjectId", "37599242-a840-4926-96f5-e0d938f0a903" },
+            { "unitsSide", Sides.federation },
+        };
+        ConditionData reachTentConditionDataForStage7 = new ConditionData(type: "ReachDistanceBetweenUnitsAndObject", data: dataForReachTentConditionDataForStage7);
+
+        Dictionary<string, object> dataForReachEnemy1ConditionDataForStage7 = new Dictionary<string, object>()
+        {
+            { "minDistance", 3 },
+            { "targetObjectId", "1cce846a-8b8d-41e6-8de9-e8a8d9030a4f" },
+            { "unitsSide", Sides.federation },
+        };
+        ConditionData reachEnemy1ConditionDataForStage7 = new ConditionData(type: "ReachDistanceBetweenUnitsAndObject", data: dataForReachEnemy1ConditionDataForStage7);
+
+        Dictionary<string, object> dataForReachEnemy2ConditionDataForStage7 = new Dictionary<string, object>()
+        {
+            { "minDistance", 3 },
+            { "targetObjectId", "b7f3ff8f-87d6-4a61-97cf-3d5b9bb8edcc" },
+            { "unitsSide", Sides.federation },
+        };
+        ConditionData reachEnemy2ConditionDataForStage7 = new ConditionData(type: "ReachDistanceBetweenUnitsAndObject", data: dataForReachEnemy2ConditionDataForStage7);
+
+        Dictionary<string, object> dataForMainConditionDataForStage7 = new Dictionary<string, object>()
+        {
+            { "conditions", new ConditionData[] { reachToAttackConditionDataForStage7, reachTentConditionDataForStage7, reachEnemy1ConditionDataForStage7, reachEnemy2ConditionDataForStage7 } },
+        };
+        ConditionData mainConditionDataForStage7 = new ConditionData(type: "Or", data: dataForMainConditionDataForStage7);
+
+
+        // Этап 8 - Обнаружены новые вражеские позиции
+        // Вражеские юниты у штаба
+        UnitOnBattle[] newUnitsForStage8 = new UnitOnBattle[]
+        {
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(1, 5) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "2d17572c-df04-45c1-a200-b5ff8192ed42"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(1, 8) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "9d02dd91-375d-41c1-af4f-6b30f4416465"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(6, 11) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "df80ea4b-0e4e-4cf1-bfff-35151a769b6d"
+                    ),
+        };
+
+        Replic[] dialogueForStage8 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Мне доложили, что атака противника захлёбывается, однако, они не покидают позиций. Если они не уходят, это говорит о том, что они ждут подкрепления! Нужно их немедленно уничтожить!",
+                focus: new Bector2Int(6, 6)
+                ),
+        };
+
+        // Поведения компонентов для этапа 8
+        Dictionary<string, string> behaviourIdByComponentNameForStage8 = new Dictionary<string, string>()
+        {
+            { "BaseSettingsPanel", "Disabled" },
+        };
+
+        // ИИ этапа 8
+        AISettings AISettingsForEmpireSideInStage8 = new AISettings(
+            "Pursuing",
+            Sides.empire,
+            null,
+            new string[] { "85e8f427-fcf9-473f-a85d-12e058791727" }
+            );
+        AISettings AISettingsForNeutralSideInStage8 = new AISettings(
+            "Frozen",
+            Sides.neutral,
+            null,
+            null
+            );
+
+        // Условие для перехода к следующему этапу(8) - уничтожить всех юнитов
+        ConditionData conditionForPassStage8 = new ConditionData(type: "DestroyAllEnemies", null);
+
+        // Этап 9 - Разведка лесных массивов
+        Replic[] dialogueForStage9 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Согласно разведданным, остатки вражеских сил осели в ближайших лесных массивах. Нам стоит развить успех и разбить неприятеля. Но не исключено, что он от нас этого и ждёт",
+                focus: new Bector2Int(3, 10)
+                ),
+        };
+
+        // Поведения компонентов для этапа 9
+        Dictionary<string, string> behaviourIdByComponentNameForStage9 = new Dictionary<string, string>()
+        {
+            { "BaseSettingsPanel", "Disabled" },
+        };
+
+        // ИИ этапа 9
+        AISettings AISettingsForEmpireSideInStage9 = new AISettings(
+            "Frozen",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage9 = new AISettings(
+            "Frozen",
+            Sides.neutral,
+            null,
+            null
+            );
+
+        // Условие для перехода к следующему этапу(9) - достигнуть области
+        Dictionary<string, object> сonditionDataForStage9 = new Dictionary<string, object>()
+        {
+            { "positionRectangle", new RectangleBector2Int(new Bector2Int(0, 8), new Bector2Int(6, 14)) },
+            { "side", Sides.federation },
+        };
+        ConditionData conditionForPassStage9 = new ConditionData(type: "SideReachPosition", data: сonditionDataForStage9);
+
+        // Этап 10 - Столкновение с основными силами врага в лесах
+
+
 
         // Сохранение сценария
         table.Add(scenarioItem);

@@ -731,7 +731,56 @@ public class BattleSituation
         return clone;
     }
 
+    public UnitOnBattle FindNearestUnitByRectangleAndSide(RectangleBector2Int rectangle, string side)
+    {
+        ObjectOnBattle nearestUnit = null;
+        int nearestDistance = int.MaxValue;
+
+        Dictionary<string, ObjectOnBattle> unitsBySide = GetUnitsCollectionBySide(side);
+        foreach (var keyValuePair in unitsBySide)
+        {
+            ObjectOnBattle currentUnit = keyValuePair.Value;
+            int currentDistance = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(currentUnit.Position.First(), rectangle);
+            if (currentDistance < nearestDistance)
+            {
+                nearestUnit = currentUnit;
+                nearestDistance = currentDistance;
+                if (nearestDistance < 2)
+                {
+                    return nearestUnit as UnitOnBattle;
+                }
+            }
+        }
+
+        return nearestUnit as UnitOnBattle;
+    }
+
+
     public UnitOnBattle FindNearestUnitByPointAndSide(Bector2Int point, string side)
+    {
+        ObjectOnBattle nearestUnit = null;
+        int nearestDistance = int.MaxValue;
+
+        Dictionary<string, ObjectOnBattle> unitsBySide = GetUnitsCollectionBySide(side);
+        foreach (var keyValuePair in unitsBySide)
+        {
+            ObjectOnBattle currentUnit = keyValuePair.Value;
+            int currentDistance = BattleEngine.GetDistanceBetweenPoints(point, currentUnit.Position.First());
+            if (currentDistance < nearestDistance)
+            {
+                nearestUnit = currentUnit;
+                nearestDistance = currentDistance;
+                if (nearestDistance < 2)
+                {
+                    return nearestUnit as UnitOnBattle;
+                }
+            }
+        }
+
+        return nearestUnit as UnitOnBattle;
+    }
+
+    public UnitOnBattle FindMostAccessibleUnitByPointAndSide(Bector2Int point, string side)
     {
         ObjectOnBattle nearestUnit = null;
         int nearestDistance = int.MaxValue;
@@ -751,7 +800,7 @@ public class BattleSituation
         return nearestUnit as UnitOnBattle;
     }
 
-    public int FindDistanceToNearestUnitBySide(Bector2Int point, string side)
+    public int FindDistanceToMostAccessibleUnitBySide(Bector2Int point, string side)
     {
         int nearestDistance = int.MaxValue;
 

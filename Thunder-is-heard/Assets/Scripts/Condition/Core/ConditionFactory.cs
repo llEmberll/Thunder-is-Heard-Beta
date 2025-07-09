@@ -10,6 +10,11 @@ public static class ConditionFactory
     {
         switch (conditionData.Type)
         {
+            case "ReachDistanceBetweenUnitsAndObject":
+                int minDistanceToReach = Convert.ToInt32(conditionData.Data["minDistance"]);
+                string unitsSide = (string)conditionData.Data["unitsSide"];
+                string targetObjectToReach = (string)conditionData.Data["targetObjectId"];
+                return new ReachDistanceBetweenUnitsAndObjectCondition(minDistanceToReach, targetObjectToReach, unitsSide);
             case "AttackSide":
                 string sideForAttack = (string)conditionData.Data["side"];
                 return new AttackSideCondition(sideForAttack);
@@ -278,6 +283,14 @@ public static class ConditionFactory
             {
                 Type = "AttackSide",
                 Data = new Dictionary<string, object> { { "side", attackSideCondition._side } }
+            };
+        }
+        else if (condition is ReachDistanceBetweenUnitsAndObjectCondition reachDistanceBetweenUnitsAndObjectCondition)
+        {
+            return new ConditionData
+            {
+                Type = "ReachDistanceBetweenUnitsAndObject",
+                Data = new Dictionary<string, object> { { "minDistance", reachDistanceBetweenUnitsAndObjectCondition._minDistance }, { "targetObjectId", reachDistanceBetweenUnitsAndObjectCondition._targetObjectId }, { "unitsSide", reachDistanceBetweenUnitsAndObjectCondition._unitsSide } }
             };
         }
 
