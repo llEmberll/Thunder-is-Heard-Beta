@@ -11,6 +11,10 @@ public class FocusData
     [JsonProperty("Data")]
     public Dictionary<string, object> Data;
 
+    // Универсальные параметры
+    /// <summary>
+    /// {"Type": "...", "Data": {"lockCamera": true}
+    /// </summary>
 
     // Example 1. Опциональная кнопка по тегу
     /// <summary>
@@ -86,6 +90,19 @@ public class FocusData
     /// <summary>
     /// {"Type": "ProductsNotification", "Data": {"sourceObjectCoreId": "8878498b-a4bc-4dc8-8f39-bc9e987a689f", ...}}
     /// </summary>
+
+    // Example 12. Область на карте с подсветкой
+    /// <summary>
+    /// {"Type": "Area", "Data": {"visible": true, "rectangle": new RectangleBector2Int...}}
+    /// </summary>
+
+    // Example 12. Область на карте без подсветки
+    /// <summary>
+    /// {"Type": "Area", "Data": {"visible": false, "rectangle": new RectangleBector2Int...}}
+    /// </summary>
+
+    .// Реализовать это через добавление обводки на сцене и её мигание
+
 
 
     public FocusData() { }

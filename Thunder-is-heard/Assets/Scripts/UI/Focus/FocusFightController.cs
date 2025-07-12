@@ -99,7 +99,7 @@ public class FocusFightController : FocusController
         Unit unit = FindUnitByFocusData(data);
         if (unit == null) return;
 
-        EventMaster.current.FocusCameraOnPosition(unit.center, true);
+        SetCameraFocus(unit.center, data);
 
         _targetEntity = unit;
         SaveMaterials(unit.gameObject);

@@ -68,4 +68,9 @@ public class RectangleBector2Int
         return point._x >= _startPosition._x && point._x < _startPosition._x + _size._x &&
                point._y >= _startPosition._y && point._y < _startPosition._y + _size._y;
     }
+
+    public Bector2Int FindCenter()
+    {
+
+    }
 }

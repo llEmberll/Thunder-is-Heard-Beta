@@ -72,6 +72,7 @@ TagManager:
   - SupportButton
   - ToBasePrepareButton
   - ToBaseFightButton
+  - AreaHighlightCanvas
   layers:
   - Default
   - TransparentFX

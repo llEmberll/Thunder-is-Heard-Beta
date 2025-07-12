@@ -3666,6 +3666,13 @@ public class BaseMap : Map
             null
             );
 
+        // Фокус для этапа 8
+        .// Реализовать фокус по области и параметр блокировки камеры про фокусе, установить тут область от 0:8 до 6:14
+        FocusData focusDataForStage8 = new FocusData(
+            type: "Area",
+            data: new Dictionary<string, object>() { }
+            );
+
         // Условие для перехода к следующему этапу(9) - достигнуть области
         Dictionary<string, object> сonditionDataForStage9 = new Dictionary<string, object>()
         {
@@ -3675,7 +3682,258 @@ public class BaseMap : Map
         ConditionData conditionForPassStage9 = new ConditionData(type: "SideReachPosition", data: сonditionDataForStage9);
 
         // Этап 10 - Столкновение с основными силами врага в лесах
+        // Вражеские юниты в лесу
+        UnitOnBattle[] newUnitsForStage10 = new UnitOnBattle[]
+        {
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(2, 11) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "d32d8b62-8720-4235-ad97-6f80c8b9ab4e"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(3, 11) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "c7f2b481-dabc-4440-a656-b5d0b2efa23e"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(1, 12) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "77bcde05-eba3-47d1-a6ee-48c1ef932603"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(2, 12) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "89e67dca-34e3-43ae-8505-adeadad13093"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(3, 12) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "f528eb48-1878-4247-bf9f-5f0aad77909f"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(4, 12) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "180e97fd-4b86-4dd6-ba4f-bc9a05973f04"
+                    ),
+        };
 
+        Replic[] dialogueForStage10 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Теперь понятно почему они перестали атаковать. Ладно, заканчивайте с ними поскорее! Вашу атаку будет поддерживать командир танка… Точнее…",
+                focus: new Bector2Int(2, 11)
+                ),
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Танка у нас нет, но под её командованием сейчас небольшая группа пехоты. Она вам поможет"
+                ),
+            new Replic(
+                charName: Chars.tankGirl,
+                charSide: Sides.federation,
+                text: "Здравия желаю, командир! Ну что, прошла голова? Отлично, тогда за дело. Позвольте им отвлечься на вас и подойти, пока они будут заняты вами, я нанесу им удар во фланг и тыл!"
+                ),
+        };
+
+        ConditionData conditionForPassStage10 = new ConditionData(type: "AlwaysTrue", null);
+        
+        // Этап 11 - Дружественное подкрепление
+
+        .//Реализовать спавн с поиском свободной позиции
+        UnitOnBattle[] newUnitsForStage11 = new UnitOnBattle[]
+        {
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(10, 5) }, 
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.federation,
+                    unitIdOnBattle: "ef35903b-9816-49ac-811f-a4fccaffdf46"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(5, 8) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.federation,
+                    unitIdOnBattle: "23171c2b-e91c-47e8-99be-14b6c0e3cd3e"
+                    ),
+        };
+
+        Replic[] dialogueForStage11 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Отдаю вам под командование последних уцелевших солдат из штрафной роты",
+                focus: new Bector2Int(7, 6)
+                ),
+        };
+
+
+        // ИИ этапа 11
+        AISettings AISettingsForEmpireSideInStage11 = new AISettings(
+            "Attacking",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage11 = new AISettings(
+            "Attacking",
+            Sides.neutral,
+            null,
+            null
+            );
+
+        // Поведения компонентов для этапа 11
+        Dictionary<string, string> behaviourIdByComponentNameForStage11 = new Dictionary<string, string>()
+        {
+            { "BaseSettingsPanel", "Disabled" },
+        };
+
+        // Условие для перехода к следующему этапу(12) - уничтожить всех юнитов
+        ConditionData conditionForPassStage11 = new ConditionData(type: "DestroyAllEnemies", null);
+
+
+        // Этап 12 - Вражеские подкрепления
+        UnitOnBattle[] newUnitsForStage12 = new UnitOnBattle[]
+        {
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(12, 13) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "72ed2747-4a12-4b7f-8825-9e7737d6387b"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(11, 12) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "59e2309c-e8c4-4bc8-a3a6-753e6456f8c5"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(11, 11) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "39ce7d67-fcde-48f7-8a45-62f33c89c5ca"
+                    ),
+            new UnitOnBattle(
+                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                    unitPosition: new Bector2Int[] { new Bector2Int(10, 12) },
+                    unitRotation: 0,
+                    unitMaxHealth: 2,
+                    unitHealth: 2,
+                    unitDamage: 1,
+                    unitDistance: 2,
+                    unitMobility: 2,
+                    UnitTypes.infantry,
+                    Doctrines.land,
+                    Sides.empire,
+                    unitIdOnBattle: "9cae1044-df5e-4cb3-b7b9-f194801e078a"
+                    ),
+    };
+        // Фокус для этапа 12
+        .// Реализовать фокус по области и параметр блокировки камеры про фокусе
+        FocusData focusDataForStage12 = new FocusData(
+            type: "Area",
+            data: new Dictionary<string, object>() {  }
+            );
+
+        // Условие для перехода к следующему этапу(13) - уничтожить всех юнитов
+        ConditionData conditionForPassStage12 = new ConditionData(type: "AlwaysTrue", null);
+
+        // Этап 13 - Помощь танкистки
 
 
         // Сохранение сценария

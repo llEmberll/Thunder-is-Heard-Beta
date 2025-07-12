@@ -70,4 +70,6 @@ public static class Tags
     public static string tutorialController = "TutorialController";
 
     public static string hintBoard = "HintBoard";
+
+    public static string areaHighlightCanvas = "AreaHighlightCanvas";
 }

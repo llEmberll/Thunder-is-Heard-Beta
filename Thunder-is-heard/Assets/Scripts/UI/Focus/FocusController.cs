@@ -26,6 +26,9 @@ public abstract class FocusController : MonoBehaviour
 
     public Dictionary<string, TMP_Text> textByTag;
 
+    public Canvas areaHighlightCanvas;
+    public int areaHighlightSizePerCell = 800;
+
     // Для мигания текста
     private Color? _originalTextColor = null;
     public int _minTextAlpha = 110;
@@ -39,6 +42,7 @@ public abstract class FocusController : MonoBehaviour
         InitButtons();
         InitUI();
         InitTexts();
+        InitAreaHighlight();
     }
 
     public void Start()
@@ -71,6 +75,12 @@ public abstract class FocusController : MonoBehaviour
         }
     }
 
+    public void InitAreaHighlight()
+    {
+        areaHighlightCanvas = GameObject.FindGameObjectWithTag(Tags.areaHighlightCanvas).GetComponent<Canvas>();
+        areaHighlightCanvas.enabled = false;
+    }
+
 
     public virtual void OnFocus(FocusData focusData)
     {
@@ -88,6 +98,9 @@ public abstract class FocusController : MonoBehaviour
                 return;
             case "Text":
                 OnTextFocus(focusData.Data);
+                return;
+            case "Area":
+                OnAreaFocus(focusData.Data);
                 return;
         }
     }
@@ -107,6 +120,8 @@ public abstract class FocusController : MonoBehaviour
         _targetImage = null;
         _targetText = null;
         _targetEntity = null;
+
+        areaHighlightCanvas.enabled = false;
     }
 
     public virtual void OnBuildFocus(Dictionary<string, object> data)
@@ -114,10 +129,21 @@ public abstract class FocusController : MonoBehaviour
         Build build = FindBuildByFocusData(data);
         if (build == null) return;
 
-        EventMaster.current.FocusCameraOnPosition(build.center, true);
+        SetCameraFocus(build.center, data);
 
         _targetEntity = build;
         SaveMaterials(build.gameObject);
+    }
+
+    public virtual void SetCameraFocus(Vector2Int position, Dictionary<string, object> data)
+    {
+        bool lockCamera = true;
+        if (data.ContainsKey("lockCamera"))
+        {
+            lockCamera = (bool)data["lockCamera"];
+        }
+
+        EventMaster.current.FocusCameraOnPosition(position, lockCamera: lockCamera);
     }
 
     public abstract Build FindBuildByFocusData(Dictionary<string, object> data);
@@ -198,6 +224,24 @@ public abstract class FocusController : MonoBehaviour
         TMP_Text text = textByTag[textTag];
         _targetText = text;
         _originalTextColor = text.color;
+    }
+
+    public virtual void OnAreaFocus(Dictionary<string, object> data)
+    {
+        if (!data.ContainsKey("rectangle"))
+        {
+            throw new System.Exception("Not sent rectangle when focus on area");
+        }
+
+        RectangleBector2Int areaAsRectangle = (RectangleBector2Int)data["rectangle"];
+        Bector2Int center = areaAsRectangle.FindCenter();
+
+        SetCameraFocus(center.ToVector2Int(), data);
+
+        if (data.ContainsKey("visible") && (bool)data["visible"] == true)
+        {
+            конфигурация areaCanvas
+        }
     }
 
     public void ProcessTargetWithMaterials()
