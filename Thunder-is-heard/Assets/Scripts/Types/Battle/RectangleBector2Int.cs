@@ -29,10 +29,10 @@ public class RectangleBector2Int
 
     public RectangleBector2Int(Bector2Int[] positions)
     {
-            // Находим минимальные и максимальные координаты
-            int minX = int.MaxValue; // Инициализируем минимальные значения максимально возможным числом
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            int minX = int.MaxValue; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             int minY = int.MaxValue;
-            int maxX = int.MinValue; // Инициализируем максимальные значения минимально возможным числом
+            int maxX = int.MinValue; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             int maxY = int.MinValue;
 
             for (int i = 0; i < positions.Length; i++)
@@ -64,13 +64,43 @@ public class RectangleBector2Int
 
     public bool Contains(Bector2Int point)
     {
-        // Проверяем, находится ли точка в пределах прямоугольника
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         return point._x >= _startPosition._x && point._x < _startPosition._x + _size._x &&
                point._y >= _startPosition._y && point._y < _startPosition._y + _size._y;
     }
 
-    public Bector2Int FindCenter()
+    public Vector2 FindAbsoluteCenter()
     {
+        float centerX = _startPosition._x + (_size._x / 2f);
+        float centerY = _startPosition._y + (_size._y / 2f);
+        return new Vector2(centerX, centerY);
+    }
 
+    public Vector2Int FindAbsoluteCenterAsInt()
+    {
+        Vector2 center = FindAbsoluteCenter();
+        return new Vector2Int(Mathf.FloorToInt(center.x), Mathf.FloorToInt(center.y));
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null || GetType() != obj.GetType())
+        {
+            return false;
+        }
+
+        RectangleBector2Int other = (RectangleBector2Int)obj;
+        return _size == other._size && _startPosition == other._startPosition;
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17;
+            hash = hash * 23 + _size.GetHashCode();
+            hash = hash * 23 + _startPosition.GetHashCode();
+            return hash;
+        }
     }
 }

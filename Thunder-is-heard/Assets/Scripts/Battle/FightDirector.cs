@@ -233,7 +233,7 @@ public class FightDirector : MonoBehaviour
         Map map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
         map.Init(mapSize, terrainPath);
 
-        Scenario.Init(map, currentStage, scenarioStartDialogue);
+        Scenario.Init(map, currentStage, scenarioStartDialogue, this);
         
     }
 

@@ -84,8 +84,8 @@ public class BaseSubsituableCampanyBehaviour : ISubsituableCampanyBehaviour
                 missionData.GetExternalId(),
                 missionData.GetName(),
                 missionData.GetPassed(),
-                missionData.GetPoseOnMap().ToVector2Int(),
                 missionData.GetGives(),
+                missionData.GetPoseOnMap(),
                 missionData.GetDescription()
                 );
 

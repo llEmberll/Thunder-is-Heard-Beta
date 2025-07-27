@@ -234,14 +234,22 @@ public abstract class FocusController : MonoBehaviour
         }
 
         RectangleBector2Int areaAsRectangle = (RectangleBector2Int)data["rectangle"];
-        Bector2Int center = areaAsRectangle.FindCenter();
+        Vector2Int centerInteger = areaAsRectangle.FindAbsoluteCenterAsInt();
 
-        SetCameraFocus(center.ToVector2Int(), data);
+        SetCameraFocus(centerInteger, data);
 
         if (data.ContainsKey("visible") && (bool)data["visible"] == true)
         {
-            конфигурация areaCanvas
+            ConfigureAreaCanvas(areaAsRectangle);
         }
+    }
+
+    public void ConfigureAreaCanvas(RectangleBector2Int areaAsRectangle) 
+    {
+        Vector2 centerAbsolute = areaAsRectangle.FindAbsoluteCenter();
+        areaHighlightCanvas.transform.position = new Vector3(centerAbsolute.x, areaHighlightCanvas.transform.position.y, centerAbsolute.y);
+        areaHighlightCanvas.GetComponent<RectTransform>().sizeDelta = new Vector2(areaAsRectangle._size._x * areaHighlightSizePerCell, areaAsRectangle._size._y * areaHighlightSizePerCell);
+        areaHighlightCanvas.enabled = true;
     }
 
     public void ProcessTargetWithMaterials()

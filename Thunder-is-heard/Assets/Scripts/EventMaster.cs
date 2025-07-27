@@ -459,4 +459,16 @@ public class EventMaster: MonoBehaviour
     {
         CameraMoved?.Invoke();
     }
+
+    public event Action<ScenarioEventData[]> BegunScenarioEvents;
+    public void BeginScenarioEvents(ScenarioEventData[] events)
+    {
+        BegunScenarioEvents?.Invoke(events);
+    }
+
+    public event Action ScenarioEventsEnd;
+    public void OnEndScenarioEvents()
+    {
+        ScenarioEventsEnd?.Invoke();
+    }
 }

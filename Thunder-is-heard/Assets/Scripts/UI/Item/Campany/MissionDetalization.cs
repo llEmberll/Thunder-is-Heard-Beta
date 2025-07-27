@@ -2,7 +2,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Linq;
 
 public class MissionDetalization: UIElement
 {
@@ -96,5 +96,31 @@ public class MissionDetalization: UIElement
     {
         BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
         return battleTable.Items.Count > 0;
+    }
+
+    public static string GetCurrentFightMissionId()
+    {
+        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
+        if (battleTable.Items.Count < 1)
+        {
+            return null;
+        }
+        CacheItem cacheItem = battleTable.Items.First().Value;
+        BattleCacheItem battleCacheItem = new BattleCacheItem(cacheItem.Fields);
+        return battleCacheItem.GetMissionId();
+    }
+
+    public static string FindBattleIdByMissionId(string missionId)
+    {
+        BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
+        foreach (CacheItem cacheItem in battleTable.Items.Values)
+        {
+            if (cacheItem != null)
+            {
+                BattleCacheItem battleData = new BattleCacheItem(cacheItem.Fields);
+                if (battleData.GetMissionId() == missionId) return battleData.GetExternalId();
+            }
+        }
+        return null;
     }
 }

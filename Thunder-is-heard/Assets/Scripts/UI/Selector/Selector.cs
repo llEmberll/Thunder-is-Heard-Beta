@@ -64,7 +64,7 @@ public class Selector : MonoBehaviour
     public void InitState()
     {
         SceneState sceneState = GameObject.FindWithTag("State").GetComponent<SceneState>();
-        isFight = sceneState.currentState.stateName == "Fight";
+        isFight = sceneState.currentState.stateName == Scenes.fight;
         if (isFight )
         {
             _battleEngine = GameObject.FindGameObjectWithTag(Tags.battleEngine).GetComponent<BattleEngine>();
@@ -370,7 +370,7 @@ public class Selector : MonoBehaviour
                 ConfigureProductionForContract(processSource.id);
                 break;
             case "Improvement":
-                //TODO реализовать
+                //TODO пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 break;
             case "UnitProduction":
                 ConfigureProductionForUnitProduction(processSource.id);

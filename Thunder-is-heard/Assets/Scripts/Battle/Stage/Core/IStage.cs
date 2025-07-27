@@ -6,8 +6,8 @@ public interface IStage
     public string StageId { get; }
 
     public Scenario Scenario { get; }
-    public UnitOnBattle[] Units { get; }
-    public BuildOnBattle[] Builds { get; }
+    public UnitOnBattleSpawnData[] UnitsForSpawn { get; }
+    public BuildOnBattleSpawnData[] BuildsForSpawn { get; }
 
     public Replic[] ReplicsOnStart { get; }
     public Replic[] ReplicsOnPass { get; }
@@ -30,6 +30,8 @@ public interface IStage
 
     public MediaEventData MediaEventData { get; }
 
+    public ScenarioEventData[] ScenarioEvents { get; }
+
     public LandingData LandingData { get; }
 
     public string HintText { get; }
@@ -40,8 +42,8 @@ public interface IStage
         AISettings[] AISettings,
         ICondition conditionsForPass,
         ICondition conditionsForFail,
-        UnitOnBattle[] units,
-        BuildOnBattle[] builds,
+        UnitOnBattleSpawnData[] stageUnitsForSpawn,
+        BuildOnBattleSpawnData[] stageBuildsForSpawn,
         Replic[] replicsOnStart,
         Replic[] replicsOnPass,
         Replic[] replicOnFail,
@@ -51,13 +53,13 @@ public interface IStage
         FocusData focusData = null,
         MediaEventData stageMediaEventData = null,
         LandingData stageLandingData = null,
-        string stageHintText = null
+        string stageHintText = null,
+        ScenarioEventData[] stageScenarioEvents = null
         );
     public void SetScenario(Scenario value);
     public void SetConditionsForPass(ICondition conditions);
     public void SetConditionsForFail(ICondition conditions);
-    public void SetUnits(UnitOnBattle[] units);
-    public void SetBuilds(BuildOnBattle[] builds);
+    public void SetObjectsForSpawn(UnitOnBattleSpawnData[] unitsForSpawn, BuildOnBattleSpawnData[] buildsForSpawn);
     public void SetReplics(Replic[] replicOnStart, Replic[] replicOnPass, Replic[] replicOnFail);
 
     public void SetCustomProperties();

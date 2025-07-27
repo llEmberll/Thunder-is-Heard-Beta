@@ -101,8 +101,6 @@ public class FocusData
     /// {"Type": "Area", "Data": {"visible": false, "rectangle": new RectangleBector2Int...}}
     /// </summary>
 
-    .// Реализовать это через добавление обводки на сцене и её мигание
-
 
 
     public FocusData() { }

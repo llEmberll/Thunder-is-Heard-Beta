@@ -73,6 +73,8 @@ TagManager:
   - ToBasePrepareButton
   - ToBaseFightButton
   - AreaHighlightCanvas
+  - ScenarioEventController
+  - ScenarioEventExecutor
   layers:
   - Default
   - TransparentFX

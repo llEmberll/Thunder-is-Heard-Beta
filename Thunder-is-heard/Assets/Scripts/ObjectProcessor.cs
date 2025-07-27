@@ -39,9 +39,9 @@ public class ObjectProcessor : MonoBehaviour
         ObjectPreview preview = FindObjectOfType<ObjectPreview>();
         if (IsSomeObjectSelected(preview))
         {
-            if (preview.buildedObjectOnScene.name == "Штаб")
+            if (preview.buildedObjectOnScene.name == "пїЅпїЅпїЅпїЅ")
             {
-                Debug.Log("Нельзя снести штаб");
+                Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ");
                 return;
             }
 
@@ -190,6 +190,41 @@ public class ObjectProcessor : MonoBehaviour
         EventMaster.current.OnChangeBaseObjects();
     }
 
+    public void CreateObjectsOnBattleFromSpawnData(UnitOnBattleSpawnData[] unitsSpawnData, BuildOnBattleSpawnData[] buildsSpawnData)
+    {
+        if (unitsSpawnData != null && unitsSpawnData.Count() > 0)
+        {
+            foreach (UnitOnBattleSpawnData unitSpawnData in unitsSpawnData)
+            {
+                UnitOnBattle currentUnit = unitSpawnData.UnitOnBattle;
+                RectangleBector2Int occypationAsBector2Int = map.FindNearestFreeRectangle(new RectangleBector2Int(currentUnit.Position), unitSpawnData.PossibleSpawnPositions);
+                if (occypationAsBector2Int == null)
+                {
+                    continue;
+                }
+
+                currentUnit.position = occypationAsBector2Int.GetPositions();
+                CreateUnitOnBattle(currentUnit);
+            }
+        }
+
+        if (buildsSpawnData != null && buildsSpawnData.Count() > 0)
+        {
+            foreach (BuildOnBattleSpawnData buildSpawnData in buildsSpawnData)
+            {
+                BuildOnBattle currentBuild = buildSpawnData.BuildOnBattle;
+                RectangleBector2Int occypationAsBector2Int = map.FindNearestFreeRectangle(new RectangleBector2Int(currentBuild.Position), buildSpawnData.PossibleSpawnPositions);
+                if (occypationAsBector2Int == null)
+                {
+                    continue;
+                }
+
+                currentBuild.position = occypationAsBector2Int.GetPositions();
+                CreateBuildOnBattle(currentBuild);
+            }
+        }
+    }
+
     public void CreateObjectsOnBattle(UnitOnBattle[] unitDatas, BuildOnBattle[] buildDatas)
     {
         if (unitDatas != null && unitDatas.Length > 0)
@@ -207,52 +242,62 @@ public class ObjectProcessor : MonoBehaviour
     {
         foreach (UnitOnBattle unit in units)
         {
-            CacheItem currentCacheItem = Cache.LoadByType<UnitCacheTable>().GetById(unit.coreId);
-            if (currentCacheItem == null) continue;
-            UnitCacheItem currentCoreUnitData = new UnitCacheItem(currentCacheItem.Fields);
-            Transform model = CreateModel(currentCoreUnitData.GetModelPath() + "/" + unit.side, unit.rotation).transform;
-            Vector3 unitObjPosition = new Vector3(unit.position.First()._x, 0, unit.position.First()._y);
-            model.transform.position += unitObjPosition;
-
-            CreateObjectOnBattle(
-                battleId: FightSceneLoader.parameters._battleId,
-                coreId: unit.coreId,
-                type: "Unit",
-                model: model,
-                objName: currentCoreUnitData.GetName(),
-                size: currentCoreUnitData.GetSize().ToVector2Int(),
-                occypation: new List<Vector2Int>() { unit.position.First().ToVector2Int() },
-                unit.health,
-                unit.side,
-                unit.skillsData
-                );
+            CreateUnitOnBattle(unit);
         }
+    }
+
+    public void CreateUnitOnBattle(UnitOnBattle unit)
+    {
+        CacheItem currentCacheItem = Cache.LoadByType<UnitCacheTable>().GetById(unit.coreId);
+        if (currentCacheItem == null) return;
+        UnitCacheItem currentCoreUnitData = new UnitCacheItem(currentCacheItem.Fields);
+        Transform model = CreateModel(currentCoreUnitData.GetModelPath() + "/" + unit.side, unit.rotation).transform;
+        Vector3 unitObjPosition = new Vector3(unit.position.First()._x, 0, unit.position.First()._y);
+        model.transform.position += unitObjPosition;
+
+        CreateObjectOnBattle(
+            battleId: FightSceneLoader.parameters._battleId,
+            coreId: unit.coreId,
+            type: "Unit",
+            model: model,
+            objName: currentCoreUnitData.GetName(),
+            size: currentCoreUnitData.GetSize().ToVector2Int(),
+            occypation: new List<Vector2Int>() { unit.position.First().ToVector2Int() },
+            unit.health,
+            unit.side,
+            unit.skillsData
+            );
     }
 
     public void CreateBuildsOnBattle(BuildOnBattle[] builds)
     {
         foreach (BuildOnBattle build in builds)
         {
-            CacheItem currentCacheItem = Cache.LoadByType<BuildCacheTable>().GetById(build.coreId);
-            if (currentCacheItem == null) continue;
-            BuildCacheItem currentCoreBuildData = new BuildCacheItem(currentCacheItem.Fields);
-
-            Transform model = CreateModel(currentCoreBuildData.GetModelPath() + "/" + build.side, build.rotation).transform;
-            Vector3 buildObjPosition = new Vector3(build.position.First()._x, model.transform.position.y, build.position.First()._y);
-            model.transform.position += buildObjPosition;
-
-            CreateObjectOnBattle(
-                battleId: FightSceneLoader.parameters._battleId,
-                coreId: build.coreId,
-                type: "Build",
-                model: model,
-                objName: currentCoreBuildData.GetName(),
-                size: currentCoreBuildData.GetSize().ToVector2Int(),
-                occypation: Bector2Int.MassiveToVector2Int(build.position).ToList(),
-                build.health,
-                build.side
-                );
+            CreateBuildOnBattle(build);
         }
+    }
+
+    public void CreateBuildOnBattle(BuildOnBattle build)
+    {
+        CacheItem currentCacheItem = Cache.LoadByType<BuildCacheTable>().GetById(build.coreId);
+        if (currentCacheItem == null) return;
+        BuildCacheItem currentCoreBuildData = new BuildCacheItem(currentCacheItem.Fields);
+
+        Transform model = CreateModel(currentCoreBuildData.GetModelPath() + "/" + build.side, build.rotation).transform;
+        Vector3 buildObjPosition = new Vector3(build.position.First()._x, model.transform.position.y, build.position.First()._y);
+        model.transform.position += buildObjPosition;
+
+        CreateObjectOnBattle(
+            battleId: FightSceneLoader.parameters._battleId,
+            coreId: build.coreId,
+            type: "Build",
+            model: model,
+            objName: currentCoreBuildData.GetName(),
+            size: currentCoreBuildData.GetSize().ToVector2Int(),
+            occypation: Bector2Int.MassiveToVector2Int(build.position).ToList(),
+            build.health,
+            build.side
+            );
     }
 
     public void CreateObjectOnBattle(
@@ -480,7 +525,7 @@ public class ObjectProcessor : MonoBehaviour
 
         else
         {
-            throw new System.Exception("Неожиданный тип объекта: " + type);
+            throw new System.Exception("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + type);
         }
 
         EventMaster.current.ExposeObject(entity.GetComponent<Entity>());
@@ -506,7 +551,7 @@ public class ObjectProcessor : MonoBehaviour
 
         else
         {
-            throw new System.Exception("Неожиданный тип объекта: " + type);
+            throw new System.Exception("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + type);
         }
 
         //model.transform.position += entity.transform.position;
@@ -1021,5 +1066,10 @@ public class ObjectProcessor : MonoBehaviour
         productsNotificationsTable.DeleteById(itemId);
         Cache.Save(productsNotificationsTable);
         EventMaster.current.OnDeleteProductsNotification(productsNotificationForDeletion);
+    }
+
+    public void ThrowSystemException()
+    {
+        throw new System.Exception("РСЃРєСѓСЃСЃС‚РІРµРЅРЅРѕ РІС‹Р·РІР°РЅРЅР°СЏ СЃРёСЃС‚РµРјРЅР°СЏ РѕС€РёР±РєР° РёР· ObjectProcessor");
     }
 }

@@ -14,9 +14,17 @@ public class TutorialController : MonoBehaviour
 
     private bool _waitingForUpdateStage = false;
 
+    private string _tutorialMissionId = "60fc96d5-e769-4509-a5f1-597b844c7f25";
 
     public void Start()
     {
+        // TODO ВЕРНУТЬ
+        //if (!IsFightTutorialPassed())
+        //{
+        //    LoadTutorialMission();
+        //    return;
+        //}
+
         if (_instance != null)
         {
             Destroy(gameObject);
@@ -64,6 +72,43 @@ public class TutorialController : MonoBehaviour
             return activeTutorialData;
         }
         return null;
+    }
+
+    private bool IsFightTutorialPassed()
+    {
+        MissionCacheTable missions = Cache.LoadByType<MissionCacheTable>();
+        MissionCacheItem tutorialMission = new MissionCacheItem(missions.GetById(_tutorialMissionId).Fields);
+        return tutorialMission.GetPassed();
+    }
+
+    private void LoadTutorialMission()
+    {
+        string startedTutorialMissionbattleId = MissionDetalization.FindBattleIdByMissionId(_tutorialMissionId);
+        if (startedTutorialMissionbattleId != null)
+        {
+            SceneLoader.LoadFight(new FightSceneParameters(startedTutorialMissionbattleId));
+        }
+        else
+        {
+            MissionCacheTable missionTable = Cache.LoadByType<MissionCacheTable>();
+            CacheItem cacheItemMission = missionTable.GetById(_tutorialMissionId);
+            MissionCacheItem missionData = new MissionCacheItem(cacheItemMission.Fields);
+
+            ScenarioCacheTable scenarioTable = Cache.LoadByType<ScenarioCacheTable>();
+            CacheItem cacheItemScenario = scenarioTable.GetById(missionData.GetScenarioId());
+            ScenarioCacheItem scenarioData = new ScenarioCacheItem(cacheItemScenario.Fields);
+
+            BattleCacheTable battleTable = Cache.LoadByType<BattleCacheTable>();
+            BattleCacheItem battleData = new BattleCacheItem(new Dictionary<string, object>());
+            battleData.SetMissionId(_tutorialMissionId);
+            battleData.SetUnits(scenarioData.GetUnits());
+            battleData.SetBuilds(scenarioData.GetBuilds());
+            battleData.SetObstacles(scenarioData.GetObstacles());
+            battleTable.AddOne(battleData);
+            Cache.Save(battleTable);
+
+            SceneLoader.LoadFight(new FightSceneParameters(battleData.GetExternalId()));
+        }
     }
 
     private TutorialCacheItem GetNextTutorial()

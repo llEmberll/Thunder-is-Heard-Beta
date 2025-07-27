@@ -12,7 +12,7 @@ public class BaseMap : Map
 
     public void Start()
     {
-        //CreateScenarioForEnemyOutpost();
+        //CreateTrainingMission();
     }
 
     public void CreateTutorialOnBase()
@@ -1267,8 +1267,8 @@ public class BaseMap : Map
         ///// ��
 
         StageData stage0 = new StageData(
-                stageUnits: null,
-                stageBuilds: null,
+                stageUnitsForSpawn: null,
+                stageBuildsForSpawn: null,
                 stageReplicsOnStart: null,
                 stageReplicsOnPass: null,
                 stageReplicsOnFail: null,
@@ -1332,8 +1332,8 @@ public class BaseMap : Map
         };
         //// ������ � ������ �������
         StageData stage1 = new StageData(
-                stageUnits: null,
-                stageBuilds: null,
+                stageUnitsForSpawn: null,
+                stageBuildsForSpawn: null,
                 stageReplicsOnStart: startDialogueForStage1,
                 stageReplicsOnPass: null,
                 stageReplicsOnFail: failDialogueForStage1,
@@ -1384,8 +1384,8 @@ public class BaseMap : Map
         };
         //// ������ � ������ �������
         StageData stageOnPassStage1 = new StageData(
-                stageUnits: null,
-                stageBuilds: null,
+                stageUnitsForSpawn: null,
+                stageBuildsForSpawn: null,
                 stageReplicsOnStart: startDialogueForStage2,
                 stageReplicsOnPass: null,
                 stageReplicsOnFail: null,
@@ -1445,84 +1445,94 @@ public class BaseMap : Map
         //// ������ � ������ ������
 
         //// �����
-        UnitOnBattle[] stage21Units = new UnitOnBattle[]
+        UnitOnBattleSpawnData[] stage21Units = new UnitOnBattleSpawnData[]
         {
-            new UnitOnBattle(
-                    coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
-                    unitPosition: new Bector2Int[] { new Bector2Int(13, 35) },
-                    unitRotation: 180,
-                    unitMaxHealth: 6,
-                    unitHealth: 6,
-                    unitDamage: 3,
-                    unitDistance: 3,
-                    unitMobility: 4,
-                    UnitTypes.vehicle,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "844b3458-b8c4-4fc5-a72b-44033ea5836c"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
+                        unitPosition: new Bector2Int[] { new Bector2Int(13, 35) },
+                        unitRotation: 180,
+                        unitMaxHealth: 6,
+                        unitHealth: 6,
+                        unitDamage: 3,
+                        unitDistance: 3,
+                        unitMobility: 4,
+                        UnitTypes.vehicle,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "844b3458-b8c4-4fc5-a72b-44033ea5836c"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
-                    unitPosition: new Bector2Int[] { new Bector2Int(13, 34) },
-                    unitRotation: 180,
-                    unitMaxHealth: 6,
-                    unitHealth: 6,
-                    unitDamage: 3,
-                    unitDistance: 3,
-                    unitMobility: 4,
-                    UnitTypes.vehicle,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "e512b440-1c13-460d-b399-6e42a3823eec"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
+                        unitPosition: new Bector2Int[] { new Bector2Int(13, 34) },
+                        unitRotation: 180,
+                        unitMaxHealth: 6,
+                        unitHealth: 6,
+                        unitDamage: 3,
+                        unitDistance: 3,
+                        unitMobility: 4,
+                        UnitTypes.vehicle,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "e512b440-1c13-460d-b399-6e42a3823eec"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
-                    unitPosition: new Bector2Int[] { new Bector2Int(13, 33) },
-                    unitRotation: 180,
-                    unitMaxHealth: 5,
-                    unitHealth: 5,
-                    unitDamage: 2,
-                    unitDistance: 1,
-                    unitMobility: 5,
-                    UnitTypes.vehicle,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitSkillsData: new SkillOnBattle[] { new SkillOnBattle("a60f271d-4aa1-41af-b6d1-c89ed667dad6", 0, false) },
-                    unitIdOnBattle: "44310c6b-a692-4fec-a2f6-56862f95f7c5"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
+                        unitPosition: new Bector2Int[] { new Bector2Int(13, 33) },
+                        unitRotation: 180,
+                        unitMaxHealth: 5,
+                        unitHealth: 5,
+                        unitDamage: 2,
+                        unitDistance: 1,
+                        unitMobility: 5,
+                        UnitTypes.vehicle,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitSkillsData: new SkillOnBattle[] { new SkillOnBattle("a60f271d-4aa1-41af-b6d1-c89ed667dad6", 0, false) },
+                        unitIdOnBattle: "44310c6b-a692-4fec-a2f6-56862f95f7c5"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(12, 33) },
-                    unitRotation: 180,
-                    unitMaxHealth: 3,
-                    unitHealth: 3,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "479e4109-c2f5-4b67-90f7-a79d5563bf6f"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(12, 33) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "479e4109-c2f5-4b67-90f7-a79d5563bf6f"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(14, 33) },
-                    unitRotation: 180,
-                    unitMaxHealth: 3,
-                    unitHealth: 3,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "103f5510-8b4a-4755-a56e-ae2fab4d1259"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(14, 33) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "103f5510-8b4a-4755-a56e-ae2fab4d1259"
+                        )
                     ),
         };
         //// �����
         StageData stageOnFailStage2 = new StageData(
-                stageUnits: stage21Units,
-                stageBuilds: null,
+                stageUnitsForSpawn: stage21Units,
+                stageBuildsForSpawn: null,
                 stageReplicsOnStart: startDialogueForStage21,
                 stageReplicsOnPass: passDialogueForStage21,
                 stageReplicsOnFail: failDialogueForStage21,
@@ -1575,8 +1585,8 @@ public class BaseMap : Map
         };
         //// ������ � ������ �������
         StageData stageOnPassStage2 = new StageData(
-                stageUnits: null,
-                stageBuilds: null,
+                stageUnitsForSpawn: null,
+                stageBuildsForSpawn: null,
                 stageReplicsOnStart: startDialogueForStage3,
                 stageReplicsOnPass: null,
                 stageReplicsOnFail: failDialogueForStage3,
@@ -1621,8 +1631,8 @@ public class BaseMap : Map
         //// C�������� ������
 
         StageData stageOnPassStage3 = new StageData(
-                stageUnits: null,
-                stageBuilds: null,
+                stageUnitsForSpawn: null,
+                stageBuildsForSpawn: null,
                 stageReplicsOnStart: startDialogueForStage4,
                 stageReplicsOnPass: null,
                 stageReplicsOnFail: null,
@@ -1682,84 +1692,94 @@ public class BaseMap : Map
         //// ������ � ������ ������
 
         //// �����
-        UnitOnBattle[] stage41Units = new UnitOnBattle[]
+        UnitOnBattleSpawnData[] stage41Units = new UnitOnBattleSpawnData[]
         {
-            new UnitOnBattle(
-                    coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
-                    unitPosition: new Bector2Int[] { new Bector2Int(13, 35) },
-                    unitRotation: 180,
-                    unitMaxHealth: 6,
-                    unitHealth: 6,
-                    unitDamage: 3,
-                    unitDistance: 3,
-                    unitMobility: 4,
-                    UnitTypes.vehicle,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "844b3458-b8c4-4fc5-a72b-44033ea5836c"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
+                        unitPosition: new Bector2Int[] { new Bector2Int(13, 35) },
+                        unitRotation: 180,
+                        unitMaxHealth: 6,
+                        unitHealth: 6,
+                        unitDamage: 3,
+                        unitDistance: 3,
+                        unitMobility: 4,
+                        UnitTypes.vehicle,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "844b3458-b8c4-4fc5-a72b-44033ea5836c"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
-                    unitPosition: new Bector2Int[] { new Bector2Int(13, 34) },
-                    unitRotation: 180,
-                    unitMaxHealth: 6,
-                    unitHealth: 6,
-                    unitDamage: 3,
-                    unitDistance: 3,
-                    unitMobility: 4,
-                    UnitTypes.vehicle,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "e512b440-1c13-460d-b399-6e42a3823eec"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "035655f8-a347-4057-87cc-83385fa20660",
+                        unitPosition: new Bector2Int[] { new Bector2Int(13, 34) },
+                        unitRotation: 180,
+                        unitMaxHealth: 6,
+                        unitHealth: 6,
+                        unitDamage: 3,
+                        unitDistance: 3,
+                        unitMobility: 4,
+                        UnitTypes.vehicle,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "e512b440-1c13-460d-b399-6e42a3823eec"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
-                    unitPosition: new Bector2Int[] { new Bector2Int(13, 33) },
-                    unitRotation: 180,
-                    unitMaxHealth: 5,
-                    unitHealth: 5,
-                    unitDamage: 2,
-                    unitDistance: 1,
-                    unitMobility: 5,
-                    UnitTypes.vehicle,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitSkillsData: new SkillOnBattle[] { new SkillOnBattle("a60f271d-4aa1-41af-b6d1-c89ed667dad6", 0, false) },
-                    unitIdOnBattle: "44310c6b-a692-4fec-a2f6-56862f95f7c5"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
+                        unitPosition: new Bector2Int[] { new Bector2Int(13, 33) },
+                        unitRotation: 180,
+                        unitMaxHealth: 5,
+                        unitHealth: 5,
+                        unitDamage: 2,
+                        unitDistance: 1,
+                        unitMobility: 5,
+                        UnitTypes.vehicle,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitSkillsData: new SkillOnBattle[] { new SkillOnBattle("a60f271d-4aa1-41af-b6d1-c89ed667dad6", 0, false) },
+                        unitIdOnBattle: "44310c6b-a692-4fec-a2f6-56862f95f7c5"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(12, 33) },
-                    unitRotation: 180,
-                    unitMaxHealth: 3,
-                    unitHealth: 3,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "479e4109-c2f5-4b67-90f7-a79d5563bf6f"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(12, 33) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "479e4109-c2f5-4b67-90f7-a79d5563bf6f"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(14, 33) },
-                    unitRotation: 180,
-                    unitMaxHealth: 3,
-                    unitHealth: 3,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "103f5510-8b4a-4755-a56e-ae2fab4d1259"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(14, 33) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "103f5510-8b4a-4755-a56e-ae2fab4d1259"
+                        )
                     ),
         };
         //// �����
         StageData stageOnFailStage4 = new StageData(
-                stageUnits: stage41Units,
-                stageBuilds: null,
+                stageUnitsForSpawn: stage41Units,
+                stageBuildsForSpawn: null,
                 stageReplicsOnStart: startDialogueForStage41,
                 stageReplicsOnPass: passDialogueForStage41,
                 stageReplicsOnFail: failDialogueForStage41,
@@ -1806,41 +1826,45 @@ public class BaseMap : Map
         //// ������ � ������ �������
 
         //// �����
-        UnitOnBattle[] stage5Units = new UnitOnBattle[]
+        UnitOnBattleSpawnData[] stage5Units = new UnitOnBattleSpawnData[]
         {
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(11, 35) },
-                    unitRotation: 180,
-                    unitMaxHealth: 3,
-                    unitHealth: 3,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "4aca4a22-f735-4f57-9300-9477c9e9c98f"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(11, 35) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "4aca4a22-f735-4f57-9300-9477c9e9c98f"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(15, 35) },
-                    unitRotation: 180,
-                    unitMaxHealth: 3,
-                    unitHealth: 3,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "bad369e3-4b71-430c-9d04-eb9a7b3fa9e0"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(15, 35) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "bad369e3-4b71-430c-9d04-eb9a7b3fa9e0"
+                        )
                     ),
         };
         //// �����
         StageData stageOnPassStage4 = new StageData(
-                stageUnits: stage5Units,
-                stageBuilds: null,
+                stageUnitsForSpawn: stage5Units,
+                stageBuildsForSpawn: null,
                 stageReplicsOnStart: startDialogueForStage5,
                 stageReplicsOnPass: null,
                 stageReplicsOnFail: failDialogueForStage5,
@@ -1900,41 +1924,45 @@ public class BaseMap : Map
         //// ������ � ������ ������
 
         //// �����
-        UnitOnBattle[] stage6Units = new UnitOnBattle[]
+        UnitOnBattleSpawnData[] stage6Units = new UnitOnBattleSpawnData[]
         {
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(11, 35) },
-                    unitRotation: 180,
-                    unitMaxHealth: 3,
-                    unitHealth: 3,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "103978ed-2c8e-4c7d-8d3e-37faaf22c786"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(11, 35) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "103978ed-2c8e-4c7d-8d3e-37faaf22c786"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(15, 35) },
-                    unitRotation: 180,
-                    unitMaxHealth: 3,
-                    unitHealth: 3,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "38e2b5e4-d82f-4c77-9635-34e58fa28dec"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(15, 35) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "38e2b5e4-d82f-4c77-9635-34e58fa28dec"
+                        )
                     ),
         };
         //// �����
         StageData stageOnPassStage5 = new StageData(
-                stageUnits: stage6Units,
-                stageBuilds: null,
+                stageUnitsForSpawn: stage6Units,
+                stageBuildsForSpawn: null,
                 stageReplicsOnStart: startDialogueForStage6,
                 stageReplicsOnPass: passDialogueForStage6,
                 stageReplicsOnFail: failDialogueForStage6,
@@ -2825,7 +2853,7 @@ public class BaseMap : Map
         {
             new UnitOnBattle(
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(4, 2) },
+                    unitPosition: new Bector2Int[] { new Bector2Int(4, 1) },
                     unitRotation: 0,
                     unitMaxHealth: 2,
                     unitHealth: 2,
@@ -2839,7 +2867,7 @@ public class BaseMap : Map
                     ),
             new UnitOnBattle(
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(6, 2) },
+                    unitPosition: new Bector2Int[] { new Bector2Int(6, 1) },
                     unitRotation: 0,
                     unitMaxHealth: 2,
                     unitHealth: 2,
@@ -2853,7 +2881,7 @@ public class BaseMap : Map
                     ),
             new UnitOnBattle(
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(3, 5) },
+                    unitPosition: new Bector2Int[] { new Bector2Int(0, 4) },
                     unitRotation: 0,
                     unitMaxHealth: 2,
                     unitHealth: 2,
@@ -2867,7 +2895,7 @@ public class BaseMap : Map
                     ),
             new UnitOnBattle(
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(3, 7) },
+                    unitPosition: new Bector2Int[] { new Bector2Int(1, 10) },
                     unitRotation: 0,
                     unitMaxHealth: 2,
                     unitHealth: 2,
@@ -2881,7 +2909,7 @@ public class BaseMap : Map
                     ),
             new UnitOnBattle(
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(7, 10) },
+                    unitPosition: new Bector2Int[] { new Bector2Int(6, 11) },
                     unitRotation: 0,
                     unitMaxHealth: 2,
                     unitHealth: 2,
@@ -2905,15 +2933,15 @@ public class BaseMap : Map
                     coreBuildId: "9b2cf240-5f63-4107-8751-eb91b95b94d9",
                     new Bector2Int[]
                     {
+                        new Bector2Int(4, 5),
+                        new Bector2Int(4, 6),
+                        new Bector2Int(4, 7),
                         new Bector2Int(5, 5),
                         new Bector2Int(5, 6),
                         new Bector2Int(5, 7),
                         new Bector2Int(6, 5),
                         new Bector2Int(6, 6),
                         new Bector2Int(6, 7),
-                        new Bector2Int(7, 5),
-                        new Bector2Int(7, 6),
-                        new Bector2Int(7, 7),
                     },
                     180,
                     9,
@@ -2929,12 +2957,12 @@ public class BaseMap : Map
                     coreBuildId: "ba290dde-968d-46ab-868b-b0f7598a7787",
                     new Bector2Int[]
                     {
-                        new Bector2Int(8, 5),
-                        new Bector2Int(8, 6),
-                        new Bector2Int(8, 7),
-                        new Bector2Int(9, 5),
-                        new Bector2Int(9, 6),
-                        new Bector2Int(9, 7)
+                        new Bector2Int(11, 1),
+                        new Bector2Int(11, 2),
+                        new Bector2Int(11, 3),
+                        new Bector2Int(12, 1),
+                        new Bector2Int(12, 2),
+                        new Bector2Int(12, 3)
                     },
                     0,
                     6,
@@ -3236,26 +3264,21 @@ public class BaseMap : Map
                 landingMaxStaff: 20,
                 landingZone: new Bector2Int[]
                 {
-                    new Bector2Int(5, 4),
-                    new Bector2Int(5, 3),
-                    new Bector2Int(4, 4),
-                    new Bector2Int(4, 5),
-                    new Bector2Int(4, 6),
-                    new Bector2Int(4, 7),
+                    new Bector2Int(3, 8),
+                    new Bector2Int(3, 7),
+                    new Bector2Int(3, 6),
+                    new Bector2Int(3, 5),
                     new Bector2Int(4, 8),
+                    new Bector2Int(4, 4),
                     new Bector2Int(5, 8),
+                    new Bector2Int(5, 4),
                     new Bector2Int(6, 8),
-                    new Bector2Int(7, 8),
-                    new Bector2Int(8, 8),
-                    new Bector2Int(8, 7),
-                    new Bector2Int(8, 6),
-                    new Bector2Int(8, 5),
-                    new Bector2Int(8, 4),
-                    new Bector2Int(8, 3),
-                    new Bector2Int(7, 4),
-                    new Bector2Int(7, 3),
                     new Bector2Int(6, 4),
-                    new Bector2Int(6, 3),
+                    new Bector2Int(7, 8),
+                    new Bector2Int(7, 7),
+                    new Bector2Int(7, 6),
+                    new Bector2Int(7, 5),
+                    new Bector2Int(7, 4)
                 }
             );
 
@@ -3446,41 +3469,47 @@ public class BaseMap : Map
         Dictionary<string, string> behaviourIdByComponentNameForStage6 = new Dictionary<string, string>()
         {
             { "BaseSettingsPanel", "Disabled" },
+            { "FightPanel", "NoBaseReturn" },
+
         };
 
 
         // Этап 7 - Отбить казарму
 
         // Вражеские юниты у казармы
-        UnitOnBattle[] newUnitsForStage7 = new UnitOnBattle[]
+        UnitOnBattleSpawnData[] newUnitsForStage7 = new UnitOnBattleSpawnData[]
         {
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(11, 0) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "1cce846a-8b8d-41e6-8de9-e8a8d9030a4f"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(11, 0) },
+                        unitRotation: 0,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "1cce846a-8b8d-41e6-8de9-e8a8d9030a4f"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(11, 4) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "b7f3ff8f-87d6-4a61-97cf-3d5b9bb8edcc"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(11, 4) },
+                        unitRotation: 0,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "b7f3ff8f-87d6-4a61-97cf-3d5b9bb8edcc"
+                        )
                     ),
         };
 
@@ -3491,7 +3520,7 @@ public class BaseMap : Map
                 charName: Chars.officer,
                 charSide: Sides.federation,
                 text: "Теперь нам нужно отвоевать нашу казарму у врага. Солдат там немного, поэтому без проблемы справитесь с ними. Но и не забудьте про штаб! Оставьте там солдат для прикрытия и выдвигайтесь на захват казармы!",
-                focus: new Bector2Int(8, 6)
+                focus: new Bector2Int(10, 3)
                 ),
         };
 
@@ -3513,6 +3542,7 @@ public class BaseMap : Map
         Dictionary<string, string> behaviourIdByComponentNameForStage7 = new Dictionary<string, string>()
         {
             { "BaseSettingsPanel", "Disabled" },
+            { "FightPanel", "NoBaseReturn" },
         };
 
         // Условие для перехода к следующему этапу (8) - на расстоянии огня ИЛИ на расстоянии в 3 от казармы ИЛИ на расстоянии в 3 от любого врага
@@ -3525,7 +3555,7 @@ public class BaseMap : Map
 
         Dictionary<string, object> dataForReachTentConditionDataForStage7 = new Dictionary<string, object>()
         {
-            { "minDistance", 3 },
+            { "minDistance", 2 },
             { "targetObjectId", "37599242-a840-4926-96f5-e0d938f0a903" },
             { "unitsSide", Sides.federation },
         };
@@ -3533,7 +3563,7 @@ public class BaseMap : Map
 
         Dictionary<string, object> dataForReachEnemy1ConditionDataForStage7 = new Dictionary<string, object>()
         {
-            { "minDistance", 3 },
+            { "minDistance", 2 },
             { "targetObjectId", "1cce846a-8b8d-41e6-8de9-e8a8d9030a4f" },
             { "unitsSide", Sides.federation },
         };
@@ -3541,7 +3571,7 @@ public class BaseMap : Map
 
         Dictionary<string, object> dataForReachEnemy2ConditionDataForStage7 = new Dictionary<string, object>()
         {
-            { "minDistance", 3 },
+            { "minDistance", 2 },
             { "targetObjectId", "b7f3ff8f-87d6-4a61-97cf-3d5b9bb8edcc" },
             { "unitsSide", Sides.federation },
         };
@@ -3556,49 +3586,55 @@ public class BaseMap : Map
 
         // Этап 8 - Обнаружены новые вражеские позиции
         // Вражеские юниты у штаба
-        UnitOnBattle[] newUnitsForStage8 = new UnitOnBattle[]
+        UnitOnBattleSpawnData[] newUnitsForStage8 = new UnitOnBattleSpawnData[]
         {
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(1, 5) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "2d17572c-df04-45c1-a200-b5ff8192ed42"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(1, 5) },
+                        unitRotation: 0,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "2d17572c-df04-45c1-a200-b5ff8192ed42"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(1, 8) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "9d02dd91-375d-41c1-af4f-6b30f4416465"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(1, 8) },
+                        unitRotation: 0,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "9d02dd91-375d-41c1-af4f-6b30f4416465"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(6, 11) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "df80ea4b-0e4e-4cf1-bfff-35151a769b6d"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(6, 11) },
+                        unitRotation: 0,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "df80ea4b-0e4e-4cf1-bfff-35151a769b6d"
+                        )
                     ),
         };
 
@@ -3616,6 +3652,7 @@ public class BaseMap : Map
         Dictionary<string, string> behaviourIdByComponentNameForStage8 = new Dictionary<string, string>()
         {
             { "BaseSettingsPanel", "Disabled" },
+            { "FightPanel", "NoBaseReturn" },
         };
 
         // ИИ этапа 8
@@ -3650,6 +3687,7 @@ public class BaseMap : Map
         Dictionary<string, string> behaviourIdByComponentNameForStage9 = new Dictionary<string, string>()
         {
             { "BaseSettingsPanel", "Disabled" },
+            { "FightPanel", "NoBaseReturn" },
         };
 
         // ИИ этапа 9
@@ -3666,108 +3704,121 @@ public class BaseMap : Map
             null
             );
 
+        RectangleBector2Int areaForStage8 = new RectangleBector2Int(new Bector2Int(0, 9), new Bector2Int(6, 14));
+
         // Фокус для этапа 8
-        .// Реализовать фокус по области и параметр блокировки камеры про фокусе, установить тут область от 0:8 до 6:14
         FocusData focusDataForStage8 = new FocusData(
             type: "Area",
-            data: new Dictionary<string, object>() { }
+            data: new Dictionary<string, object>() { { "rectangle", areaForStage8 }, { "visible", true }, { "lockCamera", false } }
             );
 
         // Условие для перехода к следующему этапу(9) - достигнуть области
         Dictionary<string, object> сonditionDataForStage9 = new Dictionary<string, object>()
         {
-            { "positionRectangle", new RectangleBector2Int(new Bector2Int(0, 8), new Bector2Int(6, 14)) },
+            { "positionRectangle", areaForStage8 },
             { "side", Sides.federation },
         };
         ConditionData conditionForPassStage9 = new ConditionData(type: "SideReachPosition", data: сonditionDataForStage9);
 
         // Этап 10 - Столкновение с основными силами врага в лесах
         // Вражеские юниты в лесу
-        UnitOnBattle[] newUnitsForStage10 = new UnitOnBattle[]
+        UnitOnBattleSpawnData[] newUnitsForStage10 = new UnitOnBattleSpawnData[]
         {
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(2, 11) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "d32d8b62-8720-4235-ad97-6f80c8b9ab4e"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(2, 11) },
+                        unitRotation: 180,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "d32d8b62-8720-4235-ad97-6f80c8b9ab4e"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(3, 11) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "c7f2b481-dabc-4440-a656-b5d0b2efa23e"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(3, 11) },
+                        unitRotation: 180,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "c7f2b481-dabc-4440-a656-b5d0b2efa23e"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(1, 12) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "77bcde05-eba3-47d1-a6ee-48c1ef932603"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(1, 12) },
+                        unitRotation: 180,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "77bcde05-eba3-47d1-a6ee-48c1ef932603"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(2, 12) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "89e67dca-34e3-43ae-8505-adeadad13093"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(2, 12) },
+                        unitRotation: 180,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "89e67dca-34e3-43ae-8505-adeadad13093"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(3, 12) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "f528eb48-1878-4247-bf9f-5f0aad77909f"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(3, 12) },
+                        unitRotation: 180,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "f528eb48-1878-4247-bf9f-5f0aad77909f"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(4, 12) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "180e97fd-4b86-4dd6-ba4f-bc9a05973f04"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(4, 12) },
+                        unitRotation: 180,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "180e97fd-4b86-4dd6-ba4f-bc9a05973f04"
+                        )
                     ),
         };
 
@@ -3794,37 +3845,41 @@ public class BaseMap : Map
         ConditionData conditionForPassStage10 = new ConditionData(type: "AlwaysTrue", null);
         
         // Этап 11 - Дружественное подкрепление
-
-        .//Реализовать спавн с поиском свободной позиции
-        UnitOnBattle[] newUnitsForStage11 = new UnitOnBattle[]
+        UnitOnBattleSpawnData[] newUnitsForStage11 = new UnitOnBattleSpawnData[]
         {
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(10, 5) }, 
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.federation,
-                    unitIdOnBattle: "ef35903b-9816-49ac-811f-a4fccaffdf46"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(7, 8) }, 
+                        unitRotation: 0,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.federation,
+                        unitIdOnBattle: "ef35903b-9816-49ac-811f-a4fccaffdf46"
+                        ),
+                    new RectangleBector2Int(new Bector2Int(5, 8), new Bector2Int(10, 4))
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(5, 8) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.federation,
-                    unitIdOnBattle: "23171c2b-e91c-47e8-99be-14b6c0e3cd3e"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(8, 8) },
+                        unitRotation: 0,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.federation,
+                        unitIdOnBattle: "23171c2b-e91c-47e8-99be-14b6c0e3cd3e"
+                        ),
+                    new RectangleBector2Int(new Bector2Int(5, 8), new Bector2Int(10, 4))
                     ),
         };
 
@@ -3833,7 +3888,7 @@ public class BaseMap : Map
             new Replic(
                 charName: Chars.officer,
                 charSide: Sides.federation,
-                text: "Отдаю вам под командование последних уцелевших солдат из штрафной роты",
+                text: "Отдаю вам под командование последних уцелевших солдат из штрафной роты!",
                 focus: new Bector2Int(7, 6)
                 ),
         };
@@ -3857,6 +3912,7 @@ public class BaseMap : Map
         Dictionary<string, string> behaviourIdByComponentNameForStage11 = new Dictionary<string, string>()
         {
             { "BaseSettingsPanel", "Disabled" },
+            { "FightPanel", "NoBaseReturn" },
         };
 
         // Условие для перехода к следующему этапу(12) - уничтожить всех юнитов
@@ -3864,80 +3920,751 @@ public class BaseMap : Map
 
 
         // Этап 12 - Вражеские подкрепления
-        UnitOnBattle[] newUnitsForStage12 = new UnitOnBattle[]
+        UnitOnBattleSpawnData[] newUnitsForStage12 = new UnitOnBattleSpawnData[]
         {
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(12, 13) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "72ed2747-4a12-4b7f-8825-9e7737d6387b"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(10, 13) },
+                        unitRotation: -90,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "72ed2747-4a12-4b7f-8825-9e7737d6387b"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(11, 12) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "59e2309c-e8c4-4bc8-a3a6-753e6456f8c5"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(10, 12) },
+                        unitRotation: -90,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "59e2309c-e8c4-4bc8-a3a6-753e6456f8c5"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(11, 11) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "39ce7d67-fcde-48f7-8a45-62f33c89c5ca"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(11, 11) },
+                        unitRotation: -90,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "39ce7d67-fcde-48f7-8a45-62f33c89c5ca"
+                        )
                     ),
-            new UnitOnBattle(
-                    coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(10, 12) },
-                    unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
-                    unitDamage: 1,
-                    unitDistance: 2,
-                    unitMobility: 2,
-                    UnitTypes.infantry,
-                    Doctrines.land,
-                    Sides.empire,
-                    unitIdOnBattle: "9cae1044-df5e-4cb3-b7b9-f194801e078a"
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(12, 11) },
+                        unitRotation: -90,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "9cae1044-df5e-4cb3-b7b9-f194801e078a"
+                        )
                     ),
     };
         // Фокус для этапа 12
-        .// Реализовать фокус по области и параметр блокировки камеры про фокусе
         FocusData focusDataForStage12 = new FocusData(
             type: "Area",
-            data: new Dictionary<string, object>() {  }
+            data: new Dictionary<string, object>() { { "rectangle", new RectangleBector2Int(new Bector2Int(10, 11), new Bector2Int(12, 13)) }, { "visible", false }, { "lockCamera", true } }
             );
 
-        // Условие для перехода к следующему этапу(13) - уничтожить всех юнитов
+        // Условие для перехода к следующему этапу(13)
         ConditionData conditionForPassStage12 = new ConditionData(type: "AlwaysTrue", null);
 
-        // Этап 13 - Помощь танкистки
+        // Этап 13 - Помощь танкистки(спавн юнитов)
+        UnitOnBattleSpawnData[] newUnitsForStage13 = new UnitOnBattleSpawnData[]
+        {
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(12, 13) },
+                        unitRotation: -90,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.federation,
+                        unitIdOnBattle: "dfd416ac-bdc3-4562-b612-52b151bb3ced"
+                        ),
+                    new RectangleBector2Int(new Bector2Int(10, 14), new Bector2Int(14, 9))
+                    ),
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(12, 12) },
+                        unitRotation: 0,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.federation,
+                        unitIdOnBattle: "5564ad01-b8ee-4912-8289-d9f5f09a24b6"
+                        ),
+                    new RectangleBector2Int(new Bector2Int(10, 14), new Bector2Int(14, 9))
+                    ),
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(12, 9) },
+                        unitRotation: 0,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.federation,
+                        unitIdOnBattle: "77f3c11f-3853-4b76-ab2c-c19ed9c83e5e"
+                        ),
+                    new RectangleBector2Int(new Bector2Int(10, 14), new Bector2Int(14, 9))
+                    ),
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(13, 10) },
+                        unitRotation: 0,
+                        unitMaxHealth: 2,
+                        unitHealth: 2,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.federation,
+                        unitIdOnBattle: "5b32b6ba-459c-4770-824e-15bf60e62741"
+                        ),
+                    new RectangleBector2Int(new Bector2Int(10, 14), new Bector2Int(14, 9))
+                    ),
+        };
 
+        // Фокус для этапа 13
+        FocusData focusDataForStage13 = new FocusData(
+            type: "Area",
+            data: new Dictionary<string, object>() { { "rectangle", new RectangleBector2Int(new Bector2Int(11, 11), new Bector2Int(13, 13)) }, { "visible", false }, { "lockCamera", true } }
+            );
+
+        // Условие для перехода к следующему этапу(14)
+        ConditionData conditionForPassStage13 = new ConditionData(type: "AlwaysTrue", null);
+
+
+        // Этап 14 - Помощь танкистки(уничтожение врага)
+
+        ScenarioEventData[] scenarioEventsForStage14 = new ScenarioEventData[]
+        {
+            new UnitAttackEventData(
+                attackerUnitId: "dfd416ac-bdc3-4562-b612-52b151bb3ced",
+                targetId: "72ed2747-4a12-4b7f-8825-9e7737d6387b",
+                instantKill: true,
+                executeInParallel: true
+            ),
+            new UnitAttackEventData(
+                attackerUnitId: "5564ad01-b8ee-4912-8289-d9f5f09a24b6",
+                targetId: "59e2309c-e8c4-4bc8-a3a6-753e6456f8c5",
+                instantKill: true,
+                executeInParallel: true
+            ),
+            new UnitAttackEventData(
+                attackerUnitId: "77f3c11f-3853-4b76-ab2c-c19ed9c83e5e",
+                targetId: "39ce7d67-fcde-48f7-8a45-62f33c89c5ca",
+                instantKill: true,
+                executeInParallel: true
+            ),
+            new UnitAttackEventData(
+                attackerUnitId: "5b32b6ba-459c-4770-824e-15bf60e62741",
+                targetId: "9cae1044-df5e-4cb3-b7b9-f194801e078a",
+                instantKill: true,
+                executeInParallel: true
+            ),
+        };
+
+        // Фокус для этапа 14
+        FocusData focusDataForStage14 = new FocusData(
+            type: "Area",
+            data: new Dictionary<string, object>() { { "rectangle", new RectangleBector2Int(new Bector2Int(11, 11), new Bector2Int(13, 13)) }, { "visible", false }, { "lockCamera", true } }
+            );
+
+        // ИИ этапа 14
+        AISettings AISettingsForEmpireSideInStage14 = new AISettings(
+            "Attacking",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage14 = new AISettings(
+            "Attacking",
+            Sides.neutral,
+            null,
+            null
+            );
+
+        // Поведения компонентов для этапа 14
+        Dictionary<string, string> behaviourIdByComponentNameForStage14 = new Dictionary<string, string>()
+        {
+            { "BaseSettingsPanel", "Disabled" },
+            { "FightPanel", "NoBaseReturn" },
+        };
+
+        // Условие для перехода к следующему этапу(15)
+        ConditionData conditionForPassStage14 = new ConditionData(type: "DestroyAllEnemies", null);
+
+
+        Replic[] endDialogueForStage14 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.tankGirl,
+                charSide: Sides.federation,
+                text: "Отлично! Противник уничтожен!"
+                ),
+        };
+
+
+        // Этап 15 - последние вражеские подкрепления
+        RectangleBector2Int areaForStage15 = new RectangleBector2Int(new Bector2Int(4, 14), new Bector2Int(9, 11));
+
+        UnitOnBattleSpawnData[] newUnitsForStage15 = new UnitOnBattleSpawnData[]
+        {
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(4, 14) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "f7a9bbd7-2b2b-4d0b-b911-6984dae6512a"
+                        ),
+                    areaForStage15
+                    ),
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(5, 14) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "dabd0a2d-2c98-47ce-b5d8-a0f25f57b0f5"
+                        ),
+                    areaForStage15
+                    ),
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(6, 14) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "357c22c5-e6f5-4eba-95e4-8563d79b70b1"
+                        ),
+                    areaForStage15
+                    ),
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(7, 14) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "378bbc19-503d-4eec-9503-76f7242cb288"
+                        ),
+                    areaForStage15
+                    ),
+            new UnitOnBattleSpawnData(
+                    new UnitOnBattle(
+                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+                        unitPosition: new Bector2Int[] { new Bector2Int(8, 14) },
+                        unitRotation: 180,
+                        unitMaxHealth: 3,
+                        unitHealth: 3,
+                        unitDamage: 1,
+                        unitDistance: 2,
+                        unitMobility: 2,
+                        UnitTypes.infantry,
+                        Doctrines.land,
+                        Sides.empire,
+                        unitIdOnBattle: "16b59443-69af-4eb7-84ba-b56db131abab"
+                        ),
+                    areaForStage15
+                    ),
+    };
+        // Фокус для этапа 15
+        FocusData focusDataForStage15 = new FocusData(
+            type: "Area",
+            data: new Dictionary<string, object>() { { "rectangle", areaForStage15 }, { "visible", false }, { "lockCamera", false } }
+            );
+
+
+        Replic[] dialogueForStage15 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Похоже моя версия с подкреплением оказалась верной. Но я ожидала увидеть более многочисленную группировку"
+                ),
+        };
+
+        // Условие для перехода к следующему этапу(16)
+        ConditionData conditionForPassStage15 = new ConditionData(type: "AlwaysTrue", null);
+
+
+        // Этап 16 - в бой
+        Replic[] dialogueForStage16 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Самое время их остановить! Займитесь ими!",
+                focus: new Bector2Int(4, 10)
+                ),
+            new Replic(
+                charName: Chars.fighter,
+                charSide: Sides.empire,
+                text: "Не ожидал от своих солдат услышать запрос о подкреплении. Всё ещё не угомонитесь? Ладно парни, разберитесь там с ними…",
+                focus: new Bector2Int(7, 12)
+                ),
+        };
+
+        // ИИ этапа 16
+        AISettings AISettingsForEmpireSideInStage16 = new AISettings(
+            "Attacking",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage16 = new AISettings(
+            "Attacking",
+            Sides.neutral,
+            null,
+            null
+            );
+
+        // Поведения компонентов для этапа 16
+        Dictionary<string, string> behaviourIdByComponentNameForStage16 = new Dictionary<string, string>()
+        {
+            { "BaseSettingsPanel", "Disabled" },
+            { "FightPanel", "NoBaseReturn" },
+        };
+
+        // Условие для перехода к следующему этапу(17)
+        ConditionData conditionForPassStage16 = new ConditionData(type: "DestroyAllEnemies", null);
+
+
+        // Этап 17 - финал
+        Replic[] dialogueForStage17 = new Replic[]
+        {
+            new Replic(
+                charName: Chars.fighter,
+                charSide: Sides.empire,
+                text: "Я вас недооценил, но это ничего не решит. Ваш разгром лишь вопрос времени…"
+                ),
+            new Replic(
+                charName: Chars.officer,
+                charSide: Sides.federation,
+                text: "Ура! Мы отразили атаку! Враг надолго запомнит этот бой"
+                ),
+        };
+
+        // Создание этапов задом наперед для правильной установки связей
+
+        // Этап 17 - финал (последний этап)
+        StageData stage17 = new StageData(
+            stageUnitsForSpawn: null,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage17,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: null,
+            stageConditionsForFail: null,
+            stageConditionsForPass: null,
+            stageStageOnPass: null,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: null,
+            stageFocusData: null,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 16 - в бой
+        StageData stage16 = new StageData(
+            stageUnitsForSpawn: null,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage16,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage16, AISettingsForNeutralSideInStage16 },
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage16,
+            stageStageOnPass: stage17,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage16,
+            stageFocusData: null,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 15 - последние вражеские подкрепления
+        StageData stage15 = new StageData(
+            stageUnitsForSpawn: newUnitsForStage15,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage15,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: null,
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage15,
+            stageStageOnPass: stage16,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: null,
+            stageFocusData: focusDataForStage15,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 14 - Помощь танкистки(уничтожение врага)
+        StageData stage14 = new StageData(
+            stageUnitsForSpawn: null,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: endDialogueForStage14,
+            stageReplicsOnFail: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage14, AISettingsForNeutralSideInStage14 },
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage14,
+            stageStageOnPass: stage15,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage14,
+            stageFocusData: focusDataForStage14,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: scenarioEventsForStage14
+        );
+
+        // Этап 13 - Помощь танкистки(спавн юнитов)
+        StageData stage13 = new StageData(
+            stageUnitsForSpawn: newUnitsForStage13,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: null,
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage13,
+            stageStageOnPass: stage14,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: null,
+            stageFocusData: focusDataForStage13,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 12 - Вражеские подкрепления
+        StageData stage12 = new StageData(
+            stageUnitsForSpawn: newUnitsForStage12,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: null,
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage12,
+            stageStageOnPass: stage13,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: null,
+            stageFocusData: focusDataForStage12,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 11 - Дружественное подкрепление
+        StageData stage11 = new StageData(
+            stageUnitsForSpawn: newUnitsForStage11,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage11,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage11, AISettingsForNeutralSideInStage11 },
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage11,
+            stageStageOnPass: stage12,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage11,
+            stageFocusData: null,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 10 - Диалог о подкреплении
+        StageData stage10 = new StageData(
+            stageUnitsForSpawn: newUnitsForStage10,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage10,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: null,
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage10,
+            stageStageOnPass: stage11,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: null,
+            stageFocusData: null,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 9 - Разведка лесных массивов
+        StageData stage9 = new StageData(
+            stageUnitsForSpawn: null,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage9,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage9, AISettingsForNeutralSideInStage9 },
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage9,
+            stageStageOnPass: stage10,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage9,
+            stageFocusData: focusDataForStage8,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 8 - Обнаружены новые вражеские позиции
+        StageData stage8 = new StageData(
+            stageUnitsForSpawn: newUnitsForStage8,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage8,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage8, AISettingsForNeutralSideInStage8 },
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage8,
+            stageStageOnPass: stage9,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage8,
+            stageFocusData: null,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 7 - Отбить казарму
+        StageData stage7 = new StageData(
+            stageUnitsForSpawn: newUnitsForStage7,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage7,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage7, AISettingsForNeutralSideInStage7 },
+            stageConditionsForFail: null,
+            stageConditionsForPass: mainConditionDataForStage7,
+            stageStageOnPass: stage8,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage7,
+            stageFocusData: null,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 6 - Снятие окружения штаба
+        StageData stage6 = new StageData(
+            stageUnitsForSpawn: null,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: null,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage6, AISettingsForNeutralSideInStage6 },
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage6,
+            stageStageOnPass: stage7,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage6,
+            stageFocusData: null,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 5 - Обучение атаке
+        StageData stage5 = new StageData(
+            stageUnitsForSpawn: null,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage5,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage5, AISettingsForNeutralSideInStage5 },
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage5,
+            stageStageOnPass: stage6,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage5,
+            stageFocusData: focusDataForStage5,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 4 - Начало боя
+        StageData stage4 = new StageData(
+            stageUnitsForSpawn: null,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage4,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage4, AISettingsForNeutralSideInStage4 },
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage4,
+            stageStageOnPass: stage5,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage4,
+            stageFocusData: focusDataForStage4,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 3 - Проверка дистанции огня
+        StageData stage3 = new StageData(
+            stageUnitsForSpawn: null,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage3,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage3, AISettingsForNeutralSideInStage3 },
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage3,
+            stageStageOnPass: stage4,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage3,
+            stageFocusData: focusDataForStage3,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 2 - Расстановка войск
+        StageData stage2 = new StageData(
+            stageUnitsForSpawn: null,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage2,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage2, AISettingsForNeutralSideInStage2 },
+            stageConditionsForFail: defeatConditionDataForStage2,
+            stageConditionsForPass: victoryConditionDataForStage2,
+            stageStageOnPass: stage3,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage2,
+            stageFocusData: focusDataForStage2,
+            stageMediaEventData: null,
+            stageLandingData: landingData,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Этап 1 - Практика с камерой
+        StageData stage1 = new StageData(
+            stageUnitsForSpawn: null,
+            stageBuildsForSpawn: null,
+            stageReplicsOnStart: dialogueForStage1,
+            stageReplicsOnPass: null,
+            stageReplicsOnFail: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage1, AISettingsForNeutralSideInStage1 },
+            stageConditionsForFail: null,
+            stageConditionsForPass: conditionForPassStage1,
+            stageStageOnPass: stage2,
+            stageStageOnFail: null,
+            stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage1,
+            stageFocusData: null,
+            stageMediaEventData: null,
+            stageLandingData: null,
+            stageHintText: null,
+            stageScenarioEvents: null
+        );
+
+        // Установка первого этапа в сценарий
+        scenarioItem.SetStartStage(stage1);
 
         // Сохранение сценария
-        table.Add(scenarioItem);
+        table.AddOne(scenarioItem);
         Cache.Save(table);
     }
 }

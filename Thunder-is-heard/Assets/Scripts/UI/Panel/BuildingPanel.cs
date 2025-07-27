@@ -21,7 +21,17 @@ public class BuildingPanel : Panel
 
     public void Start()
     {
-        ChangeBehaviour("Disabled");
+        SceneState sceneState = GameObject.FindWithTag("State").GetComponent<SceneState>();
+        bool isFight = sceneState.currentState.stateName == Scenes.fight;
+        if (isFight)
+        {
+            ChangeBehaviour("Disabled");
+        }
+        else
+        {
+            ChangeBehaviour();
+        }
+        
 
         InitListeners();
     }

@@ -28,6 +28,18 @@
         },
         "name": "Аванпост врага"
       }
+    },
+    "60fc96d5-e769-4509-a5f1-597b844c7f25": {
+      "fields": {
+        "externalId": "60fc96d5-e769-4509-a5f1-597b844c7f25",
+        "description": "",
+        "scenarioId": "tab95c11f-8827-4c3a-b58a-c9948cdd18af",
+        "rewards": [],
+        "passed": false,
+        "gives": null,
+        "poseOnMap": null,
+        "name": "Обучение"
+      }
     }
   }
 }

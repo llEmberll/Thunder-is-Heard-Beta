@@ -1,15 +1,14 @@
-
-
 using System.Collections.Generic;
+
 
 [System.Serializable]
 public class StageData
 {
     public string id;
 
-    public UnitOnBattle[] units;
-    public BuildOnBattle[] builds;
-    
+    public UnitOnBattleSpawnData[] unitsForSpawn;
+    public BuildOnBattleSpawnData[] buildsForSpawn;
+
     public Replic[] replicsOnStart;
     public Replic[] replicsOnPass;
     public Replic[] replicsOnFail;
@@ -33,12 +32,14 @@ public class StageData
 
     public string hintText = null;
 
+    public ScenarioEventData[] scenarioEvents = null;
+
 
     public StageData() { }
 
     public StageData(
-        UnitOnBattle[] stageUnits,
-        BuildOnBattle[] stageBuilds,
+        UnitOnBattleSpawnData[] stageUnitsForSpawn,
+        BuildOnBattleSpawnData[] stageBuildsForSpawn,
         Replic[] stageReplicsOnStart,
         Replic[] stageReplicsOnPass,
         Replic[] stageReplicsOnFail,
@@ -52,12 +53,13 @@ public class StageData
         FocusData stageFocusData = null,
         MediaEventData stageMediaEventData = null,
         LandingData stageLandingData = null,
-        string stageHintText = null
+        string stageHintText = null,
+        ScenarioEventData[] stageScenarioEvents = null
         )
     {
         id = stageId;
-        units = stageUnits;
-        builds = stageBuilds;
+        unitsForSpawn = stageUnitsForSpawn;
+        buildsForSpawn = stageBuildsForSpawn;
         replicsOnStart = stageReplicsOnStart;
         replicsOnPass = stageReplicsOnPass;
         replicsOnFail = stageReplicsOnFail;
@@ -71,5 +73,6 @@ public class StageData
         mediaEventData = stageMediaEventData;
         landingData = stageLandingData;
         hintText = stageHintText;
+        scenarioEvents = stageScenarioEvents;
     }
 }

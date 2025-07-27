@@ -96,7 +96,7 @@ public class BattleEngine : MonoBehaviour
         return totalDamage;
     }
 
-    // Возможно стоит расширить интерфейс до BattleSituation чтобы изменять эффекты
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ BattleSituation пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public static int CalculateDamageToUnit(BattleSituation battleSituation, ObjectOnBattle[] attackersData, UnitOnBattle unit)
     {
         int totalDamage = 0;
@@ -105,8 +105,8 @@ public class BattleEngine : MonoBehaviour
             int currentAttackerDamage = attacker.damage;
 
 
-            // Суммирование влияния от умений и эффектов
-            // Вычитание урона из-за умений и эффектов цели
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
             totalDamage += currentAttackerDamage;
         }
@@ -125,7 +125,7 @@ public class BattleEngine : MonoBehaviour
     {
         if (rectangle._size._x == 1 && rectangle._size._y == 1) return GetDistanceBetweenPoints(point, rectangle._startPosition);
 
-        // Находим минимальное расстояние по каждой оси
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
         int minDistanceX = Mathf.Min(
             Mathf.Abs(point._x - rectangle._startPosition._x),
             Mathf.Abs(point._x - (rectangle._startPosition._x + (rectangle._size._x - 1)))
@@ -135,7 +135,7 @@ public class BattleEngine : MonoBehaviour
             Mathf.Abs(point._y - (rectangle._startPosition._y + (rectangle._size._y - 1)))
         );
 
-        // Возвращаем максимальное из минимальных расстояний
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         int maxDistance = Mathf.Max(minDistanceX, minDistanceY);
         return maxDistance;
     }
@@ -161,11 +161,11 @@ public class BattleEngine : MonoBehaviour
             return GetUnitPower(battleSituation, foundedUnit);
         }
 
-        throw new System.Exception("Объект не найден: " + objectId);
+        throw new System.Exception("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: " + objectId);
     }
 
-    // Прикрутить учет скилов
-    // У скилов реализовать интерфейс получения мощи, использующий реализацию для подсчета
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    // пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public static float GetUnitPower(BattleSituation battleSituation, UnitOnBattle unit)
     {
         List<ObjectOnBattle> targets = battleSituation.GetTargetsByAttacker(unit);
@@ -182,7 +182,7 @@ public class BattleEngine : MonoBehaviour
         float powerFromDamage = unit.Damage + maxDamageOnTarget + powerFromTargetsCount;
         float powerFromHealth = Mathf.Clamp((unit.Health - totalDamageFromAttackers), 0, unit.Health);
         float powerFromMobility = unit.Mobility / 2;
-        float powerFromSkills = 0; // Реализовать
+        float powerFromSkills = 0; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
         float totalPower = powerFromDistance + powerFromDamage + powerFromHealth + powerFromMobility + powerFromSkills;
         return totalPower;
@@ -345,6 +345,11 @@ public class BattleEngine : MonoBehaviour
         battleSituation.UnitChangePosition(unit.ChildId, newPosition);
     }
 
+    public static void OnReplaceUnit(BattleSituation battleSituation, string unitId, Bector2Int newPosition)
+    {
+        battleSituation.UnitChangePosition(unitId, newPosition);
+    }
+
     public static void OnAttackTarget(BattleSituation battleSituation, Entity entity, int damage)
     {
         int newHealthValue = entity.currentHealth - damage;
@@ -357,5 +362,39 @@ public class BattleEngine : MonoBehaviour
             battleSituation.BuildChangeHealth(entity.ChildId, newHealthValue);
         }
         
+    }
+
+    public static void RemoveUnitFromBattle(BattleSituation battleSituation, string unitId)
+    {
+        UnitOnBattle unit = battleSituation.GetUnitById(unitId);
+        if (unit != null)
+        {
+            battleSituation.RemoveUnit(unit);
+        }
+    }
+
+    public static void RemoveBuildFromBattle(BattleSituation battleSituation, string buildId)
+    {
+        BuildOnBattle build = battleSituation.GetBuildById(buildId);
+        if (build != null)
+        {
+            battleSituation.RemoveBuild(build);
+        }
+    }
+
+    public static void RemoveObjectFromBattle(BattleSituation battleSituation, string objectId)
+    {
+        ObjectOnBattle obj = battleSituation.GetObjectById(objectId);
+        if (obj != null)
+        {
+            if (obj is UnitOnBattle unit)
+            {
+                battleSituation.RemoveUnit(unit);
+            }
+            else if (obj  is BuildOnBattle build) 
+            {
+                battleSituation.RemoveBuild(build);
+            }
+        }
     }
 }

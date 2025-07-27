@@ -158,18 +158,18 @@ public class Map : MonoBehaviour
 
         HashSet<Cell> resultCells = new HashSet<Cell>();
 
-        // Проходим по клеткам в прямоугольнике
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         for (int x = center.x - radius; x <= center.x + radius; x++)
         {
             for (int y = center.y - radius; y <= center.y + radius; y++)
             {
-                // Получаем координаты клетки
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                 Vector2Int cellPos = new Vector2Int(x, y);
                 if (cellsSet.ContainsKey(cellPos))
                 {
                     Cell currentCell = cellsSet[cellPos];
 
-                    // Проверяем, пуста ли клетка или игнорируем занятость
+                    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                     if (!currentCell.occupied || ignoreOccypy)
                     {
                         resultCells.Add(currentCell);
@@ -178,7 +178,7 @@ public class Map : MonoBehaviour
             }
         }
 
-        // Удаляем центральную клетку из HashSet, если она попала в результат
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ HashSet, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (resultCells.Contains(Cells[center]))
         {
             resultCells.Remove(Cells[center]);
@@ -230,6 +230,17 @@ public class Map : MonoBehaviour
         foreach (Vector2Int pos in position)
         {
             if (!Cells.ContainsKey(pos) || Cells[pos].occupied) return false;
+        }
+
+        return true;
+    }
+
+    public bool isPositionFreeAsBector2Int(Bector2Int[] position)
+    {
+        foreach (Bector2Int posAsBector2Int in position)
+        {
+            Vector2Int posAsVector2Int = posAsBector2Int.ToVector2Int();
+            if (!Cells.ContainsKey(posAsVector2Int) || Cells[posAsVector2Int].occupied) return false;
         }
 
         return true;
@@ -333,6 +344,15 @@ public class Map : MonoBehaviour
         }
     }
 
+    public Cell GetCell(Vector2Int position)
+    {
+        if (Cells.ContainsKey(position))
+        {
+            return Cells[position];
+        }
+        return null;
+    }
+
     public List<Cell> BuildRoute(Cell startPoint, Cell endPoint, int maxLenght)
     {
         Dictionary<Vector2Int, Cell> possibleCells = GetDisplayedCells();
@@ -350,13 +370,13 @@ public class Map : MonoBehaviour
     {
         if (currentPath.Count == maxLenght)
         {
-            return; // Длина уже достигнута, выходим из метода
+            return; // Р•СЃР»Рё РґР»РёРЅР° С‚РµРєСѓС‰РµРіРѕ РїСѓС‚Рё СЂР°РІРЅР° РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ РґР»РёРЅРµ, С‚Рѕ РІС‹С…РѕРґРёРј
         }
 
         currentPath.Add(currentCell);
         visited.Add(currentCell);
 
-        // Проверка на достижение конечной точки
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         if (currentCell.Equals(endPoint))
         {
             if (shortestPath.Count == 0 || currentPath.Count < shortestPath.Count)
@@ -367,21 +387,90 @@ public class Map : MonoBehaviour
         }
         else
         {
-            // Получаем доступные клетки
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             List<Cell> neighborCells = GetRange(currentCell.position, 1, false, possibleCells);
 
             foreach (var neighbor in neighborCells)
             {
                 if (!visited.Contains(neighbor))
                 {
-                    // Рекурсивный вызов для соседних клеток
+                    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                     FindPath(neighbor, endPoint, maxLenght, visited, currentPath, shortestPath, possibleCells);
                 }
             }
         }
 
-        // Убираем текущую клетку из пути и полученных клеток
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         visited.Remove(currentCell);
         currentPath.RemoveAt(currentPath.Count - 1);
+    }
+
+    /// <summary>
+    /// РќР°С…РѕРґРёС‚ РјР°РєСЃРёРјР°Р»СЊРЅРѕ РїСЂРёР±Р»РёР¶РµРЅРЅСѓСЋ СЃРІРѕР±РѕРґРЅСѓСЋ РѕР±Р»Р°СЃС‚СЊ СЂР°Р·РјРµСЂР° ideal РІРЅСѓС‚СЂРё area.
+    /// Р•СЃР»Рё РёРґРµР°Р»СЊРЅР°СЏ РѕР±Р»Р°СЃС‚СЊ СЃРІРѕР±РѕРґРЅР° вЂ” РІРѕР·РІСЂР°С‰Р°РµС‚ РµС‘. РРЅР°С‡Рµ РёС‰РµС‚ Р±Р»РёР¶Р°Р№С€СѓСЋ СЃРІРѕР±РѕРґРЅСѓСЋ РѕР±Р»Р°СЃС‚СЊ С‚Р°РєРѕРіРѕ Р¶Рµ СЂР°Р·РјРµСЂР° РІРЅСѓС‚СЂРё area.
+    /// </summary>
+    /// <param name="ideal">РРґРµР°Р»СЊРЅР°СЏ РѕР±Р»Р°СЃС‚СЊ (РєСѓРґР° Р¶РµР»Р°С‚РµР»СЊРЅРѕ РїРѕРјРµСЃС‚РёС‚СЊ)</param>
+    /// <param name="area">Р’РѕР·РјРѕР¶РЅР°СЏ РѕР±Р»Р°СЃС‚СЊ РїРѕРёСЃРєР° (РѕРіСЂР°РЅРёС‡РµРЅРёРµ)</param>
+    /// <returns>RectangleBector2Int РЅР°Р№РґРµРЅРЅРѕР№ РѕР±Р»Р°СЃС‚Рё РёР»Рё null, РµСЃР»Рё РЅРµ РЅР°Р№РґРµРЅРѕ</returns>
+    public RectangleBector2Int FindNearestFreeRectangle(RectangleBector2Int ideal, RectangleBector2Int area)
+    {
+        // 1. РџСЂРѕРІРµСЂСЏРµРј, СЃРІРѕР±РѕРґРЅР° Р»Рё РёРґРµР°Р»СЊРЅР°СЏ РѕР±Р»Р°СЃС‚СЊ
+        var idealPositions = ideal.GetPositions();
+        bool idealFree = true;
+        foreach (var pos in idealPositions)
+        {
+            Vector2Int v2 = pos.ToVector2Int();
+            if (!Cells.ContainsKey(v2) || Cells[v2].occupied)
+            {
+                idealFree = false;
+                break;
+            }
+        }
+        if (idealFree)
+            return ideal;
+
+        if (area == null)
+            return null;
+
+        // 2. РС‰РµРј РІСЃРµ РІРѕР·РјРѕР¶РЅС‹Рµ РїРѕР·РёС†РёРё РґР»СЏ СЂР°Р·РјРµС‰РµРЅРёСЏ РѕР±Р»Р°СЃС‚Рё СЂР°Р·РјРµСЂР° ideal РІРЅСѓС‚СЂРё area
+        int minX = area._startPosition._x;
+        int minY = area._startPosition._y;
+        int maxX = area._startPosition._x + area._size._x - ideal._size._x;
+        int maxY = area._startPosition._y + area._size._y - ideal._size._y;
+
+        RectangleBector2Int bestRect = null;
+        float bestDistance = float.MaxValue;
+        Vector2 idealCenter = ideal.FindAbsoluteCenter();
+
+        for (int x = minX; x <= maxX; x++)
+        {
+            for (int y = minY; y <= maxY; y++)
+            {
+                // Р¤РѕСЂРјРёСЂСѓРµРј РїСЂСЏРјРѕСѓРіРѕР»СЊРЅРёРє С‚Р°РєРѕРіРѕ Р¶Рµ СЂР°Р·РјРµСЂР°
+                var candidate = new RectangleBector2Int(new Bector2Int(x, y), new Bector2Int(x + ideal._size._x - 1, y + ideal._size._y - 1));
+                var candidatePositions = candidate.GetPositions();
+                bool free = true;
+                foreach (var pos in candidatePositions)
+                {
+                    Vector2Int v2 = pos.ToVector2Int();
+                    if (!Cells.ContainsKey(v2) || Cells[v2].occupied)
+                    {
+                        free = false;
+                        break;
+                    }
+                }
+                if (free)
+                {
+                    // РЎС‡РёС‚Р°РµРј СЂР°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ С†РµРЅС‚СЂР°РјРё
+                    float dist = Vector2.Distance(candidate.FindAbsoluteCenter(), idealCenter);
+                    if (dist < bestDistance)
+                    {
+                        bestDistance = dist;
+                        bestRect = candidate;
+                    }
+                }
+            }
+        }
+        return bestRect;
     }
 }

@@ -26,24 +26,50 @@ public class Scenario : MonoBehaviour
 
 
     public ObjectProcessor _objectProcessor;
+    public FightDirector _fightDirector;
+    public UnitsOnFight _unitsOnFight;
+    public BuildsOnFight _buildsOnFight;
 
     public bool waitingForUpdateStage = false;
 
 
-    public void Init(Map scenarioMap, IStage currentStage, Replic[] startDialogue)
+    public void Init(Map scenarioMap, IStage currentStage, Replic[] startDialogue, FightDirector fightDirector)
     {
         map = scenarioMap;
         _currentStage = currentStage;
+        _fightDirector = fightDirector;
 
         _initialDialogue = startDialogue;
 
         InitObjectProcessor();
+        InitUnitsOnFight();
+        InitBuildsOnFight();
         EnableListenerForUpdateStage();
     }
 
     public void InitObjectProcessor()
     {
         _objectProcessor = GameObject.FindGameObjectWithTag(Tags.objectProcessor).GetComponent<ObjectProcessor>();
+    }
+
+    public void InitUnitsOnFight()
+    {
+        _unitsOnFight = GameObject.FindGameObjectWithTag(Tags.unitsOnScene).GetComponent<UnitsOnFight>();
+    }
+
+    public void InitBuildsOnFight()
+    {
+        _buildsOnFight = GameObject.FindGameObjectWithTag(Tags.buildsOnScene).GetComponent<BuildsOnFight>();
+    }
+
+    public Unit FindUnitById(string unitId)
+    {
+        return _unitsOnFight.FindObjectByChildId(unitId) as Unit;
+    }
+
+    public Build FindBuildById(string buildId)
+    {
+        return _buildsOnFight.FindObjectByChildId(buildId) as Build;
     }
 
     public void EnableListenerForUpdateStage()

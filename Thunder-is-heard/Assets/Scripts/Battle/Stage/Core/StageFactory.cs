@@ -19,8 +19,8 @@ public static class StageFactory
         IStage stageOnFail = GetAndInitStageByStageDataAndScenario(data.stageOnFail, scenario);
         ICondition conditionsForPass = ConditionFactory.CreateCondition(data.conditionsForPass);
         ICondition conditionsForFail = ConditionFactory.CreateCondition(data.conditionsForFail);
-        UnitOnBattle[] units = data.units;
-        BuildOnBattle[] builds = data.builds;
+        UnitOnBattleSpawnData[] unitsForSpawn = data.unitsForSpawn;
+        BuildOnBattleSpawnData[] buildsForSpawn = data.buildsForSpawn;
         Replic[] replicsOnStart = data.replicsOnStart;
         Replic[] replicsOnPass = data.replicsOnPass;
         Replic[] replicsOnFail = data.replicsOnFail;
@@ -29,6 +29,7 @@ public static class StageFactory
         MediaEventData mediaEventData = data.mediaEventData;
         LandingData landingData = data.landingData;
         string hintText = data.hintText;
+        ScenarioEventData[] scenarioEvents = data.scenarioEvents;
 
         stage.Init(
             data.id, 
@@ -36,7 +37,8 @@ public static class StageFactory
             data.AISettings, 
             conditionsForPass, 
             conditionsForFail, 
-            units, builds, 
+            unitsForSpawn,
+            buildsForSpawn,
             replicsOnStart,
             replicsOnPass, 
             replicsOnFail, 
@@ -46,7 +48,8 @@ public static class StageFactory
             focusData,
             mediaEventData,
             landingData,
-            hintText
+            hintText,
+            scenarioEvents
             );
         return stage;
     }
@@ -70,8 +73,8 @@ public static class StageFactory
     {
         if (stage == null) return null;
         string stageId = stage.StageId;
-        UnitOnBattle[] units = stage.Units;
-        BuildOnBattle[] builds = stage.Builds;
+        UnitOnBattleSpawnData[] unitsForSpawn = stage.UnitsForSpawn;
+        BuildOnBattleSpawnData[] buildsForSpawn = stage.BuildsForSpawn;
         Replic[] replicsOnStart = stage.ReplicsOnStart;
         Replic[] replicsOnPass = stage.ReplicsOnPass;
         Replic[] replicsOnFail = stage.ReplicsOnFail;
@@ -85,11 +88,12 @@ public static class StageFactory
         MediaEventData mediaEventData = stage.MediaEventData;
         LandingData landingData = stage.LandingData;
         string hintText = stage.HintText;
+        ScenarioEventData[] scenarioEvents = stage.ScenarioEvents;
 
         return new StageData(
             stageId: stageId,
-            stageUnits: units,
-            stageBuilds: builds,
+            stageUnitsForSpawn: unitsForSpawn,
+            stageBuildsForSpawn: buildsForSpawn,
             stageReplicsOnStart: replicsOnStart,
             stageReplicsOnPass: replicsOnPass,
             stageReplicsOnFail: replicsOnFail,
@@ -102,7 +106,8 @@ public static class StageFactory
             stageFocusData: focusData,
             stageMediaEventData: mediaEventData,
             stageLandingData: landingData,
-            stageHintText: hintText
+            stageHintText: hintText,
+            stageScenarioEvents: scenarioEvents
             );
     }
 }

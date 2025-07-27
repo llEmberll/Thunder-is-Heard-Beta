@@ -1020,6 +1020,9 @@ MonoBehaviour:
   _initialDialogue: []
   waitingForEndDialogue: 0
   _objectProcessor: {fileID: 0}
+  _fightDirector: {fileID: 0}
+  _unitsOnFight: {fileID: 0}
+  _buildsOnFight: {fileID: 0}
   waitingForUpdateStage: 0
 --- !u!4 &244744208
 Transform:
@@ -2227,6 +2230,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 664866018}
   m_CullTransparentMesh: 1
+--- !u!1 &697333040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 697333041}
+  - component: {fileID: 697333042}
+  m_Layer: 0
+  m_Name: ScenarioEventExecutor
+  m_TagString: ScenarioEventExecutor
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &697333041
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697333040}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &697333042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697333040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b1d0f1b79129d84898f7c47f0d633f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &717038488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3177,10 +3224,15 @@ MonoBehaviour:
   _maxImageTransparent: 255
   _targetImage: {fileID: 0}
   _targetText: {fileID: 0}
+  areaHighlightCanvas: {fileID: 0}
+  areaHighlightSizePerCell: 800
   _minTextAlpha: 110
   _maxTextAlpha: 255
+  _targetEntity: {fileID: 0}
   builds: {fileID: 0}
   units: {fileID: 0}
+  _battleEngine: {fileID: 0}
+  _landingUI: {fileID: 0}
 --- !u!1001 &905420879
 PrefabInstance:
   m_ObjectHideFlags: 0

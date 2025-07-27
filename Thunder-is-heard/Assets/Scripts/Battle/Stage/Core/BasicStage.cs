@@ -8,8 +8,8 @@ public class BasicStage: IStage
     public string StageId { get { return _stageId; } }
 
     public Scenario _scenario;
-    public UnitOnBattle[] _units;
-    public BuildOnBattle[] _builds;
+    public UnitOnBattleSpawnData[] _unitsForSpawn;
+    public BuildOnBattleSpawnData[] _buildsForSpawn;
 
     public Replic[] _replicsOnStart;
     public Replic[] _replicsOnPass;
@@ -19,8 +19,8 @@ public class BasicStage: IStage
     public ICondition _conditionsForPass;
     public ICondition _conditionsForFail;
 
-    public UnitOnBattle[] Units { get { return _units; } }
-    public BuildOnBattle[] Builds { get { return _builds; } }
+    public UnitOnBattleSpawnData[] UnitsForSpawn {  get { return _unitsForSpawn; } }
+    public BuildOnBattleSpawnData[] BuildsForSpawn { get { return _buildsForSpawn; } }
 
     public Replic[] ReplicsOnStart { get { return _replicsOnStart; } }
     public Replic[] ReplicsOnPass { get { return _replicsOnPass; } }
@@ -74,6 +74,10 @@ public class BasicStage: IStage
     public string _hintText;
     public string HintText { get { return _hintText; } }
 
+    public bool isScenarioEvents = false;
+    public ScenarioEventData[] _scenarioEvents;
+    public ScenarioEventData[] ScenarioEvents { get { return _scenarioEvents; } }
+
 
     private bool _isStartSequenceComplete = false;
     private Queue<System.Action> _startSequenceActions;
@@ -84,8 +88,8 @@ public class BasicStage: IStage
         AISettings[] AISettings,
         ICondition conditionsForPass,
         ICondition conditionsForFail,
-        UnitOnBattle[] units,
-        BuildOnBattle[] builds,
+        UnitOnBattleSpawnData[] stageUnitsForSpawn,
+        BuildOnBattleSpawnData[] stageBuildsForSpawn,
         Replic[] replicsOnStart,
         Replic[] replicsOnPass,
         Replic[] replicsOnFail,
@@ -95,7 +99,8 @@ public class BasicStage: IStage
         FocusData focusData = null,
         MediaEventData stageMediaEventData = null,
         LandingData stageLandingData = null,
-        string stageHintText = null
+        string stageHintText = null,
+        ScenarioEventData[] stageScenarioEvents = null
         )
     {
         _stageId = stageId;
@@ -103,8 +108,7 @@ public class BasicStage: IStage
         SetAISettings(AISettings);
         SetConditionsForPass(conditionsForPass);
         SetConditionsForFail(conditionsForFail);
-        SetUnits(units);
-        SetBuilds(builds);
+        SetObjectsForSpawn(stageUnitsForSpawn, stageBuildsForSpawn);
         SetReplics(replicsOnStart, replicsOnPass, replicsOnFail);
         _stageOnPass = stageOnPass;
         _stageOnFail = stageOnFail;
@@ -115,6 +119,7 @@ public class BasicStage: IStage
         _landingData = stageLandingData;
 
         _hintText = stageHintText;
+        _scenarioEvents = stageScenarioEvents;
 
         SetCustomProperties();
 
@@ -172,6 +177,26 @@ public class BasicStage: IStage
         EventMaster.current.FightIsContinued -= OnEndLanding;
     }
 
+    public void EnableEndScenarioEventsListener()
+    {
+        EventMaster.current.ScenarioEventsEnd += OnEndScenarioEvents;
+    }
+
+    public void DisableEndScenarioEventsListener()
+    {
+        EventMaster.current.ScenarioEventsEnd -= OnEndScenarioEvents;
+    }
+
+    public void OnEndScenarioEvents()
+    {
+        if (isScenarioEvents)
+        {
+            isScenarioEvents = false;
+            DisableEndScenarioEventsListener();
+            ProcessNextStartAction();
+        }
+    }
+
     public void SetScenario(Scenario value)
     {
         _scenario = value;
@@ -192,14 +217,10 @@ public class BasicStage: IStage
         _conditionsForFail = conditions;
     }
 
-    public virtual void SetUnits(UnitOnBattle[] units)
+    public virtual void SetObjectsForSpawn(UnitOnBattleSpawnData[] unitsForSpawn, BuildOnBattleSpawnData[] buildsForSpawn)
     {
-        _units = units;
-    }
-
-    public virtual void SetBuilds(BuildOnBattle[] builds)
-    {
-        _builds = builds;
+        _unitsForSpawn = unitsForSpawn;
+        _buildsForSpawn = buildsForSpawn;
     }
 
     public virtual void SetReplics(Replic[] replicsOnStart, Replic[] replicsOnEnd, Replic[] replicsOnFail)
@@ -211,7 +232,7 @@ public class BasicStage: IStage
 
     public void CreateObjects()
     {
-        _objectProcessor.CreateObjectsOnBattle(_units, _builds);
+        _objectProcessor.CreateObjectsOnBattleFromSpawnData(UnitsForSpawn, BuildsForSpawn);
     }
 
     public virtual void SetCustomProperties()
@@ -235,6 +256,11 @@ public class BasicStage: IStage
         {
             _startSequenceActions.Enqueue(() => BeginMediaEvent(_mediaEventData));
         }
+        
+        if (_scenarioEvents != null && _scenarioEvents.Length > 0)
+        {
+            _startSequenceActions.Enqueue(() => BeginScenarioEvents(_scenarioEvents));
+        }
 
         if (ReplicsOnStart != null && ReplicsOnStart.Length > 0)
         {
@@ -250,6 +276,7 @@ public class BasicStage: IStage
         {
             _startSequenceActions.Enqueue(() => BeginLanding(LandingData));
         }
+        
     }
 
     protected void ProcessNextStartAction()
@@ -290,6 +317,13 @@ public class BasicStage: IStage
         isLanding = true;
         EventMaster.current.Landing(landingData);
         EnableEndLandingListener();
+    }
+
+    public void BeginScenarioEvents(ScenarioEventData[] events)
+    {
+        isScenarioEvents = true;
+        EventMaster.current.BeginScenarioEvents(events);
+        EnableEndScenarioEventsListener();
     }
 
     public void SetHint(string text)

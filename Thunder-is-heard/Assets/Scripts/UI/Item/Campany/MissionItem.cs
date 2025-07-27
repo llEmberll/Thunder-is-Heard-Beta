@@ -6,7 +6,7 @@ public class MissionItem : Item
     public static string type = "Mission";
     public override string Type { get { return type; } }
 
-    public Vector2Int _position;
+    public Bector2Int _position;
     public bool _isPassed = false;
     public ResourcesData _givesData;
 
@@ -17,8 +17,8 @@ public class MissionItem : Item
         string missionId,
         string missionName,
         bool isPassed,
-        Vector2Int position,
-        ResourcesData missionGives, 
+        ResourcesData missionGives,
+        Bector2Int position = null,
         string missionDescription = ""
         )
     {
@@ -26,6 +26,7 @@ public class MissionItem : Item
 
         _id = missionId; _objName = missionName; _isPassed = isPassed; _itemImage.sprite = _icon;
         _position = position;
+        
 
         InitPosition();
 
@@ -58,8 +59,9 @@ public class MissionItem : Item
 
     public void InitPosition()
     {
+        if (_position == null) return;
         RectTransform rectTransform = GetComponent<RectTransform>();
-        rectTransform.anchoredPosition = new Vector2(_position.x, _position.y);
+        rectTransform.anchoredPosition = new Vector2(_position._x, _position._y);
     }
 
     public override void Interact()

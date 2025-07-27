@@ -1,7 +1,5 @@
 
 
-using Palmmedia.ReportGenerator.Core.Reporting.Builders.Rendering;
-
 public static class Tags
 {
     public static string state = "State";
@@ -68,6 +66,7 @@ public static class Tags
     public static string dialogueController = "DialogueController";
     public static string focusController = "FocusController";
     public static string tutorialController = "TutorialController";
+    public static string scenarioEventExecutor = "ScenarioEventExecutor";
 
     public static string hintBoard = "HintBoard";
 
