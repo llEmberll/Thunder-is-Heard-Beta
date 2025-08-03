@@ -60,6 +60,7 @@ public class FightDirector : MonoBehaviour
 
         EventMaster.current.TurnExecuted += ExecuteTurn;
         EventMaster.current.CurrentStageChanged += ChangeCurrentStage;
+        EventMaster.current.BeginStage += ChangeCurrentStage;
     }
 
     public void DisableListeners()
@@ -70,6 +71,7 @@ public class FightDirector : MonoBehaviour
 
         EventMaster.current.TurnExecuted -= ExecuteTurn;
         EventMaster.current.CurrentStageChanged -= ChangeCurrentStage;
+        EventMaster.current.BeginStage -= ChangeCurrentStage;
     }
 
     public void EnableStartFightListener()
@@ -181,6 +183,8 @@ public class FightDirector : MonoBehaviour
 
     public void ChangeCurrentStage(IStage stage)
     {
+        Debug.Log("FightDirector: ChangeCurrentStage");
+
         StageData serializedStage = StageFactory.SerializeStage(stage);
         _battleData.SetCurrentStage(serializedStage);
         SaveBattleData();
@@ -190,6 +194,8 @@ public class FightDirector : MonoBehaviour
         {
             foreach (var behaviour in stage.BehaviourIdByComponentName)
             {
+                Debug.Log("FightDirector: ChangeComponentBehaviour: " + behaviour.Key + " " + behaviour.Value);
+
                 EventMaster.current.OnChangeComponentBehaviour(behaviour.Key, behaviour.Value);
             }
         }

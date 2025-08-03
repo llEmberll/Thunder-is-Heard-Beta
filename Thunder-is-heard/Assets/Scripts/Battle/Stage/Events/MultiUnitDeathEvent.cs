@@ -7,22 +7,30 @@ public class MultiUnitDeathEvent : IScenarioEvent
     public ScenarioEventData EventData { get; private set; }
     public bool IsCompleted { get; private set; }
 
-    private MultiUnitDeathEventData deathData;
-
     private Scenario _scenario = GameObject.FindGameObjectWithTag(Tags.scenario).GetComponent<Scenario>();
     public Scenario Scenario { get { return _scenario; } }
 
     public MultiUnitDeathEvent(ScenarioEventData eventData)
     {
         EventData = eventData;
-        deathData = eventData as MultiUnitDeathEventData;
         IsCompleted = false;
     }
 
     public IEnumerator Execute()
     {
-        if (deathData == null || deathData.unitIds == null)
+        if (EventData == null || EventData.eventType != "MultiUnitDeath")
         {
+            IsCompleted = true;
+            yield break;
+        }
+
+        // Получаем параметры из EventData
+        string[] unitIds = EventData.GetParameter<string[]>("unitIds");
+        bool playAnimation = EventData.GetParameter<bool>("playAnimation", true);
+
+        if (unitIds == null || unitIds.Length == 0)
+        {
+            Debug.LogError("MultiUnitDeathEvent: Missing required parameter unitIds");
             IsCompleted = true;
             yield break;
         }
@@ -30,7 +38,7 @@ public class MultiUnitDeathEvent : IScenarioEvent
         var units = new List<Unit>();
 
         // Находим всех юнитов
-        foreach (string unitId in deathData.unitIds)
+        foreach (string unitId in unitIds)
         {
             Unit unit = _scenario.FindUnitById(unitId);
             if (unit == null)
@@ -48,7 +56,7 @@ public class MultiUnitDeathEvent : IScenarioEvent
             yield break;
         }
 
-        if (deathData.playAnimation)
+        if (playAnimation)
         {
             // Запускаем анимации смерти для всех юнитов одновременно
             foreach (Unit unit in units)

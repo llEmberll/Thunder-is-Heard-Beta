@@ -15,9 +15,9 @@ public class FocusFightController : FocusController
 
     public override void Awake()
     {
-        builds = GameObject.FindGameObjectWithTag(Tags.buildsOnScene).GetComponent<BuildsOnFight>();
-        units = GameObject.FindGameObjectWithTag(Tags.unitsOnScene).GetComponent<UnitsOnFight>();
-        _battleEngine = GameObject.FindGameObjectWithTag(Tags.battleEngine).GetComponent<BattleEngine>();
+        builds = GameObjectUtils.FindComponentByTagIncludingInactive<BuildsOnFight>(Tags.buildsOnScene);
+        units = GameObjectUtils.FindComponentByTagIncludingInactive<UnitsOnFight>(Tags.unitsOnScene);
+        _battleEngine = GameObjectUtils.FindComponentByTagIncludingInactive<BattleEngine>(Tags.battleEngine);
         base.Awake();
     }
 
@@ -25,34 +25,34 @@ public class FocusFightController : FocusController
     {
         buttonImageByTag = new Dictionary<string, Image>();
 
-        Image toBattleButtonImage = GameObject.FindGameObjectWithTag(Tags.toBattleButton).GetComponent<Image>();
+        Image toBattleButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.toBattleButton);
         buttonImageByTag.Add(Tags.toBattleButton, toBattleButtonImage);
 
-        Image toBasePrepareButtonImage = GameObject.FindGameObjectWithTag(Tags.toBasePrepareButton).GetComponent<Image>();
+        Image toBasePrepareButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.toBasePrepareButton);
         buttonImageByTag.Add(Tags.toBasePrepareButton, toBasePrepareButtonImage);
 
-        Image toBaseFightButtonImage = GameObject.FindGameObjectWithTag(Tags.toBaseFightButton).GetComponent<Image>();
+        Image toBaseFightButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.toBaseFightButton);
         buttonImageByTag.Add(Tags.toBaseFightButton, toBaseFightButtonImage);
 
-        Image cleanLandingButtonImage = GameObject.FindGameObjectWithTag(Tags.cleanLandingButton).GetComponent<Image>();
+        Image cleanLandingButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.cleanLandingButton);
         buttonImageByTag.Add(Tags.cleanLandingButton, cleanLandingButtonImage);
 
-        Image changeBaseButtonImage = GameObject.FindGameObjectWithTag(Tags.changeBaseButton).GetComponent<Image>();
+        Image changeBaseButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.changeBaseButton);
         buttonImageByTag.Add(Tags.changeBaseButton, changeBaseButtonImage);
 
-        Image passButtonImage = GameObject.FindGameObjectWithTag(Tags.passButton).GetComponent<Image>();
+        Image passButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.passButton);
         buttonImageByTag.Add(Tags.passButton, passButtonImage);
 
-        Image surrenderButtonImage = GameObject.FindGameObjectWithTag(Tags.surrenderButton).GetComponent<Image>();
+        Image surrenderButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.surrenderButton);
         buttonImageByTag.Add(Tags.surrenderButton, surrenderButtonImage);
 
-        Image supportButtonImage = GameObject.FindGameObjectWithTag(Tags.supportButton).GetComponent<Image>();
+        Image supportButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.supportButton);
         buttonImageByTag.Add(Tags.supportButton, supportButtonImage);
     }
 
     public override void InitUI()
     {
-        _landingUI = GameObject.FindGameObjectWithTag(Tags.landableUnits).GetComponent<Landing>();
+        _landingUI = GameObjectUtils.FindComponentByTagIncludingInactive<Landing>(Tags.landableUnits);
     }
 
     public override void InitTexts()

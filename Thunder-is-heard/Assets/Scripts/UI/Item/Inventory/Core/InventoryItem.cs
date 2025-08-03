@@ -60,11 +60,9 @@ public abstract class InventoryItem : Item
         conductor.Substract(this, number);
     }
 
-    public void InitCoreId()
+    public void InitCoreId(string coreId)
     {
-        InventoryCacheTable inventory = Cache.LoadByType<InventoryCacheTable>();
-        InventoryCacheItem inventoryItem = new InventoryCacheItem(inventory.GetById(_id).Fields);
-        coreId = inventoryItem.GetCoreId();
+        this.coreId = coreId;
     }
 
     public override void OnPointerEnter(PointerEventData data)

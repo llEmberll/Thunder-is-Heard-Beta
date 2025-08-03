@@ -67,9 +67,9 @@ public class Selector : MonoBehaviour
         isFight = sceneState.currentState.stateName == Scenes.fight;
         if (isFight )
         {
-            _battleEngine = GameObject.FindGameObjectWithTag(Tags.battleEngine).GetComponent<BattleEngine>();
-            _unitsOnFight = GameObject.FindGameObjectWithTag(Tags.unitsOnScene).GetComponent<UnitsOnFight>();
-            _buildsOnFight = GameObject.FindGameObjectWithTag(Tags.buildsOnScene).GetComponent<BuildsOnFight>();
+            _battleEngine = GameObjectUtils.FindComponentByTagIncludingInactive<BattleEngine>(Tags.battleEngine);
+            _unitsOnFight = GameObjectUtils.FindComponentByTagIncludingInactive<UnitsOnFight>(Tags.unitsOnScene);
+            _buildsOnFight = GameObjectUtils.FindComponentByTagIncludingInactive<BuildsOnFight>(Tags.buildsOnScene);
         }
     }
 

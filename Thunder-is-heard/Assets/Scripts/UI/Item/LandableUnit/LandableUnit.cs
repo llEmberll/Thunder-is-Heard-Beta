@@ -14,10 +14,10 @@ public class LandableUnit: ExposableInventoryItem
     public int staff;
     public TMP_Text TmpStaff;
 
-    public void Init(string inventoryItemId, string objectName, int objectStaff, int objectHealth, int objectDamage, int objectDistance, int objectMobility, int objectCount, Sprite objectIcon = null)
+    public void Init(string inventoryItemId, string inventoryItemCoreId, string objectName, int objectStaff, int objectHealth, int objectDamage, int objectDistance, int objectMobility, int objectCount, Sprite objectIcon = null)
     {
         _id = inventoryItemId; _objName = objectName; _icon = objectIcon; _itemImage.sprite = _icon;
-        InitCoreId();
+        InitCoreId(inventoryItemCoreId);
 
         staff = objectStaff;
         health = objectHealth; damage = objectDamage; distance = objectDistance; mobility = objectMobility; _count = objectCount;
@@ -30,5 +30,15 @@ public class LandableUnit: ExposableInventoryItem
         TmpName.text = _objName;
         TmpCount.text = "x" + _count.ToString();
         TmpStaff.text = staff.ToString();
+    }
+
+    public override void OnInventoryItemAdded(InventoryCacheItem item)
+    {
+        conductor.OnInventoryItemAdded(this, item);
+    }
+
+    public override void Increment(int number = 1)
+    {
+        conductor.Increment(this, number);
     }
 }

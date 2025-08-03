@@ -8,6 +8,11 @@ public static class ConditionFactory
 {
     public static ICondition CreateCondition(ConditionData conditionData)
     {
+        if (conditionData == null)
+        {
+            return new AlwaysTrueCondition();
+        }
+
         switch (conditionData.Type)
         {
             case "ReachDistanceBetweenUnitsAndObject":
@@ -24,13 +29,16 @@ public static class ConditionFactory
             case "EnterOnFederationObject":
                 int enterFederationtimes = Convert.ToInt32(conditionData.Data["times"]);
                 return new EnterOnFederationObjectCondition(enterFederationtimes);
+            case "EnterOnFederationUnit":
+                int enterFederationUnitTimes = Convert.ToInt32(conditionData.Data["times"]);
+                return new EnterOnFederationUnitCondition(enterFederationUnitTimes);
             case "EnterOnObject":
                 string targetObjectIdForEnter = (string)conditionData.Data["targetObjectId"];
                 int enterTimes = Convert.ToInt32(conditionData.Data["times"]);
                 return new EnterOnObjectCondition(targetObjectIdForEnter, enterTimes);
-            case "CameraMovement":
+            case "CameraMovementPractice":
                 float practiceDuration = Convert.ToSingle(conditionData.Data["duration"]);
-                return new CameraPracticeCondition(practiceDuration);
+                return new CameraMovementPracticeCondition(practiceDuration);
             case "AlwaysTrue":
                 return new AlwaysTrueCondition();
             case "AlwaysFalse":
@@ -103,6 +111,11 @@ public static class ConditionFactory
 
     public static ConditionData SerializeCondition(ICondition condition)
     {
+        if (condition == null)
+        {
+            return new ConditionData { Type = "AlwaysTrue", Data = new Dictionary<string, object>() };
+        }
+
         if (condition is AlwaysTrueCondition)
         {
             return new ConditionData { Type = "AlwaysTrue", Data = new Dictionary<string, object>() };
@@ -245,7 +258,7 @@ public static class ConditionFactory
                 Data = new Dictionary<string, object> { { "conditions", JsonConvert.SerializeObject(conditionsData) } }
             };
         }
-        else if (condition is CameraPracticeCondition cameraPracticeCondition)
+        else if (condition is CameraMovementPracticeCondition cameraPracticeCondition)
         {
             return new ConditionData
             {
@@ -267,6 +280,14 @@ public static class ConditionFactory
             {
                 Type = "EnterOnFederationObject",
                 Data = new Dictionary<string, object> { { "times", enterOnFederationObjectCondition._times } }
+            };
+        }
+        else if (condition is EnterOnFederationUnitCondition enterOnFederationUnitCondition)
+        {
+            return new ConditionData
+            {
+                Type = "EnterOnFederationUnit",
+                Data = new Dictionary<string, object> { { "times", enterOnFederationUnitCondition._times } }
             };
         }
         else if (condition is NewTargetForAttackCondition newTargetForAttackCondition)

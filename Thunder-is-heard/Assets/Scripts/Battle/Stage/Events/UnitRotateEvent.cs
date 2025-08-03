@@ -1,50 +1,72 @@
 using System.Collections;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 
 public class UnitRotateEvent : IScenarioEvent
 {
     public ScenarioEventData EventData { get; private set; }
     public bool IsCompleted { get; private set; }
 
-    private UnitRotateEventData rotateData;
-
     private Scenario _scenario = GameObject.FindGameObjectWithTag(Tags.scenario).GetComponent<Scenario>();
     public Scenario Scenario { get { return _scenario; } }
-
-
 
     public UnitRotateEvent(ScenarioEventData eventData)
     {
         EventData = eventData;
-        rotateData = eventData as UnitRotateEventData;
         IsCompleted = false;
     }
 
     public IEnumerator Execute()
     {
-        if (rotateData == null)
+        if (EventData == null || EventData.eventType != "UnitRotate")
         {
             IsCompleted = true;
             yield break;
         }
 
-        Unit unit = _scenario.FindUnitById(rotateData.unitId);
+        // Получаем параметры из EventData
+        string unitId = EventData.GetParameter<string>("unitId");
+        int rotation = EventData.GetParameter<int>("rotation", 0);
+
+        // Обрабатываем targetPosition
+        Bector2Int targetPosition = null;
+        var targetPositionObj = EventData.GetParameter<object>("targetPosition");
+        if (targetPositionObj is Bector2Int bector)
+        {
+            targetPosition = bector;
+        }
+        else if (targetPositionObj is JObject jObj)
+        {
+            // Если это JObject, конвертируем в Bector2Int
+            var x = jObj["x"]?.Value<int>() ?? 0;
+            var y = jObj["y"]?.Value<int>() ?? 0;
+            targetPosition = new Bector2Int(x, y);
+        }
+
+        if (string.IsNullOrEmpty(unitId))
+        {
+            Debug.LogError("UnitRotateEvent: Missing required parameter unitId");
+            IsCompleted = true;
+            yield break;
+        }
+
+        Unit unit = _scenario.FindUnitById(unitId);
         if (unit == null)
         {
-            Debug.LogError($"UnitRotateEvent: Cannot find unit {rotateData.unitId}");
+            Debug.LogError($"UnitRotateEvent: Cannot find unit {unitId}");
             IsCompleted = true;
             yield break;
         }
 
-        if (rotateData.targetPosition != null)
+        if (targetPosition != null)
         {
             // Поворачиваемся к указанной позиции
-            unit.RotateToTarget(rotateData.targetPosition.ToVector2Int());
+            unit.RotateToTarget(targetPosition.ToVector2Int());
         }
         else
         {
             // Поворачиваемся на конкретный угол
-            unit.SetRotation(rotateData.rotation);
+            unit.SetRotation(rotation);
         }
 
         // Небольшая пауза для завершения поворота

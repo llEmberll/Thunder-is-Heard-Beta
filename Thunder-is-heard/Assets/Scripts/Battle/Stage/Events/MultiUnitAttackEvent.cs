@@ -7,29 +7,38 @@ public class MultiUnitAttackEvent : IScenarioEvent
     public ScenarioEventData EventData { get; private set; }
     public bool IsCompleted { get; private set; }
 
-    private MultiUnitAttackEventData attackData;
-
     private Scenario _scenario = GameObject.FindGameObjectWithTag(Tags.scenario).GetComponent<Scenario>();
     public Scenario Scenario { get { return _scenario; } }
 
     public MultiUnitAttackEvent(ScenarioEventData eventData)
     {
         EventData = eventData;
-        attackData = eventData as MultiUnitAttackEventData;
         IsCompleted = false;
     }
 
     public IEnumerator Execute()
     {
-        if (attackData == null || attackData.attackerUnitIds == null || attackData.targetIds == null) 
+        if (EventData == null || EventData.eventType != "MultiUnitAttack") 
         {
             IsCompleted = true;
             yield break;
         }
 
-        if (attackData.attackerUnitIds.Length != attackData.targetIds.Length)
+        // Получаем параметры из EventData
+        string[] attackerUnitIds = EventData.GetParameter<string[]>("attackerUnitIds");
+        string[] targetIds = EventData.GetParameter<string[]>("targetIds");
+        bool instantKill = EventData.GetParameter<bool>("instantKill", false);
+
+        if (attackerUnitIds == null || targetIds == null)
         {
-            Debug.LogError($"MultiUnitAttackEvent: Mismatch between attackers ({attackData.attackerUnitIds.Length}) and targets ({attackData.targetIds.Length})");
+            Debug.LogError("MultiUnitAttackEvent: Missing required parameters");
+            IsCompleted = true;
+            yield break;
+        }
+
+        if (attackerUnitIds.Length != targetIds.Length)
+        {
+            Debug.LogError($"MultiUnitAttackEvent: Mismatch between attackers ({attackerUnitIds.Length}) and targets ({targetIds.Length})");
             IsCompleted = true;
             yield break;
         }
@@ -38,23 +47,23 @@ public class MultiUnitAttackEvent : IScenarioEvent
         var attackers = new List<Unit>();
         var targets = new List<Entity>();
 
-        for (int i = 0; i < attackData.attackerUnitIds.Length; i++)
+        for (int i = 0; i < attackerUnitIds.Length; i++)
         {
-            Unit attacker = _scenario.FindUnitById(attackData.attackerUnitIds[i]);
+            Unit attacker = _scenario.FindUnitById(attackerUnitIds[i]);
             if (attacker == null)
             {
-                Debug.LogError($"MultiUnitAttackEvent: Cannot find attacker {attackData.attackerUnitIds[i]}");
+                Debug.LogError($"MultiUnitAttackEvent: Cannot find attacker {attackerUnitIds[i]}");
                 continue;
             }
 
-            Entity target = _scenario.FindUnitById(attackData.targetIds[i]);
+            Entity target = _scenario.FindUnitById(targetIds[i]);
             if (target == null)
             {
-                target = _scenario.FindBuildById(attackData.targetIds[i]);
+                target = _scenario.FindBuildById(targetIds[i]);
             }
             if (target == null)
             {
-                Debug.LogError($"MultiUnitAttackEvent: Cannot find target {attackData.targetIds[i]}");
+                Debug.LogError($"MultiUnitAttackEvent: Cannot find target {targetIds[i]}");
                 continue;
             }
 
@@ -79,7 +88,7 @@ public class MultiUnitAttackEvent : IScenarioEvent
         yield return new WaitForSeconds(1f);
 
         // Если нужно мгновенное убийство
-        if (attackData.instantKill)
+        if (instantKill)
         {
             for (int i = 0; i < targets.Count; i++)
             {

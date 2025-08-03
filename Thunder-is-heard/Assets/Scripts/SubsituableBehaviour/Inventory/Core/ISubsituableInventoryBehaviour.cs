@@ -12,7 +12,11 @@ public interface ISubsituableInventoryBehaviour
 
     public void OnObjectExposed(Inventory conductor, ExposableInventoryItem item, Entity obj);
 
+    public void OnInventoryItemAdded(Inventory conductor, InventoryItem sourceItem, InventoryCacheItem addedItem);
+
     public void Substract(Inventory conductor, InventoryItem item, int number = 1);
+
+    public void Increment(Inventory conductor, InventoryItem item, int number = 1);
 
     public void Toggle(Inventory conductor);
 

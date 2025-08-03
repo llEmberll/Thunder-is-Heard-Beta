@@ -31,6 +31,9 @@ public class FightPanel : Panel
         EventMaster.current.StartLanding += ToggleToLanding;
         EventMaster.current.FightIsStarted += ToggleToFight;
         EventMaster.current.FightIsContinued += ToggleToFight;
+        EventMaster.current.ToBattleButtonPressed += OnPressToBattleButton;
+        EventMaster.current.ComponentBehaviourChanged += OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset += OnResetBehaviour;
     }
 
     public void DisableListeners()
@@ -38,6 +41,9 @@ public class FightPanel : Panel
         EventMaster.current.StartLanding -= ToggleToLanding;
         EventMaster.current.FightIsStarted -= ToggleToFight;
         EventMaster.current.FightIsContinued -= ToggleToFight;
+        EventMaster.current.ToBattleButtonPressed -= OnPressToBattleButton;
+        EventMaster.current.ComponentBehaviourChanged -= OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset -= OnResetBehaviour;
     }
 
     public void ToggleToLanding(LandingData landingData)

@@ -10915,7 +10915,7 @@
       "fields": {
         "externalId": "tab95c11f-8827-4c3a-b58a-c9948cdd18af",
         "description": "",
-        "terrainPath": "Prefabs/Terrain/Missions/Base/Terrain",
+        "terrainPath": "Prefabs/Terrain/Base/Terrain",
         "mapSize": {
           "x": 15,
           "y": 15
@@ -10973,7 +10973,7 @@
                 "y": 4
               }
             ],
-            "rotation": 0,
+            "rotation": 90,
             "maxHealth": 2,
             "health": 2,
             "damage": 1,
@@ -10989,11 +10989,11 @@
             "idOnBattle": "aaf752c1-04cb-4c6b-95b2-e4fe1ae63fab",
             "position": [
               {
-                "x": 1,
+                "x": 0,
                 "y": 10
               }
             ],
-            "rotation": 0,
+            "rotation": 180,
             "maxHealth": 2,
             "health": 2,
             "damage": 1,
@@ -11013,7 +11013,7 @@
                 "y": 11
               }
             ],
-            "rotation": 0,
+            "rotation": 180,
             "maxHealth": 2,
             "health": 2,
             "damage": 1,
@@ -11651,7 +11651,10 @@
               "targetObjectIds": null
             }
           ],
-          "conditionsForFail": null,
+          "conditionsForFail": {
+            "Type": "AlwaysFalse",
+            "Data": null
+          },
           "conditionsForPass": {
             "Type": "CameraMovementPractice",
             "Data": {
@@ -11673,7 +11676,10 @@
                 "charName": "officer",
                 "charSide": "Federation",
                 "text": "Выставите бойцов рядом со штабом, чтобы обеспечить его защиту. Я советую расставить их по сторонам, чтобы с каждой стороны по неприятелю был открыт огонь",
-                "focus": null
+                "focus": {
+                  "x": 6,
+                  "y": 5
+                }
               }
             ],
             "replicsOnPass": null,
@@ -11728,9 +11734,12 @@
                   "targetObjectIds": null
                 }
               ],
-              "conditionsForFail": null,
+              "conditionsForFail": {
+                "Type": "AlwaysFalse",
+                "Data": null
+              },
               "conditionsForPass": {
-                "Type": "EnterOnFederationObject",
+                "Type": "EnterOnFederationUnit",
                 "Data": {
                   "times": "3"
                 }
@@ -11763,7 +11772,10 @@
                     "targetObjectIds": null
                   }
                 ],
-                "conditionsForFail": null,
+                "conditionsForFail": {
+                  "Type": "AlwaysFalse",
+                  "Data": null
+                },
                 "conditionsForPass": {
                   "Type": "NewTargetForAttack",
                   "Data": {
@@ -11798,7 +11810,10 @@
                       "targetObjectIds": null
                     }
                   ],
-                  "conditionsForFail": null,
+                  "conditionsForFail": {
+                    "Type": "AlwaysFalse",
+                    "Data": null
+                  },
                   "conditionsForPass": {
                     "Type": "AttackSide",
                     "Data": {
@@ -11826,7 +11841,10 @@
                         "targetObjectIds": null
                       }
                     ],
-                    "conditionsForFail": null,
+                    "conditionsForFail": {
+                      "Type": "DestroyAllAllies",
+                      "Data": null
+                    },
                     "conditionsForPass": {
                       "Type": "DestroyAllEnemies",
                       "Data": null
@@ -11909,7 +11927,10 @@
                           "targetObjectIds": null
                         }
                       ],
-                      "conditionsForFail": null,
+                      "conditionsForFail": {
+                        "Type": "DestroyAllAllies",
+                        "Data": null
+                      },
                       "conditionsForPass": {
                         "Type": "Or",
                         "Data": {
@@ -12050,7 +12071,10 @@
                             "targetObjectIds": null
                           }
                         ],
-                        "conditionsForFail": null,
+                        "conditionsForFail": {
+                          "Type": "AlwaysFalse",
+                          "Data": null
+                        },
                         "conditionsForPass": {
                           "Type": "DestroyAllEnemies",
                           "Data": null
@@ -12086,7 +12110,10 @@
                               "targetObjectIds": null
                             }
                           ],
-                          "conditionsForFail": null,
+                          "conditionsForFail": {
+                            "Type": "AlwaysFalse",
+                            "Data": null
+                          },
                           "conditionsForPass": {
                             "Type": "SideReachPosition",
                             "Data": {
@@ -12272,7 +12299,10 @@
                             "replicsOnPass": null,
                             "replicsOnFail": null,
                             "AISettings": null,
-                            "conditionsForFail": null,
+                            "conditionsForFail": {
+                              "Type": "AlwaysFalse",
+                              "Data": null
+                            },
                             "conditionsForPass": {
                               "Type": "AlwaysTrue",
                               "Data": null
@@ -12373,7 +12403,10 @@
                                   "targetObjectIds": null
                                 }
                               ],
-                              "conditionsForFail": null,
+                              "conditionsForFail": {
+                                "Type": "DestroyAllAllies",
+                                "Data": null
+                              },
                               "conditionsForPass": {
                                 "Type": "DestroyAllEnemies",
                                 "Data": null
@@ -12479,7 +12512,10 @@
                                 "replicsOnPass": null,
                                 "replicsOnFail": null,
                                 "AISettings": null,
-                                "conditionsForFail": null,
+                                "conditionsForFail": {
+                                  "Type": "AlwaysFalse",
+                                  "Data": null
+                                },
                                 "conditionsForPass": {
                                   "Type": "AlwaysTrue",
                                   "Data": null
@@ -12621,7 +12657,10 @@
                                   "replicsOnPass": null,
                                   "replicsOnFail": null,
                                   "AISettings": null,
-                                  "conditionsForFail": null,
+                                  "conditionsForFail": {
+                                    "Type": "AlwaysFalse",
+                                    "Data": null
+                                  },
                                   "conditionsForPass": {
                                     "Type": "AlwaysTrue",
                                     "Data": null
@@ -12654,7 +12693,10 @@
                                         "targetObjectIds": null
                                       }
                                     ],
-                                    "conditionsForFail": null,
+                                    "conditionsForFail": {
+                                      "Type": "DestroyAllAllies",
+                                      "Data": null
+                                    },
                                     "conditionsForPass": {
                                       "Type": "DestroyAllEnemies",
                                       "Data": null
@@ -12835,7 +12877,10 @@
                                       "replicsOnPass": null,
                                       "replicsOnFail": null,
                                       "AISettings": null,
-                                      "conditionsForFail": null,
+                                      "conditionsForFail": {
+                                        "Type": "AlwaysFalse",
+                                        "Data": null
+                                      },
                                       "conditionsForPass": {
                                         "Type": "AlwaysTrue",
                                         "Data": null
@@ -12880,7 +12925,10 @@
                                             "targetObjectIds": null
                                           }
                                         ],
-                                        "conditionsForFail": null,
+                                        "conditionsForFail": {
+                                          "Type": "DestroyAllAllies",
+                                          "Data": null
+                                        },
                                         "conditionsForPass": {
                                           "Type": "DestroyAllEnemies",
                                           "Data": null
@@ -12906,8 +12954,14 @@
                                           "replicsOnPass": null,
                                           "replicsOnFail": null,
                                           "AISettings": null,
-                                          "conditionsForFail": null,
-                                          "conditionsForPass": null,
+                                          "conditionsForFail": {
+                                            "Type": "AlwaysFalse",
+                                            "Data": null
+                                          },
+                                          "conditionsForPass": {
+                                            "Type": "AlwaysTrue",
+                                            "Data": null
+                                          },
                                           "stageOnPass": null,
                                           "stageOnFail": null,
                                           "behaviourIdByComponentName": null,
@@ -12979,40 +13033,48 @@
                                     "hintText": null,
                                     "scenarioEvents": [
                                       {
-                                        "attackerUnitId": "dfd416ac-bdc3-4562-b612-52b151bb3ced",
-                                        "targetId": "72ed2747-4a12-4b7f-8825-9e7737d6387b",
-                                        "instantKill": true,
                                         "eventType": "UnitAttack",
                                         "delay": 0.0,
                                         "waitForCompletion": true,
-                                        "executeInParallel": true
+                                        "executeInParallel": true,
+                                        "parameters": {
+                                          "attackerUnitId": "dfd416ac-bdc3-4562-b612-52b151bb3ced",
+                                          "targetId": "72ed2747-4a12-4b7f-8825-9e7737d6387b",
+                                          "instantKill": true
+                                        }
                                       },
                                       {
-                                        "attackerUnitId": "5564ad01-b8ee-4912-8289-d9f5f09a24b6",
-                                        "targetId": "59e2309c-e8c4-4bc8-a3a6-753e6456f8c5",
-                                        "instantKill": true,
                                         "eventType": "UnitAttack",
                                         "delay": 0.0,
                                         "waitForCompletion": true,
-                                        "executeInParallel": true
+                                        "executeInParallel": true,
+                                        "parameters": {
+                                          "attackerUnitId": "5564ad01-b8ee-4912-8289-d9f5f09a24b6",
+                                          "targetId": "59e2309c-e8c4-4bc8-a3a6-753e6456f8c5",
+                                          "instantKill": true
+                                        }
                                       },
                                       {
-                                        "attackerUnitId": "77f3c11f-3853-4b76-ab2c-c19ed9c83e5e",
-                                        "targetId": "39ce7d67-fcde-48f7-8a45-62f33c89c5ca",
-                                        "instantKill": true,
                                         "eventType": "UnitAttack",
                                         "delay": 0.0,
                                         "waitForCompletion": true,
-                                        "executeInParallel": true
+                                        "executeInParallel": true,
+                                        "parameters": {
+                                          "attackerUnitId": "77f3c11f-3853-4b76-ab2c-c19ed9c83e5e",
+                                          "targetId": "39ce7d67-fcde-48f7-8a45-62f33c89c5ca",
+                                          "instantKill": true
+                                        }
                                       },
                                       {
-                                        "attackerUnitId": "5b32b6ba-459c-4770-824e-15bf60e62741",
-                                        "targetId": "9cae1044-df5e-4cb3-b7b9-f194801e078a",
-                                        "instantKill": true,
                                         "eventType": "UnitAttack",
                                         "delay": 0.0,
                                         "waitForCompletion": true,
-                                        "executeInParallel": true
+                                        "executeInParallel": true,
+                                        "parameters": {
+                                          "attackerUnitId": "5b32b6ba-459c-4770-824e-15bf60e62741",
+                                          "targetId": "9cae1044-df5e-4cb3-b7b9-f194801e078a",
+                                          "instantKill": true
+                                        }
                                       }
                                     ]
                                   },
@@ -13282,7 +13344,7 @@
                   "y": 4
                 }
               ],
-              "maxStaff": 20
+              "maxStaff": 10
             },
             "hintText": null,
             "scenarioEvents": null

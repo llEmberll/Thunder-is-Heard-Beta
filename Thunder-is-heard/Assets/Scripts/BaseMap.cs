@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ public class BaseMap : Map
 
     public void Start()
     {
-        //CreateTrainingMission();
+        CreateTrainingMission();
     }
 
     public void CreateTutorialOnBase()
@@ -2843,8 +2842,7 @@ public class BaseMap : Map
         scenarioItem.SetExternalId("tab95c11f-8827-4c3a-b58a-c9948cdd18af");
         scenarioItem.SetName("Обучение");
 
-        string terrainPath = Config.terrainsPath["mission"];
-        terrainPath = terrainPath.Replace("{MissionName}", "Base");
+        string terrainPath = Config.terrainsPath["Base"];
 
         scenarioItem.SetTerrainPath(terrainPath);
         scenarioItem.SetMapSize(new Bector2Int(15, 15));
@@ -2882,7 +2880,7 @@ public class BaseMap : Map
             new UnitOnBattle(
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
                     unitPosition: new Bector2Int[] { new Bector2Int(0, 4) },
-                    unitRotation: 0,
+                    unitRotation: 90,
                     unitMaxHealth: 2,
                     unitHealth: 2,
                     unitDamage: 1,
@@ -2895,8 +2893,8 @@ public class BaseMap : Map
                     ),
             new UnitOnBattle(
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                    unitPosition: new Bector2Int[] { new Bector2Int(1, 10) },
-                    unitRotation: 0,
+                    unitPosition: new Bector2Int[] { new Bector2Int(0, 10) },
+                    unitRotation: 180,
                     unitMaxHealth: 2,
                     unitHealth: 2,
                     unitDamage: 1,
@@ -2910,7 +2908,7 @@ public class BaseMap : Map
             new UnitOnBattle(
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
                     unitPosition: new Bector2Int[] { new Bector2Int(6, 11) },
-                    unitRotation: 0,
+                    unitRotation: 180,
                     unitMaxHealth: 2,
                     unitHealth: 2,
                     unitDamage: 1,
@@ -3216,6 +3214,8 @@ public class BaseMap : Map
         };
         ConditionData conditionForPassStage1 = new ConditionData(type: "CameraMovementPractice", dataForConditionForPassStage1);
 
+        ConditionData conditionForFailStage1 = new ConditionData(type: "AlwaysFalse", null);
+
         // Поведения компонентов для этапа 1
         Dictionary<string, string> behaviourIdByComponentNameForStage1 = new Dictionary<string, string>()
         {
@@ -3253,15 +3253,16 @@ public class BaseMap : Map
             new Replic(
                 charName: Chars.officer,
                 charSide: Sides.federation,
-                text: "Выставите бойцов рядом со штабом, чтобы обеспечить его защиту. Я советую расставить их по сторонам, чтобы с каждой стороны по неприятелю был открыт огонь"
+                text: "Выставите бойцов рядом со штабом, чтобы обеспечить его защиту. Я советую расставить их по сторонам, чтобы с каждой стороны по неприятелю был открыт огонь",
+                focus: new Bector2Int(6, 5)
             )
         };
 
-        ConditionData defeatConditionDataForStage2 = new ConditionData(type: "AlwaysFalse", null);
-        ConditionData victoryConditionDataForStage2 = new ConditionData(type: "AlwaysTrue", null);
+        ConditionData conditionForFailStage2 = new ConditionData(type: "AlwaysFalse", null);
+        ConditionData conditionForPassStage2 = new ConditionData(type: "AlwaysTrue", null);
 
         LandingData landingData = new LandingData(
-                landingMaxStaff: 20,
+                landingMaxStaff: 10,
                 landingZone: new Bector2Int[]
                 {
                     new Bector2Int(3, 8),
@@ -3321,7 +3322,9 @@ public class BaseMap : Map
         {
             { "times", "3" },
         };
-        ConditionData conditionForPassStage3 = new ConditionData(type: "EnterOnFederationObject", dataForConditionForPassStage3);
+        ConditionData conditionForPassStage3 = new ConditionData(type: "EnterOnFederationUnit", dataForConditionForPassStage3);
+
+        ConditionData conditionForFailStage3 = new ConditionData(type: "AlwaysFalse", null);
 
 
         FocusData focusDataForStage3 = new FocusData(type: "Unit", data: new Dictionary<string, object>() { { "side", Sides.federation } });
@@ -3368,10 +3371,11 @@ public class BaseMap : Map
         };
         ConditionData conditionForPassStage4 = new ConditionData(type: "NewTargetForAttack", dataForConditionForPassStage4);
 
+        ConditionData conditionForFailStage4 = new ConditionData(type: "AlwaysFalse", null);
 
         // ИИ этапа 4
         AISettings AISettingsForEmpireSideInStage4 = new AISettings(
-            "Attacking",
+            "Attacking", тут вынужденная атака
             Sides.empire,
             null,
             null
@@ -3414,6 +3418,8 @@ public class BaseMap : Map
         };
         ConditionData conditionForPassStage5 = new ConditionData(type: "AttackSide", dataForConditionForPassStage5);
 
+        ConditionData conditionForFailStage5 = new ConditionData(type: "AlwaysFalse", null);
+
         // Фокус для этапа 5
         FocusData focusDataForStage5 = new FocusData(
             type: "Unit",
@@ -3450,6 +3456,8 @@ public class BaseMap : Map
 
         // Условие для перехода к следующему этапу(7) - уничтожить всех юнитов
         ConditionData conditionForPassStage6 = new ConditionData(type: "DestroyAllEnemies", null);
+
+        ConditionData conditionForFailStage6 = new ConditionData(type: "DestroyAllAllies", null);
 
         // ИИ этапа 6
         AISettings AISettingsForEmpireSideInStage6 = new AISettings(
@@ -3583,6 +3591,8 @@ public class BaseMap : Map
         };
         ConditionData mainConditionDataForStage7 = new ConditionData(type: "Or", data: dataForMainConditionDataForStage7);
 
+        ConditionData conditionForFailStage7 = new ConditionData(type: "DestroyAllAllies", null);
+
 
         // Этап 8 - Обнаружены новые вражеские позиции
         // Вражеские юниты у штаба
@@ -3672,6 +3682,8 @@ public class BaseMap : Map
         // Условие для перехода к следующему этапу(8) - уничтожить всех юнитов
         ConditionData conditionForPassStage8 = new ConditionData(type: "DestroyAllEnemies", null);
 
+        ConditionData conditionForFailStage8 = new ConditionData(type: "AlwaysFalse", null);
+
         // Этап 9 - Разведка лесных массивов
         Replic[] dialogueForStage9 = new Replic[]
         {
@@ -3719,6 +3731,8 @@ public class BaseMap : Map
             { "side", Sides.federation },
         };
         ConditionData conditionForPassStage9 = new ConditionData(type: "SideReachPosition", data: сonditionDataForStage9);
+
+        ConditionData conditionForFailStage9 = new ConditionData(type: "AlwaysFalse", null);
 
         // Этап 10 - Столкновение с основными силами врага в лесах
         // Вражеские юниты в лесу
@@ -3843,6 +3857,8 @@ public class BaseMap : Map
         };
 
         ConditionData conditionForPassStage10 = new ConditionData(type: "AlwaysTrue", null);
+
+        ConditionData conditionForFailStage10 = new ConditionData(type: "AlwaysFalse", null);
         
         // Этап 11 - Дружественное подкрепление
         UnitOnBattleSpawnData[] newUnitsForStage11 = new UnitOnBattleSpawnData[]
@@ -3917,6 +3933,8 @@ public class BaseMap : Map
 
         // Условие для перехода к следующему этапу(12) - уничтожить всех юнитов
         ConditionData conditionForPassStage11 = new ConditionData(type: "DestroyAllEnemies", null);
+
+        ConditionData conditionForFailStage11 = new ConditionData(type: "DestroyAllAllies", null);
 
 
         // Этап 12 - Вражеские подкрепления
@@ -3995,6 +4013,8 @@ public class BaseMap : Map
 
         // Условие для перехода к следующему этапу(13)
         ConditionData conditionForPassStage12 = new ConditionData(type: "AlwaysTrue", null);
+
+        ConditionData conditionForFailStage12 = new ConditionData(type: "AlwaysFalse", null);
 
         // Этап 13 - Помощь танкистки(спавн юнитов)
         UnitOnBattleSpawnData[] newUnitsForStage13 = new UnitOnBattleSpawnData[]
@@ -4078,30 +4098,32 @@ public class BaseMap : Map
         // Условие для перехода к следующему этапу(14)
         ConditionData conditionForPassStage13 = new ConditionData(type: "AlwaysTrue", null);
 
+        ConditionData conditionForFailStage13 = new ConditionData(type: "AlwaysFalse", null);
+
 
         // Этап 14 - Помощь танкистки(уничтожение врага)
 
         ScenarioEventData[] scenarioEventsForStage14 = new ScenarioEventData[]
         {
-            new UnitAttackEventData(
+            ScenarioEventData.CreateUnitAttack(
                 attackerUnitId: "dfd416ac-bdc3-4562-b612-52b151bb3ced",
                 targetId: "72ed2747-4a12-4b7f-8825-9e7737d6387b",
                 instantKill: true,
                 executeInParallel: true
             ),
-            new UnitAttackEventData(
+            ScenarioEventData.CreateUnitAttack(
                 attackerUnitId: "5564ad01-b8ee-4912-8289-d9f5f09a24b6",
                 targetId: "59e2309c-e8c4-4bc8-a3a6-753e6456f8c5",
                 instantKill: true,
                 executeInParallel: true
             ),
-            new UnitAttackEventData(
+            ScenarioEventData.CreateUnitAttack(
                 attackerUnitId: "77f3c11f-3853-4b76-ab2c-c19ed9c83e5e",
                 targetId: "39ce7d67-fcde-48f7-8a45-62f33c89c5ca",
                 instantKill: true,
                 executeInParallel: true
             ),
-            new UnitAttackEventData(
+            ScenarioEventData.CreateUnitAttack(
                 attackerUnitId: "5b32b6ba-459c-4770-824e-15bf60e62741",
                 targetId: "9cae1044-df5e-4cb3-b7b9-f194801e078a",
                 instantKill: true,
@@ -4138,6 +4160,8 @@ public class BaseMap : Map
 
         // Условие для перехода к следующему этапу(15)
         ConditionData conditionForPassStage14 = new ConditionData(type: "DestroyAllEnemies", null);
+
+        ConditionData conditionForFailStage14 = new ConditionData(type: "DestroyAllAllies", null);
 
 
         Replic[] endDialogueForStage14 = new Replic[]
@@ -4260,6 +4284,8 @@ public class BaseMap : Map
         // Условие для перехода к следующему этапу(16)
         ConditionData conditionForPassStage15 = new ConditionData(type: "AlwaysTrue", null);
 
+        ConditionData conditionForFailStage15 = new ConditionData(type: "AlwaysFalse", null);
+
 
         // Этап 16 - в бой
         Replic[] dialogueForStage16 = new Replic[]
@@ -4302,6 +4328,7 @@ public class BaseMap : Map
         // Условие для перехода к следующему этапу(17)
         ConditionData conditionForPassStage16 = new ConditionData(type: "DestroyAllEnemies", null);
 
+        ConditionData conditionForFailStage16 = new ConditionData(type: "DestroyAllAllies", null);
 
         // Этап 17 - финал
         Replic[] dialogueForStage17 = new Replic[]
@@ -4318,6 +4345,11 @@ public class BaseMap : Map
                 ),
         };
 
+        // Условие для завершения боя
+        ConditionData conditionForPassStage17 = new ConditionData(type: "AlwaysTrue", null);
+
+        ConditionData conditionForFailStage17 = new ConditionData(type: "AlwaysFalse", null);
+
         // Создание этапов задом наперед для правильной установки связей
 
         // Этап 17 - финал (последний этап)
@@ -4328,8 +4360,8 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: null,
-            stageConditionsForFail: null,
-            stageConditionsForPass: null,
+            stageConditionsForFail: conditionForFailStage17,
+            stageConditionsForPass: conditionForPassStage17,
             stageStageOnPass: null,
             stageStageOnFail: null,
             stageBehaviourIdByComponentName: null,
@@ -4348,7 +4380,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage16, AISettingsForNeutralSideInStage16 },
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage16,
             stageConditionsForPass: conditionForPassStage16,
             stageStageOnPass: stage17,
             stageStageOnFail: null,
@@ -4368,7 +4400,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: null,
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage15,
             stageConditionsForPass: conditionForPassStage15,
             stageStageOnPass: stage16,
             stageStageOnFail: null,
@@ -4388,7 +4420,7 @@ public class BaseMap : Map
             stageReplicsOnPass: endDialogueForStage14,
             stageReplicsOnFail: null,
             stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage14, AISettingsForNeutralSideInStage14 },
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage14,
             stageConditionsForPass: conditionForPassStage14,
             stageStageOnPass: stage15,
             stageStageOnFail: null,
@@ -4408,7 +4440,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: null,
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage13,
             stageConditionsForPass: conditionForPassStage13,
             stageStageOnPass: stage14,
             stageStageOnFail: null,
@@ -4428,7 +4460,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: null,
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage12,
             stageConditionsForPass: conditionForPassStage12,
             stageStageOnPass: stage13,
             stageStageOnFail: null,
@@ -4448,7 +4480,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage11, AISettingsForNeutralSideInStage11 },
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage11,
             stageConditionsForPass: conditionForPassStage11,
             stageStageOnPass: stage12,
             stageStageOnFail: null,
@@ -4468,7 +4500,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: null,
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage10,
             stageConditionsForPass: conditionForPassStage10,
             stageStageOnPass: stage11,
             stageStageOnFail: null,
@@ -4488,7 +4520,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage9, AISettingsForNeutralSideInStage9 },
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage9,
             stageConditionsForPass: conditionForPassStage9,
             stageStageOnPass: stage10,
             stageStageOnFail: null,
@@ -4508,7 +4540,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage8, AISettingsForNeutralSideInStage8 },
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage8,
             stageConditionsForPass: conditionForPassStage8,
             stageStageOnPass: stage9,
             stageStageOnFail: null,
@@ -4528,7 +4560,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage7, AISettingsForNeutralSideInStage7 },
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage7,
             stageConditionsForPass: mainConditionDataForStage7,
             stageStageOnPass: stage8,
             stageStageOnFail: null,
@@ -4548,7 +4580,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage6, AISettingsForNeutralSideInStage6 },
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage6,
             stageConditionsForPass: conditionForPassStage6,
             stageStageOnPass: stage7,
             stageStageOnFail: null,
@@ -4568,7 +4600,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage5, AISettingsForNeutralSideInStage5 },
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage5,
             stageConditionsForPass: conditionForPassStage5,
             stageStageOnPass: stage6,
             stageStageOnFail: null,
@@ -4588,7 +4620,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage4, AISettingsForNeutralSideInStage4 },
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage4,
             stageConditionsForPass: conditionForPassStage4,
             stageStageOnPass: stage5,
             stageStageOnFail: null,
@@ -4608,7 +4640,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage3, AISettingsForNeutralSideInStage3 },
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage3,
             stageConditionsForPass: conditionForPassStage3,
             stageStageOnPass: stage4,
             stageStageOnFail: null,
@@ -4628,8 +4660,8 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage2, AISettingsForNeutralSideInStage2 },
-            stageConditionsForFail: defeatConditionDataForStage2,
-            stageConditionsForPass: victoryConditionDataForStage2,
+            stageConditionsForFail: conditionForFailStage2,
+            stageConditionsForPass: conditionForPassStage2,
             stageStageOnPass: stage3,
             stageStageOnFail: null,
             stageBehaviourIdByComponentName: behaviourIdByComponentNameForStage2,
@@ -4648,7 +4680,7 @@ public class BaseMap : Map
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
             stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage1, AISettingsForNeutralSideInStage1 },
-            stageConditionsForFail: null,
+            stageConditionsForFail: conditionForFailStage1,
             stageConditionsForPass: conditionForPassStage1,
             stageStageOnPass: stage2,
             stageStageOnFail: null,

@@ -86,7 +86,7 @@ public class TutorialController : MonoBehaviour
         string startedTutorialMissionbattleId = MissionDetalization.FindBattleIdByMissionId(_tutorialMissionId);
         if (startedTutorialMissionbattleId != null)
         {
-            SceneLoader.LoadFight(new FightSceneParameters(startedTutorialMissionbattleId));
+            SceneLoader.LoadFight(new FightSceneParameters(battleId: startedTutorialMissionbattleId, autoStartFight: true));
         }
         else
         {
@@ -107,7 +107,7 @@ public class TutorialController : MonoBehaviour
             battleTable.AddOne(battleData);
             Cache.Save(battleTable);
 
-            SceneLoader.LoadFight(new FightSceneParameters(battleData.GetExternalId()));
+            SceneLoader.LoadFight(new FightSceneParameters(battleId: battleData.GetExternalId(), autoStartFight: true));
         }
     }
 

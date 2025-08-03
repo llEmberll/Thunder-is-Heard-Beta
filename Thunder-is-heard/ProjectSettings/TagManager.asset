@@ -75,6 +75,7 @@ TagManager:
   - AreaHighlightCanvas
   - ScenarioEventController
   - ScenarioEventExecutor
+  - LandableUnitsContent
   layers:
   - Default
   - TransparentFX

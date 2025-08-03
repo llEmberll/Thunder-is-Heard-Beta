@@ -77,7 +77,7 @@ public abstract class FocusController : MonoBehaviour
 
     public void InitAreaHighlight()
     {
-        areaHighlightCanvas = GameObject.FindGameObjectWithTag(Tags.areaHighlightCanvas).GetComponent<Canvas>();
+        areaHighlightCanvas = GameObjectUtils.FindComponentByTagIncludingInactive<Canvas>(Tags.areaHighlightCanvas);
         areaHighlightCanvas.enabled = false;
     }
 

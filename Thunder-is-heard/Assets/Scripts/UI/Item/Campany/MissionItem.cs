@@ -27,6 +27,11 @@ public class MissionItem : Item
         _id = missionId; _objName = missionName; _isPassed = isPassed; _itemImage.sprite = _icon;
         _position = position;
         
+        if (_position == null ) 
+        { 
+            gameObject.SetActive( false );
+            return;
+        }
 
         InitPosition();
 
@@ -59,7 +64,6 @@ public class MissionItem : Item
 
     public void InitPosition()
     {
-        if (_position == null) return;
         RectTransform rectTransform = GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new Vector2(_position._x, _position._y);
     }

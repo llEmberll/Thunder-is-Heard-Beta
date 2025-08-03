@@ -8,7 +8,12 @@ public interface IItemConductor
 
     public void OnObjectExposed(ExposableInventoryItem item, Entity obj);
 
+    public void OnInventoryItemAdded(InventoryItem sourceItem, InventoryCacheItem addedItem);
+
     public void Substract(InventoryItem item, int number = 1);
+
+    public void Increment(InventoryItem item, int number = 1);
+
 
     public void OnPointerEnter(InventoryItem item, PointerEventData eventData);
     public void OnPointerExit(InventoryItem item, PointerEventData eventData);

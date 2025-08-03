@@ -35,6 +35,8 @@ public class BattleEngine : MonoBehaviour
 
         currentBattleSituation = new BattleSituation();
         currentBattleSituation.InitByBattleDataAndMap(battleData, _map);
+
+        Debug.Log("Current battle situation INITED!");
     }
 
     public void EnableListeners()

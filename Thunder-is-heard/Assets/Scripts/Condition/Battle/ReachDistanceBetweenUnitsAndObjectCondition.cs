@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -48,7 +47,53 @@ public class ReachDistanceBetweenUnitsAndObjectCondition : BasicCondition
 
     public bool InitialCheck()
     {
+        // Логируем _battleEngine
+        Debug.Log($"[ReachDistanceCondition] _battleEngine: {(_battleEngine == null ? "NULL" : "NOT NULL")}");
+        
+        if (_battleEngine == null)
+        {
+            Debug.LogError("[ReachDistanceCondition] _battleEngine is null!");
+            return false;
+        }
+        
+        // Логируем currentBattleSituation
+        Debug.Log($"[ReachDistanceCondition] currentBattleSituation: {(_battleEngine.currentBattleSituation == null ? "NULL" : "NOT NULL")}");
+        
+        if (_battleEngine.currentBattleSituation == null)
+        {
+            Debug.LogWarning("[ReachDistanceCondition] currentBattleSituation is null! Returning false.");
+            return false;
+        }
+        
+        // Логируем _targetObjectId
+        Debug.Log($"[ReachDistanceCondition] _targetObjectId: '{_targetObjectId}'");
+        
+        if (string.IsNullOrEmpty(_targetObjectId))
+        {
+            Debug.LogError("[ReachDistanceCondition] _targetObjectId is null or empty!");
+            return false;
+        }
+        
         ObjectOnBattle target = _battleEngine.currentBattleSituation.GetObjectById(_targetObjectId);
+        
+        // Логируем результат GetObjectById
+        Debug.Log($"[ReachDistanceCondition] target from GetObjectById: {(target == null ? "NULL" : "NOT NULL")}");
+        
+        if (target == null)
+        {
+            Debug.LogError($"[ReachDistanceCondition] GetObjectById returned null for id: '{_targetObjectId}'");
+            return false;
+        }
+        
+        // Логируем target.Position
+        Debug.Log($"[ReachDistanceCondition] target.Position: {(target.Position == null ? "NULL" : "NOT NULL")}");
+        
+        if (target.Position == null)
+        {
+            Debug.LogError("[ReachDistanceCondition] target.Position is null!");
+            return false;
+        }
+        
         RectangleBector2Int rectangleTargetPosition = new RectangleBector2Int(target.Position);
 
         ObjectOnBattle nearestUnitBySide = _battleEngine.currentBattleSituation.FindNearestUnitByRectangleAndSide(rectangleTargetPosition, _unitsSide);
@@ -69,6 +114,12 @@ public class ReachDistanceBetweenUnitsAndObjectCondition : BasicCondition
 
         Bector2Int currentUnitPosition = new Bector2Int(unit.occypiedPoses.First());
         ObjectOnBattle target = _battleEngine.currentBattleSituation.GetObjectById(_targetObjectId);
+        
+        if (target == null)
+        {
+            return;
+        }
+        
         RectangleBector2Int rectangleTargetPosition = new RectangleBector2Int(target.Position);
         int currentDistanceToTarget = BattleEngine.GetDistanceBetweenPointAndRectangleOfPoints(currentUnitPosition, rectangleTargetPosition);
         if (currentDistanceToTarget <= _minDistance)

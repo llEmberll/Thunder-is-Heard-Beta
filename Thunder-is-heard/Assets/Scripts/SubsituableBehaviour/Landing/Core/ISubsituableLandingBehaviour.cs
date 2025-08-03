@@ -24,5 +24,9 @@ public interface ISubsituableLandingBehaviour
 
     public void OnObjectExposed(Landing conductor, ExposableInventoryItem item, Entity obj);
 
+    public void OnInventoryItemAdded(Landing conductor, InventoryItem sourceItem, InventoryCacheItem addedItem);
+
     public void Substract(Landing conductor, InventoryItem item, int number = 1);
+
+    public void Increment(Landing conductor, InventoryItem item, int number = 1);
 }

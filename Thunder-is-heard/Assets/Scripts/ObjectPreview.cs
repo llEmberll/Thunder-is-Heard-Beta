@@ -276,7 +276,7 @@ public class ObjectPreview: MonoBehaviour
         CacheItem cacheItem = objectsTable.GetById(id);
         if (cacheItem == null)
         {
-            Debug.Log("В таблице " + objectsTable.Name + " не найдено объекта с id = " + id);
+            Debug.Log("пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ " + objectsTable.Name + " пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ id = " + id);
 
             return true;
         }

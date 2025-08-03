@@ -46,6 +46,8 @@ public class Landing : ItemList, IItemConductor
         EventMaster.current.LandableUnitDefocused += OnLandableUnitDefocus;
         EventMaster.current.BattleObjectRemoved += OnObjectRemoved;
         EventMaster.current.ObjectExposed += OnObjectLanded;
+        EventMaster.current.ComponentBehaviourChanged += OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset += OnResetBehaviour;
     }
 
     public override void DisableListeners()
@@ -59,6 +61,8 @@ public class Landing : ItemList, IItemConductor
         EventMaster.current.LandableUnitDefocused -= OnLandableUnitDefocus;
         EventMaster.current.BattleObjectRemoved -= OnObjectRemoved;
         EventMaster.current.ObjectExposed -= OnObjectLanded;
+        EventMaster.current.ComponentBehaviourChanged -= OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset -= OnResetBehaviour;
     }
 
     public override void Start()
@@ -95,12 +99,12 @@ public class Landing : ItemList, IItemConductor
 
     public void InitMap()
     {
-        _map = GameObject.FindGameObjectWithTag(Tags.map).GetComponent<Map>();
+        _map = GameObjectUtils.FindComponentByTagIncludingInactive<Map>(Tags.map);
     }
 
     public void InitUnitsOnScene()
     {
-        _unitsOnScene = GameObject.FindGameObjectWithTag(Tags.unitsOnScene).GetComponent<UnitsOnFight>();
+        _unitsOnScene = GameObjectUtils.FindComponentByTagIncludingInactive<UnitsOnFight>(Tags.unitsOnScene);
     }
 
     public void OnObjectRemoved(Entity entity)
@@ -188,7 +192,7 @@ public class Landing : ItemList, IItemConductor
 
     public void InitContent()
     {
-        content = GameObjectUtils.FindChildObjectByTag(this.gameObject, Tags.landableUnits);
+        content = GameObjectUtils.FindChildObjectByTag(this.gameObject, Tags.landableUnitsContent);
     }
 
     public override void Show()
@@ -219,6 +223,7 @@ public class Landing : ItemList, IItemConductor
 
     public void ChangeBehaviour(string name = "Base")
     {
+        Debug.Log("Landing: ChangeBehaviour: " + name);
         _behaviour = SubsituableLandingFactory.GetBehaviourById(name);
         _behaviour.Init(this);
     }
@@ -262,9 +267,19 @@ public class Landing : ItemList, IItemConductor
         _behaviour.OnObjectExposed(this, item, obj);
     }
 
+    public void OnInventoryItemAdded(InventoryItem sourceItem, InventoryCacheItem addedItem)
+    {
+        _behaviour.OnInventoryItemAdded(this, sourceItem, addedItem);
+    }
+
     public void Substract(InventoryItem item, int number = 1)
     {
         _behaviour.Substract(this, item, number);
+    }
+
+    public void Increment(InventoryItem item, int number = 1)
+    {
+        _behaviour.Increment(this, item, number);
     }
 
     public LandableUnit FindItemByCoreId(string coreId)

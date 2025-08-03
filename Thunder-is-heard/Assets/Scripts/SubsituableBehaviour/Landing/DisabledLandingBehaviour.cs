@@ -1,4 +1,4 @@
-
+using UnityEngine;
 
 public class DisabledLandingBehaviour : BaseSubsituableLandingBehaviour
 {
@@ -31,6 +31,8 @@ public class DisabledLandingBehaviour : BaseSubsituableLandingBehaviour
 
     public override void StartLanding(Landing conductor, LandingData landingData)
     {
+        Debug.Log("StartLanding from DISABLED BEHAVIOUR");
+
         conductor.Show();
         conductor.ChangeBehaviour();
         conductor.StartLanding(landingData);
@@ -48,7 +50,15 @@ public class DisabledLandingBehaviour : BaseSubsituableLandingBehaviour
     {
     }
 
+    public override void OnInventoryItemAdded(Landing conductor, InventoryItem sourceItem, InventoryCacheItem addedItem)
+    {
+    }
+
     public override void Substract(Landing conductor, InventoryItem item, int number = 1)
+    {
+    }
+
+    public override void Increment(Landing conductor, InventoryItem item, int number = 1)
     {
     }
 }

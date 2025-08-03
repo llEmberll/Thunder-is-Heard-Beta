@@ -81,6 +81,7 @@ public class BaseSubsituableInventoryBehaviour : ISubsituableInventoryBehaviour
     public virtual BuildInventoryItem CreateBuild(Inventory conductor, InventoryCacheItem inventoryItemData, BuildCacheItem buildData)
     {
         string id = inventoryItemData.GetExternalId();
+        string coreId = inventoryItemData.GetCoreId();
         string name = buildData.GetName();
         ResourcesData gives = buildData.GetGives();
         int health = buildData.GetHealth();
@@ -96,6 +97,7 @@ public class BaseSubsituableInventoryBehaviour : ISubsituableInventoryBehaviour
 
         buildComponent.Init(
             id, 
+            coreId,
             name, 
             gives,
             health, 
@@ -112,6 +114,7 @@ public class BaseSubsituableInventoryBehaviour : ISubsituableInventoryBehaviour
     public virtual UnitInventoryItem CreateUnit(Inventory conductor, InventoryCacheItem inventoryItemData, UnitCacheItem unitData)
     {
         string id = inventoryItemData.GetExternalId();
+        string coreId = inventoryItemData.GetCoreId();
         string name = unitData.GetName();
         ResourcesData gives = unitData.GetGives();
         int health = unitData.GetHealth();
@@ -128,6 +131,7 @@ public class BaseSubsituableInventoryBehaviour : ISubsituableInventoryBehaviour
 
         unitComponent.Init(
             id, 
+            coreId,
             name, 
             gives, 
             health, 
@@ -145,6 +149,7 @@ public class BaseSubsituableInventoryBehaviour : ISubsituableInventoryBehaviour
     public virtual MaterialInventoryItem CreateMaterial(Inventory conductor, InventoryCacheItem inventoryItemData, MaterialCacheItem materialData)
     {
         string id = inventoryItemData.GetExternalId();
+        string coreId = inventoryItemData.GetCoreId();
         string name = materialData.GetName();
         int count = inventoryItemData.GetCount();
         string description = materialData.GetDescription();
@@ -154,7 +159,7 @@ public class BaseSubsituableInventoryBehaviour : ISubsituableInventoryBehaviour
         itemObject.name = name;
         MaterialInventoryItem materialComponent = itemObject.GetComponent<MaterialInventoryItem>();
 
-        materialComponent.Init(id, name, count, description, icon);
+        materialComponent.Init(id, coreId, name, count, description, icon);
         materialComponent.SetConductor(conductor);
         return materialComponent;
     }
@@ -215,5 +220,15 @@ public class BaseSubsituableInventoryBehaviour : ISubsituableInventoryBehaviour
         Cache.Save(inventoryItemsTable);
 
         item.UpdateCount(item._count - number);
+    }
+
+    public virtual void OnInventoryItemAdded(Inventory conductor, InventoryItem sourceItem, InventoryCacheItem addedItem)
+    {
+        sourceItem.OnInventoryItemAdded(addedItem);
+    }
+
+    public virtual void Increment(Inventory conductor, InventoryItem item, int number = 1)
+    {
+        item.Increment(number);
     }
 }

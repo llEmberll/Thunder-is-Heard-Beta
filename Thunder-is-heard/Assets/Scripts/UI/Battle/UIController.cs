@@ -25,7 +25,7 @@ public class UIController : MonoBehaviour
 
     public void InitBattleEngine()
     {
-        _battleEngine = GameObject.FindGameObjectWithTag(Tags.battleEngine).GetComponent<BattleEngine>();
+        _battleEngine = GameObjectUtils.FindComponentByTagIncludingInactive<BattleEngine>(Tags.battleEngine);
     }
 
     public void EnableListeners()

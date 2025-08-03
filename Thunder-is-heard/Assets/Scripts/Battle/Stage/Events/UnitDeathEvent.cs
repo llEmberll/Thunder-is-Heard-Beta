@@ -6,36 +6,43 @@ public class UnitDeathEvent : IScenarioEvent
     public ScenarioEventData EventData { get; private set; }
     public bool IsCompleted { get; private set; }
 
-    private UnitDeathEventData deathData;
-
     private Scenario _scenario = GameObject.FindGameObjectWithTag(Tags.scenario).GetComponent<Scenario>();
     public Scenario Scenario { get { return _scenario; } }
-
 
     public UnitDeathEvent(ScenarioEventData eventData)
     {
         EventData = eventData;
-        deathData = eventData as UnitDeathEventData;
         IsCompleted = false;
     }
 
     public IEnumerator Execute()
     {
-        if (deathData == null)
+        if (EventData == null || EventData.eventType != "UnitDeath")
         {
             IsCompleted = true;
             yield break;
         }
 
-        Unit unit = _scenario.FindUnitById(deathData.unitId);
+        // Получаем параметры из EventData
+        string unitId = EventData.GetParameter<string>("unitId");
+        bool playAnimation = EventData.GetParameter<bool>("playAnimation", true);
+
+        if (string.IsNullOrEmpty(unitId))
+        {
+            Debug.LogError("UnitDeathEvent: Missing required parameter unitId");
+            IsCompleted = true;
+            yield break;
+        }
+
+        Unit unit = _scenario.FindUnitById(unitId);
         if (unit == null)
         {
-            Debug.LogError($"UnitDeathEvent: Cannot find unit {deathData.unitId}");
+            Debug.LogError($"UnitDeathEvent: Cannot find unit {unitId}");
             IsCompleted = true;
             yield break;
         }
 
-        if (deathData.playAnimation)
+        if (playAnimation)
         {
             // Запускаем анимацию смерти
             unit.Die();

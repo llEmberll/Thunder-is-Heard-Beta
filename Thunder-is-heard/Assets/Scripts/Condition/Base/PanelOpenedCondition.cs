@@ -23,7 +23,7 @@ public class PanelOpenedCondition : BasicCondition
 
     public bool IsPanelOpened()
     {
-        GameObject panel = GameObject.FindGameObjectWithTag(_tag);
+        GameObject panel = GameObjectUtils.FindGameObjectByTagIncludingInactive(_tag);
         if (panel == null) return false;
         return panel.activeSelf;
     }

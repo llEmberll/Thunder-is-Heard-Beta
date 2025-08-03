@@ -42,6 +42,7 @@ public static class Tags
     public static string mission = "Mission";
     public static string inventoryItems = "InventoryItems";
     public static string landableUnits = "LandableUnits";
+    public static string landableUnitsContent = "LandableUnitsContent";
     public static string shopItems = "ShopItems";
     public static string contractItems = "ContractItems";
     public static string unitProductionItems = "UnitProductionItems";

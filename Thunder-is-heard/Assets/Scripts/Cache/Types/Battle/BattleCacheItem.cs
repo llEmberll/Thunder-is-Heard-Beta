@@ -42,6 +42,11 @@ public class BattleCacheItem : CacheItem
         {
             SetTurnIndex(0);
         }
+
+        if (!objFields.ContainsKey("customData"))
+        {
+            SetCustomData(new Dictionary<string, object>());
+        }
     }
 
     public string? GetMissionId()
@@ -164,6 +169,61 @@ public class BattleCacheItem : CacheItem
     public void SetTurnIndex(int value)
     {
         SetField("turnIndex", value);
+    }
+
+    public Dictionary<string, object> GetCustomData()
+    {
+        object value = GetField("customData");
+        if (value == null)
+        {
+            return new Dictionary<string, object>();
+        }
+
+        if (value is Dictionary<string, object> typedValue)
+        {
+            return typedValue;
+        }
+
+        return JsonConvert.DeserializeObject<Dictionary<string, object>>(value.ToString());
+    }
+
+    public void SetCustomData(Dictionary<string, object> value)
+    {
+        SetField("customData", value);
+    }
+
+    public void SetCustomDataValue(string key, object value)
+    {
+        Dictionary<string, object> customData = GetCustomData();
+        if (customData == null)
+        {
+            customData = new Dictionary<string, object>();
+        }
+        customData[key] = value;
+        SetCustomData(customData);
+    }
+
+    public T GetCustomDataValue<T>(string key, T defaultValue = default(T))
+    {
+        Dictionary<string, object> customData = GetCustomData();
+        if (customData.ContainsKey(key))
+        {
+            object value = customData[key];
+            if (value is T typedValue)
+            {
+                return typedValue;
+            }
+            
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(value.ToString());
+            }
+            catch
+            {
+                return defaultValue;
+            }
+        }
+        return defaultValue;
     }
 
     public override CacheItem Clone()

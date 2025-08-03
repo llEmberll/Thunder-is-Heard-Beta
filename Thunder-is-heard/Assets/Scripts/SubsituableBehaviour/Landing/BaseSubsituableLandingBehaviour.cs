@@ -54,6 +54,8 @@ public class BaseSubsituableLandingBehaviour : ISubsituableLandingBehaviour
 
     public virtual void StartLanding(Landing conductor, LandingData landingData)
     {
+        Debug.Log("StartLanding from DISABLED BEHAVIOUR");
+
         conductor._maxStaff = landingData.maxStaff;
         conductor.UpdateLandedStaff();
         conductor.UpdateStaffText();
@@ -63,7 +65,6 @@ public class BaseSubsituableLandingBehaviour : ISubsituableLandingBehaviour
         conductor._map.SetActive(landableZoneAsVectors);
         conductor._map.Display(landableZoneAsVectors);
 
-        conductor.ChangeBehaviour();
         conductor.Show();
     }
 
@@ -111,6 +112,7 @@ public class BaseSubsituableLandingBehaviour : ISubsituableLandingBehaviour
     public virtual LandableUnit CreateUnit(Landing conductor, InventoryCacheItem inventoryItemData, UnitCacheItem unitData)
     {
         string id = inventoryItemData.GetExternalId();
+        string coreId = inventoryItemData.GetCoreId();
         string name = unitData.GetName();
         int staff = unitData.GetGives().staff;
         int health = unitData.GetHealth();
@@ -126,6 +128,7 @@ public class BaseSubsituableLandingBehaviour : ISubsituableLandingBehaviour
 
         unitComponent.Init(
             id,
+            coreId,
             name,
             staff,
             health,
@@ -211,5 +214,18 @@ public class BaseSubsituableLandingBehaviour : ISubsituableLandingBehaviour
         Cache.Save(inventoryItemsTable);
 
         item.UpdateCount(item._count - number);
+    }
+
+    public virtual void OnInventoryItemAdded(Landing conductor, InventoryItem sourceItem, InventoryCacheItem addedItem)
+    {
+        if (sourceItem.Type.Contains(addedItem.GetType()) && addedItem.GetCoreId() == sourceItem.coreId)
+        {
+            Increment(conductor, sourceItem);
+        }
+    }
+
+    public virtual void Increment(Landing conductor, InventoryItem item, int number = 1)
+    {
+        item.Increment(number);
     }
 }

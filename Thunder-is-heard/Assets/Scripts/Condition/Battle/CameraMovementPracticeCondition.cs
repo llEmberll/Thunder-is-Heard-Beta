@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 
-public class CameraPracticeCondition : BasicCondition
+public class CameraMovementPracticeCondition : BasicCondition
 {
     public float _practiceDuration;
 
 
-    public CameraPracticeCondition(float practiceDuration) 
+    public CameraMovementPracticeCondition(float practiceDuration) 
     { 
         _practiceDuration = practiceDuration;
         EventMaster.current.CameraMoved += OnCameraMoved;
@@ -24,6 +23,6 @@ public class CameraPracticeCondition : BasicCondition
 
     public override bool IsComply()
     {
-        return _practiceDuration > 0;
+        return _practiceDuration <= 0;
     }
 }

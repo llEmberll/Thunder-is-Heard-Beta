@@ -63,7 +63,7 @@ public abstract class Item : UIElement
         _count = newCount;
     }
 
-    public void Increment(int number = 1)
+    public virtual void Increment(int number = 1)
     {
         UpdateCount(_count + number);
     }

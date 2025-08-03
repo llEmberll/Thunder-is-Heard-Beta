@@ -16,7 +16,7 @@ public class FocusBaseController : FocusController
 
     public override void Awake()
     {
-        builds = GameObject.FindGameObjectWithTag(Tags.buildsOnScene).GetComponent<BuildsOnBase>();
+        builds = GameObjectUtils.FindComponentByTagIncludingInactive<BuildsOnBase>(Tags.buildsOnScene);
         base.Awake();
     }
 
@@ -24,42 +24,42 @@ public class FocusBaseController : FocusController
     {
         buttonImageByTag = new Dictionary<string, Image>();
 
-        Image shopButtonImage = GameObject.FindGameObjectWithTag(Tags.toShopButton).GetComponent<Image>();
+        Image shopButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.toShopButton);
         buttonImageByTag.Add(Tags.toShopButton, shopButtonImage);
 
-        Image inventoryButtonImage = GameObject.FindGameObjectWithTag(Tags.toInventoryButton).GetComponent<Image>();
+        Image inventoryButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.toInventoryButton);
         buttonImageByTag.Add(Tags.toInventoryButton, inventoryButtonImage);
 
-        Image campanyButtonImage = GameObject.FindGameObjectWithTag(Tags.toCampaignButton).GetComponent<Image>();
+        Image campanyButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.toCampaignButton);
         buttonImageByTag.Add(Tags.toCampaignButton, campanyButtonImage);
 
-        Image battlefieldButtonImage = GameObject.FindGameObjectWithTag(Tags.toBattlefieldButton).GetComponent<Image>();
+        Image battlefieldButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.toBattlefieldButton);
         buttonImageByTag.Add(Tags.toBattlefieldButton, battlefieldButtonImage);
 
-        Image PVPButtonImage = GameObject.FindGameObjectWithTag(Tags.toPVPButton).GetComponent<Image>();
+        Image PVPButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.toPVPButton);
         buttonImageByTag.Add(Tags.toPVPButton, PVPButtonImage);
 
-        Image mailButton = GameObject.FindGameObjectWithTag(Tags.toMailButton).GetComponent<Image>();
+        Image mailButton = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.toMailButton);
         buttonImageByTag.Add(Tags.toMailButton, mailButton);
 
-        Image reportsButtonImage = GameObject.FindGameObjectWithTag(Tags.toReportsButton).GetComponent<Image>();
+        Image reportsButtonImage = GameObjectUtils.FindComponentByTagIncludingInactive<Image>(Tags.toReportsButton);
         buttonImageByTag.Add(Tags.toReportsButton, reportsButtonImage);
     }
 
     public override void InitUI()
     {
-        _shopUI = GameObject.FindGameObjectWithTag(Tags.shop).GetComponent<Shop>();
-        _inventoryUI = GameObject.FindGameObjectWithTag(Tags.inventory).GetComponent<Inventory>();
-        _contractsUI = GameObject.FindGameObjectWithTag(Tags.contracts).GetComponent<Contracts>();
-        _unitProductionsUI = GameObject.FindGameObjectWithTag(Tags.unitProductions).GetComponent<UnitProductions>();
-        _campanyUI = GameObject.FindGameObjectWithTag(Tags.campany).GetComponent<Campany>();
+        _shopUI = GameObjectUtils.FindComponentByTagIncludingInactive<Shop>(Tags.shop);
+        _inventoryUI = GameObjectUtils.FindComponentByTagIncludingInactive<Inventory>(Tags.inventory);
+        _contractsUI = GameObjectUtils.FindComponentByTagIncludingInactive<Contracts>(Tags.contracts);
+        _unitProductionsUI = GameObjectUtils.FindComponentByTagIncludingInactive<UnitProductions>(Tags.unitProductions);
+        _campanyUI = GameObjectUtils.FindComponentByTagIncludingInactive<Campany>(Tags.campany);
     }
 
     public override void InitTexts()
     {
         textByTag = new Dictionary<string, TMP_Text>();
 
-        TMP_Text baseNameText = GameObject.FindGameObjectWithTag(Tags.renameBaseButton).GetComponent<TMP_Text>();
+        TMP_Text baseNameText = GameObjectUtils.FindComponentByTagIncludingInactive<TMP_Text>(Tags.renameBaseButton);
         textByTag.Add(Tags.renameBaseButton, baseNameText);
     }
 

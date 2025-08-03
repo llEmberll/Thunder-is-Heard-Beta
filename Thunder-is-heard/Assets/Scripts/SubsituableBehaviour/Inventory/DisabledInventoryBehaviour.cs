@@ -26,7 +26,15 @@ public class DisabledInventoryBehaviour : BaseSubsituableInventoryBehaviour
     {
     }
 
+    public override void OnInventoryItemAdded(Inventory conductor, InventoryItem sourceItem, InventoryCacheItem addedItem)
+    {
+    }
+
     public override void Substract(Inventory conductor, InventoryItem item, int number = 1)
+    {
+    }
+
+    public override void Increment(Inventory conductor, InventoryItem item, int number = 1)
     {
     }
 }

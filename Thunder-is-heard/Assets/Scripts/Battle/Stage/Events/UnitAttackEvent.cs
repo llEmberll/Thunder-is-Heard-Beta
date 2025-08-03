@@ -6,36 +6,44 @@ public class UnitAttackEvent : IScenarioEvent
     public ScenarioEventData EventData { get; private set; }
     public bool IsCompleted { get; private set; }
 
-    private UnitAttackEventData attackData;
-
     private Scenario _scenario = GameObject.FindGameObjectWithTag(Tags.scenario).GetComponent<Scenario>();
     public Scenario Scenario { get { return _scenario; } }
-
 
     public UnitAttackEvent(ScenarioEventData eventData)
     {
         EventData = eventData;
-        attackData = eventData as UnitAttackEventData;
         IsCompleted = false;
     }
 
     public IEnumerator Execute()
     {
-        if (attackData == null) yield break;
+        if (EventData == null || EventData.eventType != "UnitAttack") yield break;
+
+        // Получаем параметры из EventData
+        string attackerUnitId = EventData.GetParameter<string>("attackerUnitId");
+        string targetId = EventData.GetParameter<string>("targetId");
+        bool instantKill = EventData.GetParameter<bool>("instantKill", false);
+
+        if (string.IsNullOrEmpty(attackerUnitId) || string.IsNullOrEmpty(targetId))
+        {
+            Debug.LogError($"UnitAttackEvent: Missing required parameters: attackerUnitId={attackerUnitId}, targetId={targetId}");
+            IsCompleted = true;
+            yield break;
+        }
 
         // Находим атакующего через Scenario
-        Unit attacker = _scenario.FindUnitById(attackData.attackerUnitId);
+        Unit attacker = _scenario.FindUnitById(attackerUnitId);
         
         // Находим цель (может быть Unit или Build)
-        Entity target = _scenario.FindUnitById(attackData.targetId);
+        Entity target = _scenario.FindUnitById(targetId);
         if (target == null)
         {
-            target = _scenario.FindBuildById(attackData.targetId);
+            target = _scenario.FindBuildById(targetId);
         }
 
         if (attacker == null || target == null)
         {
-            Debug.LogError($"UnitAttackEvent: Cannot find attacker ({attackData.attackerUnitId}) or target ({attackData.targetId})");
+            Debug.LogError($"UnitAttackEvent: Cannot find attacker ({attackerUnitId}) or target ({targetId})");
             IsCompleted = true;
             yield break;
         }
@@ -47,7 +55,7 @@ public class UnitAttackEvent : IScenarioEvent
         yield return new WaitForSeconds(1f);
 
         // Если нужно мгновенное убийство
-        if (attackData.instantKill)
+        if (instantKill)
         {
             BattleEngine.RemoveObjectFromBattle(_scenario._fightDirector._battleEngine.currentBattleSituation, target.ChildId);
 

@@ -142,4 +142,14 @@ public class Inventory : ItemList, IItemConductor
             }
         }
     }
+
+    public void OnInventoryItemAdded(InventoryItem sourceItem, InventoryCacheItem addedItem)
+    {
+        _behaviour.OnInventoryItemAdded(this, sourceItem, addedItem);
+    }
+
+    public void Increment(InventoryItem item, int number = 1)
+    {
+        _behaviour.Increment(this, item, number);
+    }
 }
