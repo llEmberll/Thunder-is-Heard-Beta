@@ -185,6 +185,12 @@ public class FightDirector : MonoBehaviour
     {
         Debug.Log("FightDirector: ChangeCurrentStage");
 
+        // Сбрасываем фокус при обновлении сценария
+        EventMaster.current.OnClearObjectFocus();
+
+        // Восстанавливаем стандартные поведения компонентов
+        EventMaster.current.OnResetComponentsBehaviour();
+
         StageData serializedStage = StageFactory.SerializeStage(stage);
         _battleData.SetCurrentStage(serializedStage);
         SaveBattleData();
@@ -194,7 +200,7 @@ public class FightDirector : MonoBehaviour
         {
             foreach (var behaviour in stage.BehaviourIdByComponentName)
             {
-                Debug.Log("FightDirector: ChangeComponentBehaviour: " + behaviour.Key + " " + behaviour.Value);
+                Debug.Log("[FightDirector]: component " + behaviour.Key + " - " +  behaviour.Value);
 
                 EventMaster.current.OnChangeComponentBehaviour(behaviour.Key, behaviour.Value);
             }
@@ -305,12 +311,6 @@ public class FightDirector : MonoBehaviour
 
         Debug.Log("Данные синхронизированы");
 
-        // Сбрасываем фокус при обновлении сценария
-        EventMaster.current.OnClearObjectFocus();
-
-        // Восстанавливаем стандартные поведения компонентов
-        EventMaster.current.OnResetComponentsBehaviour();
-
         EventMaster.current.OnNextTurn(_battleData.GetTurn());
         _turnController.OnNextTurn(_battleData.GetTurn());
     }
@@ -322,7 +322,7 @@ public class FightDirector : MonoBehaviour
             return;
         }
 
-        if (Scenario.CurrentStage.IsFailed() || Scenario.CurrentStage.IsPassed())
+        if ((Scenario.CurrentStage.IsRealTimeConditionForFail && Scenario.CurrentStage.IsFailed()) || (Scenario.CurrentStage.IsRealTimeConditionForPass && Scenario.CurrentStage.IsPassed()))
         {
             Debug.Log("Next turn by Update!");
 
@@ -337,10 +337,8 @@ public class FightDirector : MonoBehaviour
         Debug.Log("Начинаем новый ход");
 
         UpdateEffects();
-        Debug.Log("Обновляем эффекты");
 
         UpdateSkills();
-        Debug.Log("Обновляем умения");
 
         ChangeSideTurn();
 
@@ -388,7 +386,7 @@ public class FightDirector : MonoBehaviour
                     target = _buildsOnFightManager.FindObjectByChildId(turnData._targetIdOnBattle);
                 }
 
-                Debug.Log("Начинаем атаку на " + target.name);
+                Debug.Log("Начинаем атаку на " + target.side + " "  + target.name);
 
                 List<UnitOnBattle> attackersData = _battleEngine.currentBattleSituation.GetAttackersByTargetId(target.ChildId).ToArray().OfType<UnitOnBattle>().ToList();
 
@@ -415,7 +413,6 @@ public class FightDirector : MonoBehaviour
                         attacker.Attack(target);
                     }
 
-                    Debug.Log("Атака завершена");
                     BattleEngine.OnAttackTarget(_battleEngine.currentBattleSituation, target, damage);
 
                     target.GetDamage(damage);
@@ -433,6 +430,7 @@ public class FightDirector : MonoBehaviour
         unitCurrentCell.Free();
 
         unit.center = newOccypation.position;
+        unit.SetOccypation(new List<Vector2Int>() { newOccypation.position });
         newOccypation.Occupy();
 
         UpdateUnitPositionInCache(unit);

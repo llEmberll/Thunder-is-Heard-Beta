@@ -11,7 +11,7 @@ public class BaseMap : Map
 
     public void Start()
     {
-        CreateTrainingMission();
+        //CreateTrainingMission();
     }
 
     public void CreateTutorialOnBase()
@@ -3375,13 +3375,13 @@ public class BaseMap : Map
 
         // ИИ этапа 4
         AISettings AISettingsForEmpireSideInStage4 = new AISettings(
-            "Attacking", тут вынужденная атака
+            "Suicidal",
             Sides.empire,
             null,
             null
             );
         AISettings AISettingsForNeutralSideInStage4 = new AISettings(
-            "Attacking",
+            "Suicidal",
             Sides.neutral,
             null,
             null
@@ -3428,13 +3428,13 @@ public class BaseMap : Map
 
         // ИИ этапа 5
         AISettings AISettingsForEmpireSideInStage5 = new AISettings(
-            "Attacking",
+            "Suicidal",
             Sides.empire,
             null,
             null
             );
         AISettings AISettingsForNeutralSideInStage5 = new AISettings(
-            "Attacking",
+            "Suicidal",
             Sides.neutral,
             null,
             null
@@ -3461,13 +3461,13 @@ public class BaseMap : Map
 
         // ИИ этапа 6
         AISettings AISettingsForEmpireSideInStage6 = new AISettings(
-            "Attacking",
+            "Suicidal",
             Sides.empire,
             null,
             null
             );
         AISettings AISettingsForNeutralSideInStage6 = new AISettings(
-            "Attacking",
+            "Suicidal",
             Sides.neutral,
             null,
             null
@@ -3859,6 +3859,19 @@ public class BaseMap : Map
         ConditionData conditionForPassStage10 = new ConditionData(type: "AlwaysTrue", null);
 
         ConditionData conditionForFailStage10 = new ConditionData(type: "AlwaysFalse", null);
+
+        AISettings AISettingsForEmpireSideInStage10 = new AISettings(
+            "Suicidal",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage10 = new AISettings(
+            "Suicidal",
+            Sides.neutral,
+            null,
+            null
+            );
         
         // Этап 11 - Дружественное подкрепление
         UnitOnBattleSpawnData[] newUnitsForStage11 = new UnitOnBattleSpawnData[]
@@ -3912,13 +3925,13 @@ public class BaseMap : Map
 
         // ИИ этапа 11
         AISettings AISettingsForEmpireSideInStage11 = new AISettings(
-            "Attacking",
+            "Suicidal",
             Sides.empire,
             null,
             null
             );
         AISettings AISettingsForNeutralSideInStage11 = new AISettings(
-            "Attacking",
+            "Suicidal",
             Sides.neutral,
             null,
             null
@@ -4016,6 +4029,20 @@ public class BaseMap : Map
 
         ConditionData conditionForFailStage12 = new ConditionData(type: "AlwaysFalse", null);
 
+        // ИИ этапа 12
+        AISettings AISettingsForEmpireSideInStage12 = new AISettings(
+            "Suicidal",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage12 = new AISettings(
+            "Suicidal",
+            Sides.neutral,
+            null,
+            null
+            );
+
         // Этап 13 - Помощь танкистки(спавн юнитов)
         UnitOnBattleSpawnData[] newUnitsForStage13 = new UnitOnBattleSpawnData[]
         {
@@ -4100,6 +4127,20 @@ public class BaseMap : Map
 
         ConditionData conditionForFailStage13 = new ConditionData(type: "AlwaysFalse", null);
 
+        // ИИ этапа 13
+        AISettings AISettingsForEmpireSideInStage13 = new AISettings(
+            "Suicidal",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage13 = new AISettings(
+            "Suicidal",
+            Sides.neutral,
+            null,
+            null
+            );
+
 
         // Этап 14 - Помощь танкистки(уничтожение врага)
 
@@ -4139,13 +4180,13 @@ public class BaseMap : Map
 
         // ИИ этапа 14
         AISettings AISettingsForEmpireSideInStage14 = new AISettings(
-            "Attacking",
+            "Suicidal",
             Sides.empire,
             null,
             null
             );
         AISettings AISettingsForNeutralSideInStage14 = new AISettings(
-            "Attacking",
+            "Suicidal",
             Sides.neutral,
             null,
             null
@@ -4286,6 +4327,19 @@ public class BaseMap : Map
 
         ConditionData conditionForFailStage15 = new ConditionData(type: "AlwaysFalse", null);
 
+        AISettings AISettingsForEmpireSideInStage15 = new AISettings(
+            "Suicidal",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage15 = new AISettings(
+            "Suicidal",
+            Sides.neutral,
+            null,
+            null
+            );
+
 
         // Этап 16 - в бой
         Replic[] dialogueForStage16 = new Replic[]
@@ -4306,13 +4360,13 @@ public class BaseMap : Map
 
         // ИИ этапа 16
         AISettings AISettingsForEmpireSideInStage16 = new AISettings(
-            "Attacking",
+            "Suicidal",
             Sides.empire,
             null,
             null
             );
         AISettings AISettingsForNeutralSideInStage16 = new AISettings(
-            "Attacking",
+            "Suicidal",
             Sides.neutral,
             null,
             null
@@ -4345,6 +4399,20 @@ public class BaseMap : Map
                 ),
         };
 
+        // ИИ этапа 17
+        AISettings AISettingsForEmpireSideInStage17 = new AISettings(
+            "Suicidal",
+            Sides.empire,
+            null,
+            null
+            );
+        AISettings AISettingsForNeutralSideInStage17 = new AISettings(
+            "Suicidal",
+            Sides.neutral,
+            null,
+            null
+            );
+
         // Условие для завершения боя
         ConditionData conditionForPassStage17 = new ConditionData(type: "AlwaysTrue", null);
 
@@ -4359,7 +4427,7 @@ public class BaseMap : Map
             stageReplicsOnStart: dialogueForStage17,
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
-            stageAISettings: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage17, AISettingsForNeutralSideInStage17 },
             stageConditionsForFail: conditionForFailStage17,
             stageConditionsForPass: conditionForPassStage17,
             stageStageOnPass: null,
@@ -4399,7 +4467,7 @@ public class BaseMap : Map
             stageReplicsOnStart: dialogueForStage15,
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
-            stageAISettings: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage15, AISettingsForNeutralSideInStage15 },
             stageConditionsForFail: conditionForFailStage15,
             stageConditionsForPass: conditionForPassStage15,
             stageStageOnPass: stage16,
@@ -4439,7 +4507,7 @@ public class BaseMap : Map
             stageReplicsOnStart: null,
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
-            stageAISettings: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage13, AISettingsForNeutralSideInStage13 },
             stageConditionsForFail: conditionForFailStage13,
             stageConditionsForPass: conditionForPassStage13,
             stageStageOnPass: stage14,
@@ -4459,7 +4527,7 @@ public class BaseMap : Map
             stageReplicsOnStart: null,
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
-            stageAISettings: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage12, AISettingsForNeutralSideInStage12 },
             stageConditionsForFail: conditionForFailStage12,
             stageConditionsForPass: conditionForPassStage12,
             stageStageOnPass: stage13,
@@ -4499,7 +4567,7 @@ public class BaseMap : Map
             stageReplicsOnStart: dialogueForStage10,
             stageReplicsOnPass: null,
             stageReplicsOnFail: null,
-            stageAISettings: null,
+            stageAISettings: new AISettings[] { AISettingsForEmpireSideInStage10, AISettingsForNeutralSideInStage10 },
             stageConditionsForFail: conditionForFailStage10,
             stageConditionsForPass: conditionForPassStage10,
             stageStageOnPass: stage11,

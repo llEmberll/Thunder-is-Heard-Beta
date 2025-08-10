@@ -1,3 +1,5 @@
+using UnityEngine;
+
 
 public class BaseSubsituableFightOptionsBehaviour : ISubsituableFightOptionsBehaviour
 {
@@ -38,6 +40,8 @@ public class BaseSubsituableFightOptionsBehaviour : ISubsituableFightOptionsBeha
 
     public virtual void OnPressPassButton(FightPanel conductor)
     {
+        Debug.Log("Base fight panel behaviour: press on PASS");
+
         EventMaster.current.OnPassTurn();
     }
 }

@@ -79,9 +79,9 @@ public abstract class AbstractAI : AIInterface
     public virtual TurnData GetBestAttackOnNextTurn(BattleSituation battleSituation, Dictionary<TurnData, BattleSituation> movements)
     {
         TurnData bestMoveWithAttackOnNextTurn = null;
-        int greaterDamageByAttackOnNextTurn = 0; /////Вычислить ход с наибольшим исходящим уроном
-        int incomingDamage = int.MaxValue; /////Вычислить ход с наименьшим входящим уроном
-        int distanceToEnemy = int.MaxValue; ////Вычислить ход с ближайшим расстоянием от врага
+        int greaterDamageByAttackOnNextTurn = 0; /////пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        int incomingDamage = int.MaxValue; /////пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        int distanceToEnemy = int.MaxValue; ////пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
         foreach (var keyValuePair in movements)
         {
@@ -179,5 +179,28 @@ public abstract class AbstractAI : AIInterface
         if (bestMoveWithAttackOnNextTurn != null) return bestMoveWithAttackOnNextTurn;
 
         return GetMovementWithFastestApproachToAttack(battleSituation, movements);
+    }
+
+    /// <summary>
+    /// РџРѕР»СѓС‡Р°РµС‚ Р°С‚Р°РєРё С‚РѕР»СЊРєРѕ РїРѕ СЋРЅРёС‚Р°Рј, РёСЃРєР»СЋС‡Р°СЏ Р·РґР°РЅРёСЏ
+    /// </summary>
+    protected Dictionary<TurnData, BattleSituation> GetUnitOnlyAttackingSequels(BattleSituation battleSituation)
+    {
+        Dictionary<TurnData, BattleSituation> allAttacks = battleSituation.GetAllAttackingSequels();
+        Dictionary<TurnData, BattleSituation> unitOnlyAttacks = new Dictionary<TurnData, BattleSituation>();
+
+        foreach (var attack in allAttacks)
+        {
+            string targetId = attack.Key._targetIdOnBattle;
+            
+            // РџСЂРѕРІРµСЂСЏРµРј, СЏРІР»СЏРµС‚СЃСЏ Р»Рё С†РµР»СЊ СЋРЅРёС‚РѕРј (Р° РЅРµ Р·РґР°РЅРёРµРј)
+            UnitOnBattle targetUnit = battleSituation.GetUnitById(targetId);
+            if (targetUnit != null)
+            {
+                unitOnlyAttacks.Add(attack.Key, attack.Value);
+            }
+        }
+
+        return unitOnlyAttacks;
     }
 }

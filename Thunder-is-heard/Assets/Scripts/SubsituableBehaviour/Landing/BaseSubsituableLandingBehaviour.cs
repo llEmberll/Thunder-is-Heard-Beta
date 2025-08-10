@@ -226,6 +226,6 @@ public class BaseSubsituableLandingBehaviour : ISubsituableLandingBehaviour
 
     public virtual void Increment(Landing conductor, InventoryItem item, int number = 1)
     {
-        item.Increment(number);
+        item.UpdateCount(item._count + number);
     }
 }

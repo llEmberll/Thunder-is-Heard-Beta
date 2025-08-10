@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -26,5 +24,10 @@ public class DestroyObjectsCondition : BasicCondition
         }
 
         return true;
+    }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return false;
     }
 }

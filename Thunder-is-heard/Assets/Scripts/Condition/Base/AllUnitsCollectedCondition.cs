@@ -16,7 +16,7 @@ public class AllUnitsCollectedCondition : BasicCondition
 
         collected = IsAllUnitsCollected();
 
-        if (!collected)
+        if (!collected && _isActive)
         {
             EnableListeners();
         }
@@ -54,14 +54,44 @@ public class AllUnitsCollectedCondition : BasicCondition
         DisableListeners();
     }
 
+    protected override void OnActivate()
+    {
+        // При активации проверяем текущее состояние
+        if (firstCheck)
+        {
+            FirstComplyCheck();
+        }
+        else if (!collected)
+        {
+            // Если уже проверяли и юниты не собраны, подписываемся на события
+            EnableListeners();
+        }
+    }
+    
+    protected override void OnDeactivate()
+    {
+        DisableListeners();
+    }
+    
+    protected override void OnReset()
+    {
+        firstCheck = true;
+        collected = false;
+        DisableListeners();
+    }
 
     public override bool IsComply()
     {
-        if (firstCheck)
+        if (firstCheck && _isActive)
         {
             FirstComplyCheck();
         }
 
         return collected;
+    }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return true;
     }
 }

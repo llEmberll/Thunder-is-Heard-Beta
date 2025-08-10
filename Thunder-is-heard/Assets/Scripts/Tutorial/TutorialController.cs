@@ -19,11 +19,11 @@ public class TutorialController : MonoBehaviour
     public void Start()
     {
         // TODO ВЕРНУТЬ
-        //if (!IsFightTutorialPassed())
-        //{
-        //    LoadTutorialMission();
-        //    return;
-        //}
+        if (!IsFightTutorialPassed())
+        {
+            LoadTutorialMission();
+            return;
+        }
 
         if (_instance != null)
         {

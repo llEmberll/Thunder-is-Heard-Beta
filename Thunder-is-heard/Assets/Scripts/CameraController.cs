@@ -111,7 +111,6 @@ public class CameraController : MonoBehaviour
 
     public void SetSoftFocusOnPoint(Vector2Int point, bool lockCamera)
     {
-        Debug.Log("Set focus on " + point);
         focus = point;
         haveFocus = true;
         _isMovable = !lockCamera;
@@ -139,12 +138,10 @@ public class CameraController : MonoBehaviour
         direction.Normalize();
         cameraPosition += direction * Vector3.Distance(transform.position, focusVector3) * moveToFocusSpeed * mainCamera.orthographicSize * Time.deltaTime;
 
-        Debug.Log("Move calculated: " + cameraPosition);
 
         // Move camera to target position
         transform.position = Vector3.Lerp(transform.position, cameraPosition, 0.030f);
 
-        Debug.Log("Camera moved");
 
         // Отправляем событие о движении камеры при фокусировке
         EventMaster.current.OnCameraMoved();
@@ -190,7 +187,6 @@ public class CameraController : MonoBehaviour
     {
         if (haveFocus)
         {
-            Debug.Log("Update: focus true");
             SoftMoveOnFocus();
             return;
         }

@@ -18,4 +18,9 @@ public class DestroyAllEnemiesCondition : BasicCondition
 
         return true;
     }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return false;
+    }
 }

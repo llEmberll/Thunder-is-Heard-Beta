@@ -34,6 +34,11 @@ public class LandableUnit: ExposableInventoryItem
 
     public override void OnInventoryItemAdded(InventoryCacheItem item)
     {
+        Debug.Log($"[OnInventoryItemAdded] InventoryCacheItem: {(item == null ? "NULL" : "NOT NULL")}");
+        Debug.Log($"[OnInventoryItemAdded] conductor: {(conductor == null ? "NULL" : "NOT NULL")}");
+
+        // ����� �� ��� ���� ��-�� ���� ��� Landing � ���� ������ ��������?
+
         conductor.OnInventoryItemAdded(this, item);
     }
 

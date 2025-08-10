@@ -19,7 +19,7 @@ public class ContractFinishedCondition: BasicCondition
 
         finished = IsTargetContractFinish();
 
-        if (!finished)
+        if (!finished && _isActive)
         {
             EnableListeners();
         }
@@ -56,14 +56,44 @@ public class ContractFinishedCondition: BasicCondition
         DisableListeners();
     }
 
+    protected override void OnActivate()
+    {
+        // При активации проверяем текущее состояние
+        if (firstCheck)
+        {
+            FirstComplyCheck();
+        }
+        else if (!finished)
+        {
+            // Если уже проверяли и контракт не завершен, подписываемся на события
+            EnableListeners();
+        }
+    }
+    
+    protected override void OnDeactivate()
+    {
+        DisableListeners();
+    }
+    
+    protected override void OnReset()
+    {
+        firstCheck = true;
+        finished = false;
+        DisableListeners();
+    }
 
     public override bool IsComply()
     {
-        if (firstCheck)
+        if (firstCheck && _isActive)
         {
             FirstComplyCheck();
         }
 
         return finished;
+    }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return true;
     }
 }

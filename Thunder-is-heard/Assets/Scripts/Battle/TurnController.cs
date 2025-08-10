@@ -10,6 +10,8 @@ public class TurnController : MonoBehaviour
     public string[] _controlSides = new string[] { Sides.federation };
     public bool isAllowedToControl = false;
 
+    public bool isLanding = false;
+
     public Unit _activeUnit = null;
     public Entity _target = null;
     public TurnData _turnData;
@@ -22,18 +24,16 @@ public class TurnController : MonoBehaviour
 
     public void EnableStartListeners()
     {
+        EventMaster.current.StartLanding += OnStartLanding;
         EventMaster.current.FightIsStarted += OnStartFight;
-        EventMaster.current.FightIsContinued += OnStartFight;
-
-        EventMaster.current.PassedTurn += Pass;
+        EventMaster.current.FightIsContinued += OnContinueFight;
     }
 
     public void DisableStartListeners()
     {
+        EventMaster.current.StartLanding -= OnStartLanding;
         EventMaster.current.FightIsStarted -= OnStartFight;
-        EventMaster.current.FightIsContinued -= OnStartFight;
-
-        EventMaster.current.PassedTurn -= Pass;
+        EventMaster.current.FightIsContinued -= OnContinueFight;
     }
 
     public void EnableObjectClickListeners()
@@ -41,7 +41,7 @@ public class TurnController : MonoBehaviour
         EventMaster.current.ClickedOnObject += OnObjectClick;
     }
 
-    public void DisableObjectClickListener()
+    public void DisableObjectClickListeners()
     {
         EventMaster.current.ClickedOnObject -= OnObjectClick;
     }
@@ -85,15 +85,38 @@ public class TurnController : MonoBehaviour
         InitBattleEngine();
         InitMapProcessor();
 
+        EnablePassListeners();
         EnableStartListeners();
         ClearTurnData();
     }
 
+    public void EnablePassListeners()
+    {
+        EventMaster.current.PassedTurn += Pass;
+    }
+
+    public void DisablePassListeners()
+    {
+        EventMaster.current.PassedTurn -= Pass;
+    }
+
     public void OnStartFight()
     {
-        DisableStartListeners();
         EnableObjectClickListeners();
         EnableBuildRouteListeners();
+    }
+
+    public void OnStartLanding(LandingData landingData)
+    {
+        DisableObjectClickListeners();
+        DisableBuildRouteListeners();
+        isLanding = true;
+    }
+
+    public void OnContinueFight()
+    {
+        OnStartFight();
+        isLanding = false;
     }
 
     public void OnNextTurn(string side)
@@ -127,8 +150,10 @@ public class TurnController : MonoBehaviour
 
     public void OnObjectClick(Entity obj)
     {
-        if (isAllowedToControl == false) return;
-        if (obj is Obstacle) return; // Нельзя взаимодействовать с препятствиями в бою
+        Debug.Log("[TurnController]: OnObjectClick");
+
+        if (isAllowedToControl == false || isLanding) return;
+        if (obj is Obstacle) return; // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ
 
         if (obj.side == Sides.neutral)
         {
@@ -186,6 +211,8 @@ public class TurnController : MonoBehaviour
 
     public void OnFriendlyUnitClick(Unit unit)
     {
+        Debug.Log("[TurnController]: OnFriendlyUnitClick");
+
         if (_turnData._activeUnitIdOnBattle == null || _turnData._activeUnitIdOnBattle != unit.ChildId)
         {
             SetActiveUnit(unit);
@@ -225,7 +252,7 @@ public class TurnController : MonoBehaviour
         {
             if (_turnData._route.Last() == cellPosition) return;
 
-            // Если клетка присоединена к маршруту, обрезаем маршрут
+            // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             CutRouteToCell(cell);
         }
         else
@@ -237,7 +264,7 @@ public class TurnController : MonoBehaviour
             }
             else
             {
-                // Автоматическое построение маршрута от активного юнита до выделенной клетки
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
                 RebuildRouteToCell(cell);
             }
         }
@@ -300,6 +327,8 @@ public class TurnController : MonoBehaviour
 
     public void SetActiveUnit(Unit unit)
     {
+        Debug.Log("[TurnController]: set active unit");
+
         _activeUnit = unit;
         _turnData._activeUnitIdOnBattle = unit.ChildId;
         _turnData._route = new List<Bector2Int>();
@@ -309,6 +338,8 @@ public class TurnController : MonoBehaviour
 
     public void ClearActiveUnit()
     {
+        Debug.Log("[TurnController]: ClearActiveUnit");
+
         _activeUnit = null;
         _turnData._activeUnitIdOnBattle = null;
         ClearRoute();
@@ -335,6 +366,8 @@ public class TurnController : MonoBehaviour
 
     public void Pass()
     {
+        Debug.Log("TurnController: Pass");
+
         ClearTurnData();
         Execute();
     }

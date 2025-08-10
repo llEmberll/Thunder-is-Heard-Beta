@@ -32,4 +32,9 @@ public class ReachToAttackObjectCondition : BasicCondition
 
         return false;
     }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return false;
+    }
 }

@@ -146,8 +146,27 @@ public class BasicTutorialStage: ITutorialStage
 
     public void OnStart()
     {
+        // Активируем условия только при старте этапа
+        ActivateConditions();
+        
         PrepareStartSequence();
         ProcessNextStartAction();
+    }
+    
+    private void ActivateConditions()
+    {
+        if (_conditionsForPass != null)
+        {
+            _conditionsForPass.Activate();
+        }
+    }
+    
+    private void DeactivateConditions()
+    {
+        if (_conditionsForPass != null)
+        {
+            _conditionsForPass.Deactivate();
+        }
     }
 
     protected virtual void PrepareStartSequence()
@@ -234,8 +253,9 @@ public class BasicTutorialStage: ITutorialStage
 
     public void OnFinish()
     {
+        DeactivateConditions();
         EventMaster.current.OnUpdateStage();
-
+        
     }
 
     public bool IsPassed()

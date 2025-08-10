@@ -265,7 +265,9 @@ public class ObjectProcessor : MonoBehaviour
             occypation: new List<Vector2Int>() { unit.position.First().ToVector2Int() },
             unit.health,
             unit.side,
-            unit.skillsData
+            unit.skillsData,
+            unit.idOnBattle,
+            unit.maxHealth
             );
     }
 
@@ -296,7 +298,9 @@ public class ObjectProcessor : MonoBehaviour
             size: currentCoreBuildData.GetSize().ToVector2Int(),
             occypation: Bector2Int.MassiveToVector2Int(build.position).ToList(),
             build.health,
-            build.side
+            build.side,
+            idOnBattle: build.idOnBattle,
+            maxHealth: build.maxHealth
             );
     }
 
@@ -310,7 +314,9 @@ public class ObjectProcessor : MonoBehaviour
         List<Vector2Int> occypation, 
         int? currentHealth = null, 
         string side = null,
-        SkillOnBattle[] skillDatas = null
+        SkillOnBattle[] skillDatas = null,
+        string idOnBattle = null,
+        int? maxHealth = null
         )
     {
         if (battleId == null) return;
@@ -323,8 +329,8 @@ public class ObjectProcessor : MonoBehaviour
             BuildCacheTable coreBuildDatas = Cache.LoadByType<BuildCacheTable>();
             CacheItem coreItemData = coreBuildDatas.GetById(coreId);
             BuildCacheItem coreBuildData = new BuildCacheItem(coreItemData.Fields);
-            int maxHealth = coreBuildData.GetHealth();
-            if (currentHealth == null) currentHealth = maxHealth;
+            int maxHealthValue = maxHealth.HasValue ? maxHealth.Value : coreBuildData.GetHealth();
+            if (currentHealth == null) currentHealth = maxHealthValue;
             int damage = coreBuildData.GetDamage();
             int distance = coreBuildData.GetDistance();
             string doctrine = coreBuildData.GetDoctrine();
@@ -336,11 +342,13 @@ public class ObjectProcessor : MonoBehaviour
                 coreId, 
                 Bector2Int.GetVector2IntListAsBector(occypation), 
                 (int)model.rotation.eulerAngles.y, 
-                maxHealth,
+                maxHealthValue,
                 currentHealth.Value,
                 damage,
                 distance,
-                side
+                side,
+                WorkStatuses.idle,
+                idOnBattle
                 );
 
             entity = CreateObject(coreId, type, model, objName, size, occypation);
@@ -353,7 +361,7 @@ public class ObjectProcessor : MonoBehaviour
                 objName,
                 size,
                 occypation.ToArray(),
-                maxHealth,
+                maxHealthValue,
                 currentHealth.Value,
                 damage,
                 distance,
@@ -370,8 +378,8 @@ public class ObjectProcessor : MonoBehaviour
             UnitCacheTable coreUnitDatas = Cache.LoadByType<UnitCacheTable>();
             CacheItem coreItemData = coreUnitDatas.GetById(coreId);
             UnitCacheItem coreUnitData = new UnitCacheItem(coreItemData.Fields);
-            int maxHealth = coreUnitData.GetHealth();
-            if (currentHealth == null) currentHealth = maxHealth;
+            int maxHealthValue = maxHealth.HasValue ? maxHealth.Value : coreUnitData.GetHealth();
+            if (currentHealth == null) currentHealth = maxHealthValue;
             int damage = coreUnitData.GetDamage();
             int distance = coreUnitData.GetDistance();
             int mobility = coreUnitData.GetMobility();
@@ -384,12 +392,14 @@ public class ObjectProcessor : MonoBehaviour
                 coreId, 
                 new Bector2Int(occypation.First()), 
                 (int)model.rotation.eulerAngles.y, 
-                maxHealth,
+                maxHealthValue,
                 currentHealth.Value,
                 damage,
                 distance,
                 mobility,
-                side
+                side,
+                skillDatas,
+                idOnBattle
                 );
 
             entity = CreateObject(coreId, type, model, objName, size, occypation);
@@ -412,7 +422,7 @@ public class ObjectProcessor : MonoBehaviour
                 objName,
                 size,
                 occypation.ToArray(),
-                maxHealth,
+                maxHealthValue,
                 currentHealth.Value,
                 damage,
                 distance,
@@ -872,7 +882,8 @@ public class ObjectProcessor : MonoBehaviour
         int damage,
         int distance,
         string side = null, 
-        string workStatus = null
+        string workStatus = null,
+        string idOnBattle = null
         )
     {
         if (side == null) side = Sides.federation;
@@ -905,7 +916,8 @@ public class ObjectProcessor : MonoBehaviour
             distance,
             doctrine,
             side,
-            workStatus
+            workStatus,
+            idOnBattle
             );
         updatedBattleBuilds[battleBuilds.Length] = newBuild;
 
@@ -927,7 +939,8 @@ public class ObjectProcessor : MonoBehaviour
         int distance,
         int mobility,
         string side = null,
-        SkillOnBattle[] skillsData = null
+        SkillOnBattle[] skillsData = null,
+        string idOnBattle = null
         )
     {
         if (side == null) side = Sides.federation;
@@ -962,7 +975,8 @@ public class ObjectProcessor : MonoBehaviour
             unitType,
             doctrine,
             side,
-            unitSkillsData: skillsData
+            unitSkillsData: skillsData,
+            unitIdOnBattle: idOnBattle
             );
         updatedBattleUnits[battleUnits.Length] = newUnit;
 

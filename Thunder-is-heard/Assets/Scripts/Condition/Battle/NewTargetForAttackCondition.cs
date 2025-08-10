@@ -12,7 +12,7 @@ public class NewTargetForAttackCondition : BasicCondition
     public NewTargetForAttackCondition(string targetSide)
     {
         _targetSide = targetSide;
-        EnableListeners();
+        // Убираем EnableListeners() из конструктора - теперь это будет в OnActivate
     }
 
     public void EnableListeners()
@@ -34,8 +34,30 @@ public class NewTargetForAttackCondition : BasicCondition
         }
     }
 
+    protected override void OnActivate()
+    {
+        // Подписываемся на события при активации
+        EnableListeners();
+    }
+    
+    protected override void OnDeactivate()
+    {
+        DisableListeners();
+    }
+    
+    protected override void OnReset()
+    {
+        _isComplete = false;
+        DisableListeners();
+    }
+
     public override bool IsComply()
     {
         return _isComplete;
+    }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return false;
     }
 }

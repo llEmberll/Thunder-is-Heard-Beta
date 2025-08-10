@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Newtonsoft.Json.Linq;
 
 public abstract class FocusController : MonoBehaviour
 {
@@ -12,7 +15,9 @@ public abstract class FocusController : MonoBehaviour
     public int _maxMaterialColorLevel = 255;
     public int _maxChangeFromOriginalColorLevel = 145;
     public int _current_ChangeFromOriginalColorLevel = 0;
+    // Словарь для хранения оригинальных уровней яркости материалов по уникальным ключам (InstanceID_имяМатериала)
     public Dictionary<string, int> _defaultMaterialColorLevelByName = new Dictionary<string, int>();
+    // Словарь для хранения материалов по уникальным ключам (InstanceID_имяМатериала)
     public Dictionary<string, Material> _targetObjectMaterials = null;
 
 
@@ -84,24 +89,87 @@ public abstract class FocusController : MonoBehaviour
 
     public virtual void OnFocus(FocusData focusData)
     {
-        string targetType = focusData.Type;
-        switch (targetType)
+        if (focusData == null) return;
+        
+        Debug.Log($"[FocusController] OnFocus вызван с типом: {focusData.Type}");
+        Debug.Log($"[FocusController] FocusData.Data тип: {focusData.Data?.GetType()}");
+        
+        switch (focusData.Type)
         {
-            case "Build":
-                OnBuildFocus(focusData.Data);
-                return;
-            case "Button":
-                OnButtonFocus(focusData.Data);
-                return;
-            case "UIItem":
-                OnUIItemFocus(focusData.Data);
-                return;
-            case "Text":
-                OnTextFocus(focusData.Data);
-                return;
             case "Area":
                 OnAreaFocus(focusData.Data);
-                return;
+                break;
+            case "Build":
+                OnBuildFocus(focusData.Data);
+                break;
+            case "Button":
+                OnButtonFocus(focusData.Data);
+                break;
+            case "UIItem":
+                OnUIItemFocus(focusData.Data);
+                break;
+            case "Text":
+                OnTextFocus(focusData.Data);
+                break;
+            default:
+                Debug.LogWarning($"[FocusController] Неизвестный тип фокуса: {focusData.Type}");
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Рекурсивно преобразует JObject в Dictionary<string, object>
+    /// </summary>
+    private Dictionary<string, object> ConvertJObjectToDictionary(Newtonsoft.Json.Linq.JObject jObject)
+    {
+        var result = new Dictionary<string, object>();
+        
+        foreach (var property in jObject.Properties())
+        {
+            var value = property.Value;
+            result[property.Name] = ConvertJTokenToObject(value);
+        }
+        
+        return result;
+    }
+    
+    /// <summary>
+    /// Преобразует JToken в объект, рекурсивно обрабатывая вложенные структуры
+    /// </summary>
+    private object ConvertJTokenToObject(Newtonsoft.Json.Linq.JToken token)
+    {
+        if (token == null) return null;
+        
+        switch (token.Type)
+        {
+            case Newtonsoft.Json.Linq.JTokenType.Object:
+                return ConvertJObjectToDictionary((Newtonsoft.Json.Linq.JObject)token);
+                
+            case Newtonsoft.Json.Linq.JTokenType.Array:
+                var array = new List<object>();
+                foreach (var item in token)
+                {
+                    array.Add(ConvertJTokenToObject(item));
+                }
+                return array.ToArray();
+                
+            case Newtonsoft.Json.Linq.JTokenType.String:
+                return token.ToString();
+                
+            case Newtonsoft.Json.Linq.JTokenType.Integer:
+                return Convert.ToInt32(token);
+                
+            case Newtonsoft.Json.Linq.JTokenType.Float:
+                return Convert.ToSingle(token);
+                
+            case Newtonsoft.Json.Linq.JTokenType.Boolean:
+                return Convert.ToBoolean(token);
+                
+            case Newtonsoft.Json.Linq.JTokenType.Null:
+                return null;
+                
+            default:
+                return token.ToString();
         }
     }
 
@@ -154,22 +222,31 @@ public abstract class FocusController : MonoBehaviour
         SaveMaterialsRecursive(obj);
     }
 
+    /// <summary>
+    /// Рекурсивно сохраняет материалы объекта и всех его дочерних объектов.
+    /// Использует InstanceID объекта + имя материала для создания уникальных ключей,
+    /// что позволяет корректно обрабатывать объекты с одинаковыми именами материалов.
+    /// </summary>
+    /// <param name="obj">GameObject для сохранения материалов</param>
     public void SaveMaterialsRecursive(GameObject obj)
     {
+        int objectId = obj.GetInstanceID();
+        
         MeshRenderer meshRenderer = obj.GetComponent<MeshRenderer>();
         if (meshRenderer != null)
         {
             Material[] materials = meshRenderer.materials;
             foreach (Material mat in materials)
             {
-                if (!_targetObjectMaterials.ContainsKey(mat.name))
+                string uniqueKey = $"{objectId}_{mat.name}";
+                if (!_targetObjectMaterials.ContainsKey(uniqueKey))
                 {
-                    _targetObjectMaterials.Add(mat.name, mat);
+                    _targetObjectMaterials.Add(uniqueKey, mat);
                 }
 
-                if (!_defaultMaterialColorLevelByName.ContainsKey(mat.name))
+                if (!_defaultMaterialColorLevelByName.ContainsKey(uniqueKey))
                 {
-                    _defaultMaterialColorLevelByName[mat.name] = (int)(mat.color.grayscale * 255);
+                    _defaultMaterialColorLevelByName[uniqueKey] = (int)(mat.color.grayscale * 255);
                 }
             }
         }
@@ -182,14 +259,15 @@ public abstract class FocusController : MonoBehaviour
                 Material[] materials = skinnedMeshRenderer.materials;
                 foreach (Material mat in materials)
                 {
-                    if (!_targetObjectMaterials.ContainsKey(mat.name))
+                    string uniqueKey = $"{objectId}_{mat.name}";
+                    if (!_targetObjectMaterials.ContainsKey(uniqueKey))
                     {
-                        _targetObjectMaterials.Add(mat.name, mat);
+                        _targetObjectMaterials.Add(uniqueKey, mat);
                     }
 
-                    if (!_defaultMaterialColorLevelByName.ContainsKey(mat.name))
+                    if (!_defaultMaterialColorLevelByName.ContainsKey(uniqueKey))
                     {
-                        _defaultMaterialColorLevelByName[mat.name] = (int)(mat.color.grayscale * 255);
+                        _defaultMaterialColorLevelByName[uniqueKey] = (int)(mat.color.grayscale * 255);
                     }
                 }
             }
@@ -228,12 +306,61 @@ public abstract class FocusController : MonoBehaviour
 
     public virtual void OnAreaFocus(Dictionary<string, object> data)
     {
+        Debug.Log($"[FocusController] OnAreaFocus вызван с данными: {string.Join(", ", data.Select(kv => $"{kv.Key}={kv.Value}"))}");
+        
         if (!data.ContainsKey("rectangle"))
         {
+            Debug.LogError("[FocusController] Ключ 'rectangle' отсутствует в данных");
             throw new System.Exception("Not sent rectangle when focus on area");
         }
 
-        RectangleBector2Int areaAsRectangle = (RectangleBector2Int)data["rectangle"];
+        // Получаем rectangle данные как JObject
+        var rectangleJObject = data["rectangle"] as Newtonsoft.Json.Linq.JObject;
+        if (rectangleJObject == null)
+        {
+            Debug.LogError($"[FocusController] Не удалось привести rectangle к JObject. Тип: {data["rectangle"]?.GetType()}");
+            throw new System.Exception("Rectangle data is not in expected format");
+        }
+        
+        Debug.Log($"[FocusController] RectangleData получен как JObject. Свойства: {string.Join(", ", rectangleJObject.Properties().Select(p => p.Name))}");
+        
+        // Проверяем наличие обязательных свойств
+        if (!rectangleJObject.ContainsKey("startPosition") || !rectangleJObject.ContainsKey("size"))
+        {
+            Debug.LogError("[FocusController] Отсутствуют обязательные свойства 'startPosition' или 'size' в rectangleJObject");
+            throw new System.Exception("Rectangle data missing startPosition or size");
+        }
+        
+        // Получаем startPosition и size как JObject
+        var startPositionJObject = rectangleJObject["startPosition"] as Newtonsoft.Json.Linq.JObject;
+        var sizeJObject = rectangleJObject["size"] as Newtonsoft.Json.Linq.JObject;
+        
+        if (startPositionJObject == null || sizeJObject == null)
+        {
+            Debug.LogError($"[FocusController] startPositionJObject или sizeJObject null. startPositionJObject: {startPositionJObject}, sizeJObject: {sizeJObject}");
+            throw new System.Exception("Rectangle data missing startPosition or size");
+        }
+
+        // Извлекаем координаты из JObject
+        var startX = startPositionJObject["x"];
+        var startY = startPositionJObject["y"];
+        var sizeX = sizeJObject["x"];
+        var sizeY = sizeJObject["y"];
+
+        Debug.Log($"[FocusController] Извлеченные значения: startX={startX}, startY={startY}, sizeX={sizeX}, sizeY={sizeY}");
+
+        var areaAsRectangle = RectangleBector2Int.FromStartAndSize(
+            new Bector2Int(
+                Convert.ToInt32(startX), 
+                Convert.ToInt32(startY)
+            ),
+            new Bector2Int(
+                Convert.ToInt32(sizeX), 
+                Convert.ToInt32(sizeY)
+            )
+        );
+        
+        Debug.Log($"[FocusController] RectangleBector2Int успешно создан: {areaAsRectangle}");
         Vector2Int centerInteger = areaAsRectangle.FindAbsoluteCenterAsInt();
 
         SetCameraFocus(centerInteger, data);
@@ -318,10 +445,11 @@ public abstract class FocusController : MonoBehaviour
         {
             foreach (var materialPair in _targetObjectMaterials)
             {
+                string key = materialPair.Key;
                 Material material = materialPair.Value;
-                if (_defaultMaterialColorLevelByName.ContainsKey(material.name))
+                if (_defaultMaterialColorLevelByName.ContainsKey(key))
                 {
-                    int originalColorLevel = _defaultMaterialColorLevelByName[material.name];
+                    int originalColorLevel = _defaultMaterialColorLevelByName[key];
                     material.color = new Color(
                         originalColorLevel / 255f,
                         originalColorLevel / 255f,

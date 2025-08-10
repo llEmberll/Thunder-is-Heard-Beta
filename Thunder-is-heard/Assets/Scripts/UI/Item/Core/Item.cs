@@ -19,7 +19,8 @@ public abstract class Item : UIElement
 
     public virtual void Awake()
     {
-        InitListeners();
+        // Убираем автоматическую инициализацию слушателей
+        // InitListeners();
     }
 
     public virtual void Init(string itemId, string itemName, Sprite itemIcon = null)

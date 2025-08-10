@@ -8,9 +8,8 @@ public class AttackSideCondition : BasicCondition
     public AttackSideCondition(string side) 
     { 
         _side = side;
-        EnableListeners();
+        // Убираем EnableListeners() из конструктора - теперь это будет в OnActivate
     }
-
 
     public void EnableListeners()
     {
@@ -31,9 +30,30 @@ public class AttackSideCondition : BasicCondition
         }
     }
 
+    protected override void OnActivate()
+    {
+        // Подписываемся на события при активации
+        EnableListeners();
+    }
+    
+    protected override void OnDeactivate()
+    {
+        DisableListeners();
+    }
+    
+    protected override void OnReset()
+    {
+        attacked = false;
+        DisableListeners();
+    }
 
     public override bool IsComply()
     {
         return attacked;
+    }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return false;
     }
 }

@@ -12,6 +12,8 @@ public abstract class InventoryItem : Item
     public void SetConductor(IItemConductor value)
     {
         conductor = value;
+        // Подписываемся на события только после установки conductor
+        EnableListeners();
     }
 
     public override void EnableListeners()

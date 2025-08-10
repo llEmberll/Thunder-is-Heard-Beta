@@ -18,7 +18,10 @@ public class PanelOpenedCondition : BasicCondition
         firstCheck = false;
 
         opened = IsPanelOpened();
-        EnableListeners();
+        if (!opened && _isActive)
+        {
+            EnableListeners();
+        }
     }
 
     public bool IsPanelOpened()
@@ -43,14 +46,44 @@ public class PanelOpenedCondition : BasicCondition
         opened = IsPanelOpened();
     }
 
+    protected override void OnActivate()
+    {
+        // При активации проверяем текущее состояние
+        if (firstCheck)
+        {
+            FirstComplyCheck();
+        }
+        else if (!opened)
+        {
+            // Если уже проверяли и панель не открыта, подписываемся на события
+            EnableListeners();
+        }
+    }
+    
+    protected override void OnDeactivate()
+    {
+        DisableListeners();
+    }
+    
+    protected override void OnReset()
+    {
+        firstCheck = true;
+        opened = false;
+        DisableListeners();
+    }
 
     public override bool IsComply()
     {
-        if (firstCheck)
+        if (firstCheck && _isActive)
         {
             FirstComplyCheck();
         }
 
         return opened;
+    }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return true;
     }
 }

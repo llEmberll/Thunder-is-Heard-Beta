@@ -96,10 +96,14 @@ public class FocusFightController : FocusController
 
     public void OnUnitFocus(Dictionary<string, object> data)
     {
+       
+
         Unit unit = FindUnitByFocusData(data);
         if (unit == null) return;
 
         SetCameraFocus(unit.center, data);
+
+        Debug.Log("Unit focused!");
 
         _targetEntity = unit;
         SaveMaterials(unit.gameObject);

@@ -13,6 +13,30 @@ public class AndCondition : BasicCondition
         _conditions = conditions;
     }
 
+    protected override void OnActivate()
+    {
+        foreach (var condition in _conditions)
+        {
+            condition.Activate();
+        }
+    }
+    
+    protected override void OnDeactivate()
+    {
+        foreach (var condition in _conditions)
+        {
+            condition.Deactivate();
+        }
+    }
+    
+    protected override void OnReset()
+    {
+        foreach (var condition in _conditions)
+        {
+            condition.Reset();
+        }
+    }
+
     public override bool IsComply()
     {
         foreach (var condition in _conditions)
@@ -23,5 +47,10 @@ public class AndCondition : BasicCondition
             }
         }
         return true;
+    }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return false;
     }
 }

@@ -8,9 +8,8 @@ public class AttackObjectCondition : BasicCondition
     public AttackObjectCondition(string targetObjectId) 
     { 
         _targetObjectId = targetObjectId;
-        EnableListeners();
+        // Убираем EnableListeners() из конструктора - теперь это будет в OnActivate
     }
-
 
     public void EnableListeners()
     {
@@ -31,9 +30,30 @@ public class AttackObjectCondition : BasicCondition
         }
     }
 
+    protected override void OnActivate()
+    {
+        // Подписываемся на события только при активации
+        EnableListeners();
+    }
+    
+    protected override void OnDeactivate()
+    {
+        DisableListeners();
+    }
+    
+    protected override void OnReset()
+    {
+        attacked = false;
+        DisableListeners();
+    }
 
     public override bool IsComply()
     {
         return attacked;
+    }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return false;
     }
 }

@@ -9,6 +9,7 @@ public class AIFactory
         { "Attacking", typeof(AttackingAI) },
         { "Frozen", typeof(FrozenAI) },
         { "Pursuing", typeof (PursuingAI) },
+        { "Suicidal", typeof(SuicidalAI) },
     };
 
     public static AIInterface GetConfiguredAIByTypeAndSettings(AISettings settings)

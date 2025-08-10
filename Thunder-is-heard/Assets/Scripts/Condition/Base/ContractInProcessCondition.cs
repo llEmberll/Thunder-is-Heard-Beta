@@ -11,7 +11,7 @@ public class ContractInProcessCondition: BasicCondition
     public ContractInProcessCondition(string targetContractId) 
     {
         _targetContractId = targetContractId;
-        EnableListeners();
+        // Убираем EnableListeners() из конструктора - теперь это будет в OnActivate
     }
 
     public void FirstComplyCheck()
@@ -56,14 +56,44 @@ public class ContractInProcessCondition: BasicCondition
         DisableListeners();
     }
 
+    protected override void OnActivate()
+    {
+        // При активации проверяем текущее состояние
+        if (firstCheck)
+        {
+            FirstComplyCheck();
+        }
+        else if (!process)
+        {
+            // Если уже проверяли и контракт не в процессе, подписываемся на события
+            EnableListeners();
+        }
+    }
+    
+    protected override void OnDeactivate()
+    {
+        DisableListeners();
+    }
+    
+    protected override void OnReset()
+    {
+        firstCheck = true;
+        process = false;
+        DisableListeners();
+    }
 
     public override bool IsComply()
     {
-        if (firstCheck)
+        if (firstCheck && _isActive)
         {
             FirstComplyCheck();
         }
 
         return process;
+    }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return true;
     }
 }

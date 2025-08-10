@@ -23,7 +23,7 @@ public class ExistObjectCondition: BasicCondition
 
         Debug.Log("exist = " + exist);
 
-        if (!exist)
+        if (!exist && _isActive)
         {
             EnableListeners();
         }
@@ -70,14 +70,44 @@ public class ExistObjectCondition: BasicCondition
         }
     }
 
+    protected override void OnActivate()
+    {
+        // При активации проверяем текущее состояние
+        if (firstCheck)
+        {
+            FirstComplyCheck();
+        }
+        else if (!exist)
+        {
+            // Если уже проверяли и объект не найден, подписываемся на события
+            EnableListeners();
+        }
+    }
+    
+    protected override void OnDeactivate()
+    {
+        DisableListeners();
+    }
+    
+    protected override void OnReset()
+    {
+        firstCheck = true;
+        exist = false;
+        DisableListeners();
+    }
 
     public override bool IsComply()
     {
-        if (firstCheck)
+        if (firstCheck && _isActive)
         {
             FirstComplyCheck();
         }
 
         return exist;
+    }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return true;
     }
 }

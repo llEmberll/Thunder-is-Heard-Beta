@@ -36,4 +36,9 @@ public class MissionPassedCondition: BasicCondition
 
         return passed;
     }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return true;
+    }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -18,5 +16,10 @@ public class DestroyAllAlliesCondition : BasicCondition
         }
 
         return true;
+    }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return false;
     }
 }

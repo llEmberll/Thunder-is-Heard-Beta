@@ -11761,13 +11761,13 @@
                 "AISettings": [
                   {
                     "side": "Empire",
-                    "type": "Attacking",
+                    "type": "Suicidal",
                     "targetPositions": null,
                     "targetObjectIds": null
                   },
                   {
                     "side": "Neutral",
-                    "type": "Attacking",
+                    "type": "Suicidal",
                     "targetPositions": null,
                     "targetObjectIds": null
                   }
@@ -11799,13 +11799,13 @@
                   "AISettings": [
                     {
                       "side": "Empire",
-                      "type": "Attacking",
+                      "type": "Suicidal",
                       "targetPositions": null,
                       "targetObjectIds": null
                     },
                     {
                       "side": "Neutral",
-                      "type": "Attacking",
+                      "type": "Suicidal",
                       "targetPositions": null,
                       "targetObjectIds": null
                     }
@@ -11830,13 +11830,13 @@
                     "AISettings": [
                       {
                         "side": "Empire",
-                        "type": "Attacking",
+                        "type": "Suicidal",
                         "targetPositions": null,
                         "targetObjectIds": null
                       },
                       {
                         "side": "Neutral",
-                        "type": "Attacking",
+                        "type": "Suicidal",
                         "targetPositions": null,
                         "targetObjectIds": null
                       }
@@ -12298,7 +12298,20 @@
                             ],
                             "replicsOnPass": null,
                             "replicsOnFail": null,
-                            "AISettings": null,
+                            "AISettings": [
+                              {
+                                "side": "Empire",
+                                "type": "Suicidal",
+                                "targetPositions": null,
+                                "targetObjectIds": null
+                              },
+                              {
+                                "side": "Neutral",
+                                "type": "Suicidal",
+                                "targetPositions": null,
+                                "targetObjectIds": null
+                              }
+                            ],
                             "conditionsForFail": {
                               "Type": "AlwaysFalse",
                               "Data": null
@@ -12392,13 +12405,13 @@
                               "AISettings": [
                                 {
                                   "side": "Empire",
-                                  "type": "Attacking",
+                                  "type": "Suicidal",
                                   "targetPositions": null,
                                   "targetObjectIds": null
                                 },
                                 {
                                   "side": "Neutral",
-                                  "type": "Attacking",
+                                  "type": "Suicidal",
                                   "targetPositions": null,
                                   "targetObjectIds": null
                                 }
@@ -12511,7 +12524,20 @@
                                 "replicsOnStart": null,
                                 "replicsOnPass": null,
                                 "replicsOnFail": null,
-                                "AISettings": null,
+                                "AISettings": [
+                                  {
+                                    "side": "Empire",
+                                    "type": "Suicidal",
+                                    "targetPositions": null,
+                                    "targetObjectIds": null
+                                  },
+                                  {
+                                    "side": "Neutral",
+                                    "type": "Suicidal",
+                                    "targetPositions": null,
+                                    "targetObjectIds": null
+                                  }
+                                ],
                                 "conditionsForFail": {
                                   "Type": "AlwaysFalse",
                                   "Data": null
@@ -12656,7 +12682,20 @@
                                   "replicsOnStart": null,
                                   "replicsOnPass": null,
                                   "replicsOnFail": null,
-                                  "AISettings": null,
+                                  "AISettings": [
+                                    {
+                                      "side": "Empire",
+                                      "type": "Suicidal",
+                                      "targetPositions": null,
+                                      "targetObjectIds": null
+                                    },
+                                    {
+                                      "side": "Neutral",
+                                      "type": "Suicidal",
+                                      "targetPositions": null,
+                                      "targetObjectIds": null
+                                    }
+                                  ],
                                   "conditionsForFail": {
                                     "Type": "AlwaysFalse",
                                     "Data": null
@@ -12682,13 +12721,13 @@
                                     "AISettings": [
                                       {
                                         "side": "Empire",
-                                        "type": "Attacking",
+                                        "type": "Suicidal",
                                         "targetPositions": null,
                                         "targetObjectIds": null
                                       },
                                       {
                                         "side": "Neutral",
-                                        "type": "Attacking",
+                                        "type": "Suicidal",
                                         "targetPositions": null,
                                         "targetObjectIds": null
                                       }
@@ -12876,7 +12915,20 @@
                                       ],
                                       "replicsOnPass": null,
                                       "replicsOnFail": null,
-                                      "AISettings": null,
+                                      "AISettings": [
+                                        {
+                                          "side": "Empire",
+                                          "type": "Suicidal",
+                                          "targetPositions": null,
+                                          "targetObjectIds": null
+                                        },
+                                        {
+                                          "side": "Neutral",
+                                          "type": "Suicidal",
+                                          "targetPositions": null,
+                                          "targetObjectIds": null
+                                        }
+                                      ],
                                       "conditionsForFail": {
                                         "Type": "AlwaysFalse",
                                         "Data": null
@@ -12914,13 +12966,13 @@
                                         "AISettings": [
                                           {
                                             "side": "Empire",
-                                            "type": "Attacking",
+                                            "type": "Suicidal",
                                             "targetPositions": null,
                                             "targetObjectIds": null
                                           },
                                           {
                                             "side": "Neutral",
-                                            "type": "Attacking",
+                                            "type": "Suicidal",
                                             "targetPositions": null,
                                             "targetObjectIds": null
                                           }
@@ -12953,7 +13005,20 @@
                                           ],
                                           "replicsOnPass": null,
                                           "replicsOnFail": null,
-                                          "AISettings": null,
+                                          "AISettings": [
+                                            {
+                                              "side": "Empire",
+                                              "type": "Suicidal",
+                                              "targetPositions": null,
+                                              "targetObjectIds": null
+                                            },
+                                            {
+                                              "side": "Neutral",
+                                              "type": "Suicidal",
+                                              "targetPositions": null,
+                                              "targetObjectIds": null
+                                            }
+                                          ],
                                           "conditionsForFail": {
                                             "Type": "AlwaysFalse",
                                             "Data": null

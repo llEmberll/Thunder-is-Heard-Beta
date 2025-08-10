@@ -16,7 +16,7 @@ public class AllResourcesCollectedCondition : BasicCondition
 
         collected = IsAllResourcesCollected();
 
-        if (!collected)
+        if (!collected && _isActive)
         {
             EnableListeners();
         }
@@ -54,13 +54,43 @@ public class AllResourcesCollectedCondition : BasicCondition
         DisableListeners();
     }
 
-
-    public override bool IsComply()
+    protected override void OnActivate()
     {
+        // При активации проверяем текущее состояние
         if (firstCheck)
         {
             FirstComplyCheck();
         }
+        else if (!collected)
+        {
+            // Если уже проверяли и ресурсы не собраны, подписываемся на события
+            EnableListeners();
+        }
+    }
+    
+    protected override void OnDeactivate()
+    {
+        DisableListeners();
+    }
+    
+    protected override void OnReset()
+    {
+        firstCheck = true;
+        collected = false;
+        DisableListeners();
+    }
+
+    public override bool IsComply()
+    {
+        if (firstCheck && _isActive)
+        {
+            FirstComplyCheck();
+        }
         return collected;
+    }
+
+    public override bool IsRealTimeUpdate()
+    {
+        return true;
     }
 }

@@ -1,9 +1,14 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BaseSubsituableBuildingOptionsBehaviour : ISubsituableBuildingOptionsBehaviour
 {
+    ObjectProcessor _objectProcessor;
+
     public virtual void Init(BuildingPanel conductor)
     {
+        _objectProcessor = GameObjectUtils.FindGameObjectByTagIncludingInactive(Tags.objectProcessor).GetComponent<ObjectProcessor>();
+
         SceneState sceneState = GameObject.FindWithTag(Tags.state).GetComponent<SceneState>();
         State currentState = sceneState.GetCurrentState();
         if (currentState.stateName == "Building")
@@ -48,7 +53,21 @@ public class BaseSubsituableBuildingOptionsBehaviour : ISubsituableBuildingOptio
 
     public virtual void ToInventory(BuildingPanel conductor)
     {
-        ObjectProcessor.PutSelectedObjectOnBaseToInventory();
+        State _baseState = StateConfig.statesByScene[SceneManager.GetActiveScene().name];
+        if (_baseState.stateName == Scenes.fight)
+        {
+            _objectProcessor.PutSelectedObjectOnBattleToInventory();
+        }
+
+        else if (_baseState.stateName != Scenes.home)
+        {
+            ObjectProcessor.PutSelectedObjectOnBaseToInventory();
+        }
+       
+        else
+        {
+            Debug.Log("Put to inventory: undefined game state(Fight | Home)");
+        }
     }
 
     public virtual void Sell(BuildingPanel conductor)

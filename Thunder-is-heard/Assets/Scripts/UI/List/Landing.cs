@@ -223,7 +223,6 @@ public class Landing : ItemList, IItemConductor
 
     public void ChangeBehaviour(string name = "Base")
     {
-        Debug.Log("Landing: ChangeBehaviour: " + name);
         _behaviour = SubsituableLandingFactory.GetBehaviourById(name);
         _behaviour.Init(this);
     }

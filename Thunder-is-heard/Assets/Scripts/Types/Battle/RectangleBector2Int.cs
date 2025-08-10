@@ -47,6 +47,25 @@ public class RectangleBector2Int
             _size = new Bector2Int(maxX - minX + 1, maxY - minY + 1);
     }
 
+    public static RectangleBector2Int FromStartAndSize(Bector2Int startPosition, Bector2Int size)
+    {
+        return new RectangleBector2Int { _startPosition = startPosition, _size = size };
+    }
+
+    public static RectangleBector2Int FromStartAndEnd(Bector2Int startPosition, Bector2Int endPosition)
+    {
+        int minX = startPosition._x; 
+        int minY = startPosition._y;
+        int maxX = endPosition._x; 
+        int maxY = endPosition._y;
+
+        return new RectangleBector2Int 
+        { 
+            _startPosition = new Bector2Int(minX, minY),
+            _size = new Bector2Int(maxX - minX + 1, maxY - minY + 1)
+        };
+    }
+
     public Bector2Int[] GetPositions()
     {
         List<Bector2Int> positions = new List<Bector2Int>();

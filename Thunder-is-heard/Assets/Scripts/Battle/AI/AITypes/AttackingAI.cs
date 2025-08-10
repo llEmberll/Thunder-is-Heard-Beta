@@ -3,13 +3,14 @@ using System.Linq;
 
 public class AttackingAI : AbstractAI
 {
-    /// Агрессивное поведение. Атакует аккуратно при возможности, иначе подтягивает остальные силы к фронту. При тупике отчаянно атакует
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     public override TurnData GetTurn()
     {
         if (_battleEngine.currentBattleSituation.GetUnitsCollectionBySide(_battleEngine.currentBattleSituation._sideTurn).Count < 1) { return new TurnData(); }
 
-        Dictionary<TurnData, BattleSituation> attackMoves = _battleEngine.currentBattleSituation.GetAllAttackingSequels();
+        // РџРѕР»СѓС‡Р°РµРј Р°С‚Р°РєРё С‚РѕР»СЊРєРѕ РїРѕ СЋРЅРёС‚Р°Рј, РёСЃРєР»СЋС‡Р°СЏ Р·РґР°РЅРёСЏ
+        Dictionary<TurnData, BattleSituation> attackMoves = GetUnitOnlyAttackingSequels(_battleEngine.currentBattleSituation);
         if (attackMoves.Count > 0)
         {
             return GetBestAttack(_battleEngine.currentBattleSituation, attackMoves);
@@ -23,6 +24,8 @@ public class AttackingAI : AbstractAI
 
         return GetBestMovement(_battleEngine.currentBattleSituation, movementMoves);
     }
+
+
 
     public TurnData GetBestMovement(BattleSituation battleSituation, Dictionary<TurnData, BattleSituation> movements)
     {
@@ -45,7 +48,7 @@ public class AttackingAI : AbstractAI
         TurnData bestMovementWithAccurateBringToNearestEnemy = FindBestMovementWithAccurateBringToNearestEnemy(battleSituation, movements);
         if (bestMovementWithAccurateBringToNearestEnemy != null) return bestMovementWithAccurateBringToNearestEnemy;
 
-        //Если нет безопасного хода, приближающего союзника к врагу
+        //пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
         return GetMovementWithFastestApproachToAttack(battleSituation, movements);
     }
 

@@ -36,6 +36,9 @@ public interface IStage
 
     public string HintText { get; }
 
+    public bool IsRealTimeConditionForPass { get; }
+    public bool IsRealTimeConditionForFail { get; }
+
     public void Init(
         string stageId,
         Scenario stageScenario,
