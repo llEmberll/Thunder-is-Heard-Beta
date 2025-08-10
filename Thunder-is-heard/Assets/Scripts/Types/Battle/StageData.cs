@@ -34,6 +34,8 @@ public class StageData
 
     public ScenarioEventData[] scenarioEvents = null;
 
+    public bool autoPassTurn = false;
+
 
     public StageData() { }
 
@@ -54,7 +56,8 @@ public class StageData
         MediaEventData stageMediaEventData = null,
         LandingData stageLandingData = null,
         string stageHintText = null,
-        ScenarioEventData[] stageScenarioEvents = null
+        ScenarioEventData[] stageScenarioEvents = null,
+        bool stageAutoPassTurn = false
         )
     {
         id = stageId;
@@ -74,5 +77,6 @@ public class StageData
         landingData = stageLandingData;
         hintText = stageHintText;
         scenarioEvents = stageScenarioEvents;
+        autoPassTurn = stageAutoPassTurn;
     }
 }

@@ -39,6 +39,9 @@ public interface IStage
     public bool IsRealTimeConditionForPass { get; }
     public bool IsRealTimeConditionForFail { get; }
 
+    public bool AutoPassTurn { get; }
+
+
     public void Init(
         string stageId,
         Scenario stageScenario,
@@ -57,7 +60,8 @@ public interface IStage
         MediaEventData stageMediaEventData = null,
         LandingData stageLandingData = null,
         string stageHintText = null,
-        ScenarioEventData[] stageScenarioEvents = null
+        ScenarioEventData[] stageScenarioEvents = null,
+        bool stageAutoPassTurn = false
         );
     public void SetScenario(Scenario value);
     public void SetConditionsForPass(ICondition conditions);

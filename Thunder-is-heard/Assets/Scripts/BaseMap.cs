@@ -4497,7 +4497,8 @@ public class BaseMap : Map
             stageMediaEventData: null,
             stageLandingData: null,
             stageHintText: null,
-            stageScenarioEvents: scenarioEventsForStage14
+            stageScenarioEvents: scenarioEventsForStage14,
+            stageAutoPassTurn: true
         );
 
         // Этап 13 - Помощь танкистки(спавн юнитов)

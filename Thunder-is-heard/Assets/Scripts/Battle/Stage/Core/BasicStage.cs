@@ -81,6 +81,9 @@ public class BasicStage: IStage
     public ScenarioEventData[] _scenarioEvents;
     public ScenarioEventData[] ScenarioEvents { get { return _scenarioEvents; } }
 
+    public bool _autoPassTurn = false;
+    public bool AutoPassTurn { get { return _autoPassTurn; } }
+
 
     private bool _isStartSequenceComplete = false;
     private Queue<System.Action> _startSequenceActions;
@@ -103,7 +106,8 @@ public class BasicStage: IStage
         MediaEventData stageMediaEventData = null,
         LandingData stageLandingData = null,
         string stageHintText = null,
-        ScenarioEventData[] stageScenarioEvents = null
+        ScenarioEventData[] stageScenarioEvents = null,
+        bool stageAutoPassTurn = false
         )
     {
         _stageId = stageId;
@@ -123,6 +127,7 @@ public class BasicStage: IStage
 
         _hintText = stageHintText;
         _scenarioEvents = stageScenarioEvents;
+        _autoPassTurn = stageAutoPassTurn;
 
         SetCustomProperties();
 
@@ -182,22 +187,30 @@ public class BasicStage: IStage
 
     public void EnableEndScenarioEventsListener()
     {
+        Debug.Log($"[BasicStage] EnableEndScenarioEventsListener called for stage: {_stageId}");
         EventMaster.current.ScenarioEventsEnd += OnEndScenarioEvents;
     }
 
     public void DisableEndScenarioEventsListener()
     {
+        Debug.Log($"[BasicStage] DisableEndScenarioEventsListener called for stage: {_stageId}");
         EventMaster.current.ScenarioEventsEnd -= OnEndScenarioEvents;
     }
 
     public void OnEndScenarioEvents()
     {
-        Debug.Log($"[BasicStage] OnEndScenarioEvents for stage: {_stageId}, isScenarioEvents: {isScenarioEvents}");
+        Debug.Log($"[BasicStage] OnEndScenarioEvents called for stage: {_stageId}, isScenarioEvents: {isScenarioEvents}");
         if (isScenarioEvents)
         {
+            Debug.Log($"[BasicStage] Processing scenario events completion for stage: {_stageId}");
             isScenarioEvents = false;
             DisableEndScenarioEventsListener();
+            Debug.Log($"[BasicStage] Calling ProcessNextStartAction for stage: {_stageId}");
             ProcessNextStartAction();
+        }
+        else
+        {
+            Debug.LogWarning($"[BasicStage] OnEndScenarioEvents called but isScenarioEvents is false for stage: {_stageId}");
         }
     }
 
@@ -282,53 +295,73 @@ public class BasicStage: IStage
 
     protected virtual void PrepareStartSequence()
     {
+        Debug.Log($"[BasicStage] PrepareStartSequence called for stage: {_stageId}");
         _startSequenceActions.Clear();
         _isStartSequenceComplete = false;
 
         if (_mediaEventData != null)
         {
+            Debug.Log($"[BasicStage] Adding media event to start sequence for stage: {_stageId}");
             _startSequenceActions.Enqueue(() => BeginMediaEvent(_mediaEventData));
         }
         
         if (_scenarioEvents != null && _scenarioEvents.Length > 0)
         {
+            Debug.Log($"[BasicStage] Adding {_scenarioEvents.Length} scenario events to start sequence for stage: {_stageId}");
             _startSequenceActions.Enqueue(() => BeginScenarioEvents(_scenarioEvents));
         }
 
         if (ReplicsOnStart != null && ReplicsOnStart.Length > 0)
         {
+            Debug.Log($"[BasicStage] Adding {ReplicsOnStart.Length} start replics to start sequence for stage: {_stageId}");
             _startSequenceActions.Enqueue(() => BeginDialogue(ReplicsOnStart));
         }
 
         if (_hintText != null)
         {
+            Debug.Log($"[BasicStage] Adding hint to start sequence for stage: {_stageId}");
             _startSequenceActions.Enqueue(() => SetHint(_hintText));
         }
 
         if (LandingData != null)
         {
+            Debug.Log($"[BasicStage] Adding landing to start sequence for stage: {_stageId}");
             _startSequenceActions.Enqueue(() => BeginLanding(LandingData));
         }
         
+        Debug.Log($"[BasicStage] Start sequence prepared with {_startSequenceActions.Count} actions for stage: {_stageId}");
     }
 
     protected void ProcessNextStartAction()
     {
+        Debug.Log($"[BasicStage] ProcessNextStartAction called for stage: {_stageId}, remaining actions: {_startSequenceActions.Count}");
         if (_startSequenceActions.Count > 0)
         {
             var nextAction = _startSequenceActions.Dequeue();
+            Debug.Log($"[BasicStage] Executing next action for stage: {_stageId}, action type: {nextAction.Method.Name}");
             nextAction.Invoke();
         }
         else
         {
+            Debug.Log($"[BasicStage] No more actions, completing start sequence for stage: {_stageId}");
             CompleteStartSequence();
         }
     }
 
     protected void CompleteStartSequence()
     {
+        Debug.Log($"[BasicStage] CompleteStartSequence called for stage: {_stageId}");
         _isStartSequenceComplete = true;
+        Debug.Log($"[BasicStage] Calling OnUpdateStage for stage: {_stageId}");
         EventMaster.current.OnUpdateStage();
+        
+        if (_autoPassTurn)
+        {
+            Debug.Log($"[BasicStage] Auto pass turn enabled for stage: {_stageId}, calling OnExecuteTurn with empty TurnData");
+            EventMaster.current.OnExecuteTurn(new TurnData());
+        }
+        
+        Debug.Log($"[BasicStage] Start sequence completed for stage: {_stageId}");
     }
 
     public void BeginMediaEvent(MediaEventData eventData)
@@ -340,9 +373,11 @@ public class BasicStage: IStage
 
     public void BeginDialogue(Replic[] replics)
     {
+        Debug.Log($"[BasicStage] BeginDialogue called with {replics?.Length ?? 0} replics for stage: {_stageId}");
         isDialogue = true;
         EventMaster.current.BeginDialogue(replics);
         EnableEndDialogueListener();
+        Debug.Log($"[BasicStage] BeginDialogue completed for stage: {_stageId}");
     }
 
     public void BeginLanding(LandingData landingData)
@@ -358,46 +393,70 @@ public class BasicStage: IStage
         isScenarioEvents = true;
         EventMaster.current.BeginScenarioEvents(events);
         EnableEndScenarioEventsListener();
+        Debug.Log($"[BasicStage] BeginScenarioEvents completed, isScenarioEvents set to true for stage: {_stageId}");
     }
 
     public void SetHint(string text)
     {
+        Debug.Log($"[BasicStage] SetHint called with text: {text} for stage: {_stageId}");
         EventMaster.current.OnSetHint(text);
         ProcessNextStartAction();
     }
 
     public void HideHint()
     {
+        Debug.Log($"[BasicStage] HideHint called for stage: {_stageId}");
         EventMaster.current.OnHideHint();
     }
 
     public void OnEndMediaEvent()
     {
+        Debug.Log($"[BasicStage] OnEndMediaEvent called for stage: {_stageId}, isMediaEvent: {isMediaEvent}");
         if (isMediaEvent)
         {
+            Debug.Log($"[BasicStage] Processing media event completion for stage: {_stageId}");
             isMediaEvent = false;
             DisableEndMediaEventListener();
+            Debug.Log($"[BasicStage] Calling ProcessNextStartAction after media event for stage: {_stageId}");
             ProcessNextStartAction();
+        }
+        else
+        {
+            Debug.LogWarning($"[BasicStage] OnEndMediaEvent called but isMediaEvent is false for stage: {_stageId}");
         }
     }
 
     public void OnEndDialogue()
     {
+        Debug.Log($"[BasicStage] OnEndDialogue called for stage: {_stageId}, isDialogue: {isDialogue}");
         if (isDialogue)
         {
+            Debug.Log($"[BasicStage] Processing dialogue completion for stage: {_stageId}");
             isDialogue = false;
             DisableEndDialogueListener();
+            Debug.Log($"[BasicStage] Calling ProcessNextStartAction after dialogue for stage: {_stageId}");
             ProcessNextStartAction();
+        }
+        else
+        {
+            Debug.LogWarning($"[BasicStage] OnEndDialogue called but isDialogue is false for stage: {_stageId}");
         }
     }
 
     public void OnEndLanding()
     {
+        Debug.Log($"[BasicStage] OnEndLanding called for stage: {_stageId}, isLanding: {isLanding}");
         if (isLanding)
         {
+            Debug.Log($"[BasicStage] Processing landing completion for stage: {_stageId}");
             isLanding = false;
             DisableEndLandingListener();
+            Debug.Log($"[BasicStage] Calling ProcessNextStartAction after landing for stage: {_stageId}");
             ProcessNextStartAction();
+        }
+        else
+        {
+            Debug.LogWarning($"[BasicStage] OnEndLanding called but isLanding is false for stage: {_stageId}");
         }
     }
 

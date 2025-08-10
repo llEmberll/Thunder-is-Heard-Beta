@@ -34,11 +34,11 @@ public static class StageFactory
         ScenarioEventData[] scenarioEvents = data.scenarioEvents;
 
         stage.Init(
-            data.id, 
-            scenario, 
-            data.AISettings, 
-            conditionsForPass, 
-            conditionsForFail, 
+            data.id,
+            scenario,
+            data.AISettings,
+            conditionsForPass,
+            conditionsForFail,
             unitsForSpawn,
             buildsForSpawn,
             replicsOnStart,
@@ -51,7 +51,8 @@ public static class StageFactory
             mediaEventData,
             landingData,
             hintText,
-            scenarioEvents
+            scenarioEvents,
+            data.autoPassTurn
             );
         return stage;
     }
@@ -91,9 +92,9 @@ public static class StageFactory
         LandingData landingData = stage.LandingData;
         string hintText = stage.HintText;
         ScenarioEventData[] scenarioEvents = stage.ScenarioEvents;
+        bool autoPassTurn = stage.AutoPassTurn;
 
         return new StageData(
-            stageId: stageId,
             stageUnitsForSpawn: unitsForSpawn,
             stageBuildsForSpawn: buildsForSpawn,
             stageReplicsOnStart: replicsOnStart,
@@ -102,6 +103,7 @@ public static class StageFactory
             stageAISettings: aISettings,
             stageConditionsForPass: serializedConditionsForPass,
             stageConditionsForFail: serializedConditionsForFail,
+            stageId: stageId,
             stageStageOnPass: stageOnPass,
             stageStageOnFail: stageOnFail,
             stageBehaviourIdByComponentName: behaviourIdByCompoentName,
@@ -109,7 +111,8 @@ public static class StageFactory
             stageMediaEventData: mediaEventData,
             stageLandingData: landingData,
             stageHintText: hintText,
-            stageScenarioEvents: scenarioEvents
+            stageScenarioEvents: scenarioEvents,
+            stageAutoPassTurn: autoPassTurn
             );
     }
 }
