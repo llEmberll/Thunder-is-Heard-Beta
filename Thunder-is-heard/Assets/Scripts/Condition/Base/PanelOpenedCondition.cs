@@ -53,7 +53,7 @@ public class PanelOpenedCondition : BasicCondition
         {
             FirstComplyCheck();
         }
-        else if (!opened)
+        if (!opened)
         {
             // Если уже проверяли и панель не открыта, подписываемся на события
             EnableListeners();

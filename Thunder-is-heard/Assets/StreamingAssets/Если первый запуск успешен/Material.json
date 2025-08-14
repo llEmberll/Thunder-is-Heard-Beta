@@ -1,0 +1,30 @@
+﻿{
+  "name": "Material",
+  "items": {
+    "31391161-4be3-4149-833d-7fdde496946c": {
+      "fields": {
+        "externalId": "31391161-4be3-4149-833d-7fdde496946c",
+        "description": "",
+        "cost": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 1,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0,
+          "Rub": 0
+        },
+        "createTime": 3,
+        "iconSection": "UIMaterialCards",
+        "iconName": "megafone",
+        "name": "Мегафон"
+      }
+    }
+  }
+}

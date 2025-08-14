@@ -7,7 +7,7 @@
         "description": "В тусклом свете предрассветной дымки наши войска двинулись к вражеским позициям. Согласно разведданным, оборона противника зияет брешами. Пред подразделениями стоит задача отбросить вражеские силы от штаба и лишить плацдарма для нового наступления.",
         "scenarioId": "aa815447-cdcd-464d-8f37-307f35a15ad6",
         "rewards": [],
-        "passed": true,
+        "passed": false,
         "gives": {
           "rub": 1500,
           "maxRub": 0,
@@ -35,8 +35,21 @@
         "description": "",
         "scenarioId": "tab95c11f-8827-4c3a-b58a-c9948cdd18af",
         "rewards": [],
-        "passed": false,
-        "gives": null,
+        "passed": true,
+        "gives": {
+          "rub": 1000,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 100,
+          "maxExp": 0
+        },
         "poseOnMap": null,
         "name": "Обучение"
       }

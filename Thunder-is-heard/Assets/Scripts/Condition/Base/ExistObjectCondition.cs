@@ -77,7 +77,7 @@ public class ExistObjectCondition: BasicCondition
         {
             FirstComplyCheck();
         }
-        else if (!exist)
+        if (!exist)
         {
             // Если уже проверяли и объект не найден, подписываемся на события
             EnableListeners();

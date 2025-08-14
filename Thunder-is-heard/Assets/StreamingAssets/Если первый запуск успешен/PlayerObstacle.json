@@ -1,0 +1,411 @@
+﻿{
+  "name": "PlayerObstacle",
+  "items": {
+    "88199bd8-0f5e-43bb-807e-253f7b94abd3": {
+      "fields": {
+        "externalId": "88199bd8-0f5e-43bb-807e-253f7b94abd3",
+        "description": "",
+        "rotation": 180,
+        "position": [
+          {
+            "x": 0,
+            "y": 5
+          }
+        ],
+        "coreId": "fccb430b-9ab1-4073-a334-6183a40ad0f2"
+      }
+    },
+    "b15a5478-c6b2-4269-a144-eed2807a9396": {
+      "fields": {
+        "externalId": "b15a5478-c6b2-4269-a144-eed2807a9396",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 1,
+            "y": 7
+          }
+        ],
+        "coreId": "ee8c8e9e-8b30-4687-9179-0a279badf766"
+      }
+    },
+    "062415f6-f700-46f3-b4ad-e46b2623707e": {
+      "fields": {
+        "externalId": "062415f6-f700-46f3-b4ad-e46b2623707e",
+        "description": "",
+        "rotation": 90,
+        "position": [
+          {
+            "x": 1,
+            "y": 9
+          }
+        ],
+        "coreId": "0b3a9589-3e96-45c9-8e4e-ab6f8dc8cd7a"
+      }
+    },
+    "b3d8f7ce-bdb4-4317-865f-1bf1dcdaae34": {
+      "fields": {
+        "externalId": "b3d8f7ce-bdb4-4317-865f-1bf1dcdaae34",
+        "description": "",
+        "rotation": 90,
+        "position": [
+          {
+            "x": 3,
+            "y": 10
+          }
+        ],
+        "coreId": "1dc74e29-35f1-4fc5-a3f0-d2c6c39d558b"
+      }
+    },
+    "1ab13464-92e0-4f94-a574-7a80103742e2": {
+      "fields": {
+        "externalId": "1ab13464-92e0-4f94-a574-7a80103742e2",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 1,
+            "y": 2
+          }
+        ],
+        "coreId": "429b4e2e-b6a2-465b-982f-4cc96d67a011"
+      }
+    },
+    "2e338e59-e021-4854-863a-b239b23d7f1f": {
+      "fields": {
+        "externalId": "2e338e59-e021-4854-863a-b239b23d7f1f",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 2,
+            "y": 0
+          }
+        ],
+        "coreId": "0b3a9589-3e96-45c9-8e4e-ab6f8dc8cd7a"
+      }
+    },
+    "eb3590df-4d78-448d-b3fa-e6e5555a798b": {
+      "fields": {
+        "externalId": "eb3590df-4d78-448d-b3fa-e6e5555a798b",
+        "description": "",
+        "rotation": 180,
+        "position": [
+          {
+            "x": 8,
+            "y": 0
+          }
+        ],
+        "coreId": "fccb430b-9ab1-4073-a334-6183a40ad0f2"
+      }
+    },
+    "5d5d2e5a-a78e-41ad-b9e9-c615fc3c6ba4": {
+      "fields": {
+        "externalId": "5d5d2e5a-a78e-41ad-b9e9-c615fc3c6ba4",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "coreId": "90ebae2b-7633-42c7-9868-406d47583d5a"
+      }
+    },
+    "212a3a7a-e11d-4012-8834-ab4e5aefb624": {
+      "fields": {
+        "externalId": "212a3a7a-e11d-4012-8834-ab4e5aefb624",
+        "description": "",
+        "rotation": 180,
+        "position": [
+          {
+            "x": 12,
+            "y": 6
+          }
+        ],
+        "coreId": "7b6c7782-0a71-4501-87f5-ed18b935cea1"
+      }
+    },
+    "a8fcc4ff-be51-4a48-845b-54fe7861e7a1": {
+      "fields": {
+        "externalId": "a8fcc4ff-be51-4a48-845b-54fe7861e7a1",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 8,
+            "y": 9
+          }
+        ],
+        "coreId": "429b4e2e-b6a2-465b-982f-4cc96d67a011"
+      }
+    },
+    "e8569aa9-d203-4885-84c1-46749054030f": {
+      "fields": {
+        "externalId": "e8569aa9-d203-4885-84c1-46749054030f",
+        "description": "",
+        "rotation": 90,
+        "position": [
+          {
+            "x": 7,
+            "y": 11
+          }
+        ],
+        "coreId": "48b9e917-ecfb-44ea-ade9-25cec693789e"
+      }
+    },
+    "8c9dfba8-3a5c-4521-9c79-28fd0de9a879": {
+      "fields": {
+        "externalId": "8c9dfba8-3a5c-4521-9c79-28fd0de9a879",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 3,
+            "y": 13
+          }
+        ],
+        "coreId": "0b3a9589-3e96-45c9-8e4e-ab6f8dc8cd7a"
+      }
+    },
+    "e602ccea-9e5a-46ef-b619-db24b02f42ac": {
+      "fields": {
+        "externalId": "e602ccea-9e5a-46ef-b619-db24b02f42ac",
+        "description": "",
+        "rotation": 180,
+        "position": [
+          {
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "coreId": "fccb430b-9ab1-4073-a334-6183a40ad0f2"
+      }
+    },
+    "2a9b6754-47a1-4719-af56-75a2a55667d8": {
+      "fields": {
+        "externalId": "2a9b6754-47a1-4719-af56-75a2a55667d8",
+        "description": "",
+        "rotation": 90,
+        "position": [
+          {
+            "x": 7,
+            "y": 1
+          }
+        ],
+        "coreId": "1dc74e29-35f1-4fc5-a3f0-d2c6c39d558b"
+      }
+    },
+    "43fb8f3a-9fd1-4e2b-9e2e-7761c87d439a": {
+      "fields": {
+        "externalId": "43fb8f3a-9fd1-4e2b-9e2e-7761c87d439a",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 2,
+            "y": 13
+          }
+        ],
+        "coreId": "bb9da51e-303d-4aed-951d-0248490f76b6"
+      }
+    },
+    "e7eddc3f-1a65-4555-98f1-7eea2d5f416a": {
+      "fields": {
+        "externalId": "e7eddc3f-1a65-4555-98f1-7eea2d5f416a",
+        "description": "",
+        "rotation": 90,
+        "position": [
+          {
+            "x": 13,
+            "y": 11
+          }
+        ],
+        "coreId": "0b3a9589-3e96-45c9-8e4e-ab6f8dc8cd7a"
+      }
+    },
+    "91030b11-2b4d-4923-8b9b-9503fbf92b25": {
+      "fields": {
+        "externalId": "91030b11-2b4d-4923-8b9b-9503fbf92b25",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 13,
+            "y": 5
+          }
+        ],
+        "coreId": "ee8c8e9e-8b30-4687-9179-0a279badf766"
+      }
+    },
+    "e4d797c4-1acd-4256-abe3-fa7b3dff84a6": {
+      "fields": {
+        "externalId": "e4d797c4-1acd-4256-abe3-fa7b3dff84a6",
+        "description": "",
+        "rotation": 180,
+        "position": [
+          {
+            "x": 6,
+            "y": 12
+          }
+        ],
+        "coreId": "429b4e2e-b6a2-465b-982f-4cc96d67a011"
+      }
+    },
+    "769ac8a5-ce21-49d6-b8b3-b39fffa6fa8f": {
+      "fields": {
+        "externalId": "769ac8a5-ce21-49d6-b8b3-b39fffa6fa8f",
+        "description": "",
+        "rotation": 90,
+        "position": [
+          {
+            "x": 4,
+            "y": 11
+          }
+        ],
+        "coreId": "7b6c7782-0a71-4501-87f5-ed18b935cea1"
+      }
+    },
+    "8e66a46e-6b32-4c04-8177-3ad7ba508e93": {
+      "fields": {
+        "externalId": "8e66a46e-6b32-4c04-8177-3ad7ba508e93",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 9,
+            "y": 12
+          }
+        ],
+        "coreId": "90ebae2b-7633-42c7-9868-406d47583d5a"
+      }
+    },
+    "78d0a375-5238-4d1a-bee1-3cda36b7c9a8": {
+      "fields": {
+        "externalId": "78d0a375-5238-4d1a-bee1-3cda36b7c9a8",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 5,
+            "y": 10
+          }
+        ],
+        "coreId": "bb9da51e-303d-4aed-951d-0248490f76b6"
+      }
+    },
+    "c4b46dfc-a984-4203-a0c9-653bc087ef8a": {
+      "fields": {
+        "externalId": "c4b46dfc-a984-4203-a0c9-653bc087ef8a",
+        "description": "",
+        "rotation": 90,
+        "position": [
+          {
+            "x": 10,
+            "y": 8
+          }
+        ],
+        "coreId": "48b9e917-ecfb-44ea-ade9-25cec693789e"
+      }
+    },
+    "3274fce2-0875-4b10-8d5c-af8630078a67": {
+      "fields": {
+        "externalId": "3274fce2-0875-4b10-8d5c-af8630078a67",
+        "description": "",
+        "rotation": 180,
+        "position": [
+          {
+            "x": 13,
+            "y": 3
+          }
+        ],
+        "coreId": "0b3a9589-3e96-45c9-8e4e-ab6f8dc8cd7a"
+      }
+    },
+    "18d85255-f9ed-483c-8a54-efd9eb4889f9": {
+      "fields": {
+        "externalId": "18d85255-f9ed-483c-8a54-efd9eb4889f9",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 13,
+            "y": 2
+          }
+        ],
+        "coreId": "7b6c7782-0a71-4501-87f5-ed18b935cea1"
+      }
+    },
+    "2e3956d3-81ff-47eb-a427-7f51dd6cb9f1": {
+      "fields": {
+        "externalId": "2e3956d3-81ff-47eb-a427-7f51dd6cb9f1",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 11,
+            "y": 10
+          }
+        ],
+        "coreId": "ee8c8e9e-8b30-4687-9179-0a279badf766"
+      }
+    },
+    "7689817f-98cd-41c6-91ef-1b340a6436fe": {
+      "fields": {
+        "externalId": "7689817f-98cd-41c6-91ef-1b340a6436fe",
+        "description": "",
+        "rotation": 180,
+        "position": [
+          {
+            "x": 1,
+            "y": 11
+          }
+        ],
+        "coreId": "0b3a9589-3e96-45c9-8e4e-ab6f8dc8cd7a"
+      }
+    },
+    "4a0114ee-0829-42bd-b821-63da24c5e6f9": {
+      "fields": {
+        "externalId": "4a0114ee-0829-42bd-b821-63da24c5e6f9",
+        "description": "",
+        "rotation": 90,
+        "position": [
+          {
+            "x": 1,
+            "y": 4
+          }
+        ],
+        "coreId": "48b9e917-ecfb-44ea-ade9-25cec693789e"
+      }
+    },
+    "821686f4-1aa1-49c7-8fce-806de9a092fc": {
+      "fields": {
+        "externalId": "821686f4-1aa1-49c7-8fce-806de9a092fc",
+        "description": "",
+        "rotation": 180,
+        "position": [
+          {
+            "x": 12,
+            "y": 0
+          }
+        ],
+        "coreId": "ee8c8e9e-8b30-4687-9179-0a279badf766"
+      }
+    },
+    "661d327e-7e51-4aa9-911f-025a01335cab": {
+      "fields": {
+        "externalId": "661d327e-7e51-4aa9-911f-025a01335cab",
+        "description": "",
+        "rotation": 0,
+        "position": [
+          {
+            "x": 5,
+            "y": 9
+          }
+        ],
+        "coreId": "bb9da51e-303d-4aed-951d-0248490f76b6"
+      }
+    }
+  }
+}

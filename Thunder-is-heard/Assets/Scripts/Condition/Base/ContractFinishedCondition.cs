@@ -63,7 +63,7 @@ public class ContractFinishedCondition: BasicCondition
         {
             FirstComplyCheck();
         }
-        else if (!finished)
+        if (!finished)
         {
             // Если уже проверяли и контракт не завершен, подписываемся на события
             EnableListeners();

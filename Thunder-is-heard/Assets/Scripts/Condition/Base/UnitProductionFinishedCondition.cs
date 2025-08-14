@@ -64,7 +64,7 @@ public class UnitProductionFinishedCondition: BasicCondition
         {
             FirstComplyCheck();
         }
-        else if (!finished)
+        if (!finished)
         {
             // Если уже проверяли и производство не завершено, подписываемся на события
             EnableListeners();

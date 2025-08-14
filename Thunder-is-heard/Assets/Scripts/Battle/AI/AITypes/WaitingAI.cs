@@ -9,7 +9,7 @@ public class WaitingAI : AbstractAI
     {
         if (_battleEngine.currentBattleSituation.GetUnitsCollectionBySide(_battleEngine.currentBattleSituation._sideTurn).Count < 1) {  return new TurnData(); }
 
-        Dictionary<TurnData, BattleSituation> attackMoves = _battleEngine.currentBattleSituation.GetAllAttackingSequels();
+        Dictionary<TurnData, BattleSituation> attackMoves = GetUnitOnlyAttackingSequels(_battleEngine.currentBattleSituation);
         if (attackMoves.Count > 0)
         {
             return GetBestAttack(_battleEngine.currentBattleSituation, attackMoves);

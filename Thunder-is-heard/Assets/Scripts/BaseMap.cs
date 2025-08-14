@@ -2853,8 +2853,8 @@ public class BaseMap : Map
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
                     unitPosition: new Bector2Int[] { new Bector2Int(4, 1) },
                     unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
+                    unitMaxHealth: 1,
+                    unitHealth: 1,
                     unitDamage: 1,
                     unitDistance: 2,
                     unitMobility: 2,
@@ -2867,8 +2867,8 @@ public class BaseMap : Map
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
                     unitPosition: new Bector2Int[] { new Bector2Int(6, 1) },
                     unitRotation: 0,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
+                    unitMaxHealth: 1,
+                    unitHealth: 1,
                     unitDamage: 1,
                     unitDistance: 2,
                     unitMobility: 2,
@@ -2881,8 +2881,8 @@ public class BaseMap : Map
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
                     unitPosition: new Bector2Int[] { new Bector2Int(0, 4) },
                     unitRotation: 90,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
+                    unitMaxHealth: 1,
+                    unitHealth: 1,
                     unitDamage: 1,
                     unitDistance: 2,
                     unitMobility: 2,
@@ -2895,8 +2895,8 @@ public class BaseMap : Map
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
                     unitPosition: new Bector2Int[] { new Bector2Int(0, 10) },
                     unitRotation: 180,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
+                    unitMaxHealth: 1,
+                    unitHealth: 1,
                     unitDamage: 1,
                     unitDistance: 2,
                     unitMobility: 2,
@@ -2909,8 +2909,8 @@ public class BaseMap : Map
                     coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
                     unitPosition: new Bector2Int[] { new Bector2Int(6, 11) },
                     unitRotation: 180,
-                    unitMaxHealth: 2,
-                    unitHealth: 2,
+                    unitMaxHealth: 1,
+                    unitHealth: 1,
                     unitDamage: 1,
                     unitDistance: 2,
                     unitMobility: 2,
@@ -3352,6 +3352,7 @@ public class BaseMap : Map
             { "BuildingPanel", "Disabled" },
             { "FightPanel", "Disabled" },
             { "BaseSettingsPanel", "Disabled" },
+            { "Unit", "OnlyFocus" },
         };
 
         // Этап 4 - Начало боя
@@ -3411,12 +3412,20 @@ public class BaseMap : Map
             ),
         };
 
-        // Условие для перехода к следующему этапу (6) - атака вражеского юнита
-        Dictionary<string, object> dataForConditionForPassStage5 = new Dictionary<string, object>()
+        // Условие для перехода к следующему этапу (6) - ИЛИ атака вражеского юнита, ИЛИ уничтожить всех врагов
+        Dictionary<string, object> dataForAttackSideCondition = new Dictionary<string, object>()
         {
             { "side", Sides.empire }
         };
-        ConditionData conditionForPassStage5 = new ConditionData(type: "AttackSide", dataForConditionForPassStage5);
+        ConditionData attackSideCondition = new ConditionData(type: "AttackSide", dataForAttackSideCondition);
+
+        ConditionData destroyAllEnemiesCondition = new ConditionData(type: "DestroyAllEnemies", null);
+
+        Dictionary<string, object> dataForOrCondition = new Dictionary<string, object>()
+        {
+            { "conditions", new ConditionData[] { attackSideCondition, destroyAllEnemiesCondition } }
+        };
+        ConditionData conditionForPassStage5 = new ConditionData(type: "Or", dataForOrCondition);
 
         ConditionData conditionForFailStage5 = new ConditionData(type: "AlwaysFalse", null);
 
@@ -3492,8 +3501,8 @@ public class BaseMap : Map
                         coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
                         unitPosition: new Bector2Int[] { new Bector2Int(11, 0) },
                         unitRotation: 0,
-                        unitMaxHealth: 2,
-                        unitHealth: 2,
+                        unitMaxHealth: 1,
+                        unitHealth: 1,
                         unitDamage: 1,
                         unitDistance: 2,
                         unitMobility: 2,
@@ -3508,8 +3517,8 @@ public class BaseMap : Map
                         coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
                         unitPosition: new Bector2Int[] { new Bector2Int(11, 4) },
                         unitRotation: 0,
-                        unitMaxHealth: 2,
-                        unitHealth: 2,
+                        unitMaxHealth: 1,
+                        unitHealth: 1,
                         unitDamage: 1,
                         unitDistance: 2,
                         unitMobility: 2,
@@ -3603,8 +3612,8 @@ public class BaseMap : Map
                         coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
                         unitPosition: new Bector2Int[] { new Bector2Int(1, 5) },
                         unitRotation: 0,
-                        unitMaxHealth: 2,
-                        unitHealth: 2,
+                        unitMaxHealth: 1,
+                        unitHealth: 1,
                         unitDamage: 1,
                         unitDistance: 2,
                         unitMobility: 2,
@@ -3619,8 +3628,8 @@ public class BaseMap : Map
                         coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
                         unitPosition: new Bector2Int[] { new Bector2Int(1, 8) },
                         unitRotation: 0,
-                        unitMaxHealth: 2,
-                        unitHealth: 2,
+                        unitMaxHealth: 1,
+                        unitHealth: 1,
                         unitDamage: 1,
                         unitDistance: 2,
                         unitMobility: 2,
@@ -3629,23 +3638,7 @@ public class BaseMap : Map
                         Sides.empire,
                         unitIdOnBattle: "9d02dd91-375d-41c1-af4f-6b30f4416465"
                         )
-                    ),
-            new UnitOnBattleSpawnData(
-                    new UnitOnBattle(
-                        coreUnitId: "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
-                        unitPosition: new Bector2Int[] { new Bector2Int(6, 11) },
-                        unitRotation: 0,
-                        unitMaxHealth: 2,
-                        unitHealth: 2,
-                        unitDamage: 1,
-                        unitDistance: 2,
-                        unitMobility: 2,
-                        UnitTypes.infantry,
-                        Doctrines.land,
-                        Sides.empire,
-                        unitIdOnBattle: "df80ea4b-0e4e-4cf1-bfff-35151a769b6d"
-                        )
-                    ),
+                    )
         };
 
         Replic[] dialogueForStage8 = new Replic[]
@@ -3667,7 +3660,7 @@ public class BaseMap : Map
 
         // ИИ этапа 8
         AISettings AISettingsForEmpireSideInStage8 = new AISettings(
-            "Pursuing",
+            "Waiting",
             Sides.empire,
             null,
             new string[] { "85e8f427-fcf9-473f-a85d-12e058791727" }
@@ -4200,9 +4193,9 @@ public class BaseMap : Map
         };
 
         // Условие для перехода к следующему этапу(15)
-        ConditionData conditionForPassStage14 = new ConditionData(type: "DestroyAllEnemies", null);
+        ConditionData conditionForPassStage14 = new ConditionData(type: "AlwaysTrue", null);
 
-        ConditionData conditionForFailStage14 = new ConditionData(type: "DestroyAllAllies", null);
+        ConditionData conditionForFailStage14 = new ConditionData(type: "AlwaysFalse", null);
 
 
         Replic[] endDialogueForStage14 = new Replic[]

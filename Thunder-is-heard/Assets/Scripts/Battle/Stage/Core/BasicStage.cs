@@ -84,6 +84,8 @@ public class BasicStage: IStage
     public bool _autoPassTurn = false;
     public bool AutoPassTurn { get { return _autoPassTurn; } }
 
+    public bool _isAlreadyAutoPassed = false;
+
 
     private bool _isStartSequenceComplete = false;
     private Queue<System.Action> _startSequenceActions;
@@ -352,13 +354,17 @@ public class BasicStage: IStage
     {
         Debug.Log($"[BasicStage] CompleteStartSequence called for stage: {_stageId}");
         _isStartSequenceComplete = true;
-        Debug.Log($"[BasicStage] Calling OnUpdateStage for stage: {_stageId}");
-        EventMaster.current.OnUpdateStage();
         
-        if (_autoPassTurn)
+        
+        if (_autoPassTurn && !_isAlreadyAutoPassed)
         {
+            _isAlreadyAutoPassed = true;
             Debug.Log($"[BasicStage] Auto pass turn enabled for stage: {_stageId}, calling OnExecuteTurn with empty TurnData");
             EventMaster.current.OnExecuteTurn(new TurnData());
+        }
+        else {
+            Debug.Log($"[BasicStage] Calling OnUpdateStage for stage: {_stageId}");
+            EventMaster.current.OnUpdateStage();
         }
         
         Debug.Log($"[BasicStage] Start sequence completed for stage: {_stageId}");

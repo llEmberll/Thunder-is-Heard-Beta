@@ -1,0 +1,429 @@
+﻿{
+  "name": "Unit",
+  "items": {
+    "bd1b7986-cf1a-4d76-8b14-c68bf10f363f": {
+      "fields": {
+        "externalId": "bd1b7986-cf1a-4d76-8b14-c68bf10f363f",
+        "description": "",
+        "cost": {
+          "rub": 750,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 2,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 3,
+        "health": 3,
+        "damage": 1,
+        "distance": 2,
+        "mobility": 2,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconSection": "Textures/Interface/Cards/Units/Base",
+        "iconName": "assaulters",
+        "landingIconSection": "Textures/Interface/Cards/Units/Landing",
+        "landingIconName": "assaulters",
+        "name": "Штурмовики",
+        "modelPath": "Prefabs/Entity/Units/Assaulters",
+        "skillIds": [],
+        "unitType": "infantry",
+        "doctrine": "land",
+        "movementSpeed": 1
+      }
+    },
+    "035655f8-a347-4057-87cc-83385fa20660": {
+      "fields": {
+        "externalId": "035655f8-a347-4057-87cc-83385fa20660",
+        "description": "",
+        "cost": {
+          "rub": 3500,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 4,
+          "maxOil": 0,
+          "steel": 8,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 11,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 3,
+        "health": 6,
+        "damage": 3,
+        "distance": 3,
+        "mobility": 4,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconSection": "Textures/Interface/Cards/Units/Base",
+        "iconName": "osoka",
+        "landingIconSection": "Textures/Interface/Cards/Units/Landing",
+        "landingIconName": "osoka",
+        "name": "БМП Осока",
+        "modelPath": "Prefabs/Entity/Units/Osoka",
+        "skillIds": [],
+        "unitType": "vehicle",
+        "doctrine": "land",
+        "movementSpeed": 1
+      }
+    },
+    "a480c091-6b22-43f2-b26d-bbd3d2c2905b": {
+      "fields": {
+        "externalId": "a480c091-6b22-43f2-b26d-bbd3d2c2905b",
+        "description": "",
+        "cost": {
+          "rub": 2900,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 3,
+          "maxOil": 0,
+          "steel": 5,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 10,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 3,
+        "health": 5,
+        "damage": 2,
+        "distance": 1,
+        "mobility": 5,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconSection": "Textures/Interface/Cards/Units/Base",
+        "iconName": "vortex",
+        "landingIconSection": "Textures/Interface/Cards/Units/Landing",
+        "landingIconName": "vortex",
+        "name": "Вихрь",
+        "modelPath": "Prefabs/Entity/Units/Vortex",
+        "skillIds": [ "a60f271d-4aa1-41af-b6d1-c89ed667dad6" ],
+        "unitType": "vehicle",
+        "doctrine": "land",
+        "movementSpeed": 1
+      }
+    },
+    "1a82fa0c-1eb3-4e4d-bc63-43213b1bed28": {
+      "fields": {
+        "externalId": "1a82fa0c-1eb3-4e4d-bc63-43213b1bed28",
+        "description": "",
+        "cost": {
+          "rub": 1800,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 1,
+          "maxOil": 0,
+          "steel": 2,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 7,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 3,
+        "health": 9,
+        "damage": 2,
+        "distance": 2,
+        "mobility": 5,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconSection": "Textures/Interface/Cards/Units/Base",
+        "iconName": "beaver",
+        "landingIconSection": "Textures/Interface/Cards/Units/Landing",
+        "landingIconName": "beaver",
+        "name": "M113",
+        "modelPath": "Prefabs/Entity/Units/M113",
+        "skillIds": [],
+        "unitType": "vehicle",
+        "doctrine": "land",
+        "movementSpeed": 1
+      }
+    },
+    "ab0f64f0-5c33-4cbe-8cd1-79934d0d1741": {
+      "fields": {
+        "externalId": "ab0f64f0-5c33-4cbe-8cd1-79934d0d1741",
+        "description": "",
+        "cost": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 10,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 14,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 3,
+        "health": 8,
+        "damage": 5,
+        "distance": 3,
+        "mobility": 3,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconSection": "Textures/Interface/Cards/Units/Base",
+        "iconName": "leopard",
+        "landingIconSection": "Textures/Interface/Cards/Units/Landing",
+        "landingIconName": "leopard",
+        "name": "Леопард",
+        "modelPath": "Prefabs/Entity/Units/Leopard",
+        "skillIds": [],
+        "unitType": "vehicle",
+        "doctrine": "land",
+        "movementSpeed": 1
+      }
+    },
+    "c87ab088-db0b-4813-94da-929939248d76": {
+      "fields": {
+        "externalId": "c87ab088-db0b-4813-94da-929939248d76",
+        "description": "",
+        "cost": {
+          "rub": 5000,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 7,
+          "maxOil": 0,
+          "steel": 10,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 14,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 3,
+        "health": 8,
+        "damage": 4,
+        "distance": 3,
+        "mobility": 2,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconSection": "Textures/Interface/Cards/Units/Base",
+        "iconName": "obt",
+        "landingIconSection": "Textures/Interface/Cards/Units/Landing",
+        "landingIconName": "obt",
+        "name": "ОБТ-220",
+        "modelPath": "Prefabs/Entity/Units/OBT220",
+        "skillIds": [],
+        "unitType": "vehicle",
+        "doctrine": "land",
+        "movementSpeed": 1
+      }
+    },
+    "1db672c3-4207-4629-a1ee-ca054c83ba7c": {
+      "fields": {
+        "externalId": "1db672c3-4207-4629-a1ee-ca054c83ba7c",
+        "description": "",
+        "cost": {
+          "rub": 1000,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 3,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 3,
+        "health": 2,
+        "damage": 1,
+        "distance": 1,
+        "mobility": 4,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconSection": "Textures/Interface/Cards/Units/Base",
+        "iconName": "scout",
+        "landingIconSection": "Textures/Interface/Cards/Units/Landing",
+        "landingIconName": "scout",
+        "name": "Разведка",
+        "modelPath": "Prefabs/Entity/Units/Scout",
+        "skillIds": [ "a60f271d-4aa1-41af-b6d1-c89ed667dad6" ],
+        "unitType": "infantry",
+        "doctrine": "land",
+        "movementSpeed": 1
+      }
+    },
+    "91207015-36e5-4bf7-b16e-628e67935609": {
+      "fields": {
+        "externalId": "91207015-36e5-4bf7-b16e-628e67935609",
+        "description": "",
+        "cost": {
+          "rub": 1250,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 4,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "createTime": 5,
+        "health": 1,
+        "damage": 2,
+        "distance": 4,
+        "mobility": 2,
+        "size": {
+          "x": 1,
+          "y": 1
+        },
+        "iconSection": "Textures/Interface/Cards/Units/Base",
+        "iconName": "sniper",
+        "landingIconSection": "Textures/Interface/Cards/Units/Landing",
+        "landingIconName": "sniper",
+        "name": "Снайпер",
+        "modelPath": "Prefabs/Entity/Units/Sniper",
+        "skillIds": [],
+        "unitType": "infantry",
+        "doctrine": "land",
+        "movementSpeed": 1
+      }
+    }
+  }
+}

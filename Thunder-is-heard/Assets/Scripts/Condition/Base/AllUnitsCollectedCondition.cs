@@ -61,7 +61,7 @@ public class AllUnitsCollectedCondition : BasicCondition
         {
             FirstComplyCheck();
         }
-        else if (!collected)
+        if (!collected)
         {
             // Если уже проверяли и юниты не собраны, подписываемся на события
             EnableListeners();

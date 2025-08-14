@@ -63,7 +63,7 @@ public class ContractInProcessCondition: BasicCondition
         {
             FirstComplyCheck();
         }
-        else if (!process)
+        if (!process)
         {
             // Если уже проверяли и контракт не в процессе, подписываемся на события
             EnableListeners();

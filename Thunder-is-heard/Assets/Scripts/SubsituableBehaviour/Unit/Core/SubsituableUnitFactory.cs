@@ -7,6 +7,7 @@ public static class SubsituableUnitFactory
     {
         { "Base", typeof(BaseSubsituableUnitBehaviour) },
         { "Disabled", typeof(DisabledSubsituableUnitBehaviour) },
+        { "OnlyFocus", typeof(OnlyFocusUnitBehaviour) },
     };
 
     public static ISubsituableUnitBehaviour GetBehaviourById(string id)

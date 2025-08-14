@@ -12733,11 +12733,11 @@
                                       }
                                     ],
                                     "conditionsForFail": {
-                                      "Type": "DestroyAllAllies",
+                                      "Type": "AlwaysFalse",
                                       "Data": null
                                     },
                                     "conditionsForPass": {
-                                      "Type": "DestroyAllEnemies",
+                                      "Type": "AlwaysTrue",
                                       "Data": null
                                     },
                                     "stageOnPass": {
@@ -13333,7 +13333,8 @@
                 "Build": "Disabled",
                 "BuildingPanel": "Disabled",
                 "FightPanel": "Disabled",
-                "BaseSettingsPanel": "Disabled"
+                "BaseSettingsPanel": "Disabled",
+                "Unit": "OnlyFocus"
               },
               "focusData": {
                 "Type": "Unit",
