@@ -293,14 +293,18 @@ public class FightDirector : MonoBehaviour
 
     public IEnumerator WaitForScenarioBegin()
     {
+        Debug.Log("[FightDirector]: WaitForScenarioBegin");
+
         EventMaster.current.OnBaseMode();
         _scenario.map.HideAll();
 
         yield return StartCoroutine(Scenario.Begin());
 
-        _turnController.OnNextTurn(_battleData.GetTurn());
+        Debug.Log("[FightDirector]: scenario begin completed, next turn");
 
         _isFightStarted = true;
+
+        StartCoroutine(NextTurn());
     }
 
     public void OnScenarioUpdated()

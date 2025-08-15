@@ -371,9 +371,10 @@
                                               }
                                             ],
                                             "conditionsForPass": {
-                                              "Type": "ExistObject",
+                                              "Type": "ObjectCount",
                                               "Data": {
-                                                "targetObjectId": "ba290dde-968d-46ab-868b-b0f7598a7787"
+                                                "targetObjectId": "ba290dde-968d-46ab-868b-b0f7598a7787",
+                                                "needCount": 2
                                               }
                                             },
                                             "stageOnPass": {

@@ -118,11 +118,11 @@
         "unitId": null
       }
     },
-    "308e79a4-deca-44c9-81ca-e1b46aa8d1cd": {
+    "8669ae7e-507c-46d8-88e6-15c6720f8468": {
       "fields": {
-        "externalId": "308e79a4-deca-44c9-81ca-e1b46aa8d1cd",
+        "externalId": "8669ae7e-507c-46d8-88e6-15c6720f8468",
         "description": "",
-        "sourceObjectId": "c185c64a-88c7-420f-b576-5c2bc2857167",
+        "sourceObjectId": "30bd268d-08c6-47ae-bffd-ad0915721e17",
         "type": "Idle",
         "gives": {
           "rub": 0,
@@ -144,11 +144,11 @@
         "unitId": null
       }
     },
-    "c7756a28-d937-41fa-8326-84684defbddb": {
+    "f62554dc-3d53-4cd2-b88b-ee2336bf5097": {
       "fields": {
-        "externalId": "c7756a28-d937-41fa-8326-84684defbddb",
+        "externalId": "f62554dc-3d53-4cd2-b88b-ee2336bf5097",
         "description": "",
-        "sourceObjectId": "e5749271-b3a0-4409-929c-d0278d6269e6",
+        "sourceObjectId": "c80f9ec7-cce9-4c3d-b5dd-818aaeaebe41",
         "type": "Idle",
         "gives": {
           "rub": 0,
@@ -170,89 +170,11 @@
         "unitId": null
       }
     },
-    "694ed8aa-0d0f-43b7-9245-48ee3a9b5b48": {
+    "bc42543d-6f81-44c8-b957-593f822e4c43": {
       "fields": {
-        "externalId": "694ed8aa-0d0f-43b7-9245-48ee3a9b5b48",
+        "externalId": "bc42543d-6f81-44c8-b957-593f822e4c43",
         "description": "",
-        "sourceObjectId": "112f3747-d381-4ad6-a206-ae3aed8cb10b",
-        "type": "Idle",
-        "gives": {
-          "rub": 0,
-          "maxRub": 0,
-          "frames": 0,
-          "maxFrames": 0,
-          "oil": 0,
-          "maxOil": 0,
-          "steel": 0,
-          "maxSteel": 0,
-          "staff": 0,
-          "maxStaff": 0,
-          "exp": 0,
-          "maxExp": 0
-        },
-        "iconSection": "",
-        "iconName": "",
-        "count": 1,
-        "unitId": null
-      }
-    },
-    "2b9089b3-106c-46e6-9652-e7d4b4e6ab2d": {
-      "fields": {
-        "externalId": "2b9089b3-106c-46e6-9652-e7d4b4e6ab2d",
-        "description": "",
-        "sourceObjectId": "fa4a7509-dfb9-42b7-bb3f-1fc4a2d2c5da",
-        "type": "Idle",
-        "gives": {
-          "rub": 0,
-          "maxRub": 0,
-          "frames": 0,
-          "maxFrames": 0,
-          "oil": 0,
-          "maxOil": 0,
-          "steel": 0,
-          "maxSteel": 0,
-          "staff": 0,
-          "maxStaff": 0,
-          "exp": 0,
-          "maxExp": 0
-        },
-        "iconSection": "",
-        "iconName": "",
-        "count": 1,
-        "unitId": null
-      }
-    },
-    "a169e493-8c25-4e99-9189-012427efeef5": {
-      "fields": {
-        "externalId": "a169e493-8c25-4e99-9189-012427efeef5",
-        "description": "",
-        "sourceObjectId": "52abda4e-c312-4466-bb60-6bec0d2cecad",
-        "type": "Idle",
-        "gives": {
-          "rub": 0,
-          "maxRub": 0,
-          "frames": 0,
-          "maxFrames": 0,
-          "oil": 0,
-          "maxOil": 0,
-          "steel": 0,
-          "maxSteel": 0,
-          "staff": 0,
-          "maxStaff": 0,
-          "exp": 0,
-          "maxExp": 0
-        },
-        "iconSection": "",
-        "iconName": "",
-        "count": 1,
-        "unitId": null
-      }
-    },
-    "ef1010f7-72de-403a-a340-d0de46077a4e": {
-      "fields": {
-        "externalId": "ef1010f7-72de-403a-a340-d0de46077a4e",
-        "description": "",
-        "sourceObjectId": "92cdc78d-44cf-48db-9060-81ad873d6e55",
+        "sourceObjectId": "01759263-1dbd-485e-95b4-2d6875e6ceef",
         "type": "Idle",
         "gives": {
           "rub": 0,

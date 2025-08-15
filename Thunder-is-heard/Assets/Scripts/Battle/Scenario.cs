@@ -91,6 +91,8 @@ public class Scenario : MonoBehaviour
 
     public void OnUpdateStage()
     {
+        Debug.Log("[Scenario]: OnUpdateStage");
+
         DisableListenerForUpdateStage();
     }
 
@@ -113,16 +115,16 @@ public class Scenario : MonoBehaviour
 
     public IEnumerator ToNextStage(IStage nextStage)
     {
-        Debug.Log("To next stage");
+        Debug.Log("[Scenario]: To next stage");
         EnableListenerForUpdateStage();
         CurrentStage.OnFinish();
         yield return new WaitUntil(() => !waitingForUpdateStage);
 
+        Debug.Log("[Scenario]: prev stage finished");
+
         _currentStage = nextStage;
         EventMaster.current.OnCurrentStageChange(CurrentStage);
         EventMaster.current.OnNextStage(_currentStage);
-
-        Debug.Log("Changed stage");
 
         EnableListenerForUpdateStage();
         CurrentStage.OnStart();
@@ -150,6 +152,8 @@ public class Scenario : MonoBehaviour
 
     public IEnumerator Begin()
     {
+        Debug.Log("[Scenario]: begin");
+
         EventMaster.current.OnStageBegin(CurrentStage);
 
         EnableListenerForUpdateStage();
@@ -159,6 +163,8 @@ public class Scenario : MonoBehaviour
 
     public IEnumerator OnNextTurn()
     {
+        Debug.Log("[Scenario]: OnNextTurn");
+
         yield return CheckConditionAndRunNextIfNeed();
     }
 
@@ -184,9 +190,14 @@ public class Scenario : MonoBehaviour
 
         else if (CurrentStage.IsPassed())
         {
+            Debug.Log("[Scenario]: CheckConditionAndRunNextIfNeed - PASSED");
+
             EnableListenerForUpdateStage();
             CurrentStage.OnPass();
             yield return new WaitUntil(() => !waitingForUpdateStage);
+
+            Debug.Log("[Scenario]: CheckConditionAndRunNextIfNeed - Pass successed!");
+
             IStage nextStage = CurrentStage.StageOnPass;
             if (nextStage == null)
             {
@@ -197,6 +208,9 @@ public class Scenario : MonoBehaviour
             }
             else
             {
+
+                Debug.Log("[Scenario]: CheckConditionAndRunNextIfNeed - ToNextStage!");
+
                 yield return StartCoroutine(ToNextStage(nextStage));
             }
         }

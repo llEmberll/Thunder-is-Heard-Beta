@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class ObjectsOnBase : ItemList, IObjectsOnScene
@@ -11,6 +12,7 @@ public abstract class ObjectsOnBase : ItemList, IObjectsOnScene
     }
 
     public abstract Entity FindObjectByCoreId(string id);
+    public abstract List<Entity> FindAllObjectsByCoreId(string id);
     public abstract Entity FindObjectByChildId(string id);
     public abstract bool IsProperType(string type);
 

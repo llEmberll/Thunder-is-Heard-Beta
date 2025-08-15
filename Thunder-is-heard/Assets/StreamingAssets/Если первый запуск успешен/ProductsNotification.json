@@ -195,6 +195,84 @@
         "count": 1,
         "unitId": null
       }
+    },
+    "5d8f1b4a-16ca-4e91-bac5-d996589ae735": {
+      "fields": {
+        "externalId": "5d8f1b4a-16ca-4e91-bac5-d996589ae735",
+        "description": "",
+        "sourceObjectId": "fa4a7509-dfb9-42b7-bb3f-1fc4a2d2c5da",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "f349d34f-cf12-474b-8665-e662ca2ac572": {
+      "fields": {
+        "externalId": "f349d34f-cf12-474b-8665-e662ca2ac572",
+        "description": "",
+        "sourceObjectId": "52abda4e-c312-4466-bb60-6bec0d2cecad",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
+    },
+    "bfbcbd8a-8350-4cbf-a4cf-0be2b13c6265": {
+      "fields": {
+        "externalId": "bfbcbd8a-8350-4cbf-a4cf-0be2b13c6265",
+        "description": "",
+        "sourceObjectId": "92cdc78d-44cf-48db-9060-81ad873d6e55",
+        "type": "Idle",
+        "gives": {
+          "rub": 0,
+          "maxRub": 0,
+          "frames": 0,
+          "maxFrames": 0,
+          "oil": 0,
+          "maxOil": 0,
+          "steel": 0,
+          "maxSteel": 0,
+          "staff": 0,
+          "maxStaff": 0,
+          "exp": 0,
+          "maxExp": 0
+        },
+        "iconSection": "",
+        "iconName": "",
+        "count": 1,
+        "unitId": null
+      }
     }
   }
 }

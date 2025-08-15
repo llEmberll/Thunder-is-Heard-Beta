@@ -1,5 +1,4 @@
 ﻿{
-  "name": "PlayerUnit",
   "items": {
     "182f03c4-0acc-464f-bd35-64f63c4d166d": {
       "fields": {
@@ -10,7 +9,7 @@
         "name": "Штурмовики",
         "position": [
           {
-            "x": 7,
+            "x": 6,
             "y": 4
           }
         ]
@@ -25,11 +24,12 @@
         "name": "Штурмовики",
         "position": [
           {
-            "x": 6,
+            "x": 4,
             "y": 4
           }
         ]
       }
     }
-  }
+  },
+  "name": "PlayerUnit"
 }

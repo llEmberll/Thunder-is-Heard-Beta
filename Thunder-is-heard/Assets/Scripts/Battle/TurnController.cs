@@ -36,14 +36,24 @@ public class TurnController : MonoBehaviour
         EventMaster.current.FightIsContinued -= OnContinueFight;
     }
 
+    private bool _objectClickListenersEnabled = false;
+
     public void EnableObjectClickListeners()
     {
-        EventMaster.current.ClickedOnObject += OnObjectClick;
+        if (!_objectClickListenersEnabled)
+        {
+            EventMaster.current.ClickedOnObject += OnObjectClick;
+            _objectClickListenersEnabled = true;
+        }
     }
 
     public void DisableObjectClickListeners()
     {
-        EventMaster.current.ClickedOnObject -= OnObjectClick;
+        if (_objectClickListenersEnabled)
+        {
+            EventMaster.current.ClickedOnObject -= OnObjectClick;
+            _objectClickListenersEnabled = false;
+        }
     }
 
 

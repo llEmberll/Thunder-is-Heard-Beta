@@ -12,6 +12,8 @@ public class BaseMap : Map
     public void Start()
     {
         //CreateTrainingMission();
+        //CreateScenarioForEnemyOutpost();
+        //CreateTutorialOnBase();
     }
 
     public void CreateTutorialOnBase()
@@ -503,8 +505,12 @@ public class BaseMap : Map
         string tentId = "ba290dde-968d-46ab-868b-b0f7598a7787";
 
         // ������� ��� �����������
-        Dictionary<string, object> dataForConditionForPassStage18 = new Dictionary<string, object>() { { "targetObjectId", tentId } };
-        ConditionData conditionForPassStage18 = new ConditionData(type: "ExistObject", dataForConditionForPassStage18);
+        Dictionary<string, object> dataForConditionForPassStage18 = new Dictionary<string, object>() 
+        { 
+            { "targetObjectId", tentId },
+            { "needCount", 2 }
+        };
+        ConditionData conditionForPassStage18 = new ConditionData(type: "ObjectCount", dataForConditionForPassStage18);
 
         // �����
         FocusData focusDataForStage18 = new FocusData(type: "UIItem", data: new Dictionary<string, object>() { { "UIType", Shop.ComponentType }, { "coreId", tentId } });

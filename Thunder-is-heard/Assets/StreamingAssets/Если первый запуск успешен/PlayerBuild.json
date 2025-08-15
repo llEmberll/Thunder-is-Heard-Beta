@@ -1,4 +1,5 @@
 ﻿{
+  "name": "PlayerBuild",
   "items": {
     "809544a9-ecbc-4100-be6b-81f59540b65c": {
       "fields": {
@@ -10,7 +11,238 @@
         "name": "Штаб",
         "position": "[{\"x\":5,\"y\":5},{\"x\":5,\"y\":6},{\"x\":5,\"y\":7},{\"x\":6,\"y\":5},{\"x\":6,\"y\":6},{\"x\":6,\"y\":7},{\"x\":7,\"y\":5},{\"x\":7,\"y\":6},{\"x\":7,\"y\":7}]"
       }
+    },
+    "fa4a7509-dfb9-42b7-bb3f-1fc4a2d2c5da": {
+      "fields": {
+        "externalId": "fa4a7509-dfb9-42b7-bb3f-1fc4a2d2c5da",
+        "description": "",
+        "rotation": 0,
+        "workStatus": "Idle",
+        "coreId": "065a4f61-5b0e-450e-b89b-299651f90b4d",
+        "name": "Тренировочный центр",
+        "position": [
+          {
+            "x": 9,
+            "y": 0
+          },
+          {
+            "x": 9,
+            "y": 1
+          },
+          {
+            "x": 10,
+            "y": 0
+          },
+          {
+            "x": 10,
+            "y": 1
+          },
+          {
+            "x": 11,
+            "y": 0
+          },
+          {
+            "x": 11,
+            "y": 1
+          }
+        ]
+      }
+    },
+    "52abda4e-c312-4466-bb60-6bec0d2cecad": {
+      "fields": {
+        "externalId": "52abda4e-c312-4466-bb60-6bec0d2cecad",
+        "description": "",
+        "rotation": 0,
+        "workStatus": "Idle",
+        "coreId": "8878498b-a4bc-4dc8-8f39-bc9e987a689f",
+        "name": "Офис",
+        "position": [
+          {
+            "x": 8,
+            "y": 5
+          },
+          {
+            "x": 8,
+            "y": 6
+          },
+          {
+            "x": 8,
+            "y": 7
+          },
+          {
+            "x": 9,
+            "y": 5
+          },
+          {
+            "x": 9,
+            "y": 6
+          },
+          {
+            "x": 9,
+            "y": 7
+          },
+          {
+            "x": 10,
+            "y": 5
+          },
+          {
+            "x": 10,
+            "y": 6
+          },
+          {
+            "x": 10,
+            "y": 7
+          }
+        ]
+      }
+    },
+    "cac03e72-2b8d-4e30-8216-25c858e2c5a3": {
+      "fields": {
+        "externalId": "cac03e72-2b8d-4e30-8216-25c858e2c5a3",
+        "description": "",
+        "rotation": 0,
+        "workStatus": "Idle",
+        "coreId": "f4465aab-c10e-4d7a-a1f7-78d419c50f24",
+        "name": "Лаборатория",
+        "position": [
+          {
+            "x": 8,
+            "y": 2
+          },
+          {
+            "x": 8,
+            "y": 3
+          },
+          {
+            "x": 8,
+            "y": 4
+          },
+          {
+            "x": 9,
+            "y": 2
+          },
+          {
+            "x": 9,
+            "y": 3
+          },
+          {
+            "x": 9,
+            "y": 4
+          },
+          {
+            "x": 10,
+            "y": 2
+          },
+          {
+            "x": 10,
+            "y": 3
+          },
+          {
+            "x": 10,
+            "y": 4
+          }
+        ]
+      }
+    },
+    "cfc68607-9ad5-4e5e-8316-ecbb9efc3f88": {
+      "fields": {
+        "externalId": "cfc68607-9ad5-4e5e-8316-ecbb9efc3f88",
+        "description": "",
+        "rotation": 270,
+        "workStatus": "Idle",
+        "coreId": "ba290dde-968d-46ab-868b-b0f7598a7787",
+        "name": "Казарма",
+        "position": [
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 6,
+            "y": 0
+          },
+          {
+            "x": 6,
+            "y": 1
+          }
+        ]
+      }
+    },
+    "294efaa3-20ac-48ba-95b8-a63137e0be7b": {
+      "fields": {
+        "externalId": "294efaa3-20ac-48ba-95b8-a63137e0be7b",
+        "description": "",
+        "rotation": 90,
+        "workStatus": "Idle",
+        "coreId": "3d9f0f22-409e-40d7-8511-f4584b583dc0",
+        "name": "Склад",
+        "position": [
+          {
+            "x": 5,
+            "y": 2
+          },
+          {
+            "x": 5,
+            "y": 3
+          },
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 6,
+            "y": 3
+          },
+          {
+            "x": 7,
+            "y": 2
+          },
+          {
+            "x": 7,
+            "y": 3
+          }
+        ]
+      }
+    },
+    "92cdc78d-44cf-48db-9060-81ad873d6e55": {
+      "fields": {
+        "externalId": "92cdc78d-44cf-48db-9060-81ad873d6e55",
+        "description": "",
+        "rotation": 0,
+        "workStatus": "Idle",
+        "coreId": "64a4568c-bfaf-408e-9537-8e489ccaca56",
+        "name": "Нефтевышка",
+        "position": [
+          {
+            "x": 11,
+            "y": 2
+          },
+          {
+            "x": 11,
+            "y": 3
+          },
+          {
+            "x": 12,
+            "y": 2
+          },
+          {
+            "x": 12,
+            "y": 3
+          }
+        ]
+      }
     }
-  },
-  "name": "PlayerBuild"
+  }
 }

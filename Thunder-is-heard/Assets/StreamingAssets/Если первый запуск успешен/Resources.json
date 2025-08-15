@@ -6,20 +6,20 @@
         "externalId": "84bbb5b1-b65d-4872-9ad3-2741cda2d8ef",
         "description": "",
         "resources": {
-          "rub": 8000,
+          "rub": 5500,
           "maxRub": 0,
-          "frames": 40,
+          "frames": 55,
           "maxFrames": 0,
-          "oil": 12,
+          "oil": 11,
           "maxOil": 0,
-          "steel": 30,
+          "steel": 9,
           "maxSteel": 0,
           "staff": 0,
           "maxStaff": 0,
-          "exp": 0,
+          "exp": 300,
           "maxExp": 0
         },
-        "baseName": "Имя базы"
+        "baseName": "Zona51"
       }
     }
   }

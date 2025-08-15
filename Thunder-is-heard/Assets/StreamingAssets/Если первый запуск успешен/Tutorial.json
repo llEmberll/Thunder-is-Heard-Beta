@@ -10,7 +10,7 @@
           "Type": "AlwaysTrue",
           "Data": null
         },
-        "passed": false,
+        "passed": true,
         "firstStage": {
           "id": "BasicTutorialStage",
           "replicsOnStart": [

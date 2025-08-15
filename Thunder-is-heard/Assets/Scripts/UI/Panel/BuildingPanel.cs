@@ -47,6 +47,7 @@ public class BuildingPanel : Panel
         EventMaster.current.ToggledToBuildMode += OnBuildMode;
         EventMaster.current.ToggledOffBuildMode += OnExitBuildMode;
         EventMaster.current.ComponentBehaviourChanged += OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset += OnResetBehaviour;
         EventMaster.current.FightIsStarted += OnStartFight;
         EventMaster.current.FightIsContinued += OnStartFight;
     }
@@ -57,6 +58,7 @@ public class BuildingPanel : Panel
         EventMaster.current.ToggledToBuildMode -= OnBuildMode;
         EventMaster.current.ToggledOffBuildMode -= OnExitBuildMode;
         EventMaster.current.ComponentBehaviourChanged -= OnSomeComponentChangeBehaviour;
+        EventMaster.current.ComponentsBehaviourReset -= OnResetBehaviour;
         EventMaster.current.FightIsStarted -= OnStartFight;
         EventMaster.current.FightIsContinued -= OnStartFight;
     }

@@ -137,7 +137,7 @@ public class ObstaclesOnBase : ObjectsOnBase
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            Build childEntity = transform.GetChild(i).GetComponent<Build>();
+            Obstacle childEntity = transform.GetChild(i).GetComponent<Obstacle>();
             if (childEntity != null && childEntity.CoreId == id)
             {
                 return childEntity;
@@ -146,11 +146,26 @@ public class ObstaclesOnBase : ObjectsOnBase
         return null;
     }
 
+    public override List<Entity> FindAllObjectsByCoreId(string id)
+    {
+        List<Entity> objs = new List<Entity>();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Obstacle childEntity = transform.GetChild(i).GetComponent<Obstacle>();
+            if (childEntity != null && childEntity.CoreId == id)
+            {
+                objs.Add(childEntity);
+            }
+        }
+        return objs;
+    }
+
     public override Entity FindObjectByChildId(string id)
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            Build childEntity = transform.GetChild(i).GetComponent<Build>();
+            Obstacle childEntity = transform.GetChild(i).GetComponent<Obstacle>();
             if (childEntity != null && childEntity.ChildId == id)
             {
                 return childEntity;

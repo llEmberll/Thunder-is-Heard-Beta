@@ -139,6 +139,21 @@ public class UnitsOnBase : ObjectsOnBase
         return null;
     }
 
+    public override List<Entity> FindAllObjectsByCoreId(string id)
+    {
+        List<Entity> objs = new List<Entity>();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Unit childEntity = transform.GetChild(i).GetComponent<Unit>();
+            if (childEntity != null && childEntity.CoreId == id)
+            {
+                objs.Add(childEntity);
+            }
+        }
+        return objs;
+    }
+
     public override Entity FindObjectByChildId(string id)
     {
         for (int i = 0; i < transform.childCount; i++)

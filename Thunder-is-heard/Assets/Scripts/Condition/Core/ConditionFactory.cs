@@ -48,6 +48,10 @@ public static class ConditionFactory
             case "ExistObject":
                 string targetObjectIdForExisting = (string)conditionData.Data["targetObjectId"];
                 return new ExistObjectCondition(targetObjectIdForExisting);
+            case "ObjectCount":
+                string targetObjectIdForCount = (string)conditionData.Data["targetObjectId"];
+                int needCount = Convert.ToInt32(conditionData.Data["needCount"]);
+                return new ObjectCountCondition(targetObjectIdForCount, needCount);
             case "AllUnitsCollected":
                 return new AllUnitsCollectedCondition();
             case "AllResourcesCollected":
@@ -134,6 +138,18 @@ public static class ConditionFactory
             {
                 Type = "ExistObject",
                 Data = new Dictionary<string, object> { { "targetObjectId", existObjectCondition._targetObjectId } }
+            };
+        }
+        else if (condition is ObjectCountCondition objectCountCondition)
+        {
+            return new ConditionData
+            {
+                Type = "ObjectCount",
+                Data = new Dictionary<string, object> 
+                { 
+                    { "targetObjectId", objectCountCondition._targetObjectId },
+                    { "needCount", objectCountCondition._needCount }
+                }
             };
         }
         else if (condition is AllUnitsCollectedCondition)

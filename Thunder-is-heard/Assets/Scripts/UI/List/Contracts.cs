@@ -143,7 +143,7 @@ public class Contracts : ItemList
     {
         foreach (ContractItem i in items)
         {
-            if (i.Type == type) return i;
+            if (i._contractType == type) return i;
         }
         return null;
     }
