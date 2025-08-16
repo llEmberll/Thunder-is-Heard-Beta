@@ -35,7 +35,7 @@
         "description": "",
         "scenarioId": "tab95c11f-8827-4c3a-b58a-c9948cdd18af",
         "rewards": [],
-        "passed": true,
+        "passed": false,
         "gives": {
           "rub": 1000,
           "maxRub": 0,

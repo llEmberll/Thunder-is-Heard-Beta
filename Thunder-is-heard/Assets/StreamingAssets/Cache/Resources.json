@@ -6,20 +6,20 @@
         "externalId": "84bbb5b1-b65d-4872-9ad3-2741cda2d8ef",
         "description": "",
         "resources": {
-          "rub": 2550,
+          "rub": 8000,
           "maxRub": 0,
           "frames": 40,
           "maxFrames": 0,
-          "oil": 5,
+          "oil": 12,
           "maxOil": 0,
-          "steel": 3,
+          "steel": 30,
           "maxSteel": 0,
           "staff": 0,
           "maxStaff": 0,
           "exp": 0,
           "maxExp": 0
         },
-        "baseName": "jgf"
+        "baseName": "Имя базы"
       }
     }
   }

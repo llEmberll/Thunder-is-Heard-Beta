@@ -78,6 +78,7 @@ public class ProductsNotifcation : UIElement
         }
 
         EventMaster.current.ProductsNotificationDeleted -= SomeProductsNotificationDeleted;
+        EventMaster.current.BaseObjectReplaced -= SomeBaseObjectReplaced;
     }
 
     public void InitDependencies()
